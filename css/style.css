@@ -23,4 +23,116 @@
 
 body {
     font-family: 'Inter', sans-serif;
+    overflow-y: auto;
+}
+
+a {
+    text-decoration: none;
+    font-size: 0.8rem;
+    color: var(--accent-color-white);
+}
+
+/* =======================================================
+navigation
+========================================================== */
+nav {
+    background-color: var(--background-color-darkblue);
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: red 1px solid;
+}
+
+.nav {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--accent-color-white);
+}
+
+.join-logo {
+    display: none;
+}
+
+.menu-items-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu-items a {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.legal-info-wrapper {
+    display: none;
+}
+
+/* ====================================================
+media queries
+====================================================== */
+/* ---------------------------------------------------
+breakpoint: 50em
+------------------------------------------------------ */
+@media (min-width: 50em) {
+    body {
+        display: flex;
+        flex-direction: row-reverse;
+        position: relative;
+    }
+
+    nav {
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 170px;
+    }
+
+    div[w3-include-html] {
+        height: 100%;
+        border: lightskyblue 1px solid;
+    }
+
+    .nav {
+        height: 100%;
+        padding: 2em;
+        display: flex;
+        flex-direction: column;
+        border: yellow 1px solid;
+    }
+
+    .join-logo {
+        height: 100px;
+        display: block;
+    }
+
+    .join-logo img {
+        max-height: 100%;
+    }
+
+    .menu-items-wrapper {
+        height: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .legal-info-wrapper {
+        height: 10%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
 }
