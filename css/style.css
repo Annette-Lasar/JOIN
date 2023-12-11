@@ -4,6 +4,8 @@
     --accent-color-lightblue: #29abe2;
     --accent-color-red: #ff3d00;
     --accent-color-white: #ffffff;
+    --accent-color-anthracite: #2A3647;
+    --accent-color-lightgray: rgba(12, 46, 98, 0.12);
     --color-default: #6e52ff;
     --color-variant2: #ffa35e;
     --color-variant3: #ffe62b;
@@ -32,6 +34,59 @@ a {
     color: var(--accent-color-white);
 }
 
+header {
+    padding: 1em;
+    background-color: var(--accent-color-white);
+}
+
+.header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-wrapper img {
+    height: 32px;
+}
+
+.header-wrapper p {
+    display: none;
+}
+
+.header-wrapper .user-icon {
+    height: 32px;
+    width: 32px;
+    padding: 1.1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-color-lightblue);
+    font-weight: 700;
+    border: var(--accent-color-anthracite) 2px solid;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.header-wrapper .user-icon:hover {
+    background-color: var(--accent-color-lightgray);
+}
+
+.header-icon-wrapper {
+    width: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-help-icon img {
+    height: 16px;
+    cursor: pointer;
+}
+
+.header-help-icon img:hover {
+    transform: scale(1.2);
+}
+
 /* =======================================================
 navigation
 ========================================================== */
@@ -41,7 +96,6 @@ nav {
     right: 0;
     bottom: 0;
     left: 0;
-    border: red 1px solid;
 }
 
 .nav {
@@ -90,6 +144,18 @@ breakpoint: 50em
         position: relative;
     }
 
+    header {
+        padding-left: 200px;
+    }
+
+    .header-wrapper .header-join-logo {
+        display: none;
+    }
+
+    .header-wrapper p {
+        display: block;
+    }
+
     nav {
         height: 100%;
         position: fixed;
@@ -101,7 +167,6 @@ breakpoint: 50em
 
     div[w3-include-html] {
         height: 100%;
-        border: lightskyblue 1px solid;
     }
 
     .nav {
@@ -109,7 +174,6 @@ breakpoint: 50em
         padding: 2em;
         display: flex;
         flex-direction: column;
-        border: yellow 1px solid;
     }
 
     .join-logo {
