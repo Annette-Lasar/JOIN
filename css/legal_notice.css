@@ -1,0 +1,61 @@
+body {
+  padding: 1em;
+  background-color: var(--background-color-lightgray);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+}
+
+h1 {
+  margin: 24px 0;
+  font-size: 2rem;
+}
+
+h2 {
+  margin: 18px 0;
+  font-size: 1.4rem;
+}
+
+h3 {
+  margin: 12px 0;
+  font-size: 1.3rem;
+}
+
+h4 {
+  margin: 8px 0;
+  font-size: 1.2rem;
+}
+
+p,
+li {
+  font-size: 0.8rem;
+  line-height: 1.2;
+}
+
+p {
+  margin: 0 0 4px;
+  text-align: justify;
+  hyphens: auto;
+}
+
+.privacy-policy-date {
+  margin: 0 0 16px;
+  font-size: 0.7rem;
+  text-align: right;
+}
+
+li {
+  margin: 0 0 4px 1em;
+  padding: 0 0 0 0.67em;
+  list-style-type: disc;
+}
+
+.headline-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
