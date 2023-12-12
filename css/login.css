@@ -45,7 +45,7 @@ body {
 }
 
 .animate-content {
-  animation: showContent 5s forwards 2s;
+  animation: showContent 3s forwards 2s;
 }
 
 @keyframes changeBackground {
@@ -188,6 +188,12 @@ input[type='password'] {
 button {
   width: 100%;
   padding: 0.5em 0;
+}
+
+button:hover {
+    background-color: var(--accent-color-lightblue);
+    color: var(--accent-color-white);
+    border: var(--accent-color-lightblue) 1px solid;
 }
 
 .button-login,
