@@ -1,5 +1,7 @@
 async function init() {
+  moveLogoOnStartScreen();
   await includeHTML();
+  hideHelpLinkOnHelpPage();
 }
 
 async function includeHTML() {
@@ -13,5 +15,30 @@ async function includeHTML() {
     } else {
       element.innerHTML = 'Page not found';
     }
+  }
+}
+
+function moveLogoOnStartScreen() {
+  const URL = window.location.href;
+  if (URL.endsWith('login.html')) {
+    setTimeout(() => {
+      document
+        .getElementById('login_page')
+        .classList.add('change-background-color');
+      document.getElementById('login_join_logo').classList.add('animate-logo');
+      document.getElementById('path_dot').classList.add('change-logo-color');
+      document.getElementById('path_j').classList.add('change-logo-color');
+      document.getElementById('path_o').classList.add('change-logo-color');
+      document.getElementById('path_i').classList.add('change-logo-color');
+      document.getElementById('path_n').classList.add('change-logo-color');
+    }, 500);
+  }
+}
+
+function hideHelpLinkOnHelpPage() {
+  let headerHelpIcon = document.getElementById('header_help_icon');
+  const URL = window.location.href;
+  if (URL.endsWith('help.html')) {
+    headerHelpIcon.classList.add('opaque');
   }
 }

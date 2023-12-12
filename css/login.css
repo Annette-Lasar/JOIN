@@ -1,0 +1,90 @@
+body {
+  overflow: hidden;
+}
+
+.login-page {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background-color: var(--background-color-darkblue);
+  overflow: hidden;
+  transition: background-color 1s;
+}
+
+.login-join-logo {
+  height: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: transform 2s;
+}
+
+.change-background-color {
+  animation: changeBackground 1s forwards;
+}
+
+.content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transform: opacity 10s;
+}
+
+.animate-logo {
+  animation: moveLogo 2s forwards;
+}
+
+.change-logo-color {
+  animation: changeLogoColor 2s forwards;
+}
+
+.animate-content {
+  animation: showContent 1s forwards 2s;
+}
+
+@keyframes changeBackground {
+  0% {
+    background-color: var(--background-color-darkblue);
+  }
+  100% {
+    background-color: var(--background-color-lightgray);
+  }
+}
+
+@keyframes changeLogoColor {
+  0% {
+    fill: var(--accent-color-white);
+  }
+  100% {
+    fill: var(--background-color-darkblue);
+  }
+}
+
+@keyframes moveLogo {
+  0% {
+    transform: translate(-50%, -50%);
+    height: 100px;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(-32vw, -40vh);
+    height: 60px;
+  }
+}
+
+@keyframes showContent {
+  0% {
+    opacity: 0;
+    animation-timing-function: ease-in;
+  }
+
+  100% {
+    opacity: 1;
+    pointer-events: auto;
+    animation-timing-function: ease-in;
+  }
+}
