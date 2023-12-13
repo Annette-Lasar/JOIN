@@ -20,7 +20,7 @@ async function includeHTML() {
 
 function moveLogoOnStartScreen() {
   const URL = window.location.href;
-  if (URL.endsWith('login.html')) {
+  if (URL.endsWith('index.html')) {
     setTimeout(() => {
       document
         .getElementById('login_page')
