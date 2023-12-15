@@ -42,3 +42,12 @@ function hideHelpLinkOnHelpPage() {
     headerHelpIcon.classList.add('opaque');
   }
 }
+
+function toggleSignUpAndLogin() {
+  const LOGIN_CONTENT_BOX = document.getElementById('login_content');
+  const SIGN_UP_CONTENT_BOX = document.getElementById('sign_up_content');
+  const NOT_A_JOIN_USER_BOX = document.getElementById('sign_up_wrapper');
+  LOGIN_CONTENT_BOX.classList.toggle('d-none');
+  SIGN_UP_CONTENT_BOX.classList.toggle('d-none');
+  NOT_A_JOIN_USER_BOX.classList.toggle('d-none');
+}

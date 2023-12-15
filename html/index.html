@@ -66,8 +66,8 @@
         </defs>
       </svg>
       <div class="content animate-content">
-        <div class="login-wrapper">
-          <div class="headline-login-wrapper">
+        <div id="login_content" class="login-content">
+          <div class="headline-login-content">
             <h1>Log in</h1>
             <div class="blue-line"></div>
           </div>
@@ -83,16 +83,53 @@
               <label for="remember_user">Remember me</label>
             </div>
           </form>
-          <div class="button-wrapper">
-            <button type="submit" class="button-login dark-button">Log in</button>
+          <div class="button-wrapper-log-in">
+            <button type="submit" class="button-login dark-button">
+              Log in
+            </button>
             <button type="submit" class="button-guest-login light-button">
-              Guest Log in
+              <a href="summary.html">Guest Log in</a>
             </button>
           </div>
         </div>
-        <div class="sign-up-wrapper">
+        <div id="sign_up_content" class="sign-up-content d-none">
+          <div class="headline-sign-up-content">
+            <div class="sign-up-headline-wrapper">
+              <img onclick="toggleSignUpAndLogin()" src="../icons/arrow_left_line_variant2.svg" alt="" />
+              <h1>Sign up</h1>
+            </div>
+            <div class="blue-line"></div>
+          </div>
+          <form action="">
+            <div class="login-input-wrapper">
+              <input type="text" placeholder="First and last name" />
+            </div>
+            <div class="login-input-wrapper">
+              <input type="email" placeholder="Email" />
+            </div>
+            <div class="login-input-wrapper">
+              <input type="password" placeholder="Password" />
+            </div>
+            <div class="login-input-wrapper">
+              <input type="password" placeholder="Confirm password" />
+            </div>
+            <div class="remember-user">
+              <input id="accept_policy" type="checkbox" required />
+              <label for="remember_user"
+                >I accept the
+                <a href="privacy_policy.html">Privacy policy</a></label
+              >
+            </div>
+          </form>
+          <div class="button-wrapper-sign-up">
+            <button type="submit" class="button-login dark-button">
+              Sign up
+            </button>
+          </div>
+        </div>
+        <div id="sign_up_wrapper" class="sign-up-wrapper">
           <p>Not a Join user?</p>
-          <button class="button-sign-up dark-button">Sign up</button>
+          <button onclick="toggleSignUpAndLogin()" class="button-sign-up dark-button">Sign up</button>
         </div>
         <div class="legal-wrapper">
           <a href="privacy_policy.html">Privacy Policy</a>
