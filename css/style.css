@@ -7,6 +7,8 @@
     --accent-color-anthracite: #2A3647;
     --accent-color-gray: #A8A8A8;
     --accent-color-lightgray: rgba(12, 46, 98, 0.12);
+    --accent-color-red-asterisk: #FF8190;
+    --shadow-color: rgba(0, 0, 0, 0.2);
     --color-default: #6e52ff;
     --color-variant2: #ffa35e;
     --color-variant3: #ffe62b;
@@ -22,6 +24,7 @@
     --color-variant13: #9327ff;
     --color-variant14: #fc71ff;
     --color-variant15: #ff4646;
+    --header-height: 72px;
 }
 
 body {
@@ -36,6 +39,7 @@ a {
 }
 
 header {
+    height: var(--header-height);
     padding: 1em;
     background-color: var(--accent-color-white);
 }
