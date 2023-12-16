@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/reset_stylesheet.css" />
     <link rel="stylesheet" href="../css/fonts.css" />
     <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/summary.css" />
     <script src="../javascript/script.js" defer></script>
   </head>
   <body onload="init()">
@@ -15,10 +16,18 @@
       <header>
         <div w3-include-html="../templates/header.html"></div>
       </header>
-      <h1>Summary</h1>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium facere nisi, veniam omnis aliquam alias repellat atque, quod, in voluptates fugiat? Quos neque nostrum maiores in necessitatibus voluptatem, minima distinctio?</p>
-      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas repellendus voluptates error magni laudantium, quos assumenda! Non, numquam omnis. Nobis ratione dicta debitis distinctio vero odio perferendis eum adipisci numquam!</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora, dolorum aliquam ut cumque praesentium illum cum eligendi labore, quidem placeat provident atque laborum dolore nam non vel nemo minima dolores!</p>
+      <div class="summary-headline">
+        <h1>Join 360</h1>
+        <span>Key Metrics at a Glance</span>
+      </div>
+      <div class="wrapper-div">
+        <div class="summary">
+          <div class="toDo-and-done"></div>
+          <div class="urgent-upcomingDeadline"></div>
+          <div class="other-boardSummary"></div>
+        </div>
+        <div class="good-morning"></div>
+      </div>
     </div>
     <nav>
       <div w3-include-html="../templates/navigation_bar.html"></div>
