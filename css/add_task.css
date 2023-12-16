@@ -1,0 +1,228 @@
+body {
+  background-color: var(--background-color-lightgray);
+}
+
+/* customized scroll-bar layout */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: var(--orange) var(--main-background);
+}
+
+*::-webkit-scrollbar {
+  width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--background-color-lightgray);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--background-color-darkblue);
+  border: var(--accent-color-white) 3px solid;
+  border-radius: 10px;
+}
+
+.task-wrapper {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+h1 {
+  margin: 0 0 0.75em;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.red {
+  color: var(--accent-color-red-asterisk);
+}
+
+/* form-element gets overflow-y and scroll-bar */
+form {
+  height: 55vh;
+  overflow-y: auto;
+}
+
+label,
+.category-label {
+  margin: 0 0 0.4em;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.task-input-wrapper {
+  margin: 0 0 0.4em;
+  display: flex;
+  flex-direction: column;
+}
+
+textarea {
+  resize: none;
+}
+
+textarea::placeholder,
+input[type='date'] {
+  font-family: 'Inter', sans-serif;
+}
+
+.prio-button-wrapper {
+  margin: 0 0 0.4em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.prio-button-wrapper img {
+  height: 12px;
+}
+
+.prio-button-wrapper button {
+  width: 90px;
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-color: var(--accent-color-white);
+  border: var(--background-color-lightgray) 1px solid;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.prio-button-wrapper button:hover {
+  box-shadow: 0px 4px 4px var(--shadow-color);
+}
+
+.task-category {
+  width: 100%;
+  padding: 0.25em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  font-size: 0.8rem;
+  border: rgba(0, 0, 0, 0.4) 1px solid;
+  border-radius: 4px;
+  background-color: var(--accent-color-white);
+  cursor: pointer;
+}
+
+.category-list,
+.contact-list {
+  margin: 0;
+  padding: 0 0.25em;
+  max-height: 0;
+  border: var(--accent-color-gray) 1px solid;
+  border-top: none;
+  border-radius: 4px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  background-color: white;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.category-list.show,
+.contact-list.show {
+  max-height: 200px;
+}
+
+li,
+.new-category {
+  margin: 0 0 0.25em;
+  padding: 0.25em;
+  font-size: 0.8rem;
+  list-style-type: none;
+  border: rgba(0, 0, 0, 0.4) 1px solid;
+  border-radius: 4px;
+  background-color: var(--accent-color-white);
+  cursor: pointer;
+}
+
+li:hover, 
+.new-category:hover {
+    background-color: var(--background-color-lightgray);
+}
+
+.turn {
+  transform: rotate(180deg);
+}
+
+.create-task-wrapper {
+  margin: 0.5em 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.explanation-container {
+  font-size: 0.7rem;
+}
+
+.task-and-clear-button-wrapper {
+  width: 165px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.clear-button {
+  padding: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  font-size: 0.8rem;
+  background-color: var(--accent-color-white);
+  border: var(--accent-color-gray) 1px solid;
+  border-radius: 4px;
+}
+
+.clear-button img {
+  height: 12px;
+}
+
+.dark-button {
+  width: 100px;
+  padding: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent-color-white);
+  background-color: var(--background-color-darkblue);
+  border: var(--background-color-darkblue) 1px solid;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dark-button:hover {
+  background-color: var(--accent-color-lightblue);
+  border: var(--accent-color-lightblue) 1px solid;
+  color: var(--accent-color-white);
+}
+
+.dark-button img {
+  height: 8px;
+}
+
+.page {
+  width: 100%;
+}
+
+/* ====================================================
+media queries
+====================================================== */
+/* ---------------------------------------------------
+breakpoint: 50em
+------------------------------------------------------ */
+@media (min-width: 50em) {
+  .clear-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

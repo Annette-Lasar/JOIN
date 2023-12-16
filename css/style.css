@@ -7,6 +7,8 @@
     --accent-color-anthracite: #2A3647;
     --accent-color-gray: #A8A8A8;
     --accent-color-lightgray: rgba(12, 46, 98, 0.12);
+    --accent-color-red-asterisk: #FF8190;
+    --shadow-color: rgba(0, 0, 0, 0.2);
     --color-default: #6e52ff;
     --color-variant2: #ffa35e;
     --color-variant3: #ffe62b;
@@ -22,6 +24,7 @@
     --color-variant13: #9327ff;
     --color-variant14: #fc71ff;
     --color-variant15: #ff4646;
+    --header-height: 72px;
 }
 
 body {
@@ -42,6 +45,7 @@ position wurde auf sticky gesetzt;
 */
 
 header {
+    height: var(--header-height);
     padding: 1.25em 1em; 
     background-color: var(--accent-color-white);
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.10); 
@@ -149,6 +153,25 @@ nav {
 .d-none {
     display: none;
 }
+/* =======================================================
+contacts
+========================================================== */
+.add-contact {
+    height: 3.5em;
+    width: 3.5em;
+    padding: 0.75em;
+    background-color: var(--background-color-darkblue);
+    border-radius: 50%;
+    position: absolute;
+    bottom: 7em;
+    right: 1em;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.add-contact:hover {
+    cursor: pointer;
+    background-color: var(--accent-color-lightblue);
+}
 
 /* ====================================================
 media queries
@@ -157,9 +180,15 @@ media queries
 breakpoint: 50em
 ------------------------------------------------------ */
 @media (min-width: 50em) {
+
+    /*  Semir:
+Diese zwei Befehle im body habe ich auskommentiert, so löst sich das problem mit dem
+Header in der Desktop Version
+*/
+
     body {
-        display: flex;
-        flex-direction: row-reverse;
+        /* display: flex;
+        flex-direction: row-reverse; */
         position: relative;
     }
 
