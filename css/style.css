@@ -35,9 +35,18 @@ a {
     color: var(--accent-color-white);
 }
 
+/*  Semir:
+Hier wurde ein Box-shadow hinzugefügt;
+beim padding wurde das value um 1.25em ergänzt;
+position wurde auf sticky gesetzt;
+*/
+
 header {
-    padding: 1em;
+    padding: 1.25em 1em; 
     background-color: var(--accent-color-white);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.10); 
+    position: sticky;
+    top: 0;
 }
 
 .header-wrapper {
