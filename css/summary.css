@@ -28,6 +28,23 @@
     display: flex;
 }
 
+.toDo-div {
+    display: flex;
+}
+
+.summary-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.toDo {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
 
 @media(min-width: 50em) {
     body {
