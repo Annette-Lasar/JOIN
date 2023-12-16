@@ -2,6 +2,26 @@ body {
   background-color: var(--background-color-lightgray);
 }
 
+/* customized scroll-bar layout */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: var(--orange) var(--main-background);
+}
+
+*::-webkit-scrollbar {
+  width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--background-color-lightgray);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--background-color-darkblue);
+  border: var(--accent-color-white) 3px solid;
+  border-radius: 10px;
+}
+
 .task-wrapper {
   padding: 1em;
   display: flex;
@@ -16,6 +36,12 @@ h1 {
 
 .red {
   color: var(--accent-color-red-asterisk);
+}
+
+/* form-element gets overflow-y and scroll-bar */
+form {
+  height: 55vh;
+  overflow-y: auto;
 }
 
 label,
