@@ -32,15 +32,61 @@
     display: flex;
 }
 
+.toDo-and-done-icon {
+    background-color: var(--background-color-darkblue);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .summary-icon {
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
+    padding: 10px;
 }
 
 .toDo {
     display: flex;
     flex-direction: column;
 }
+
+.done-div {
+    display: flex;
+}
+
+.done {
+    display: flex;
+    flex-direction: column;
+}
+
+.urgentCounter-and-upcomingDeadline {
+    display: flex;
+}
+
+.urgency-icon {
+    background-color: var(--accent-color-red);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.urgent {
+    display: flex;
+    flex-direction: column;
+}
+
+.upcoming-deadline {
+    display: flex;
+    flex-direction: column;
+}
+
+.lower-boardSummary {
+    display: flex;
+    flex-direction: column;
+}
+
 
 
 

@@ -24,23 +24,53 @@
         <div class="summary">
           <div class="toDo-and-done">
             <div class="toDo-div">
-              <img src="../icons/edit.png" class="summary-icon">
+              <div class="toDo-and-done-icon">
+                <img src="../icons/edit.png" class="summary-icon">
+              </div>
               <div class="toDo">
                 <div class="toDo-counter">1</div>
                 <span>To-do</span>
               </div>
             </div>
-            <div></div>
+            <div class="done-div">
+              <div class="toDo-and-done-icon">
+                <img src="../icons/check_big.png" class="summary-icon">
+              </div>
+              <div class="done">
+                <div class="done-counter">1</div>
+                <span>Done</span>
+              </div>
+            </div>
           </div>
-          <div class="urgent-upcomingDeadline"></div>
+          <div class="urgentCounter-and-upcomingDeadline">
+            <div class="urgency-icon">
+              <img src="../icons/double_arrow_up.png" class="summary-icon">
+            </div>
+            <div class="urgent">
+              <div class="urgent-counter">1</div>
+              <span>Urgent</span>
+            </div>
+            <div class="upcoming-deadline">
+              <div class="date">December 28, 2023</div>
+              <span>Upcoming Deadline</span>
+            </div>
+          </div>
           <div class="other-boardSummary">
-            <div></div>
-            <div></div>
-            <div></div>
+            <div class="lower-boardSummary">
+              <div class="tasks-in-board-counter">5</div>
+              <span>Tasks in Board</span>
+            </div>
+            <div class="lower-boardSummary">
+              <div class="tasks-in-progress-counter">2</div>
+              <span>Tasks in Progress</span>
+            </div>
+            <div class="lower-boardSummary">
+              <div class="awaiting-feedback-counter">2</div>
+              <span>Awaiting Feedback</span>
+            </div>
           </div>
         </div>
         <div class="good-morning"></div>
-      </div>
     </div>
     <nav>
       <div w3-include-html="../templates/navigation_bar.html"></div>
