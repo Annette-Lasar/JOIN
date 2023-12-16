@@ -112,10 +112,10 @@
           </div>
           <div class="task-input-wrapper">
             <div class="category-label">Category<span class="red">*</span></div>
-            <div onclick="toggleCategories()" class="task-category">
+            <div onclick="toggleDropdownLists('category_list', 'select_arrow_categories')" class="task-category">
               Select task category<img
-                id="select_arrow"
-                class="select-arrow"
+                id="select_arrow_categories"
+                class="select-arrow-categories"
                 src="../icons/arrow_drop_down.svg"
               />
             </div>
@@ -126,12 +126,21 @@
             </ul>
           </div>
           <div class="task-input-wrapper">
-            <label for="task_assigned_to">Assigned to</label>
-            <input
-              id="task_assigned_to"
-              type="text"
-              placeholder="Select contacts to assign"
-            />
+            <div class="category-label">
+              Assigned to<span class="red">*</span>
+            </div>
+            <div onclick="toggleDropdownLists('contact_list', 'select_arrow_contacts')" class="task-category">
+              Select contacts to assign<img
+                id="select_arrow_contacts"
+                class="select-arrow-contacts"
+                src="../icons/arrow_drop_down.svg"
+              />
+            </div>
+            <ul id="contact_list" class="contact-list">
+              <li>Bilbo Beutlin</li>
+              <li>Hermione Granger</li>
+              <div class="new-category">New contact</div>
+            </ul>
           </div>
           <div class="task-input-wrapper">
             <label for="sub_tasks">Subtasks</label>
