@@ -153,6 +153,20 @@ nav {
 .d-none {
     display: none;
 }
+/* =======================================================
+contacts
+========================================================== */
+.add-contact {
+    height: 3.5em;
+    width: 3.5em;
+    padding: 0.75em;
+    background-color: var(--background-color-darkblue);
+    border-radius: 50%;
+    position: absolute;
+    bottom: 7em;
+    right: 1em;
+    
+}
 
 /* ====================================================
 media queries
