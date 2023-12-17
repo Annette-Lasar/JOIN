@@ -43,15 +43,20 @@ a {
 Hier wurde ein Box-shadow hinzugefügt;
 beim padding wurde das value um 1.25em ergänzt;
 position wurde auf sticky gesetzt;
+header height habe ich auskommentiert;
 */
 
 header {
-    height: var(--header-height);
+    /* height: var(--header-height); */
     padding: 1.25em 1em;
     background-color: var(--accent-color-white);
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.10);
     position: sticky;
     top: 0;
+}
+
+header p {
+    font-size: 1em !important;
 }
 
 .header-wrapper {
@@ -176,7 +181,7 @@ Header in der Desktop Version
 
     .page {
         margin: 0 0 0 180px;
-        max-width: 456px;
+        /* max-width: 456px; */
     }
 
     header {

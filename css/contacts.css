@@ -15,13 +15,14 @@
     background-color: var(--accent-color-lightblue);
 }
 
-.page {
+/* .page {
     padding: 0 14px;
-}
+} */
 
 .contact-list {
     display: flex;
     padding: 24px;
+    margin: 0 14px;
     flex-direction: column;
 }
 
@@ -78,4 +79,11 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+}
+
+@media (min-width: 50em) {
+    .contact-list {
+        max-width: 456px;
+    }
+
 }
