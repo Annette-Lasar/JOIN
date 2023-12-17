@@ -57,7 +57,20 @@ h1 {
     padding: 35px;
     background-color: var(--accent-color-white);
     border-radius: 15px;
+    transition: transform 0.1s ease-in-out;
+}
 
+.toDo-div:hover {
+    cursor: pointer;
+    background-color: var(--background-color-darkblue);
+    color: var(--accent-color-white);
+    .toDo-and-done-icon {
+        background-color: var(--accent-color-white);
+    }
+    .summary-icon {
+        filter: invert(1);
+    }
+    transform: scale(1.06);
 }
 
 .toDo-and-done-icon {
@@ -99,6 +112,20 @@ h1 {
     background-color: var(--accent-color-white);
     border-radius: 15px;
     margin-left: 15px;
+    transition: transform 0.1s ease-in-out;
+}
+
+.done-div:hover {
+    cursor: pointer;
+    background-color: var(--background-color-darkblue);
+    color: var(--accent-color-white);
+    .toDo-and-done-icon {
+        background-color: var(--accent-color-white);
+    }
+    .summary-icon {
+        filter: invert(1);
+    }
+    transform: scale(1.06);
 }
 
 .done {
@@ -143,7 +170,7 @@ h1 {
 
 .vertical-line {
     width: 2px;
-    height: 40px;
+    height: 50px;
     margin-left: 16px;
     margin-right: 16px;
     background-color: var(--accent-color-gray);
@@ -159,20 +186,25 @@ h1 {
     font-size: 13px;
     font-weight: 600;
     color: var(--background-color-darkblue);
-    margin-bottom: 5px;
+    margin-bottom: 7px;
 }
 
 .other-boardSummary {
     display: flex;
+    justify-content: space-around;
 }
 
 .lower-boardSummary {
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 25px;
+    margin: 7px;
     background-color: var(--accent-color-white);
     border-radius: 15px;
 }
 
-
+.lower-boardSummary span {
+    font-size: 11px;
+    text-align: center;
+}
 
