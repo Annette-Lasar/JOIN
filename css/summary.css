@@ -4,35 +4,73 @@ body {
 
 .summary-headline {
     display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--background-color-darkblue);
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.summary-headline span {
+    font-size: 14px;
+    color: var(--background-color-darkblue);
+}
+
+.lightblue-underline {
+    margin-top: 10px;
+    height: 2px;
+    width: 65px;
+    background-color: var(--accent-color-lightblue);
 }
 
 .wrapper-div {
     width: 100%;
-    display: flex;
 }
 
 .summary {
-    width: 65%;
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
 
 .good-morning {
+    display: none;
     width: 35%;
-    display: flex;
-    flex-direction: column;
 }
 
 .toDo-and-done {
+    width: 100%;
     display: flex;
-}
-
-.other-boardSummary {
-    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .toDo-div {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 35px;
+    background-color: var(--accent-color-white);
+    border-radius: 15px;
+    transition: transform 0.1s ease-in-out;
+}
+
+.toDo-div:hover {
+    cursor: pointer;
+    background-color: var(--background-color-darkblue);
+    color: var(--accent-color-white);
+    .toDo-and-done-icon {
+        background-color: var(--accent-color-white);
+    }
+    .summary-icon {
+        filter: invert(1);
+    }
+    transform: scale(1.06);
 }
 
 .toDo-and-done-icon {
@@ -41,30 +79,73 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 35px;
+    height: 35px;
 }
 
 .summary-icon {
-    width: 40px;
-    height: 40px;
     padding: 10px;
 }
 
 .toDo {
     display: flex;
     flex-direction: column;
+    padding: 8px;
+}
+
+.counter {
+    font-size: 30px;
+    font-weight: 500;
+    text-align: center;
+    padding: 2px;
+}
+
+.toDo span {
+    font-size: 12px;
 }
 
 .done-div {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 35px;
+    background-color: var(--accent-color-white);
+    border-radius: 15px;
+    margin-left: 15px;
+    transition: transform 0.1s ease-in-out;
+}
+
+.done-div:hover {
+    cursor: pointer;
+    background-color: var(--background-color-darkblue);
+    color: var(--accent-color-white);
+    .toDo-and-done-icon {
+        background-color: var(--accent-color-white);
+    }
+    .summary-icon {
+        filter: invert(1);
+    }
+    transform: scale(1.06);
 }
 
 .done {
     display: flex;
     flex-direction: column;
+    padding: 8px;
+}
+
+.done span {
+    font-size: 12px;
 }
 
 .urgentCounter-and-upcomingDeadline {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--accent-color-white);
+    border-radius: 15px;
+    margin: 30px 8px 30px 8px;
 }
 
 .urgency-icon {
@@ -73,31 +154,57 @@ body {
     display: flex;
     justify-content: center;
     align-items: center; 
+    width: 35px;
+    height: 35px;
 }
 
 .urgent {
     display: flex;
     flex-direction: column;
+    padding: 8px;
+}
+
+.urgent span {
+    font-size: 12px;
+}
+
+.vertical-line {
+    width: 2px;
+    height: 50px;
+    margin-left: 16px;
+    margin-right: 16px;
+    background-color: var(--accent-color-gray);
 }
 
 .upcoming-deadline {
     display: flex;
     flex-direction: column;
+    font-size: 12px;
+}
+
+.date {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--background-color-darkblue);
+    margin-bottom: 7px;
+}
+
+.other-boardSummary {
+    display: flex;
+    justify-content: space-around;
 }
 
 .lower-boardSummary {
     display: flex;
     flex-direction: column;
+    padding: 25px;
+    margin: 7px;
+    background-color: var(--accent-color-white);
+    border-radius: 15px;
 }
 
-
-
-
-
-
-@media(min-width: 50em) {
-    body {
-        display: block;
-    }
+.lower-boardSummary span {
+    font-size: 11px;
+    text-align: center;
 }
 
