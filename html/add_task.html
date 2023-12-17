@@ -12,7 +12,7 @@
     <script src="../javascript/script.js" defer></script>
     <script src="../javascript/add_task.js" defer></script>
   </head>
-  <body onload="init()">
+  <body onload="initTasks()">
     <header>
       <div w3-include-html="../templates/header.html"></div>
     </header>
@@ -111,7 +111,10 @@
                 required
               />
             </div>
-            <div class="task-input-wrapper category-wrapper">
+            <div
+              id="category_small_screen"
+              class="task-input-wrapper category-wrapper"
+            >
               <div class="category-label">
                 Category<span class="red">*</span>
               </div>
@@ -151,14 +154,14 @@
                 <div class="new-category">Add new contact</div>
               </ul>
             </div>
-            <div class="task-input-wrapper">
+            <div id="sub_tasks_small_screen" class="task-input-wrapper">
               <label for="sub_tasks">Subtasks</label>
               <input id="sub_tasks" type="text" placeholder="Add new subtask" />
             </div>
             <div id="subtask_container" class="subtask-container"></div>
-            <div class="task-separator"></div>
           </form>
-          <form action="">
+          <div class="separator-line"></div>
+          <form id="form_big_screen" action="" class="d-none">
             <div id="due_date_big_screen" class="task-input-wrapper">
               <label for="task_title">Due date<span class="red">*</span></label>
               <input
@@ -238,16 +241,16 @@
                 Category<span class="red">*</span>
               </div>
               <div
-                onclick="toggleDropdownLists('category_list', 'select_arrow_categories')"
+                onclick="toggleDropdownLists('category_list_big', 'select_arrow_categories_big')"
                 class="task-category"
               >
                 Select task category<img
-                  id="select_arrow_categories"
+                  id="select_arrow_categories_big"
                   class="select-arrow-categories"
                   src="../icons/arrow_drop_down.svg"
                 />
               </div>
-              <ul id="category_list" class="category-list">
+              <ul id="category_list_big" class="category-list">
                 <li>Technical Task</li>
                 <li>User Story</li>
                 <div class="new-category">Add new category</div>
@@ -255,7 +258,14 @@
             </div>
             <div class="task-input-wrapper">
               <label for="sub_tasks">Subtasks</label>
-              <input id="sub_tasks" type="text" placeholder="Add new subtask" />
+              <div id="sub_task_wrapper_big" class="sub-task-wrapper">
+                <input
+                  id="sub_tasks"
+                  type="text"
+                  placeholder="Add new subtask"
+                />
+                <img src="../icons/plus.svg" alt="">
+              </div>
             </div>
             <div id="subtask_container" class="subtask-container"></div>
           </form>

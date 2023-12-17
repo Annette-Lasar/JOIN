@@ -5,7 +5,8 @@ body {
 /* customized scroll-bar layout */
 * {
   scrollbar-width: auto;
-  scrollbar-color: var(--orange) var(--main-background);
+  scrollbar-color: var(--background-color-darkblue)
+    var(--background-color-lightgray);
 }
 
 *::-webkit-scrollbar {
@@ -39,7 +40,6 @@ h1 {
   color: var(--accent-color-red-asterisk);
 }
 
-/* form-wrapper element gets overflow-y and scroll-bar */
 .form-wrapper {
   height: 55vh;
   overflow-y: auto;
@@ -169,6 +169,37 @@ li:hover,
   margin: 0 0 4em;
 }
 
+.sub-task-wrapper {
+  width: 99%;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--accent-color-white);
+  border: var(--accent-color-gray) 1.5px solid;
+  border-radius: 4px;
+}
+
+.sub-task-wrapper:focus-within {
+  outline: var(--accent-color-anthracite) 2px solid;
+}
+
+.sub-task-wrapper img {
+  cursor: pointer;
+}
+
+.sub-task-wrapper input {
+  width: 50%;
+  border: none;
+}
+.sub-task-wrapper input:focus {
+  outline: none;
+}
+
+.separator-line {
+  display: none;
+}
+
 .create-task-wrapper {
   margin: 0.5em 0 0;
   display: flex;
@@ -247,5 +278,21 @@ breakpoint: 50em
 
   .form-wrapper {
     display: flex;
+    justify-content: space-between;
+  }
+
+  form {
+    width: 45%;
+  }
+
+  .separator-line {
+    width: 1px;
+    height: 80%;
+    display: block;
+    background-color: var(--accent-color-gray);
+  }
+
+  .d-none {
+    display: none;
   }
 }

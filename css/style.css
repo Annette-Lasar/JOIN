@@ -34,6 +34,7 @@ body {
     overflow-y: auto;
 }
 
+
 a {
     text-decoration: none;
     font-size: 0.8rem;
@@ -108,6 +109,8 @@ header p {
 .header-help-icon img:hover {
     transform: scale(1.2);
 }
+
+
 
 /* =======================================================
 navigation
@@ -248,3 +251,4 @@ Header in der Desktop Version
     }
 
 }
+
