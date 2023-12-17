@@ -24,6 +24,7 @@
     --color-variant13: #9327ff;
     --color-variant14: #fc71ff;
     --color-variant15: #ff4646;
+    --color-variant16: #007cee;
     --header-height: 72px;
 }
 
@@ -46,9 +47,9 @@ position wurde auf sticky gesetzt;
 
 header {
     height: var(--header-height);
-    padding: 1.25em 1em; 
+    padding: 1.25em 1em;
     background-color: var(--accent-color-white);
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.10); 
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.10);
     position: sticky;
     top: 0;
 }
@@ -153,25 +154,11 @@ nav {
 .d-none {
     display: none;
 }
+
 /* =======================================================
 contacts
 ========================================================== */
-.add-contact {
-    height: 3.5em;
-    width: 3.5em;
-    padding: 0.75em;
-    background-color: var(--background-color-darkblue);
-    border-radius: 50%;
-    position: absolute;
-    bottom: 7em;
-    right: 1em;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
 
-.add-contact:hover {
-    cursor: pointer;
-    background-color: var(--accent-color-lightblue);
-}
 
 /* ====================================================
 media queries
@@ -194,6 +181,7 @@ Header in der Desktop Version
 
     .page {
         margin: 0 0 0 180px;
+        max-width: 456px;
     }
 
     header {
@@ -250,6 +238,10 @@ Header in der Desktop Version
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+    }
+
+    .add-contact {
+        display: none;
     }
 
 }
