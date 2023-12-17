@@ -174,13 +174,15 @@ Header in der Desktop Version
         position: relative;
     }
 
+    /* Annette: max-width von .page entfernt */
     .page {
         margin: 0 0 0 180px;
-        max-width: 456px;
+        /* max-width: 456px; */
     }
 
+
     header {
-        padding-left: 200px;
+        padding: 1.25em 1em 1.25em 180px;
     }
 
 

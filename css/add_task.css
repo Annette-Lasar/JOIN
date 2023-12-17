@@ -39,8 +39,8 @@ h1 {
   color: var(--accent-color-red-asterisk);
 }
 
-/* form-element gets overflow-y and scroll-bar */
-form {
+/* form-wrapper element gets overflow-y and scroll-bar */
+.form-wrapper {
   height: 55vh;
   overflow-y: auto;
 }
@@ -62,6 +62,10 @@ textarea {
   resize: none;
 }
 
+input[type='date'] {
+  cursor: pointer;
+}
+
 textarea::placeholder,
 input[type='date'] {
   font-family: 'Inter', sans-serif;
@@ -79,8 +83,8 @@ input[type='date'] {
 }
 
 .prio-button-wrapper button {
-  width: 90px;
-  padding: 8px 0;
+  width: 80px;
+  padding: 8px 0.25em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -93,6 +97,11 @@ input[type='date'] {
 
 .prio-button-wrapper button:hover {
   box-shadow: 0px 4px 4px var(--shadow-color);
+}
+
+.category-wrapper,
+.contact-wrapper {
+  position: relative;
 }
 
 .task-category {
@@ -111,22 +120,28 @@ input[type='date'] {
 
 .category-list,
 .contact-list {
-  margin: 0;
-  padding: 0 0.25em;
+  width: 100%;
   height: 0;
-  border: var(--accent-color-gray) 1px solid;
-  border-top: none;
-  border-radius: 4px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  background-color: white;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
+  max-height: 500px;
+  margin: 0.5em 0 0;
+  padding: 0 0.25em;
+  position: absolute;
+  top: 32px;
+  left: 0;
+  z-index: 1;
+  overflow: auto;
+  transition: height 0.3s ease;
+  background-color: var(--accent-color-white);
 }
 
 .category-list.show,
 .contact-list.show {
   height: auto;
+  border: var(--accent-color-gray) 1px solid;
+  border-radius: 4px;
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 li,
@@ -141,13 +156,17 @@ li,
   cursor: pointer;
 }
 
-li:hover, 
+li:hover,
 .new-category:hover {
-    background-color: var(--background-color-lightgray);
+  background-color: var(--background-color-lightgray);
 }
 
 .turn {
   transform: rotate(180deg);
+}
+
+.subtask-container {
+  margin: 0 0 4em;
 }
 
 .create-task-wrapper {
@@ -209,6 +228,10 @@ li:hover,
   height: 8px;
 }
 
+.d-none {
+  display: none;
+}
+
 /* ====================================================
 media queries
 ====================================================== */
@@ -220,5 +243,9 @@ breakpoint: 50em
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .form-wrapper {
+    display: flex;
   }
 }
