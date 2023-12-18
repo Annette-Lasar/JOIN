@@ -235,6 +235,12 @@ h1 {
 }
 
 
+/* ====================================================
+media queries
+====================================================== */
+/* ---------------------------------------------------
+breakpoint: 800px
+------------------------------------------------------ */
 
 
 @media(min-width: 320px) {
@@ -274,7 +280,17 @@ h1 {
     }
 }
 
+@media(min-width: 370px) {
+    .summary-headline {
+        margin-left: 10px;
+    }
+}
+
 @media(min-width: 420px) {
+    .summary-headline {
+        margin-left: 20px;
+    }
+
     .toDo-div {
         padding: 40px;
     }
@@ -293,3 +309,47 @@ h1 {
     }
 }
 
+@media(min-width: 440px) {
+    .summary-headline {
+        margin-left: 30px;
+    }
+}
+
+@media(min-width: 600px) {
+    .summary-headline {
+        margin-left: 40px;
+    }
+
+    .toDo-div {
+        padding: 45px;
+    }
+
+    .done-div {
+        padding: 45px;
+    }
+
+    .urgentCounter-and-upcomingDeadline {
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+
+    .lower-boardSummary {
+        padding: 35px;
+    }
+}
+
+@media(min-width: 650px) {
+    .summary-headline {
+        margin-left: 60px;
+    }
+}
+
+@media(min-width: 700px) {
+    .summary-headline {
+        margin-left: 80px;
+    }
+}
+
+@media(mind-width: 800px) {
+    
+}
