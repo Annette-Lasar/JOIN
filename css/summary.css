@@ -9,15 +9,24 @@ body {
 }
 
 h1 {
-  font-size: 30px;
+  font-size: 32px;
   font-weight: 700;
   color: var(--background-color-darkblue);
   margin-top: 20px;
   margin-bottom: 15px;
 }
 
+.lightblue-vertical-line {
+    display: none;
+    width: 2px;
+    height: 30px;
+    background-color: var(--accent-color-lightblue);
+    margin-left: 17px;
+    margin-right: 17px;
+}
+
 .summary-headline span {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--background-color-darkblue);
 }
 
@@ -42,7 +51,6 @@ h1 {
 
 .good-morning {
   display: none;
-  width: 35%;
 }
 
 .toDo-and-done {
@@ -350,6 +358,67 @@ breakpoint: 800px
     }
 }
 
-@media(mind-width: 800px) {
-    
+@media(min-width: 800px) {
+    .summary-headline {
+        margin-top: 20px;
+        margin-left: 200px;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .lightblue-vertical-line {
+        display: flex;
+    }
+
+    .lightblue-underline {
+        display: none;
+    }
+
+    .wrapper-div {
+        display: flex;
+        margin-left: 125px;
+    }
+
+    .summary {
+        width: 60%;
+    }
+
+    .toDo-div {
+        padding: 25px;
+    }
+
+    .done-div {
+        padding: 25px;
+    }
+
+    .urgentCounter-and-upcomingDeadline {
+        padding: 20px;
+    }
+
+    .lower-boardSummary {
+        padding: 20px;
+    }
+
+    .good-morning {
+        display: flex;
+        flex-direction: column;
+        width: 40%;
+        align-items: start;
+        justify-content: center;
+        margin-right: 50px;
+    }
+
+    .greeting {
+        color: var(--background-color-darkblue);
+        font-size: 21px;
+        font-weight: 500;
+        padding-bottom: 12px;
+    }
+
+    .greeting-name {
+        color: var(--accent-color-lightblue);
+        font-size: 27px;
+        font-weight: 700;
+    }
 }
+
