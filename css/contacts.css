@@ -15,10 +15,6 @@
     background-color: var(--accent-color-lightblue);
 }
 
-/* .page {
-    padding: 0 14px;
-} */
-
 .contact-list {
     display: flex;
     padding: 24px;

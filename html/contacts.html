@@ -11,42 +11,47 @@
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/contacts.css" />
   <script src="../javascript/script.js" defer></script>
+  <script src="../javascript/json.js"></script>
+  <script src="../javascript/contacts.js"></script>
+  <script src="../javascript/templates.js"></script>
 </head>
 
-<body onload="init()">
+<body onload="init(), addGroups()">
   <header>
     <div w3-include-html="../templates/header.html"></div>
   </header>
   <div class="page">
-    <div class="contact-list">
-      <div class="group">
-        <h1>A</h1>
-      </div>
-      <div class="separator">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 354 2" fill="none">
-          <path d="M1 1H353" stroke="#D1D1D1" stroke-linecap="round" stroke-width="1px"/>
-        </svg>
-      </div>
-      <div class="contact">
-        <div class="initials">
-          <h3>AM</h3>
+    <div id="contact_list" class="contact-list">
+      <!-- <div id="group">
+        <div class="group">
+          <h1>A</h1>
         </div>
-        <div class="contact-info">
-          <h1>Anton Mayer</h1>
-          <p>antom@gmail.com</p>
+        <div class="separator">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 354 2" fill="none">
+            <path d="M1 1H353" stroke="#D1D1D1" stroke-linecap="round" stroke-width="1px" />
+          </svg>
         </div>
-      
+        <div id="contacts">
+          <div class="contact">
+            <div class="initials">
+              <h3>AM</h3>
+            </div>
+            <div class="contact-info">
+              <h1>Anton Mayer</h1>
+              <p>antom@gmail.com</p>
+            </div>
+          </div>
+        </div>
+      </div> -->
     </div>
 
-  </div>
+    <div class="add-contact">
+      <img src="../icons/person_add.svg" alt="">
+    </div>
 
-  <div class="add-contact">
-    <img src="../icons/person_add.svg" alt="">
-  </div>
-
-  <nav>
-    <div w3-include-html="../templates/navigation_bar.html"></div>
-  </nav>
+    <nav>
+      <div w3-include-html="../templates/navigation_bar.html"></div>
+    </nav>
 </body>
 
 </html>
