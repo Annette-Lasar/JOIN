@@ -155,10 +155,17 @@
               </ul>
             </div>
             <div id="sub_tasks_small_screen" class="task-input-wrapper">
-              <label for="sub_tasks">Subtasks</label>
-              <input id="sub_tasks" type="text" placeholder="Add new subtask" />
+              <div class="category-label">Subtasks</div>
+              <div id="sub_task_wrapper_small" class="sub-task-wrapper">
+                <input
+                  id="sub_tasks_small"
+                  type="text"
+                  placeholder="Add new subtask"
+                />
+                <img src="../icons/plus.svg" alt="" />
+              </div>
             </div>
-            <div id="subtask_container" class="subtask-container"></div>
+            <div id="subtask_container_small" class="subtask-container"></div>
           </form>
           <div class="separator-line"></div>
           <form id="form_big_screen" action="" class="d-none">
@@ -257,17 +264,49 @@
               </ul>
             </div>
             <div class="task-input-wrapper">
-              <label for="sub_tasks">Subtasks</label>
+              <div class="category-label">Subtasks</div>
               <div id="sub_task_wrapper_big" class="sub-task-wrapper">
                 <input
-                  id="sub_tasks"
+                  id="sub_tasks_big"
                   type="text"
                   placeholder="Add new subtask"
                 />
-                <img src="../icons/plus.svg" alt="">
+                <div
+                  id="subtasks_image_wrapper_big"
+                  class="subtasks-image-wrapper"
+                >
+                  <div
+                    id="close_and_check_wrapper_big"
+                    class="close-and-check-wrapper d-none"
+                  >
+                    <img
+                      onclick="clearSubtask()"
+                      id="cancel_subtask_big"
+                      class="cancel-subtask"
+                      src="../icons/close.svg"
+                    />
+                    <div class="subtask-separator-line"></div>
+                    <img
+                      onclick="addSubtask()"
+                      id="check_subtask_big"
+                      class="check-subtask"
+                      src="../icons/check.svg"
+                    />
+                  </div>
+                  <img
+                    id="subtask_plus_big"
+                    onclick="showCancelAndAcceptSubtask()"
+                    src="../icons/plus.svg"
+                  />
+                </div>
               </div>
             </div>
-            <div id="subtask_container" class="subtask-container"></div>
+            <div id="subtask_container_big" class="subtask-container">
+             <!--  <ul
+                id="subtask_unordered_list_big"
+                class="subtask-unordered-list"
+              ></ul> -->
+            </div>
           </form>
         </div>
         <div class="create-task-wrapper">
