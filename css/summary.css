@@ -54,7 +54,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 35px;
+    padding: 20px;
     background-color: var(--accent-color-white);
     border-radius: 15px;
     transition: transform 0.1s ease-in-out;
@@ -108,7 +108,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 35px;
+    padding: 20px;
     background-color: var(--accent-color-white);
     border-radius: 15px;
     margin-left: 15px;
@@ -142,10 +142,21 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 15px;
+    padding: 5px;
     background-color: var(--accent-color-white);
     border-radius: 15px;
     margin: 30px 8px 30px 8px;
+    transition: transform 0.1s ease-in-out;
+}
+
+.urgentCounter-and-upcomingDeadline:hover {
+    cursor: pointer;
+    background-color: var(--background-color-darkblue);
+    color: var(--accent-color-white);
+    .date {
+        color: var(--accent-color-white);
+    }
+    transform: scale(1.03);
 }
 
 .urgency-icon {
@@ -197,10 +208,18 @@ h1 {
 .lower-boardSummary {
     display: flex;
     flex-direction: column;
-    padding: 25px;
+    padding: 16px;
     margin: 7px;
     background-color: var(--accent-color-white);
     border-radius: 15px;
+    transition: transform 0.1s ease-in-out;
+}
+
+.lower-boardSummary:hover {
+    cursor: pointer;
+    background-color: var(--background-color-darkblue);
+    color: var(--accent-color-white);
+    transform: scale(1.06);
 }
 
 .lower-boardSummary span {
