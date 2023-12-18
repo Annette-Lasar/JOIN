@@ -19,6 +19,7 @@
     display: flex;
     padding: 24px;
     margin: 0 14px;
+    margin-bottom: 80px;
     flex-direction: column;
 }
 
@@ -80,6 +81,7 @@
 @media (min-width: 50em) {
     .contact-list {
         max-width: 456px;
+        margin-bottom: 16px;
     }
 
 }

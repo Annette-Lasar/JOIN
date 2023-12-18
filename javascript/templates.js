@@ -16,10 +16,11 @@ function groupsTemplate(letter) {
 
 function addContactToGroupTemplate(name, i) {
     let eMail = contacts[i]['e-mail'];
+    let initials = loadInitials(i);
     return `
-        <div id="${name}" class="contact">
-            <div class="initials">
-              <h3>AM</h3>
+        <div id="${i}" class="contact">
+            <div id="initials${i}" class="initials">
+              <h3>${initials}</h3>
             </div>
             <div class="contact-info">
               <h1>${name}</h1>
