@@ -5,7 +5,7 @@ body {
 .summary-headline {
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  padding: 15px;
 }
 
 h1 {
@@ -13,7 +13,7 @@ h1 {
   font-weight: 700;
   color: var(--background-color-darkblue);
   margin-top: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .summary-headline span {
@@ -30,12 +30,14 @@ h1 {
 
 .wrapper-div {
   width: 100%;
+  margin-top: 10px;
 }
 
 .summary {
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .good-morning {
@@ -48,6 +50,7 @@ h1 {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  margin-bottom: 7px;
 }
 
 .toDo-div {
@@ -55,6 +58,7 @@ h1 {
     justify-content: center;
     align-items: center;
     padding: 20px;
+    color: var(--background-color-darkblue);
     background-color: var(--accent-color-white);
     border-radius: 15px;
     transition: transform 0.1s ease-in-out;
@@ -109,6 +113,7 @@ h1 {
     justify-content: center;
     align-items: center;
     padding: 20px;
+    color: var(--background-color-darkblue);
     background-color: var(--accent-color-white);
     border-radius: 15px;
     margin-left: 15px;
@@ -142,10 +147,11 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5px;
+    padding: 12px;
+    color: var(--background-color-darkblue);
     background-color: var(--accent-color-white);
     border-radius: 15px;
-    margin: 30px 8px 30px 8px;
+    margin: 30px 10px 30px 10px;
     transition: transform 0.1s ease-in-out;
 }
 
@@ -172,11 +178,11 @@ h1 {
 .urgent {
   display: flex;
   flex-direction: column;
-  padding: 8px;
+  padding: 10px;
 }
 
 .urgent span {
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .vertical-line {
@@ -202,7 +208,7 @@ h1 {
 
 .other-boardSummary {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .lower-boardSummary {
@@ -210,6 +216,7 @@ h1 {
     flex-direction: column;
     padding: 16px;
     margin: 7px;
+    color: var(--background-color-darkblue);
     background-color: var(--accent-color-white);
     border-radius: 15px;
     transition: transform 0.1s ease-in-out;
@@ -226,3 +233,63 @@ h1 {
   font-size: 11px;
   text-align: center;
 }
+
+
+
+
+@media(min-width: 320px) {
+    .toDo-div {
+        padding: 25px;
+    }
+
+    .done-div {
+        padding: 25px;
+    }
+
+    .urgentCounter-and-upcomingDeadline {
+        padding: 20px;
+    }
+
+    .lower-boardSummary {
+        padding: 20px;
+    }
+}
+
+@media(min-width: 360px) {
+    .toDo-div {
+        padding: 35px;
+    }
+
+    .done-div {
+        padding: 35px;
+    }
+
+    .urgentCounter-and-upcomingDeadline {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .lower-boardSummary {
+        padding: 26px;
+    }
+}
+
+@media(min-width: 420px) {
+    .toDo-div {
+        padding: 40px;
+    }
+
+    .done-div {
+        padding: 40px;
+    }
+
+    .urgentCounter-and-upcomingDeadline {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    .lower-boardSummary {
+        padding: 30px;
+    }
+}
+
