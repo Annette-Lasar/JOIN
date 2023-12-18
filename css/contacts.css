@@ -78,6 +78,14 @@
     gap: 5px;
 }
 
+@media (max-width: 350px) {
+    .contact-list {
+        margin: 0;
+        margin-bottom: 80px;
+        padding: 8px;
+    }
+}
+
 @media (min-width: 50em) {
     .contact-list {
         max-width: 456px;
