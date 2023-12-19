@@ -405,6 +405,7 @@ breakpoint: 800px
         width: 40%;
         align-items: start;
         justify-content: center;
+        margin-top: 38px;
         margin-right: 50px;
     }
 
@@ -423,5 +424,47 @@ breakpoint: 800px
 }
 
 @media(min-width: 1000px) {
-    
+    .toDo-div {
+      padding: 30px;
+    }
+
+    .done-div {
+      padding: 30px;
+    }
+
+    .urgentCounter-and-upcomingDeadline {
+      padding: 30px;
+    }
+
+    .lower-boardSummary {
+      padding: 25px;
+    }
 }
+
+@media(min-width: 1200px) {
+    .toDo-div {
+      padding: 45px;
+    }
+
+    .done-div {
+      padding: 45px;
+    }
+
+    .urgentCounter-and-upcomingDeadline {
+      padding-left: 60px;
+      padding-right: 60px;
+    }
+
+    .lower-boardSummary {
+      padding: 35px;
+    }
+
+    .greeting {
+      font-size: 23px;
+    }
+
+    .greeting-name {
+      font-size: 30px;
+    }
+}
+
