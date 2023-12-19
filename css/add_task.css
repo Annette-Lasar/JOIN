@@ -53,6 +53,7 @@ label,
 
 .task-input-wrapper {
   margin: 0 0 0.4em;
+  padding: 0 2px;
   display: flex;
   flex-direction: column;
 }
@@ -228,25 +229,34 @@ li:hover,
 }
 
 .subtask-unordered-list {
-  list-style: disc;
   overflow-y: auto;
 }
+
+.subtask-unordered-list li::before {
+  content: '\2022'; 
+  margin-right: 8px;
+}
+
+.subtask-unordered-list::-webkit-scrollbar {
+  width: 12px;
+}
+
 
 .subtask-unordered-list li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  list-style-type: disc !important;
   background-color: var(--background-color-lightgray);
   border: none;
 }
 
 .subtask-unordered-list li:hover {
-  background-color: var(--accent-color-gray);
+  background-color: var(--background-color-mediumgray);
 }
 
 .subtask-list-wrapper {
   width: 40px;
+  margin-left: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -254,7 +264,7 @@ li:hover,
   transition: opacity 0.3s;
 }
 
-.subtask-unordered-list:hover .subtask-list-wrapper {
+.subtask-unordered-list li:hover .subtask-list-wrapper {
   opacity: 1;
 }
 
@@ -269,13 +279,8 @@ li:hover,
 .subtask-separator-line {
   width: 1px;
   height: 12px;
-  background-color: var(--background-color-lightgray);
+  background-color: var(--accent-color-darkgray);
 }
-
-/* .subtask-list-wrapper:hover img,
-.subtask-unordered-list:hover .subtask-separator-line {
-  display: flex;
-} */
 
 .create-task-wrapper {
   margin: 0.5em 0 0;
@@ -363,11 +368,21 @@ breakpoint: 50em
     width: 45%;
   }
 
+  .form-big-screen {
+    overflow: hidden;
+  }
+
   .separator-line {
     width: 1px;
     height: 80%;
     display: block;
     background-color: var(--accent-color-gray);
+  }
+
+  .subtask-unordered-list {
+    height: 120px;
+    list-style: disc;
+    overflow-y: auto;
   }
 
   .d-none {

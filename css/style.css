@@ -1,10 +1,12 @@
 :root {
     --background-color-darkblue: #2a3647;
     --background-color-lightgray: #F6F7F8;
+    --background-color-mediumgray: #ECECEC;
     --accent-color-lightblue: #29abe2;
     --accent-color-red: #ff3d00;
     --accent-color-white: #ffffff;
-    --accent-color-anthracite: #2A3647;
+    --accent-color-anthracite: #333333;
+    --accent-color-darkgray: #b9b9b9 ;
     --accent-color-gray: #d6d6d6;
     --accent-color-lightgray: rgba(12, 46, 98, 0.12);
     --accent-color-red-asterisk: #FF8190;

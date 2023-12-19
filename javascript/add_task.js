@@ -1,3 +1,5 @@
+
+
 let subTasks = [];
 
 function initTasks() {
@@ -80,50 +82,6 @@ function hideCancelAndAcceptSubtask() {
   SUBTASK_PLUS_BIG.classList.remove('d-none');
 }
 
-/* function addSubtask() {
-  const SUBTASK_INPUT_BOX = document.getElementById('sub_tasks_big');
-  const SUBTASK_CONTAINER_BIG = document.getElementById('subtask_container_big');
-  SUBTASK_CONTAINER_BIG.innerHTML = '';
-  let html = `<ul id="subtask_unordered_list_big" class="subtask-unordered-list">`;
-  if (SUBTASK_INPUT_BOX.value !== '') {
-    console.log('Input Value:', SUBTASK_INPUT_BOX.value);
-    subTasks.push(SUBTASK_INPUT_BOX.value);
-  }
-  html += renderSubtasks();
-  html += `</ul>`;
-  SUBTASK_CONTAINER_BIG.innerHTML = html;
-  document.getElementById('sub_tasks_big').value = '';
-  clearSubtask();
-}
-
-function generateSubtaskHTML(i, subtask) {
-  return `
-  <li id="subtask_entry${i}">${subtask}
-    <div class="subtask-list-wrapper">
-      <img src="../icons/edit_dark.svg">
-      <div class="subtask-separator-line"></div>
-      <img onclick="deleteSubtask(${i})" src="../icons/delete.svg">
-    </div>
-  </li>
-  `;
-}
-
-function deleteSubtask(i) {
-  subTasks.splice(i, 1);
-  renderSubtasks();
-}
-
-function renderSubtasks() {
-  const SUBTASK_CONTAINER_BIG = document.getElementById(
-    'subtask_container_big'
-  );
-  SUBTASK_CONTAINER_BIG.innerHTML = '';
-  for (let i = 0; i < subTasks.length; i++) {
-    let subtask = subTasks[i];
-    SUBTASK_CONTAINER_BIG.innerHTML += generateSubtaskHTML(i, subtask);
-  }
-} */
-
 function addSubtask() {
   const SUBTASK_INPUT_BOX = document.getElementById('sub_tasks_big');
   const SUBTASK_CONTAINER_BIG = document.getElementById('subtask_container_big');
@@ -170,4 +128,6 @@ function renderSubtasks() {
   html += `</ul>`;
   return html;
 }
+
+
 
