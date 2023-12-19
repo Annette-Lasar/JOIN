@@ -468,3 +468,13 @@ breakpoint: 800px
     }
 }
 
+@media(min-width: 1500px) {
+    .greeting {
+      font-size: 26px;
+    }
+
+    .greeting-name {
+      font-size: 34px;
+    }
+}
+
