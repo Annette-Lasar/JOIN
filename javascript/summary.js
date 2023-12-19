@@ -1,20 +1,35 @@
 let userLogin = false;
 
+
 function greetUser() {
     document.getElementById('greeting').innerHTML = getDaytime();  
-    document.getElementById('greeting_name').innerHTML = 'Sofia Müller';  // = getUserName();  nur bei UserLogin
+    if(userLogin) {
+        document.getElementById('greeting_name').innerHTML = 'Sofia Müller';  // = getUserName();  
+    }
 }
 
 
 function getDaytime() {
     let dayTime = new Date().getHours();
 
-    if(dayTime < 12) {                 // verschachtelte if-Abfrage: if(userLogin) { ..... } else { return 'Good morning'} (ohne Komma)
-        return 'Good morning,'
+    if(dayTime < 12) {                 
+        if(userLogin){
+            return 'Good morning,'
+        } else {
+            return 'Good morning'
+        }
     } else if (dayTime >= 12 && dayTime < 18) {
-        return 'Good afternoon,'
+        if(userLogin) {
+            return 'Good afternoon,'
+        } else {
+            return 'Good afternoon'
+        }
     } else {
-        return 'Good evening,'
+        if(userLogin) {
+            return 'Good evening,'
+        } else {
+            return 'Good evening'
+        }
     }
 }
 
