@@ -35,7 +35,9 @@ body {
     margin-bottom: 80px;
     flex-direction: column;
     overflow-y: auto;
+    overflow-x: hidden;
     width: 100%;
+    height: calc(100vh - 80px - 79px);
 }
 
 .contact-list h1 {
@@ -73,6 +75,17 @@ body {
     display: flex;
     justify-content: flex-start;
     gap: 35px;
+    border-radius: 10px;
+}
+
+.contact:hover {
+    cursor: pointer;
+    background-color: var(--background-color-darkblue);
+    color: var(--accent-color-white);
+}
+
+.contact:active {
+    background-color: #091931;
 }
 
 .initials {
@@ -82,7 +95,7 @@ body {
     justify-content: center;
     align-items: center;
     background-color: var(--color-variant9);
-    border-radius: solid 1px var(--accent-color-white);
+    border: solid 2px var(--accent-color-white);
     color: var(--accent-color-white);
     border-radius: 50%;
 }
@@ -97,6 +110,27 @@ body {
     display: none;
 }
 
+.contacts {
+    padding-top: 110px;
+    padding-left: 8%;
+}
+
+.contacts h1{
+    font-size: 61px;
+    font-weight: 700;
+}
+
+.contacts h3{
+    font-size: 27px;
+    font-weight: 400;
+}
+
+.contacts-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
 @media (max-width: 350px) {
     .contact-list {
         margin: 0;
@@ -108,9 +142,21 @@ body {
 @media (min-width: 50em) {
     .contact-list {
         max-width: 456px;
-        padding-bottom: 16px;
         margin-bottom: 0;
+        padding: 0;
         margin-left: 170px;
+        height: calc(100vh - 80px);
+    }
+
+    #contact_list {
+        padding: 0 24px 24px 24px;
+    }
+
+    .add-contact-button {
+        padding: 24px;
+        background-color: var(--accent-color-white);
+        position: sticky;
+        top: 1px;
     }
 
     .dark-button {
@@ -128,7 +174,6 @@ body {
         cursor: pointer;
         gap: 16px;
       }
-      
       .dark-button:hover {
         background-color: var(--accent-color-lightblue);
         border: var(--accent-color-lightblue) 1px solid;
