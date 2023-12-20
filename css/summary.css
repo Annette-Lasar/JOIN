@@ -244,14 +244,12 @@ h1 {
   text-align: center;
 }
 
-
 /* ====================================================
 media queries
 ====================================================== */
 /* ---------------------------------------------------
 breakpoint: 800px
 ------------------------------------------------------ */
-
 
 @media(min-width: 320px) {
   .toDo-div {
@@ -370,6 +368,22 @@ breakpoint: 800px
   }
 }
 
+@media(min-width: 700px) {
+  .toDo-div {
+    padding: 50px;
+  }
+  .done-div {
+    padding: 50px;
+  }
+  .urgentCounter-and-upcomingDeadline {
+    padding-left: 70px;
+    padding-right: 70px;
+  }
+  .lower-boardSummary {
+    padding: 38px;
+  }
+}
+
 @media(min-width: 800px) {
   .summary-headline {
     margin: 70px 0px 0px 135px;
@@ -391,52 +405,26 @@ breakpoint: 800px
   }
   .wrapper-div {
     display: flex;
-    margin-left: 125px;
   }
   .summary {
-    width: 60%;
+    margin-left: 140px;
+    margin-top: 42px;
   }
   .toDo-div {
-    padding: 25px;
+    padding: 48px;
   }
   .done-div {
-    padding: 25px;
+    padding: 48px;
   }
   .urgentCounter-and-upcomingDeadline {
-    padding: 20px;
+    padding: 30px 60px 30px 60px;
   }
   .lower-boardSummary {
-    padding: 20px;
-  }
-  .good-morning {
-    display: flex;
-    flex-direction: column;
-    width: 40%;
-    align-items: start;
-    justify-content: center;
-    margin-top: 38px;
-    margin-right: 50px;
-  }
-  .greeting {
-    color: var(--background-color-darkblue);
-    font-size: 21px;
-    font-weight: 500;
-    padding-bottom: 12px;
-  }
-  .greeting-name {
-    color: var(--accent-color-lightblue);
-    font-size: 27px;
-    font-weight: 700;
+    padding: 35px;
   }
 }
 
 @media(min-width: 850px) {
-  .summary-headline {
-    margin: 70px 0px 0px 150px;
-  }
-}
-
-@media(min-width: 900px) {
   h1 {
     font-size: 38px;
   }
@@ -445,18 +433,26 @@ breakpoint: 800px
   }
 }
 
-@media(min-width: 1000px) {
+@media(min-width: 950px) {
   .toDo-div {
-    padding: 30px;
+    padding: 63px;
   }
   .done-div {
-    padding: 30px;
+    padding: 63px;
+  }
+  .toDo-and-done-icon {
+    width: 40px;
+    height: 40px;
+  }
+  .urgency-icon {
+    width: 40px;
+    height: 40px;
   }
   .urgentCounter-and-upcomingDeadline {
-    padding: 30px;
+    padding: 40px 95px 40px 95px;
   }
   .lower-boardSummary {
-    padding: 25px;
+    padding: 46px;
   }
 }
 
@@ -466,6 +462,10 @@ breakpoint: 800px
   }
   .summary-headline span {
     font-size: 17px;
+  }
+  .summary {
+    width: 60%;
+    margin-left: 200px;
   }
   .toDo-div {
     padding: 45px;
@@ -479,11 +479,25 @@ breakpoint: 800px
   .lower-boardSummary {
     padding: 34px;
   }
+  .good-morning {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    align-items: start;
+    justify-content: center;
+    margin-top: 38px;
+    margin-right: 50px;
+  }
   .greeting {
-    font-size: 26px;
+    color: var(--background-color-darkblue);
+    font-size: 33px;
+    font-weight: 500;
+    padding-bottom: 12px;
   }
   .greeting-name {
-    font-size: 34px;
+    color: var(--accent-color-lightblue);
+    font-size: 42px;
+    font-weight: 700;
   }
 }
 
@@ -502,12 +516,6 @@ breakpoint: 800px
   }
   .lower-boardSummary {
     padding: 40px;
-  }
-  .greeting {
-    font-size: 33px;
-  }
-  .greeting-name {
-    font-size: 42px;
   }
 }
 
@@ -544,7 +552,7 @@ breakpoint: 800px
     margin-right: 30px;
   }
   .lower-boardSummary {
-    padding: 50px 56px 50px 56px;
+    padding: 40px 56px 40px 56px;
   }
   .greeting {
     font-size: 40px;
@@ -586,4 +594,3 @@ breakpoint: 800px
     margin: 80px 0px 0px 240px;
   }
 }
-
