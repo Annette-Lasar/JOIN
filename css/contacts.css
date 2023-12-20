@@ -7,23 +7,22 @@ body {
 
 * {
     scrollbar-width: auto;
-    scrollbar-color: var(--background-color-darkblue)
-      var(--background-color-lightgray);
-  }
-  
-  *::-webkit-scrollbar {
+    scrollbar-color: var(--background-color-darkblue) var(--background-color-lightgray);
+}
+
+*::-webkit-scrollbar {
     width: 16px;
-  }
-  
-  *::-webkit-scrollbar-track {
+}
+
+*::-webkit-scrollbar-track {
     background: var(--background-color-lightgray);
-  }
-  
-  *::-webkit-scrollbar-thumb {
+}
+
+*::-webkit-scrollbar-thumb {
     background-color: var(--background-color-darkblue);
     border: var(--accent-color-white) 3px solid;
     border-radius: 10px;
-  }
+}
 
 .add-contact {
     height: 3.5em;
@@ -139,15 +138,16 @@ body {
 .contacts {
     display: none;
     padding-top: 110px;
-    padding-left: 8%;
+    padding-left: 62px;
+    position: relative;
 }
 
-.contacts h1{
+.contacts h1 {
     font-size: 61px;
     font-weight: 700;
 }
 
-.contacts h3{
+.contacts h3 {
     font-size: 27px;
     font-weight: 400;
 }
@@ -156,6 +156,77 @@ body {
     display: flex;
     align-items: center;
     gap: 30px;
+    margin-bottom: 32px;
+}
+
+.contact-details {
+    display: flex;
+    flex-direction: column;
+    gap:21px;
+    position: absolute;
+    left: 62px;
+}
+
+.contact-details h2 {
+    margin: 32px 0;
+    font-size: 20px;
+}
+
+.name {
+    display: flex;
+    align-items: center;
+    gap: 54px;
+}
+
+.name h3 {
+    font-size: 47px;
+    font-weight: 500;
+}
+
+.large {
+    min-height: 120px;
+    min-width: 120px;
+}
+
+.icons {
+    display: flex;
+    gap: 16px;
+}
+
+.icon, .icon svg{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--background-color-darkblue);
+    fill: var(--background-color-darkblue);
+}
+
+.icon:hover, .icon svg:hover {
+    color: var(--accent-color-lightblue);
+    cursor: pointer;
+    fill: var(--accent-color-lightblue);
+    font-weight: 700;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.info-sub {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.info-sub b {
+    font-weight: 800;
+}
+
+.info-sub a {
+    font-size: 16px;
+    color:var(--accent-color-lightblue);
 }
 
 @media (max-width: 350px) {
@@ -200,18 +271,20 @@ body {
         border-radius: 10px;
         cursor: pointer;
         gap: 16px;
-      }
-      .dark-button:hover {
+    }
+
+    .dark-button:hover {
         background-color: var(--accent-color-lightblue);
         border: var(--accent-color-lightblue) 1px solid;
         color: var(--accent-color-white);
         box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      }
-      
-      .dark-button img {
+    }
+
+    .dark-button img {
         height: 32px;
-      }
-      .contacts {
+    }
+
+    .contacts {
         display: block;
     }
 
