@@ -2,6 +2,40 @@ body {
   background-color: var(--background-color-lightgray);
 }
 
+#startScreen_mobile {
+  width: 100%;
+  height: 100vw;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.fadeOut {
+  animation: fadeOut 2s;
+  opacity: 0;
+}
+
+.fadeIn {
+  animation: fadeIn 2s forwards;
+  opacity: 1;
+}
+
+@keyframes fadeOut {
+  from {opacity: 1; }
+  to {opacity: 0; }
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; }
+  to {opacity: 1; }
+}
+
+#main {
+  opacity: 0;
+}
+
 .summary-headline {
   display: flex;
   flex-direction: column;

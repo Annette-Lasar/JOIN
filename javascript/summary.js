@@ -39,5 +39,23 @@ function getUserName() {
 }
 
 
+function greetingMobile() {
+    let windowWidth = window.innerWidth;
+    if(windowWidth < 800) {
+        document.getElementById('startScreen_mobile').style.display = 'flex';
+        setTimeout(() => {
+            document.getElementById('startScreen_mobile').classList.add('fadeOut');
+        }, 2000);
+        setTimeout(() => {
+            document.getElementById('startScreen_mobile').remove();
+            document.getElementById('main').classList.add('fadeIn');
+        }, 4000);
+    } else {
+        document.getElementById('main').style.opacity = 1;
+    }
+}
+
+
 // UserLogin: Dementsprechender Name bei Greeting (WELCHER User ?)
 // GuestLogin: kein Name und kein Komma in Begrüßung
+// bei Mobilgeräten zuerst animierte Begrüßung ( function greetingMobile() )

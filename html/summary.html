@@ -12,7 +12,12 @@
     <script src="../javascript/script.js" defer></script>
     <script src="../javascript/summary.js" defer></script>
   </head>
-  <body onload="init(), greetUser()">
+  <body onload="init(), greetUser(), greetingMobile()">
+    <div id="startScreen_mobile">
+      <span id="greeting_mobile">TestGreetingMobile</span>
+      <span id="greeting_name_mobile">TestNameMobile</span>
+    </div>
+    <div id="main">
     <header>
       <div w3-include-html="../templates/header.html"></div>
     </header>
@@ -84,5 +89,6 @@
     <nav>
       <div w3-include-html="../templates/navigation_bar.html"></div>
     </nav>
+    </div>
   </body>
 </html>
