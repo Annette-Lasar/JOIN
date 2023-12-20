@@ -1,4 +1,4 @@
-let userLogin = false;
+let userLogin = true;
 
 
 function greetUser() {
@@ -39,5 +39,27 @@ function getUserName() {
 }
 
 
-// UserLogin: Dementsprechender Name bei Greeting (WELCHER User ?); 
+function greetingMobile() {
+    let windowWidth = window.innerWidth;
+    if(windowWidth < 800) {
+        let greeting = document.getElementById('greeting').innerHTML;
+        document.getElementById('greeting_mobile').innerHTML = greeting;
+        if(userLogin) {
+            let greetingName = document.getElementById('greeting_name').innerHTML;
+            document.getElementById('greeting_name_mobile').innerHTML = greetingName;
+        }
+        document.getElementById('startScreen_mobile').style.display = 'flex';
+        setTimeout(() => document.getElementById('startScreen_mobile').classList.add('fadeOut'), 1000);
+        setTimeout(() => {
+            document.getElementById('startScreen_mobile').remove();
+            document.getElementById('main').classList.add('fadeIn');
+        }, 2000);
+    } else {
+        document.getElementById('main').style.opacity = 1;
+    }
+}
+
+
+// UserLogin: Dementsprechender Name bei Greeting (WELCHER User ?)
 // GuestLogin: kein Name und kein Komma in Begrüßung
+// bei Mobilgeräten zuerst animierte Begrüßung ( function greetingMobile() )

@@ -5,6 +5,26 @@ body {
     height: 100%;
 }
 
+* {
+    scrollbar-width: auto;
+    scrollbar-color: var(--background-color-darkblue)
+      var(--background-color-lightgray);
+  }
+  
+  *::-webkit-scrollbar {
+    width: 16px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: var(--background-color-lightgray);
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--background-color-darkblue);
+    border: var(--accent-color-white) 3px solid;
+    border-radius: 10px;
+  }
+
 .add-contact {
     height: 3.5em;
     width: 3.5em;
@@ -48,8 +68,9 @@ body {
     font-size: 12px;
 }
 
-.contact-list p {
+.contact p {
     color: var(--color-variant16);
+    font-size: 16px;
 }
 
 .group {
@@ -76,16 +97,20 @@ body {
     justify-content: flex-start;
     gap: 35px;
     border-radius: 10px;
+    background-color: var(--accent-color-white);
+    border-color: var(--accent-color-white);
+    width: -webkit-fill-available;
+    border-style: hidden;
 }
 
-.contact:hover {
+.contact:hover:not(:focus) {
     cursor: pointer;
-    background-color: var(--background-color-darkblue);
-    color: var(--accent-color-white);
+    background: var(--Boton-gradient, linear-gradient(180deg, #F9F9F9 0%, #F0F0F0 100%));
 }
 
-.contact:active {
+.contact:focus {
     background-color: #091931;
+    color: var(--accent-color-white);
 }
 
 .initials {
@@ -103,6 +128,7 @@ body {
 .contact-info {
     display: flex;
     flex-direction: column;
+    text-align: start;
     gap: 5px;
 }
 

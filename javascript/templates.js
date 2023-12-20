@@ -18,7 +18,7 @@ function addContactToGroupTemplate(name, i) {
     let eMail = contacts[i]['e-mail'];
     let initials = loadInitials(i);
     return `
-        <div id="${i}" class="contact">
+        <button id="${i}" class="contact">
             <div id="initials${i}" class="initials">
               <h3>${initials}</h3>
             </div>
@@ -26,6 +26,6 @@ function addContactToGroupTemplate(name, i) {
               <h1>${name}</h1>
               <p>${eMail}</p>
             </div>
-        </div>
+        </button>
     `
 }

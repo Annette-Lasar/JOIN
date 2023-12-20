@@ -5,6 +5,7 @@ async function init() {
   moveLogoOnStartScreen();
   await includeHTML();
   hideHelpLinkOnHelpPage();
+  
 }
 
 async function includeHTML() {
