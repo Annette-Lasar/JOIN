@@ -162,10 +162,40 @@
                   type="text"
                   placeholder="Add new subtask"
                 />
-                <img src="../icons/plus.svg" alt="" />
+                <div
+                  id="subtasks_image_wrapper_small"
+                  class="subtasks-image-wrapper"
+                >
+                  <div
+                    id="close_and_check_wrapper_small"
+                    class="close-and-check-wrapper d-none"
+                  >
+                    <img
+                      onclick="clearSubtask('sub_tasks_small', 'close_and_check_wrapper_small', 'subtask_plus_small')"
+                      id="cancel_subtask_small"
+                      class="cancel-subtask"
+                      src="../icons/close.svg"
+                    />
+                    <div class="subtask-separator-line"></div>
+                    <img
+                      onclick="addSubtask('sub_tasks_small', 'close_and_check_wrapper_small', 'subtask_plus_small')"
+                      id="check_subtask_small"
+                      class="check-subtask"
+                      src="../icons/check.svg"
+                    />
+                  </div>
+                  <img
+                    id="subtask_plus_small"
+                    onclick="showCancelAndAcceptSubtask('close_and_check_wrapper_small', 'subtask_plus_small')"
+                    src="../icons/plus.svg"
+                  />
+                </div>
               </div>
             </div>
-            <div id="subtask_container_small" class="subtask-container"></div>
+            <div
+              id="subtask_container_small"
+              class="subtask-container subtask-container-big"
+            ></div>
           </form>
           <div class="separator-line"></div>
           <form id="form_big_screen" action="" class="form-big-screen d-none">
@@ -280,14 +310,14 @@
                     class="close-and-check-wrapper d-none"
                   >
                     <img
-                      onclick="clearSubtask()"
+                      onclick="clearSubtask('sub_tasks_big', 'close_and_check_wrapper_big', 'subtask_plus_big')"
                       id="cancel_subtask_big"
                       class="cancel-subtask"
                       src="../icons/close.svg"
                     />
                     <div class="subtask-separator-line"></div>
                     <img
-                      onclick="addSubtask()"
+                      onclick="addSubtask('sub_tasks_big', 'close_and_check_wrapper_big', 'subtask_plus_big')"
                       id="check_subtask_big"
                       class="check-subtask"
                       src="../icons/check.svg"
@@ -295,13 +325,16 @@
                   </div>
                   <img
                     id="subtask_plus_big"
-                    onclick="showCancelAndAcceptSubtask()"
+                    onclick="showCancelAndAcceptSubtask('close_and_check_wrapper_big', 'subtask_plus_big')"
                     src="../icons/plus.svg"
                   />
                 </div>
               </div>
             </div>
-            <div id="subtask_container_big" class="subtask-container subtask-container-big"></div>
+            <div
+              id="subtask_container_big"
+              class="subtask-container subtask-container-big"
+            ></div>
           </form>
         </div>
         <div class="create-task-wrapper">
