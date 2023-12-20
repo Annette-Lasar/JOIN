@@ -5,24 +5,24 @@ body {
 .summary-headline {
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 0px 0px 0px 16px;
 }
 
 h1 {
   font-size: 32px;
   font-weight: 700;
   color: var(--background-color-darkblue);
-  margin-top: 20px;
-  margin-bottom: 15px;
+  margin-top: 48px;
+  margin-bottom: 16px;
 }
 
 .lightblue-vertical-line {
-    display: none;
-    width: 2px;
-    height: 30px;
-    background-color: var(--accent-color-lightblue);
-    margin-left: 17px;
-    margin-right: 17px;
+  display: none;
+  width: 2px;
+  height: 30px;
+  background-color: var(--accent-color-lightblue);
+  margin-left: 17px;
+  margin-right: 17px;
 }
 
 .summary-headline span {
@@ -31,15 +31,14 @@ h1 {
 }
 
 .lightblue-underline {
-  margin-top: 10px;
+  margin-top: 16px;
   height: 2px;
-  width: 65px;
+  width: 70px;
   background-color: var(--accent-color-lightblue);
 }
 
 .wrapper-div {
   width: 100%;
-  margin-top: 10px;
 }
 
 .summary {
@@ -47,6 +46,7 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 35px;
 }
 
 .good-morning {
@@ -57,25 +57,26 @@ h1 {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 7px;
 }
 
 .toDo-div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    color: var(--background-color-darkblue);
-    background-color: var(--accent-color-white);
-    border-radius: 15px;
-    transition: transform 0.1s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: var(--background-color-darkblue);
+  background-color: var(--accent-color-white);
+  border-radius: 15px;
+  transition: transform 0.1s ease-in-out;
 }
 
 .toDo-div:hover {
   cursor: pointer;
   background-color: var(--background-color-darkblue);
   color: var(--accent-color-white);
+
   .toDo-and-done-icon {
     background-color: var(--accent-color-white);
   }
@@ -117,21 +118,22 @@ h1 {
 }
 
 .done-div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    color: var(--background-color-darkblue);
-    background-color: var(--accent-color-white);
-    border-radius: 15px;
-    margin-left: 15px;
-    transition: transform 0.1s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: var(--background-color-darkblue);
+  background-color: var(--accent-color-white);
+  border-radius: 15px;
+  margin-left: 15px;
+  transition: transform 0.1s ease-in-out;
 }
 
 .done-div:hover {
   cursor: pointer;
   background-color: var(--background-color-darkblue);
   color: var(--accent-color-white);
+
   .toDo-and-done-icon {
     background-color: var(--accent-color-white);
   }
@@ -152,25 +154,26 @@ h1 {
 }
 
 .urgentCounter-and-upcomingDeadline {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 12px;
-    color: var(--background-color-darkblue);
-    background-color: var(--accent-color-white);
-    border-radius: 15px;
-    margin: 30px 10px 30px 10px;
-    transition: transform 0.1s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  color: var(--background-color-darkblue);
+  background-color: var(--accent-color-white);
+  border-radius: 15px;
+  margin: 15px 0px 15px 0px;
+  transition: transform 0.1s ease-in-out;
 }
 
 .urgentCounter-and-upcomingDeadline:hover {
-    cursor: pointer;
-    background-color: var(--background-color-darkblue);
+  cursor: pointer;
+  background-color: var(--background-color-darkblue);
+  color: var(--accent-color-white);
+
+  .date {
     color: var(--accent-color-white);
-    .date {
-        color: var(--accent-color-white);
-    }
-    transform: scale(1.03);
+  }
+  transform: scale(1.03);
 }
 
 .urgency-icon {
@@ -220,21 +223,21 @@ h1 {
 }
 
 .lower-boardSummary {
-    display: flex;
-    flex-direction: column;
-    padding: 16px;
-    margin: 7px;
-    color: var(--background-color-darkblue);
-    background-color: var(--accent-color-white);
-    border-radius: 15px;
-    transition: transform 0.1s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  margin: 7px;
+  color: var(--background-color-darkblue);
+  background-color: var(--accent-color-white);
+  border-radius: 15px;
+  transition: transform 0.1s ease-in-out;
 }
 
 .lower-boardSummary:hover {
-    cursor: pointer;
-    background-color: var(--background-color-darkblue);
-    color: var(--accent-color-white);
-    transform: scale(1.06);
+  cursor: pointer;
+  background-color: var(--background-color-darkblue);
+  color: var(--accent-color-white);
+  transform: scale(1.06);
 }
 
 .lower-boardSummary span {
@@ -252,229 +255,194 @@ breakpoint: 800px
 
 
 @media(min-width: 320px) {
-    .toDo-div {
-        padding: 25px;
-    }
-
-    .done-div {
-        padding: 25px;
-    }
-
-    .urgentCounter-and-upcomingDeadline {
-        padding: 20px;
-    }
-
-    .lower-boardSummary {
-        padding: 20px;
-    }
+  .toDo-div {
+    padding: 25px;
+  }
+  .done-div {
+    padding: 25px;
+  }
+  .urgentCounter-and-upcomingDeadline {
+    padding: 20px;
+  }
+  .lower-boardSummary {
+    padding: 20px;
+  }
 }
 
 @media(min-width: 360px) {
-    .toDo-div {
-        padding: 35px;
-    }
-
-    .done-div {
-        padding: 35px;
-    }
-
-    .urgentCounter-and-upcomingDeadline {
-        padding-left: 40px;
-        padding-right: 40px;
-    }
-
-    .lower-boardSummary {
-        padding: 26px;
-    }
+  .summary-headline {
+    padding: 0px 0px 0px 21px;
+  }
+  .toDo-div {
+    padding: 35px;
+  }
+  .done-div {
+    padding: 35px;
+  }
+  .urgentCounter-and-upcomingDeadline {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .lower-boardSummary {
+    padding: 26px;
+  }
 }
 
 @media(min-width: 370px) {
-    .summary-headline {
-        margin-left: 10px;
-    }
+  .summary-headline {
+    padding: 0px 0px 0px 25px;
+  }
+}
+
+@media(min-width: 390px) {
+  .summary-headline {
+    padding: 0px 0px 0px 35px;
+  }
 }
 
 @media(min-width: 420px) {
-    .summary-headline {
-        margin-left: 20px;
-    }
-
-    .toDo-div {
-        padding: 40px;
-    }
-
-    .done-div {
-        padding: 40px;
-    }
-
-    .urgentCounter-and-upcomingDeadline {
-        padding-left: 50px;
-        padding-right: 50px;
-    }
-
-    .lower-boardSummary {
-        padding: 30px;
-    }
+  .summary-headline {
+    padding: 0px 0px 0px 45px;
+  }
+  .toDo-div {
+    padding: 40px;
+  }
+  .done-div {
+    padding: 40px;
+  }
+  .urgentCounter-and-upcomingDeadline {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+  .lower-boardSummary {
+    padding: 30px;
+  }
 }
 
 @media(min-width: 440px) {
-    .summary-headline {
-        margin-left: 30px;
-    }
+  .summary-headline {
+    padding: 0px 0px 0px 50px;
+  }
+}
+
+@media(min-width: 500px) {
+  .summary-headline {
+    padding: 0px 0px 0px 75px;
+  }
 }
 
 @media(min-width: 600px) {
-    .summary-headline {
-        margin-left: 40px;
-    }
-
-    .toDo-div {
-        padding: 45px;
-    }
-
-    .done-div {
-        padding: 45px;
-    }
-
-    .urgentCounter-and-upcomingDeadline {
-        padding-left: 60px;
-        padding-right: 60px;
-    }
-
-    .lower-boardSummary {
-        padding: 35px;
-    }
-}
-
-@media(min-width: 650px) {
-    .summary-headline {
-        margin-left: 60px;
-    }
-}
-
-@media(min-width: 700px) {
-    .summary-headline {
-        margin-left: 80px;
-    }
+  .toDo-div {
+    padding: 45px;
+  }
+  .done-div {
+    padding: 45px;
+  }
+  .urgentCounter-and-upcomingDeadline {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+  .lower-boardSummary {
+    padding: 35px;
+  }
 }
 
 @media(min-width: 800px) {
-    .summary-headline {
-        margin-top: 20px;
-        margin-left: 200px;
-        flex-direction: row;
-        align-items: center;
-    }
-
-    .lightblue-vertical-line {
-        display: flex;
-    }
-
-    .lightblue-underline {
-        display: none;
-    }
-
-    .wrapper-div {
-        display: flex;
-        margin-left: 125px;
-    }
-
-    .summary {
-        width: 60%;
-    }
-
-    .toDo-div {
-        padding: 25px;
-    }
-
-    .done-div {
-        padding: 25px;
-    }
-
-    .urgentCounter-and-upcomingDeadline {
-        padding: 20px;
-    }
-
-    .lower-boardSummary {
-        padding: 20px;
-    }
-
-    .good-morning {
-        display: flex;
-        flex-direction: column;
-        width: 40%;
-        align-items: start;
-        justify-content: center;
-        margin-top: 38px;
-        margin-right: 50px;
-    }
-
-    .greeting {
-        color: var(--background-color-darkblue);
-        font-size: 21px;
-        font-weight: 500;
-        padding-bottom: 12px;
-    }
-
-    .greeting-name {
-        color: var(--accent-color-lightblue);
-        font-size: 27px;
-        font-weight: 700;
-    }
+  .summary-headline {
+    margin-top: 20px;
+    margin-left: 200px;
+    flex-direction: row;
+    align-items: center;
+  }
+  .lightblue-vertical-line {
+    display: flex;
+  }
+  .lightblue-underline {
+    display: none;
+  }
+  .wrapper-div {
+    display: flex;
+    margin-left: 125px;
+  }
+  .summary {
+    width: 60%;
+  }
+  .toDo-div {
+    padding: 25px;
+  }
+  .done-div {
+    padding: 25px;
+  }
+  .urgentCounter-and-upcomingDeadline {
+    padding: 20px;
+  }
+  .lower-boardSummary {
+    padding: 20px;
+  }
+  .good-morning {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    align-items: start;
+    justify-content: center;
+    margin-top: 38px;
+    margin-right: 50px;
+  }
+  .greeting {
+    color: var(--background-color-darkblue);
+    font-size: 21px;
+    font-weight: 500;
+    padding-bottom: 12px;
+  }
+  .greeting-name {
+    color: var(--accent-color-lightblue);
+    font-size: 27px;
+    font-weight: 700;
+  }
 }
 
 @media(min-width: 1000px) {
-    .toDo-div {
-      padding: 30px;
-    }
-
-    .done-div {
-      padding: 30px;
-    }
-
-    .urgentCounter-and-upcomingDeadline {
-      padding: 30px;
-    }
-
-    .lower-boardSummary {
-      padding: 25px;
-    }
+  .toDo-div {
+    padding: 30px;
+  }
+  .done-div {
+    padding: 30px;
+  }
+  .urgentCounter-and-upcomingDeadline {
+    padding: 30px;
+  }
+  .lower-boardSummary {
+    padding: 25px;
+  }
 }
 
 @media(min-width: 1200px) {
-    .toDo-div {
-      padding: 45px;
-    }
-
-    .done-div {
-      padding: 45px;
-    }
-
-    .urgentCounter-and-upcomingDeadline {
-      padding-left: 60px;
-      padding-right: 60px;
-    }
-
-    .lower-boardSummary {
-      padding: 35px;
-    }
-
-    .greeting {
-      font-size: 23px;
-    }
-
-    .greeting-name {
-      font-size: 30px;
-    }
+  .toDo-div {
+    padding: 45px;
+  }
+  .done-div {
+    padding: 45px;
+  }
+  .urgentCounter-and-upcomingDeadline {
+    padding-left: 60px;
+    padding-right: 60px;
+  }
+  .lower-boardSummary {
+    padding: 35px;
+  }
+  .greeting {
+    font-size: 23px;
+  }
+  .greeting-name {
+    font-size: 30px;
+  }
 }
 
 @media(min-width: 1500px) {
-    .greeting {
-      font-size: 26px;
-    }
-
-    .greeting-name {
-      font-size: 34px;
-    }
+  .greeting {
+    font-size: 26px;
+  }
+  .greeting-name {
+    font-size: 34px;
+  }
 }
-

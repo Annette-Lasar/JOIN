@@ -1,4 +1,4 @@
-let userLogin = false;
+let userLogin = true;
 
 
 function greetUser() {
@@ -39,5 +39,5 @@ function getUserName() {
 }
 
 
-// UserLogin: Dementsprechender Name bei Greeting (WELCHER User ?); 
+// UserLogin: Dementsprechender Name bei Greeting (WELCHER User ?)
 // GuestLogin: kein Name und kein Komma in Begrüßung
