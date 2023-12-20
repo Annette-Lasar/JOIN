@@ -42,14 +42,18 @@ function getUserName() {
 function greetingMobile() {
     let windowWidth = window.innerWidth;
     if(windowWidth < 800) {
+        let greeting = document.getElementById('greeting').innerHTML;
+        document.getElementById('greeting_mobile').innerHTML = greeting;
+        if(userLogin) {
+            let greetingName = document.getElementById('greeting_name').innerHTML;
+            document.getElementById('greeting_name_mobile').innerHTML = greetingName;
+        }
         document.getElementById('startScreen_mobile').style.display = 'flex';
-        setTimeout(() => {
-            document.getElementById('startScreen_mobile').classList.add('fadeOut');
-        }, 2000);
+        setTimeout(() => document.getElementById('startScreen_mobile').classList.add('fadeOut'), 1000);
         setTimeout(() => {
             document.getElementById('startScreen_mobile').remove();
             document.getElementById('main').classList.add('fadeIn');
-        }, 4000);
+        }, 2000);
     } else {
         document.getElementById('main').style.opacity = 1;
     }

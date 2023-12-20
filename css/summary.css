@@ -13,12 +13,12 @@ body {
 }
 
 .fadeOut {
-  animation: fadeOut 2s;
+  animation: fadeOut 1s;
   opacity: 0;
 }
 
 .fadeIn {
-  animation: fadeIn 2s forwards;
+  animation: fadeIn 1s forwards;
   opacity: 1;
 }
 
