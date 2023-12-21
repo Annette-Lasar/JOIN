@@ -11,7 +11,12 @@ function greetUser() {
 
 function getDaytime() {
     let dayTime = new Date().getHours();
+    let greeting = greet(dayTime);
+    return greeting;
+}
 
+
+function greet(dayTime) {
     if(dayTime < 12) {                 
         if(userLogin){
             return 'Good morning,'
@@ -35,33 +40,54 @@ function getDaytime() {
 
 
 function getUserName() {
-
+    
 }
 
 
 function greetingMobile() {
     let windowWidth = window.innerWidth;
     if(windowWidth < 800) {
-        let greeting = document.getElementById('greeting').innerHTML;
-        if(userLogin) {
-            document.getElementById('greeting_mobile').innerHTML = greeting;
-            let greetingName = document.getElementById('greeting_name').innerHTML;
-            document.getElementById('greeting_name_mobile').innerHTML = greetingName;
-        } else {
-            document.getElementById('greeting_mobile').innerHTML = `${greeting}!`;
-        }
-        document.getElementById('startScreen_mobile').style.display = 'flex';
-        setTimeout(() => document.getElementById('startScreen_mobile').classList.add('fadeOut'), 1000);
-        setTimeout(() => {
-            document.getElementById('startScreen_mobile').remove();
-            document.getElementById('main').classList.add('fadeIn');
-        }, 2000);
+        showMobileWelcomeScreen();
     } else {
-        document.getElementById('main').style.opacity = 1;
+        showDesktopVersion();
     }
 }
 
 
-// UserLogin: Dementsprechender Name bei Greeting (WELCHER User ?)
-// GuestLogin: kein Name und kein Komma in Begrüßung
-// bei Mobilgeräten zuerst animierte Begrüßung ( function greetingMobile() )
+function showMobileWelcomeScreen() {
+    let greeting = document.getElementById('greeting').innerHTML;
+        if(userLogin) {
+            greetUserMobile(greeting);
+        } else {
+            greetGuestMobile(greeting);
+        }
+        mobileScreenAnimation();
+}
+
+
+function showDesktopVersion() {
+    document.getElementById('main').style.opacity = 1;
+}
+
+
+function greetUserMobile(greeting) {
+    document.getElementById('greeting_mobile').innerHTML = greeting;
+    let greetingName = document.getElementById('greeting_name').innerHTML;
+    document.getElementById('greeting_name_mobile').innerHTML = greetingName;
+}
+
+
+function greetGuestMobile(greeting) {
+    document.getElementById('greeting_mobile').innerHTML = `${greeting}!`;
+}
+
+
+function mobileScreenAnimation() {
+    document.getElementById('startScreen_mobile').style.display = 'flex';
+    setTimeout(() => document.getElementById('startScreen_mobile').classList.add('fadeOut'), 1000);
+    setTimeout(() => {
+        document.getElementById('startScreen_mobile').remove();
+        document.getElementById('main').classList.add('fadeIn');
+    }, 2000);
+}
+
