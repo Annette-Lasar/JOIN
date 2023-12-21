@@ -5,7 +5,7 @@ async function init() {
   moveLogoOnStartScreen();
   await includeHTML();
   hideHelpLinkOnHelpPage();
-  
+  checkIfSummaryPage();
 }
 
 async function includeHTML() {
@@ -55,3 +55,11 @@ function toggleSignUpAndLogin() {
   SIGN_UP_CONTENT_BOX.classList.toggle('d-none');
   NOT_A_JOIN_USER_BOX.classList.toggle('d-none');
 }
+
+function checkIfSummaryPage() {
+  const URL = window.location.href;
+  if (URL.endsWith('summary.html')) {
+    initSummary();
+  }
+}
+

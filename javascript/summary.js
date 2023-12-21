@@ -1,6 +1,12 @@
 let userLogin = true;
 
 
+function initSummary() {
+    greetUser();
+    greetingMobile();
+}
+
+
 function greetUser() {
     document.getElementById('greeting').innerHTML = getDaytime();  
     if(userLogin) {
