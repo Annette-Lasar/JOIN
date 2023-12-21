@@ -98,7 +98,7 @@ body {
     border-radius: 10px;
     background-color: var(--accent-color-white);
     border-color: var(--accent-color-white);
-    width: -webkit-fill-available;
+    width: 100%;
     border-style: hidden;
 }
 
@@ -201,7 +201,7 @@ body {
     fill: var(--background-color-darkblue);
 }
 
-.icon:hover, .icon svg:hover {
+.icon:hover, .icon:hover svg path {
     color: var(--accent-color-lightblue);
     cursor: pointer;
     fill: var(--accent-color-lightblue);
