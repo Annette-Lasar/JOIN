@@ -43,10 +43,12 @@ function greetingMobile() {
     let windowWidth = window.innerWidth;
     if(windowWidth < 800) {
         let greeting = document.getElementById('greeting').innerHTML;
-        document.getElementById('greeting_mobile').innerHTML = greeting;
         if(userLogin) {
+            document.getElementById('greeting_mobile').innerHTML = greeting;
             let greetingName = document.getElementById('greeting_name').innerHTML;
             document.getElementById('greeting_name_mobile').innerHTML = greetingName;
+        } else {
+            document.getElementById('greeting_mobile').innerHTML = `${greeting}!`;
         }
         document.getElementById('startScreen_mobile').style.display = 'flex';
         setTimeout(() => document.getElementById('startScreen_mobile').classList.add('fadeOut'), 1000);
