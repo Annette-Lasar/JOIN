@@ -2,50 +2,50 @@ let groups = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', '
 
 let contacts = [
     {
-        "name": "Anton Mayer",
-        "e-mail": "antom@gmail.com",
+        "name": "Bilbo Beutlin",
+        "e-mail": "bilbo@gmail.com",
         "phone": "123-456-7890",
         "color": "#ff7a00"
     },
     {
-        "name": "Anja Schulz",
-        "e-mail": "schulz@hotmail.com",
+        "name": "Hermoine Granger",
+        "e-mail": "grangerh@hotmail.com",
         "phone": "123-456-7890",
         "color": "#9327ff"
     },
     {
-        "name": "Benedikt Ziegler",
-        "e-mail": "benedikt@gmail.com",
+        "name": "Donald Duck",
+        "e-mail": "duckduckduck@gmail.com",
         "phone": "123-456-7890",
         "color": "#6e52ff"
     },
     {
-        "name": "David Eisenberg",
-        "e-mail": "davidberg@gmail.com",
+        "name": "Fred Feuerstein",
+        "e-mail": "fredyf@gmail.com",
         "phone": "123-456-7890",
         "color": "#fc71ff"
     },
     {
-        "name": "Eva Fischer",
-        "e-mail": "eva@gmail.com",
+        "name": "Bart Simpson",
+        "e-mail": "barty@gmail.com",
         "phone": "123-456-7890",
         "color": "#ffbb2b"
     },
     {
-        "name": "Emmanuel Mauer",
-        "e-mail": "emmanuelma@gmail.com",
+        "name": "Sheldon Cooper",
+        "e-mail": "dr.sheldoncooper@gmail.com",
         "phone": "123-456-7890",
         "color": "#1fd7c1"
     },
     {
-        "name": "Marcel Bauer",
-        "e-mail": "bauer@gmail.com",
+        "name": "Spongebob Schwammkopf",
+        "e-mail": "bikini.bottom@gmail.com",
         "phone": "123-456-7890",
         "color": "#462F8A"
     },
     {
-        "name": "Tatjana Wolf",
-        "e-mail": "wolf@gmail.com",
+        "name": "Leia Organa",
+        "e-mail": "l.organa@gmail.com",
         "phone": "123-456-7890",
         "color": "#ff4646"
     },
