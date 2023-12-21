@@ -49,7 +49,7 @@ function greetingMobile() {
     if(windowWidth < 800) {
         showMobileWelcomeScreen();
     } else {
-        showDesktopVersion();
+        showSummary();
     }
 }
 
@@ -65,7 +65,8 @@ function showMobileWelcomeScreen() {
 }
 
 
-function showDesktopVersion() {
+function showSummary() {
+    document.getElementById('main').style.display = 'block';
     document.getElementById('main').style.opacity = 1;
 }
 
@@ -87,6 +88,7 @@ function mobileScreenAnimation() {
     setTimeout(() => document.getElementById('startScreen_mobile').classList.add('fadeOut'), 1000);
     setTimeout(() => {
         document.getElementById('startScreen_mobile').remove();
+        document.getElementById('main').style.display = 'block';
         document.getElementById('main').classList.add('fadeIn');
     }, 2000);
 }

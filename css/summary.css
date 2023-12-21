@@ -4,7 +4,7 @@ body {
 
 #startScreen_mobile {
   width: 100%;
-  height: 100vw;
+  height: 100vh;
   display: none;
   flex-direction: column;
   align-items: center;
@@ -15,7 +15,7 @@ body {
 #greeting_mobile {
   color: var(--background-color-darkblue);
   font-size: 22px;
-  margin: 550px 0px 9px 0px;
+  margin-bottom: 9px;
 }
 
 #greeting_name_mobile {
@@ -45,6 +45,7 @@ body {
 }
 
 #main {
+  display: none;
   opacity: 0;
 }
 
@@ -315,7 +316,6 @@ breakpoint: 800px
 @media(min-width: 360px) {
   #greeting_mobile {
     font-size: 24px;
-    margin: 520px 0px 9px 0px;
   }
   #greeting_name_mobile {
     font-size: 30px;
@@ -353,7 +353,6 @@ breakpoint: 800px
 @media(min-width: 420px) {
   #greeting_mobile {
     font-size: 28px;
-    margin: 490px 0px 9px 0px;
   }
   #greeting_name_mobile {
     font-size: 34px;
@@ -377,24 +376,12 @@ breakpoint: 800px
 }
 
 @media(min-width: 440px) {
-  #greeting_mobile {
-    margin: 450px 0px 9px 0px;
-  }
   .summary-headline {
     padding: 0px 0px 0px 50px;
   }
 }
 
-@media(min-width: 480px) {
-  #greeting_mobile {
-    margin: 420px 0px 9px 0px;
-  }
-}
-
 @media(min-width: 500px) {
-  #greeting_mobile {
-    margin: 390px 0px 9px 0px;
-  }
   .summary-headline {
     padding: 0px 0px 0px 75px;
   }
@@ -403,7 +390,6 @@ breakpoint: 800px
 @media(min-width: 550px) {
   #greeting_mobile {
     font-size: 32px;
-    margin: 340px 0px 12px 0px;
   }
   #greeting_name_mobile {
     font-size: 40px;
@@ -415,7 +401,7 @@ breakpoint: 800px
 
 @media(min-width: 600px) {
   #greeting_mobile {
-    margin: 290px 0px 12px 0px;
+    margin-bottom: 12px;
   }
   h1 {
     font-size: 35px;
@@ -456,16 +442,7 @@ breakpoint: 800px
   }
 }
 
-@media(min-width: 640px) {
-  #greeting_mobile {
-    margin: 240px 0px 12px 0px;
-  }
-}
-
 @media(min-width: 700px) {
-  #greeting_mobile {
-    margin: 150px 0px 12px 0px;
-  }
   .toDo-div {
     padding: 50px;
   }
