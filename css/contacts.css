@@ -205,7 +205,7 @@ body {
     color: var(--accent-color-lightblue);
     cursor: pointer;
     fill: var(--accent-color-lightblue);
-    font-weight: 700;
+    text-shadow: 0 0 1px var(--accent-color-lightblue), 0 0 1px var(--accent-color-lightblue);
 }
 
 .info {
