@@ -1,11 +1,12 @@
-let userLogin = true;    // aktuell nur zu Testzwecken auf true; am Ende noch auf false setzen. Wird nur true, wenn UserLogin (also kein GuestLogin)
-let greetedMobile = false;   // Bei LogOut wieder auf false setzen und im localStorage speichern !
+let userLogin = false;       // Wird true, wenn UserLogin (also kein GuestLogin); bei LogOut localStorage löschen: localStorage.removeItem('userLogin')
+let greetedMobile = false;   // Bei LogOut localStorage löschen => localStorage.removeItem('alreadyGreeted') 
 
 
 function initSummary() {
-    greetUser();
     checkLocalStorage();
+    greetUser();
     greetingMobile();
+    saveLoginType();
 }
 
 
@@ -110,8 +111,21 @@ function saveGreeting() {
 }
 
 
+function saveLoginType() {
+    let userLoginAsString = JSON.stringify(userLogin);
+    localStorage.setItem('userLogin', userLoginAsString);
+}
+
+
 function checkLocalStorage() {
     let greetedMobileAsString = localStorage.getItem('alreadyGreeted');
-    greetedMobile = JSON.parse(greetedMobileAsString);
+    if(greetedMobileAsString) {
+        greetedMobile = JSON.parse(greetedMobileAsString);
+    }
+
+    let userLoginAsString = localStorage.getItem('userLogin');
+    if(userLoginAsString) {
+        userLogin = JSON.parse(userLoginAsString);
+    }
 }
 
