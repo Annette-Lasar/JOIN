@@ -162,7 +162,7 @@ body {
 .contact-details {
     display: flex;
     flex-direction: column;
-    gap:21px;
+    gap: 21px;
     position: absolute;
     left: 62px;
 }
@@ -193,7 +193,8 @@ body {
     gap: 16px;
 }
 
-.icon, .icon svg{
+.icon,
+.icon svg {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -201,7 +202,8 @@ body {
     fill: var(--background-color-darkblue);
 }
 
-.icon:hover, .icon:hover svg path {
+.icon:hover,
+.icon:hover svg path {
     color: var(--accent-color-lightblue);
     cursor: pointer;
     fill: var(--accent-color-lightblue);
@@ -211,7 +213,7 @@ body {
 .info {
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: 21px;
 }
 
 .info-sub {
@@ -226,7 +228,15 @@ body {
 
 .info-sub a {
     font-size: 16px;
-    color:var(--accent-color-lightblue);
+    color: var(--accent-color-lightblue);
+}
+
+.vertical-line {
+    display: block;
+}
+
+.horizontal-line {
+    display: none;
 }
 
 @media (max-width: 350px) {
@@ -237,17 +247,72 @@ body {
     }
 }
 
-@media (min-width: 50em) {
+@media (max-width: 1262px) {
+    .contacts-header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .contacts h1 {
+        font-size: 47px;
+        font-weight: 700;
+    }
+
+    .contacts h3 {
+        font-size: 20px;
+        font-weight: 400;
+    }
+
+    .name h3 {
+        font-size: 36px;
+        font-weight: 700;
+        text-wrap: nowrap;
+    }
+
+    .large {
+        min-height: 80px;
+        min-width: 80px;
+    }
+
+    .large h3 {
+        font-size: 27px;
+        font-weight: 400;
+    }
+
+    .vertical-line {
+        display: none;
+    }
+
+    .horizontal-line {
+        display: block;
+        margin-top: 8px;
+    }
+
+    .name {
+        gap: 20px;
+    }
+
+    .icons {
+        display: none;
+    }
+
+    .contact-details h2 {
+        margin: 0;
+    }
+
+}
+
+@media (min-width: 1048px) {
     .contact-list {
         max-width: 456px;
         margin-bottom: 0;
         padding: 0;
-        margin-left: 170px;
-        height: calc(100vh - 80px);
     }
 
-    #contact_list {
-        padding: 0 24px 24px 24px;
+    .contacts {
+        display: block;
     }
 
     .add-contact-button {
@@ -284,8 +349,18 @@ body {
         height: 32px;
     }
 
-    .contacts {
-        display: block;
+}
+
+@media (min-width: 50em) {
+
+    .contact-list {
+        margin-left: 170px;
+        margin-bottom: 0;
+        height: calc(100vh - 79px);
+
     }
 
+    #contact_list {
+        padding: 0 24px 24px 24px;
+    }
 }
