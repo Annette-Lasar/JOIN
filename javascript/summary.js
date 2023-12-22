@@ -1,8 +1,10 @@
-let userLogin = true;
+let userLogin = true;    // aktuell nur zu Testzwecken auf true; am Ende noch auf false setzen. Wird nur true, wenn UserLogin (also kein GuestLogin)
+let greetedMobile = false;   // Bei LogOut wieder auf false setzen und im localStorage speichern !
 
 
 function initSummary() {
     greetUser();
+    getLocalStorage();
     greetingMobile();
 }
 
@@ -52,7 +54,7 @@ function getUserName() {
 
 function greetingMobile() {
     let windowWidth = window.innerWidth;
-    if(windowWidth < 800) {
+    if(windowWidth < 800  && !greetedMobile) {     // Animation nur bei mobilen Geräten und auch nur 1 Mal nach Login
         showMobileWelcomeScreen();
     } else {
         showSummary();
@@ -97,5 +99,19 @@ function mobileScreenAnimation() {
         document.getElementById('main').style.display = 'block';
         document.getElementById('main').classList.add('fadeIn');
     }, 2000);
+    saveGreeting();
+}
+
+
+function saveGreeting() {
+    greetedMobile = true;
+    let greetedMobileAsString = JSON.stringify(greetedMobile);
+    localStorage.setItem('alreadyGreeted', greetedMobileAsString);
+}
+
+
+function getLocalStorage() {
+    let greetedMobileAsString = localStorage.getItem('alreadyGreeted');
+    greetedMobile = JSON.parse(greetedMobileAsString);
 }
 
