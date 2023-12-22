@@ -4,7 +4,7 @@ let greetedMobile = false;   // Bei LogOut wieder auf false setzen und im localS
 
 function initSummary() {
     greetUser();
-    getLocalStorage();
+    checkLocalStorage();
     greetingMobile();
 }
 
@@ -110,7 +110,7 @@ function saveGreeting() {
 }
 
 
-function getLocalStorage() {
+function checkLocalStorage() {
     let greetedMobileAsString = localStorage.getItem('alreadyGreeted');
     greetedMobile = JSON.parse(greetedMobileAsString);
 }
