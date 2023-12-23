@@ -352,7 +352,6 @@ header {
         padding: 24px;
         background-color: var(--accent-color-white);
         position: sticky;
-        top: 1px;
     }
 
     .dark-button {
