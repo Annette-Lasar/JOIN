@@ -1,6 +1,7 @@
 const STORAGE_TOKEN = 'WD1QPQKHI4MOS1DQJR4CO2CZ2PYLN9D1ZQY7FT1H';
 const STORAGE_URL = 'https://remote-storage.developerakademie.org/item';
 
+
 async function init() {
   moveLogoOnStartScreen();
   await includeHTML();
@@ -61,5 +62,16 @@ function checkIfSummaryPage() {
   if (URL.endsWith('summary.html')) {
     initSummary();
   }
+}
+
+
+/* folgende Function ist nur für erfolgreichen USER-Login, NICHT bei GuestLogin !
+*  Name für key 'userLogin' wurde bewusst gewählt, da genau dieser key in summary.js abgerufen wird ( dort in der Function 'checkLocalStorage()' )
+*  Function loginSuccessful() muss noch implementiert werden in index.html  !
+*/
+function loginSuccessful() {
+  let successfulLogin = true;
+  successfulLogin = JSON.stringify(successfulLogin);
+  localStorage.setItem('userLogin', successfulLogin);   
 }
 

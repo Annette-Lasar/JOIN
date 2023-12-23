@@ -118,14 +118,14 @@ function saveLoginType() {
 
 
 function checkLocalStorage() {
-    let greetedMobileAsString = localStorage.getItem('alreadyGreeted');
-    if(greetedMobileAsString) {
-        greetedMobile = JSON.parse(greetedMobileAsString);
-    }
-
     let userLoginAsString = localStorage.getItem('userLogin');
     if(userLoginAsString) {
         userLogin = JSON.parse(userLoginAsString);
+    }
+    
+    let greetedMobileAsString = localStorage.getItem('alreadyGreeted');
+    if(greetedMobileAsString) {
+        greetedMobile = JSON.parse(greetedMobileAsString);
     }
 }
 
