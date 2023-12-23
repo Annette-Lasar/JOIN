@@ -24,6 +24,10 @@ body {
     border-radius: 10px;
 }
 
+header {
+    z-index: 1;
+}
+
 .add-contact {
     height: 3.5em;
     width: 3.5em;
@@ -136,10 +140,13 @@ body {
 }
 
 .contacts {
-    display: none;
+    display: block;
     padding-top: 110px;
     padding-left: 62px;
-    position: relative;
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 79px);
+    background-color: var(--background-color-lightgray);
 }
 
 .contacts h1 {
@@ -239,11 +246,37 @@ body {
     display: none;
 }
 
+#arrow {
+    position: absolute;
+    right: 2em;
+    top: 6em;
+}
+
+#arrow:hover {
+    cursor: pointer;
+}
+
 @media (max-width: 350px) {
     .contact-list {
         margin: 0;
         margin-bottom: 80px;
         padding: 8px;
+    }
+}
+
+@media (max-width: 450px) {
+    .contacts {
+        padding-left: 16px;
+        padding-top: 42px;
+    }
+
+    .contact-details {
+        left: 16px;
+    }
+
+    #arrow {
+        top: 2em;
+        right: 1em;
     }
 }
 
@@ -268,7 +301,6 @@ body {
     .name h3 {
         font-size: 36px;
         font-weight: 700;
-        text-wrap: nowrap;
     }
 
     .large {
@@ -301,7 +333,12 @@ body {
     .contact-details h2 {
         margin: 0;
     }
+}
 
+@media (min-width: 1262px) {
+    #edit_contact_button {
+        display: none !important;
+    }
 }
 
 @media (min-width: 1048px) {
@@ -309,10 +346,6 @@ body {
         max-width: 456px;
         margin-bottom: 0;
         padding: 0;
-    }
-
-    .contacts {
-        display: block;
     }
 
     .add-contact-button {
@@ -349,6 +382,22 @@ body {
         height: 32px;
     }
 
+    .contacts {
+        display: block !important;
+        position: relative;
+        width: 100%;
+        left: 0;
+    }
+
+    #edit_contact_button {
+        display: block;
+        bottom: 2em;
+        right: 2em;
+    }
+
+    #arrow {
+        display: none;
+    }
 }
 
 @media (max-width: 1048px) {
@@ -357,6 +406,12 @@ body {
         bottom: 2em;
         right: 2em;
     }
+
+    .contacts {
+        width: calc(100% - 172px);
+        left: 172px;
+    }
+
 }
 
 @media (max-width: 50em) {
@@ -364,9 +419,20 @@ body {
         bottom: 7em;
         right: 1em;
     }
+
+    .contacts {
+        width: 100%;
+        left: 0;
+    }
+
 }
 
 @media (min-width: 50em) {
+    header {
+        width: calc(100% - 170px);
+        margin-left: 170px;
+        padding-left: 8px;
+    }
 
     .contact-list {
         margin-left: 170px;
@@ -378,5 +444,5 @@ body {
     #contact_list {
         padding: 0 24px 24px 24px;
     }
- 
+
 }

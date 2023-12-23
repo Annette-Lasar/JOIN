@@ -44,7 +44,20 @@ function loadInitials(i) {
 function loadColors() {
     for (let i = 0; i < contacts.length; i++) {
         const color = contacts[i]['color'];
-        document.getElementById("initials" + i).style.backgroundColor = color
+        document.getElementById("initials" + i).style.backgroundColor = color;
     }
+}
+
+function hideContactInfo() {
+    document.getElementById('contacts').style.display = 'none';
+    document.getElementById('edit_contact_button').style.display = 'none';
+}
+
+function showContactInfo(i) {
+    document.getElementById('contacts').style.display = 'block';
+    document.getElementById('edit_contact_button').style.display = 'block';
+    document.getElementById('contact_details').innerHTML = contactInfoTemplate(i);
+    let color = document.getElementById("initials" + i).style.backgroundColor;
+    document.getElementById("color_large" + i).style.backgroundColor = color;
 }
 
