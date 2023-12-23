@@ -65,7 +65,8 @@ function checkIfSummaryPage() {
 }
 
 
-/** folgende Function ist nur für erfolgreichen USER-Login, NICHT bei GuestLogin !
+/** 
+*  folgende Function ist nur für erfolgreichen USER-Login, NICHT bei GuestLogin !
 *  Name für key 'userLogin' wurde bewusst gewählt, da genau dieser key in summary.js abgerufen wird ( dort in der Function 'checkLocalStorage()' )
 *  Function loginSuccessful() muss noch richtig implementiert werden in index.html (vorübergehend zu Testzwecken auf dem Login-Button platziert )
 *  Function ist noch nicht final; zB noch Weiterleitung zu summary.html einbinden
@@ -77,7 +78,8 @@ function loginSuccessful() {
 }
 
 
-/** bei Klick auf 'Logout'
+/** 
+*  bei Klick auf 'Logout'
 *  die beiden keys 'userLogin' und 'alreadyGreeted' im localStorage müssen unbedingt wieder gelöscht werden ( localStorage.removeItem(key) ) 
 *  Function logout() muss noch richtig implementiert werden bei Klick auf Logout (vorübergehend oben im header auf den eigenen Initialien platziert) 
 *  Function noch nicht final; zB muss man wieder zur Anmeldemaske zurückkehren
