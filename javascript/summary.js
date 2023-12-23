@@ -1,5 +1,5 @@
-let userLogin = false;       // Wird true, wenn UserLogin (also kein GuestLogin); bei LogOut localStorage löschen: localStorage.removeItem('userLogin')
-let greetedMobile = false;   // Bei LogOut localStorage löschen => localStorage.removeItem('alreadyGreeted') 
+let userLogin = false;                  // Wird true, wenn UserLogin (also kein GuestLogin)
+let greetedMobile = false;    
 
 
 function initSummary() {
@@ -122,7 +122,7 @@ function checkLocalStorage() {
     if(userLoginAsString) {
         userLogin = JSON.parse(userLoginAsString);
     }
-    
+
     let greetedMobileAsString = localStorage.getItem('alreadyGreeted');
     if(greetedMobileAsString) {
         greetedMobile = JSON.parse(greetedMobileAsString);
