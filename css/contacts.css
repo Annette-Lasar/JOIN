@@ -382,10 +382,12 @@ header {
     }
 
     .contacts {
+        height: auto;
         display: block !important;
         position: relative;
         width: 100%;
         left: 0;
+        overflow: hidden;
     }
 
     #edit_contact_button {
@@ -397,6 +399,19 @@ header {
     #arrow {
         display: none;
     }
+
+    .slide-in {
+        animation: 200ms slideIn ease-in-out;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(600px);
+    }
+    to {
+        transform: translateX(0);
+    }
 }
 
 @media (max-width: 1048px) {
@@ -407,6 +422,7 @@ header {
     }
 
     .contacts {
+        display: none;
         width: calc(100% - 172px);
         left: 172px;
     }
@@ -420,6 +436,7 @@ header {
     }
 
     .contacts {
+        display: none;
         width: 100%;
         left: 0;
     }

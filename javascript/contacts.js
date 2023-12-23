@@ -51,11 +51,14 @@ function loadColors() {
 function hideContactInfo() {
     document.getElementById('contacts').style.display = 'none';
     document.getElementById('edit_contact_button').style.display = 'none';
+    document.getElementById('contact_details').style.display = 'none';
 }
 
 function showContactInfo(i) {
     document.getElementById('contacts').style.display = 'block';
     document.getElementById('edit_contact_button').style.display = 'block';
+    document.getElementById('contact_details').style.display = 'flex';
+    document.getElementById('contact_details').classList.add('slide-in');
     document.getElementById('contact_details').innerHTML = contactInfoTemplate(i);
     let color = document.getElementById("initials" + i).style.backgroundColor;
     document.getElementById("color_large" + i).style.backgroundColor = color;
