@@ -2,6 +2,7 @@ async function init() {
   moveLogoOnStartScreen();
   await includeHTML();
   hideHelpLinkOnHelpPage();
+  checkIfStartScreen();
   checkIfSummaryPage();
 }
 
@@ -57,6 +58,14 @@ function checkIfSummaryPage() {
   const URL = window.location.href;
   if (URL.endsWith('summary.html')) {
     initSummary();
+  }
+}
+
+
+function checkIfStartScreen() {
+  const URL = window.location.href;
+  if (URL.endsWith('index.html')) {
+    initRegister();
   }
 }
 

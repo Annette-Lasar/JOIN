@@ -1,7 +1,12 @@
+let registerBtn = document.getElementById('register_btn');
+let fullName = document.getElementById('name_SignUp');
+let email = document.getElementById('email_SignUp');
+let password = document.getElementById('password_SignUp');
+let confirmPassword = document.getElementById('confirmPassword_SignUp');
 let users = [];
 
 
-async function init(){
+async function initRegister(){
     loadUsers();
 }
 
@@ -14,12 +19,13 @@ async function loadUsers(){
     }
 }
 
-
+// hier noch zusätzlich prüfen, ob password mit confirmPassword übereinstimmt !
 async function register() {
     registerBtn.disabled = true;
     users.push({
+        name: fullName.value,
         email: email.value,
-        password: password.value,
+        password: password.value
     });
     await setItem('users', JSON.stringify(users));
     resetForm();
@@ -27,8 +33,10 @@ async function register() {
 
 
 function resetForm() {
+    fullName.value = '';
     email.value = '';
     password.value = '';
+    confirmPassword.value = '';
     registerBtn.disabled = false;
 }
 
