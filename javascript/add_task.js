@@ -113,29 +113,29 @@ function renderAndInsertSubtasks() {
   SUBTASK_CONTAINER_SMALL.innerHTML = renderSubtasks();
 }
 
-function generateSubtaskHTML(i, subtask) {
-  return /* html */ `
-    <li id="subtask_entry${i}">${subtask}
+/* function generateSubtaskHTML(i, subtask) {
+  return `
+    <div id="subtask_entry${i}" class="subtask-list">${subtask}
       <div class="subtask-list-wrapper">
-        <img onclick="editSubtask(${i})" src="../icons/edit_dark.svg">
+        <img onclick="editSubtask(${i}, '${subtask}')" src="../icons/edit_dark.svg">
         <div class="subtask-separator-line"></div>
         <img onclick="deleteSubtask(${i})" src="../icons/delete.svg">
       </div>
-    </li>
+    </div>
   `;
-}
+} */
 
 function renderSubtasks() {
-  let html = `<ul id="subtask_unordered_list_big" class="subtask-unordered-list">`;
+  let html = `<div id="subtask_unordered_list_big" class="subtask-unordered-list">`;
   for (let i = 0; i < subTasks.length; i++) {
     let subtask = subTasks[i];
     html += generateSubtaskHTML(i, subtask);
   }
-  html += `</ul>`;
+  html += `</div>`;
   return html;
 }
 
-function editSubtask(i) {
+/* function editSubtask(i) {
   let subtaskElement = document.getElementById(`subtask_entry${i}`);
   let originalSubtaskElement = subtaskElement.textContent.trim();
 
@@ -183,84 +183,45 @@ function editSubtask(i) {
     newInput.parentNode.replaceChild(newSubtaskElement, newInput);
     document.body.focus();
   });
-
-  // Fokussiere das Textfeld für eine bessere Benutzererfahrung
-  /* newInput.focus(); */
-
-
-setTimeout(() => {
   newInput.focus();
-}, 20);
+} */
+
+/* function editSubtask(i, subtask) {
+  let subtaskElement = document.getElementById(`subtask_entry${i}`);
+  subtaskElement.innerHTML = generateInputEditHTML(i, subtask);
 }
 
 
-/* let isEditingSubtask = false; // Neue Variable für den Fokusstatus
+function generateInputEditHTML(i, subtask) {
+  return `
+    <input type="text" id="editInput${i}" value="${subtask}">
+  `;
+}
+ */
 
-function editSubtask(i) {
-  if (isEditingSubtask) return; // Wenn bereits ein Inputfeld aktiv ist, breche ab
+let containerIndex = 0; // Startindex für Container
 
-  isEditingSubtask = true; // Setze den Fokusstatus auf true
+function generateSubtaskHTML(i, subtask) {
+  containerIndex++;
+  const containerID = `subtask_container${containerIndex}`;
+  return /* html */ `
+    <div id="${containerID}" class="subtask-list">${subtask}
+      <div class="subtask-list-wrapper">
+        <img onclick="editSubtask('${containerID}', '${subtask}')" src="../icons/edit_dark.svg">
+        <div class="subtask-separator-line"></div>
+        <img onclick="deleteSubtask('${containerID}')" src="../icons/delete.svg">
+      </div>
+    </div>
+  `;
+}
 
-  let subtaskElement = document.getElementById(`subtask_entry${i}`);
-  let originalSubtaskElement = subtaskElement.textContent.trim();
-  console.log(originalSubtaskElement);
+function generateInputEditHTML(containerID, subtask) {
+  return /* html */ `
+    <input type="text" id="${containerID}_editInput" value="${subtask}" class="edit-input">
+  `;
+}
 
-  // Erstelle ein neues li-Element für den editierten Text
-  let newSubtaskElement = document.createElement('li');
-  newSubtaskElement.id = `subtask_entry${i}`;
-  newSubtaskElement.classList.add('subtask-list-item');
-
-  // Erstelle ein neues input-Element für die Bearbeitung
-  let newInput = document.createElement('input');
-  newInput.classList.add('custom-input-subtask');
-  newInput.id = `subtask_input${i}`;
-  newInput.value = originalSubtaskElement;
-
-  // Erstelle ein neues div-Element für Icons und Text
-  let newDiv = document.createElement('div');
-  newDiv.classList.add('subtask-list-wrapper');
-
-  // Füge das Bearbeiten-Icon hinzu
-  let editIcon = document.createElement('img');
-  editIcon.src = '../icons/edit_dark.svg';
-  editIcon.addEventListener('click', () => editSubtask(i));
-  newDiv.appendChild(editIcon);
-
-  // Füge eine Trennlinie hinzu
-  let separatorLine = document.createElement('div');
-  separatorLine.classList.add('subtask-separator-line');
-  newDiv.appendChild(separatorLine);
-
-  // Füge das Löschen-Icon hinzu
-  let deleteIcon = document.createElement('img');
-  deleteIcon.src = '../icons/delete.svg';
-  deleteIcon.addEventListener('click', () => deleteSubtask(i));
-  newDiv.appendChild(deleteIcon);
-
-  // Füge das div-Element zum li-Element hinzu
-  newSubtaskElement.appendChild(newDiv);
-
-  // Füge das input-Element zum li-Element hinzu
-  newSubtaskElement.appendChild(newInput);
-
-  // Setze den ursprünglichen Text als Inhalt des li-Elements
-  newSubtaskElement.textContent = originalSubtaskElement;
-
-  // Ersetze das ursprüngliche Element durch das bearbeitete Element
-  subtaskElement.parentNode.replaceChild(newSubtaskElement, subtaskElement);
-
-  // Fokussiere das Textfeld für eine bessere Benutzererfahrung
-  newInput.focus();
-
-  // Füge ein Event-Handler für das Verlassen des Textfelds hinzu
-  newInput.addEventListener('blur', function() {
-    updatedSubtask = newInput.value;
-    subTasks[i] = updatedSubtask;
-
-    // ... (Ihr restlicher Code bleibt unverändert)
-
-    // Setze den Fokusstatus auf false
-    isEditingSubtask = false;
-  });
-} */
-
+function editSubtask(containerID, subtask) {
+  let subtaskElement = document.getElementById(containerID);
+  subtaskElement.innerHTML = generateInputEditHTML(containerID, subtask);
+}
