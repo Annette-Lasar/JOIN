@@ -4,6 +4,7 @@ async function init() {
   hideHelpLinkOnHelpPage();
   checkIfStartScreen();
   checkIfSummaryPage();
+  checkIfBoardPage();
 }
 
 async function includeHTML() {
@@ -66,6 +67,14 @@ function checkIfStartScreen() {
   const URL = window.location.href;
   if (URL.endsWith('index.html')) {
     initRegister();
+  }
+}
+
+
+function checkIfBoardPage() {
+  const URL = window.location.href;
+  if(URL.endsWith('board.html')) {
+    initBoard();
   }
 }
 
