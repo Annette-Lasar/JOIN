@@ -21,21 +21,17 @@ let currentDraggedElement;
 
 function initBoard() {
     let open = todos.filter(t => t['category'] == 'open');
-
     document.getElementById('open').innerHTML = '';
-
-    for (let index = 0; index < open.length; index++) {
-        const element = open[index];
+    for (let i = 0; i < open.length; i++) {
+        const element = open[i];
         document.getElementById('open').innerHTML += generateTodoHTML(element);
     }
 
     let closed = todos.filter(t => t['category'] == 'closed');
-
     document.getElementById('closed').innerHTML = '';
-
-    for (let index = 0; index < closed.length; index++) {
-        const element = closed[index];
-        document.getElementById('closed').innerHTML += generateTodoHTML(element);
+    for (let j = 0; j < closed.length; j++) {
+    const element = closed[j];
+    document.getElementById('closed').innerHTML += generateTodoHTML(element);
     }
 }
 
