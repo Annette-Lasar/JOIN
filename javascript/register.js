@@ -29,6 +29,7 @@ async function register() {
     });
     await setItem('users', JSON.stringify(users));
     resetForm();
+    successfullyRegistered();
 }
 
 
@@ -38,5 +39,14 @@ function resetForm() {
     password.value = '';
     confirmPassword.value = '';
     registerBtn.disabled = false;
+}
+
+
+function successfullyRegistered() {
+    document.getElementById('messageBox').style.display = 'block';
+    setTimeout(() => {
+        document.getElementById('messageBox').style.display = 'none';
+        toggleSignUpAndLogin();
+    }, 2000); 
 }
 

@@ -7,6 +7,7 @@ async function init() {
   checkIfBoardPage();
 }
 
+
 async function includeHTML() {
   let includeElements = document.querySelectorAll('[w3-include-html]');
   for (let i = 0; i < includeElements.length; i++) {
@@ -20,6 +21,7 @@ async function includeHTML() {
     }
   }
 }
+
 
 function moveLogoOnStartScreen() {
   const URL = window.location.href;
@@ -38,6 +40,7 @@ function moveLogoOnStartScreen() {
   }
 }
 
+
 function hideHelpLinkOnHelpPage() {
   let headerHelpIcon = document.getElementById('header_help_icon');
   const URL = window.location.href;
@@ -45,6 +48,7 @@ function hideHelpLinkOnHelpPage() {
     headerHelpIcon.classList.add('opaque');
   }
 }
+
 
 function toggleSignUpAndLogin() {
   const LOGIN_CONTENT_BOX = document.getElementById('login_content');
@@ -54,6 +58,7 @@ function toggleSignUpAndLogin() {
   SIGN_UP_CONTENT_BOX.classList.toggle('d-none');
   NOT_A_JOIN_USER_BOX.classList.toggle('d-none');
 }
+
 
 function checkIfSummaryPage() {
   const URL = window.location.href;
@@ -76,19 +81,6 @@ function checkIfBoardPage() {
   if(URL.endsWith('board.html')) {
     initBoard();
   }
-}
-
-
-/** 
-*  folgende Function ist nur für erfolgreichen USER-Login, NICHT bei GuestLogin !
-*  Name für key 'userLogin' wurde bewusst gewählt, da genau dieser key in summary.js abgerufen wird ( dort in der Function 'checkLocalStorage()' )
-*  Function loginSuccessful() muss noch richtig implementiert werden in index.html (vorübergehend zu Testzwecken auf dem Login-Button platziert )
-*  Function ist noch nicht final; zB noch Weiterleitung zu summary.html einbinden
-*/
-function loginSuccessful() {
-  let successfulLogin = true;
-  successfulLogin = JSON.stringify(successfulLogin);
-  localStorage.setItem('userLogin', successfulLogin);   
 }
 
 

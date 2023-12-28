@@ -329,6 +329,14 @@ button {
   display: none;
 }
 
+.messageBox {
+  display: none;
+  text-align: center;
+  border: 3px solid var(--background-color-darkblue);
+  border-radius: 14px;
+  padding: 16px;
+}
+
 /* ====================================================
 media queries
 ====================================================== */

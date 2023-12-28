@@ -12,6 +12,7 @@
     <script src="../javascript/script.js" defer></script>
     <script src="../javascript/storage.js" defer></script>
     <script src="../javascript/register.js" defer></script>
+    <script src="../javascript/login.js" defer></script>
   </head>
   <body onload="init()">
     <div id="login_page" class="login-page">
@@ -69,7 +70,7 @@
       </svg>
       <div class="content animate-content">
         <div id="login_content" class="login-content">
-          <form action="">
+          <form id="login_Form" onsubmit="login()">
             <div class="form-content-without-sign-up-button">
               <div class="headline-login-content">
                 <h1>Log in</h1>
@@ -77,10 +78,10 @@
               </div>
               <div class="login-input-and-button-wrapper">
                 <div class="login-input-wrapper">
-                  <input required type="email" placeholder="Email" />
+                  <input id="email_Login" required type="email" placeholder="Email" />
                 </div>
                 <div class="login-input-wrapper">
-                  <input required type="password" placeholder="Password" />
+                  <input id="password_Login" required type="password" placeholder="Password" />
                 </div>
                 <div class="remember-user">
                   <input id="remember_user" type="checkbox" />
@@ -90,11 +91,10 @@
                   <button
                     type="submit"
                     class="button-login dark-button"
-                    onclick="loginSuccessful()"
                   >
                     Log in
                   </button>
-                  <button type="submit" class="button-guest-login light-button">
+                  <button type="button" class="button-guest-login light-button">
                     <a href="summary.html" class="light-button-link"
                       >Guest Log in</a
                     >
@@ -105,7 +105,7 @@
             <div id="sign_up_wrapper" class="sign-up-wrapper">
               <p>Not a Join user?</p>
               <button
-                onclick="toggleSignUpAndLogin()"
+                onclick= "toggleSignUpAndLogin()"
                 class="button-sign-up dark-button"
               >
                 Sign up
@@ -125,7 +125,7 @@
             </div>
             <div class="blue-line"></div>
           </div>
-          <form onsubmit="register(); return false;">
+          <form id="signUp_Form" onsubmit="register(); return false;">
             <div class="login-input-wrapper">
               <input
                 required
@@ -175,6 +175,7 @@
               </button>
             </div>
           </form>
+          <div id="messageBox" class="messageBox">Successfully Registered !</div>
         </div>
         <!-- <div id="sign_up_wrapper" class="sign-up-wrapper">
           <p>Not a Join user?</p>
