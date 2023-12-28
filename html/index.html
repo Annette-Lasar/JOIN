@@ -69,51 +69,94 @@
       </svg>
       <div class="content animate-content">
         <div id="login_content" class="login-content">
-          <div class="headline-login-content">
-            <h1>Log in</h1>
-            <div class="blue-line"></div>
-          </div>
           <form action="">
-            <div class="login-input-wrapper">
-              <input required type="email" placeholder="Email" />
+            <div class="form-content-without-sign-up-button">
+              <div class="headline-login-content">
+                <h1>Log in</h1>
+                <div class="blue-line"></div>
+              </div>
+              <div class="login-input-and-button-wrapper">
+                <div class="login-input-wrapper">
+                  <input required type="email" placeholder="Email" />
+                </div>
+                <div class="login-input-wrapper">
+                  <input required type="password" placeholder="Password" />
+                </div>
+                <div class="remember-user">
+                  <input id="remember_user" type="checkbox" />
+                  <label for="remember_user">Remember me</label>
+                </div>
+                <div class="button-wrapper-log-in">
+                  <button
+                    type="submit"
+                    class="button-login dark-button"
+                    onclick="loginSuccessful()"
+                  >
+                    Log in
+                  </button>
+                  <button type="submit" class="button-guest-login light-button">
+                    <a href="summary.html" class="light-button-link"
+                      >Guest Log in</a
+                    >
+                  </button>
+                </div>
+              </div>
             </div>
-            <div class="login-input-wrapper">
-              <input required type="password" placeholder="Password" />
-            </div>
-            <div class="remember-user">
-              <input id="remember_user" type="checkbox" />
-              <label for="remember_user">Remember me</label>
+            <div id="sign_up_wrapper" class="sign-up-wrapper">
+              <p>Not a Join user?</p>
+              <button
+                onclick="toggleSignUpAndLogin()"
+                class="button-sign-up dark-button"
+              >
+                Sign up
+              </button>
             </div>
           </form>
-          <div class="button-wrapper-log-in">
-            <button type="submit" class="button-login dark-button" onclick="loginSuccessful()">
-              Log in
-            </button>
-            <button type="submit" class="button-guest-login light-button">
-              <a href="summary.html">Guest Log in</a>
-            </button>
-          </div>
         </div>
         <div id="sign_up_content" class="sign-up-content d-none">
           <div class="headline-sign-up-content">
             <div class="sign-up-headline-wrapper">
-              <img onclick="toggleSignUpAndLogin()" src="../icons/arrow_left_line_variant2.svg" alt="" />
+              <img
+                onclick="toggleSignUpAndLogin()"
+                src="../icons/arrow_left_line_variant2.svg"
+                alt=""
+              />
               <h1>Sign up</h1>
             </div>
             <div class="blue-line"></div>
           </div>
           <form onsubmit="register(); return false;">
             <div class="login-input-wrapper">
-              <input required id="name_SignUp" type="text" placeholder="First and last name" />
+              <input
+                required
+                id="name_SignUp"
+                type="text"
+                placeholder="First and last name"
+              />
             </div>
             <div class="login-input-wrapper">
-              <input required id="email_SignUp" type="email" placeholder="Email" />
+              <input
+                required
+                id="email_SignUp"
+                type="email"
+                placeholder="Email"
+              />
             </div>
             <div class="login-input-wrapper">
-              <input required id="password_SignUp" type="password" placeholder="Password" />
+              <input
+                required
+                id="password_SignUp"
+                type="password"
+                placeholder="Password"
+              />
             </div>
             <div class="login-input-wrapper">
-              <input required id="confirmPassword_SignUp" type="password" placeholder="Confirm password" />
+              <input
+                required
+                id="confirmPassword_SignUp"
+                type="password"
+                placeholder="Confirm password"
+              />
             </div>
             <div class="remember-user">
               <input id="accept_policy" type="checkbox" required />
@@ -122,17 +165,21 @@
                 <a href="privacy_policy.html">Privacy policy</a></label
               >
             </div>
+            <div class="button-wrapper-sign-up">
+              <button
+                id="register_btn"
+                type="submit"
+                class="button-login dark-button"
+              >
+                Sign up
+              </button>
+            </div>
           </form>
-          <div class="button-wrapper-sign-up">
-            <button id="register_btn" type="submit" class="button-login dark-button">
-              Sign up
-            </button>
-          </div>
         </div>
-        <div id="sign_up_wrapper" class="sign-up-wrapper">
+        <!-- <div id="sign_up_wrapper" class="sign-up-wrapper">
           <p>Not a Join user?</p>
           <button onclick="toggleSignUpAndLogin()" class="button-sign-up dark-button">Sign up</button>
-        </div>
+        </div> -->
         <div class="legal-wrapper">
           <a href="privacy_policy.html">Privacy Policy</a>
           <a href="legal_notice.html">Legal Notice</a>
