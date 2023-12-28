@@ -8,7 +8,10 @@
     <link rel="stylesheet" href="../css/reset_stylesheet.css" />
     <link rel="stylesheet" href="../css/fonts.css" />
     <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/board.css" />
     <script src="../javascript/script.js" defer></script>
+    <script src="../javascript/storage.js" defer></script>
+    <script src="../javascript/board.js" defer></script>
   </head>
   <body onload="init()">
     <header>
@@ -16,23 +19,8 @@
     </header>
     <div class="page">
       <h1>Board</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium
-        facere nisi, veniam omnis aliquam alias repellat atque, quod, in
-        voluptates fugiat? Quos neque nostrum maiores in necessitatibus
-        voluptatem, minima distinctio?
-      </p>
-      <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptas
-        repellendus voluptates error magni laudantium, quos assumenda! Non,
-        numquam omnis. Nobis ratione dicta debitis distinctio vero odio
-        perferendis eum adipisci numquam!
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora,
-        dolorum aliquam ut cumque praesentium illum cum eligendi labore, quidem
-        placeat provident atque laborum dolore nam non vel nemo minima dolores!
-      </p>
+      <div class="drag-area" id="open" ondrop="moveTo('open')" ondragleave="removeHighlight('open')" ondragover="allowDrop(event); highlight('open')"></div>
+      <div class="drag-area" id="closed" ondrop="moveTo('closed')" ondragleave="removeHighlight('closed')" ondragover="allowDrop(event); highlight('closed')"></div>
     </div>
     <nav>
       <div w3-include-html="../templates/navigation_bar.html"></div>

@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/login.css" />
     <script src="../javascript/script.js" defer></script>
+    <script src="../javascript/storage.js" defer></script>
+    <script src="../javascript/register.js" defer></script>
   </head>
   <body onload="init()">
     <div id="login_page" class="login-page">
@@ -73,10 +75,10 @@
           </div>
           <form action="">
             <div class="login-input-wrapper">
-              <input type="email" placeholder="Email" />
+              <input required type="email" placeholder="Email" />
             </div>
             <div class="login-input-wrapper">
-              <input type="password" placeholder="Password" />
+              <input required type="password" placeholder="Password" />
             </div>
             <div class="remember-user">
               <input id="remember_user" type="checkbox" />
@@ -100,18 +102,18 @@
             </div>
             <div class="blue-line"></div>
           </div>
-          <form action="">
+          <form onsubmit="register(); return false;">
             <div class="login-input-wrapper">
-              <input type="text" placeholder="First and last name" />
+              <input required id="name_SignUp" type="text" placeholder="First and last name" />
             </div>
             <div class="login-input-wrapper">
-              <input type="email" placeholder="Email" />
+              <input required id="email_SignUp" type="email" placeholder="Email" />
             </div>
             <div class="login-input-wrapper">
-              <input type="password" placeholder="Password" />
+              <input required id="password_SignUp" type="password" placeholder="Password" />
             </div>
             <div class="login-input-wrapper">
-              <input type="password" placeholder="Confirm password" />
+              <input required id="confirmPassword_SignUp" type="password" placeholder="Confirm password" />
             </div>
             <div class="remember-user">
               <input id="accept_policy" type="checkbox" required />
@@ -122,7 +124,7 @@
             </div>
           </form>
           <div class="button-wrapper-sign-up">
-            <button type="submit" class="button-login dark-button">
+            <button id="register_btn" type="submit" class="button-login dark-button">
               Sign up
             </button>
           </div>

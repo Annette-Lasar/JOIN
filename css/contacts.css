@@ -351,13 +351,49 @@ header {
 input {
     display: flex;
     height: 41px;
-    padding: 13px 21px;
+    padding: 10px 21px;
     align-items: center;
     gap: 10px;
     align-self: stretch;
     border-radius: 10px;
     border: 1px solid var(--Style, #D1D1D1);
     background: #FFF;
+    color: var(--black, #000);
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+}
+
+input::placeholder {
+    color: var(--Style, #D1D1D1);
+    position: relative;
+    top: 2px;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+}
+
+input:focus-visible {
+    outline: var(--accent-color-lightblue) solid 1px;
+}
+
+#add_name {
+    background: url(../icons/person.png) no-repeat scroll;
+    background-position: top 12px right 21px;
+}
+
+#add_email {
+    background: url(../icons/mail.png) no-repeat scroll;
+    background-position: top 12px right 21px;
+}
+
+#add_phone {
+    background: url(../icons/call.png) no-repeat scroll;
+    background-position: top 8px right 21px;
 }
 
 @media (max-width: 350px) {

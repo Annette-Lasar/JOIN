@@ -14,6 +14,8 @@ function greetUser() {
     document.getElementById('greeting').innerHTML = getDaytime();  
     if(userLogin) {
         document.getElementById('greeting_name').innerHTML = 'Sofia Müller';  // = getUserName();  
+    } else {
+        document.getElementById('greeting_name').innerHTML = 'Guest';
     }
 }
 
@@ -27,23 +29,11 @@ function getDaytime() {
 
 function greet(dayTime) {
     if(dayTime < 12) {                 
-        if(userLogin){
-            return 'Good morning,'
-        } else {
-            return 'Good morning'
-        }
+        return 'Good morning,'
     } else if (dayTime >= 12 && dayTime < 18) {
-        if(userLogin) {
-            return 'Good afternoon,'
-        } else {
-            return 'Good afternoon'
-        }
+        return 'Good afternoon,'  
     } else {
-        if(userLogin) {
-            return 'Good evening,'
-        } else {
-            return 'Good evening'
-        }
+        return 'Good evening,'
     }
 }
 
@@ -65,12 +55,8 @@ function greetingMobile() {
 
 function showMobileWelcomeScreen() {
     let greeting = document.getElementById('greeting').innerHTML;
-        if(userLogin) {
-            greetUserMobile(greeting);
-        } else {
-            greetGuestMobile(greeting);
-        }
-        mobileScreenAnimation();
+    greetMobile(greeting);
+    mobileScreenAnimation();
 }
 
 
@@ -80,15 +66,10 @@ function showSummary() {
 }
 
 
-function greetUserMobile(greeting) {
+function greetMobile(greeting) {
     document.getElementById('greeting_mobile').innerHTML = greeting;
     let greetingName = document.getElementById('greeting_name').innerHTML;
     document.getElementById('greeting_name_mobile').innerHTML = greetingName;
-}
-
-
-function greetGuestMobile(greeting) {
-    document.getElementById('greeting_mobile').innerHTML = `${greeting}!`;
 }
 
 
