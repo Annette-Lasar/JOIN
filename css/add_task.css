@@ -166,8 +166,11 @@ li:hover,
   transform: rotate(180deg);
 }
 
+/* -------------------------------------------------------------------------------------
+subtasks section
+---------------------------------------------------------------------------------------- */
 .subtask-container {
-  margin: 0 0 4em;
+  margin: 0 0 2em;
 }
 
 .sub-task-wrapper {
@@ -186,7 +189,8 @@ li:hover,
   outline: var(--accent-color-anthracite) 2px solid;
 }
 
-.sub-task-wrapper img {
+.sub-task-wrapper img,
+.close-and-check-wrapper-edit-subtask img {
   cursor: pointer;
 }
 
@@ -205,22 +209,26 @@ li:hover,
   gap: 8px;
 }
 
-.close-and-check-wrapper {
+.close-and-check-wrapper,
+.close-and-check-wrapper-edit-subtask {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
 }
 
-.cancel-subtask {
+.cancel-subtask,
+.cancel-edit-subtask {
   height: 16px;
 }
 
-.check-subtask {
+.check-subtask,
+.check-edit-subtask {
   height: 10px;
 }
 
-.check-subtask {
+.check-subtask,
+.check-edit-subtask {
   filter: invert(1);
 }
 
@@ -228,20 +236,18 @@ li:hover,
   display: none;
 }
 
-.subtask-unordered-list {
-  overflow-y: auto;
-}
-
-.subtask-list::before {
-  content: '\2022'; 
+.subtask-list-small::before,
+.subtask-list-big::before {
+  content: '\2022';
   margin-right: 8px;
 }
 
-.subtask-unordered-list::-webkit-scrollbar {
+.subtask-container-big::-webkit-scrollbar {
   width: 12px;
 }
 
-.subtask-list {
+.subtask-list-small,
+.subtask-list-big {
   padding: 4px;
   display: flex;
   align-items: center;
@@ -252,36 +258,60 @@ li:hover,
   border-radius: 4px;
 }
 
-.subtask-list:hover {
+.subtask-list-small:hover,
+.subtask-list-big:hover {
   background-color: var(--background-color-mediumgray);
 }
 
-.subtask-list-wrapper {
+.subtask-button-wrapper-small,
+.subtask-button-wrapper-big {
   width: 40px;
   margin-left: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.subtask-button-wrapper-big {
   opacity: 0;
   transition: opacity 0.3s;
 }
 
-.subtask-list:hover .subtask-list-wrapper {
+.subtask-list-big:hover .subtask-button-wrapper-big {
   opacity: 1;
 }
 
-.subtask-list-wrapper img:first-of-type {
+.subtask-button-wrapper-small img:first-of-type,
+.subtask-button-wrapper-big img:first-of-type {
   height: 16px;
   cursor: pointer;
 }
 
-.subtask-list-wrapper img:last-of-type {
+.subtask-button-wrapper-small img:last-of-type,
+.subtask-button-wrapper-big img:last-of-type {
   height: 14px;
   cursor: pointer;
 }
 
-.edit-input {
+.edit-subtask-wrapper {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.edit-input {
+  flex: 1;
+}
+
+.edit-subtask-button {
+  padding: 0.2em 0.4em;
+  font-weight: 700;
+  background-color: var(--background-color-darkblue);
+  color: var(--accent-color-white);
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .subtask-separator-line {
@@ -387,9 +417,8 @@ breakpoint: 50em
     background-color: var(--accent-color-gray);
   }
 
-  .subtask-unordered-list {
+  .subtask-container-big {
     height: 120px;
-    list-style: disc;
     overflow-y: auto;
   }
 

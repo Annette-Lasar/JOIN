@@ -1,11 +1,14 @@
 let subTasks = [];
+let taskCategories = ['Technical Task', 'User Story'];
 let updatedSubtask;
-const SUBTASK_CONTAINER_BIG = document.getElementById('subtask_container_big');
+let containerIndex = 0;
 const SUBTASK_CONTAINER_SMALL = document.getElementById(
   'subtask_container_small'
 );
+const SUBTASK_CONTAINER_BIG = document.getElementById('subtask_container_big');
 
 function initTasks() {
+  loadSubtasks();
   init();
   showAndHideBoxesAccordingToScreenSize();
   checkforAddTaskPage();
@@ -64,6 +67,14 @@ function checkforAddTaskPage() {
 
 checkforAddTaskPage();
 
+/**
+ * Shows two buttons that enable the user to either refuse or accept
+ * the input value as a new subtask
+ * @param {string} wrapperId - id of the div element that contains the x and the accept icon
+ * The id can either refer to the div element in the mobile view or the one in the desktop view
+ * @param {string} plusIconId - id of the plus icon (either mobile or desktop) 
+ * that holds the onclick function
+ */
 function showCancelAndAcceptSubtask(wrapperId, plusIconId) {
   const SUBTASK_PLUS_ICON = document.getElementById(plusIconId);
   const CLOSE_AND_CHECK_WRAPPER = document.getElementById(wrapperId);
@@ -71,6 +82,13 @@ function showCancelAndAcceptSubtask(wrapperId, plusIconId) {
   SUBTASK_PLUS_ICON.classList.add('d-none');
 }
 
+/**
+ * This function clears the input field if the user wants to abort the operation.
+ * @param {string} inputId - All these IDs can either refer to the html element for the
+ * mobile view (small) or for the desktop view (big)
+ * @param {string} wrapperId - see above
+ * @param {string} plusIconId - see above
+ */
 function clearSubtask(inputId, wrapperId, plusIconId) {
   const SUBTASK_INPUT_BOX = document.getElementById(inputId);
   const CLOSE_AND_CHECK_WRAPPER = document.getElementById(wrapperId);
@@ -79,6 +97,11 @@ function clearSubtask(inputId, wrapperId, plusIconId) {
   hideCancelAndAcceptSubtask(CLOSE_AND_CHECK_WRAPPER, SUBTASK_PLUS_ICON);
 }
 
+/**
+ * This function returns to the view with the plus icon instead of the x or accept icon
+ * @param {*} CLOSE_AND_CHECK_WRAPPER 
+ * @param {*} SUBTASK_PLUS_ICON 
+ */
 function hideCancelAndAcceptSubtask(
   CLOSE_AND_CHECK_WRAPPER,
   SUBTASK_PLUS_ICON
@@ -87,141 +110,150 @@ function hideCancelAndAcceptSubtask(
   SUBTASK_PLUS_ICON.classList.remove('d-none');
 }
 
+/**
+ * With this function the user can delete a certain subtask.
+ * @param {integer} i - This is the index that refers to the current subtask.
+ */
+function deleteSubtask(i) {
+  subTasks.splice(i, 1);
+  renderSubtasks();
+  saveSubtasks();
+}
+
+
+/**
+ * With this function the user can add subtasks which are shown in a list underneath
+ * the input field. 
+ * @param {string} inputId - All these strings refer to IDs that are transferred as 
+ * parameters in the onclick functions in the html code. There are two different 
+ * parameters ('small' and 'big') according to whether the function is executed in 
+ * the mobile or the desktop version of the app.
+ * @param {string} wrapperId - see above
+ * @param {string} plusIconId - see above
+ */
 function addSubtask(inputId, wrapperId, plusIconId) {
   const SUBTASK_INPUT_BOX = document.getElementById(inputId);
   const CLOSE_AND_CHECK_WRAPPER = document.getElementById(wrapperId);
   const SUBTASK_PLUS_ICON = document.getElementById(plusIconId);
-  SUBTASK_CONTAINER_BIG.innerHTML = '';
-  SUBTASK_CONTAINER_SMALL.innerHTML = '';
 
   if (SUBTASK_INPUT_BOX.value !== '') {
     subTasks.push(SUBTASK_INPUT_BOX.value);
+    console.log('Subtask-Array: ', subTasks);
+  } else {
+    alert('Bitte geben Sie Text ein.');
   }
-
-  renderAndInsertSubtasks();
+  saveSubtasks();
+  renderSubtasks();
   SUBTASK_INPUT_BOX.value = '';
   hideCancelAndAcceptSubtask(CLOSE_AND_CHECK_WRAPPER, SUBTASK_PLUS_ICON);
 }
 
-function deleteSubtask(i) {
-  subTasks.splice(i, 1);
-  renderAndInsertSubtasks();
-}
 
-function renderAndInsertSubtasks() {
-  SUBTASK_CONTAINER_BIG.innerHTML = renderSubtasks();
-  SUBTASK_CONTAINER_SMALL.innerHTML = renderSubtasks();
-}
-
-/* function generateSubtaskHTML(i, subtask) {
-  return `
-    <div id="subtask_entry${i}" class="subtask-list">${subtask}
-      <div class="subtask-list-wrapper">
-        <img onclick="editSubtask(${i}, '${subtask}')" src="../icons/edit_dark.svg">
-        <div class="subtask-separator-line"></div>
-        <img onclick="deleteSubtask(${i})" src="../icons/delete.svg">
-      </div>
-    </div>
-  `;
-} */
-
+/**
+ * With this function the subtasks of the array subTasks are rendered in the browser.
+ */
 function renderSubtasks() {
-  let html = `<div id="subtask_unordered_list_big" class="subtask-unordered-list">`;
+  SUBTASK_CONTAINER_SMALL.innerHTML = '';
+  SUBTASK_CONTAINER_BIG.innerHTML = '';
   for (let i = 0; i < subTasks.length; i++) {
     let subtask = subTasks[i];
-    html += generateSubtaskHTML(i, subtask);
+    SUBTASK_CONTAINER_SMALL.innerHTML += generateSubtaskHTML(
+      i,
+      subtask,
+      'small'
+    );
+    SUBTASK_CONTAINER_BIG.innerHTML += generateSubtaskHTML(i, subtask, 'big');
   }
-  html += `</div>`;
-  return html;
-}
-
-/* function editSubtask(i) {
-  let subtaskElement = document.getElementById(`subtask_entry${i}`);
-  let originalSubtaskElement = subtaskElement.textContent.trim();
-
-  // Erstelle ein neues input-Element für die Bearbeitung
-  let newInput = document.createElement('input');
-  newInput.classList.add('custom-input-subtask');
-  newInput.id = `subtask_input${i}`;
-  newInput.value = originalSubtaskElement;
-  subtaskElement.parentNode.replaceChild(newInput, subtaskElement);
-
-  // Füge ein Event-Handler für das Verlassen des Textfelds hinzu
-  newInput.addEventListener('blur', function () {
-    updatedSubtask = newInput.value;
-    subTasks[i] = updatedSubtask;
-
-    // Erstelle ein neues div-Element für Icons und Text
-    let newDiv = document.createElement('div');
-    newDiv.classList.add('subtask-list-wrapper');
-
-    // Füge das Bearbeiten-Icon hinzu
-    let editIcon = document.createElement('img');
-    editIcon.src = '../icons/edit_dark.svg';
-    editIcon.addEventListener('click', () => editSubtask(i));
-    newDiv.appendChild(editIcon);
-
-    // Füge eine Trennlinie hinzu
-    let separatorLine = document.createElement('div');
-    separatorLine.classList.add('subtask-separator-line');
-    newDiv.appendChild(separatorLine);
-
-    // Füge das Löschen-Icon hinzu
-    let deleteIcon = document.createElement('img');
-    deleteIcon.src = '../icons/delete.svg';
-    deleteIcon.addEventListener('click', () => deleteSubtask(i));
-    newDiv.appendChild(deleteIcon);
-
-    // Erstelle ein neues li-Element für den editierten Text
-    let newSubtaskElement = document.createElement('li');
-    newSubtaskElement.id = `subtask_entry${i}`;
-    newSubtaskElement.classList.add('subtask-list-item');
-    newSubtaskElement.textContent = updatedSubtask;
-    newSubtaskElement.appendChild(newDiv);
-
-    // Ersetze das ursprüngliche Element durch das bearbeitete Element
-    newInput.parentNode.replaceChild(newSubtaskElement, newInput);
-    document.body.focus();
-  });
-  newInput.focus();
-} */
-
-/* function editSubtask(i, subtask) {
-  let subtaskElement = document.getElementById(`subtask_entry${i}`);
-  subtaskElement.innerHTML = generateInputEditHTML(i, subtask);
 }
 
 
-function generateInputEditHTML(i, subtask) {
-  return `
-    <input type="text" id="editInput${i}" value="${subtask}">
+/**
+ * With this function the html code for rendering the subtask is generated.
+ * @param {integer} i - Index of the current task.
+ * @param {string} subtask - Value/ text of the current task
+ * @param {string} containerType - Container type ('small' or 'big') according to
+ * whether the user is working in a small or wide viewport
+ * @returns 
+ */
+function generateSubtaskHTML(i, subtask, containerType) {
+  return /* html */ `
+      <div id="subtask_list_wrapper_${containerType}_${i}" class="subtask-list-${containerType}">${subtask}
+        <div class="subtask-button-wrapper-${containerType}">
+          <img onclick="editSubtask(${i}, '${containerType}', '${subtask}')" src="../icons/edit_dark.svg">
+          <div class="subtask-separator-line"></div>
+          <img onclick="deleteSubtask(${i})" src="../icons/delete.svg">
+        </div>
+      </div>
   `;
 }
+
+/**
+ * This function saves the added subtasks in the local storage.
  */
+function saveSubtasks() {
+  let subtasksAsText = JSON.stringify(subTasks);
+  localStorage.setItem('Subtasks', subtasksAsText);
+}
 
-let containerIndex = 0; // Startindex für Container
 
-function generateSubtaskHTML(i, subtask) {
-  containerIndex++;
-  const containerID = `subtask_container${containerIndex}`;
+/**
+ * This function loads the subtasks from the local storage and transfers
+ * them back into the array subTasks.
+ */
+function loadSubtasks() {
+  let subtasksAsText = localStorage.getItem('Subtasks');
+  if (subtasksAsText) {
+    subTasks = JSON.parse(subtasksAsText);
+  }
+  renderSubtasks();
+}
+
+/**
+ * This function enables the user to edit his subtasks. It accesses the html element
+ * that contains the subtask in question by its ID and exchanges the element for an 
+ * input field.
+ * @param {integer} i - This is the index of the current subtask.
+ * @param {string} containerType - This is either 'small' or 'big' and refers to the
+ * viewport size (mobile or desktop.
+ * @param {string} subtask - This is the text of the current subtaks.
+ */
+function editSubtask(i, containerType, subtask) {
+  let subtaskElement = document.getElementById(
+    `subtask_list_wrapper_${containerType}_${i}`
+  );
+  subtaskElement.innerHTML = generateInputEditHTML(i, containerType, subtask);
+}
+
+/**
+ * This function generates an input field that contains the text of the former
+ * subtask and two buttons (x and accept) which are separated by a vertical line.
+ * @param {integer} i - index of the current subtask
+ * @param {string} containerType - 'small' or 'big' according to the viewport size
+ * @param {string} subtask - text of the current subtask
+ * @returns 
+ */
+function generateInputEditHTML(i, containerType, subtask) {
   return /* html */ `
-    <div id="${containerID}" class="subtask-list">${subtask}
-      <div class="subtask-list-wrapper">
-        <img onclick="editSubtask('${containerID}', '${subtask}')" src="../icons/edit_dark.svg">
+    <div class="edit-subtask-wrapper">
+      <input type="text" id="edit_input_${containerType}_${i}" value="${subtask}" class="edit-input" placeholder="Enter your edited subtask text">
+      <div class="close-and-check-wrapper-edit-subtask">
+        <img onclick="renderSubtasks()" class="cancel-edit-subtask" src="../icons/close.svg" alt="">
         <div class="subtask-separator-line"></div>
-        <img onclick="deleteSubtask('${containerID}')" src="../icons/delete.svg">
+        <img onclick="changeSubtaskText(${i}, '${containerType}', '${subtask}')" class="check-edit-subtask" src="../icons/check.svg" alt="">
       </div>
     </div>
   `;
 }
 
-function generateInputEditHTML(containerID, subtask) {
-  return /* html */ `
-    <input type="text" id="${containerID}_editInput" value="${subtask}" class="edit-input">
-  `;
-}
-
-function editSubtask(containerID, subtask) {
-  let subtaskElement = document.getElementById(containerID);
-  subtaskElement.innerHTML = generateInputEditHTML(containerID, subtask);
+function changeSubtaskText(i, containerType) {
+  let editedInput = document.getElementById(`edit_input_${containerType}_${i}`);
+  let editedSubtask = editedInput.value.trim();
+  if (editedSubtask !== '') {
+    subTasks[i] = editedSubtask;
+    saveSubtasks();
+    renderSubtasks();
+  } else {
+    alert('Das Eingabefeld darf nicht leer sein.');
+    renderSubtasks();
+  }
 }
