@@ -57,6 +57,8 @@ function toggleSignUpAndLogin() {
   LOGIN_CONTENT_BOX.classList.toggle('d-none');
   SIGN_UP_CONTENT_BOX.classList.toggle('d-none');
   NOT_A_JOIN_USER_BOX.classList.toggle('d-none');
+  document.getElementById('email_Login').removeAttribute('required');
+  document.getElementById('password_Login').removeAttribute('required');
 }
 
 
