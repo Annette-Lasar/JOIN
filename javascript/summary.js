@@ -7,6 +7,7 @@ function initSummary() {
     greetUser();
     greetingMobile();
     saveLoginType();
+    getSummaryValues();
 }
 
 
@@ -108,5 +109,10 @@ function checkLocalStorage() {
     if(greetedMobileAsString) {
         greetedMobile = JSON.parse(greetedMobileAsString);
     }
+}
+
+
+function getSummaryValues() {
+
 }
 

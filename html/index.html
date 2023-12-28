@@ -70,7 +70,7 @@
       </svg>
       <div class="content animate-content">
         <div id="login_content" class="login-content">
-          <form id="login_Form" onsubmit="login()">
+          <form id="login_Form" onsubmit="login(); return false;">
             <div class="form-content-without-sign-up-button">
               <div class="headline-login-content">
                 <h1>Log in</h1>
@@ -96,8 +96,7 @@
                   </button>
                   <button type="button" class="button-guest-login light-button">
                     <a href="summary.html" class="light-button-link"
-                      >Guest Log in</a
-                    >
+                      >Guest Log in</a>
                   </button>
                 </div>
               </div>

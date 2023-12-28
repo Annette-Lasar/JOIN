@@ -1,10 +1,16 @@
 function login() {
+    let email = document.getElementById('email_Login').value;
+    let password = document.getElementById('password_Login').value;
+    let user = users.find(u => u.email == email && u.password == password);
+    if(user) {
+        console.log(user);
+        loginSuccessful();
+        // hier noch Weiterleitung zu summary.html
+    } else {
+        alert('User nicht gefunden !');   // Platzhalter; alert noch durch einen richtigen Hinweis ersetzen
+    }
     
-
-    loginSuccessful();
 }
-
-
 
 
 /** 
