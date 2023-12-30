@@ -1,7 +1,48 @@
 let subTasks = [];
 let taskCategories = ['Technical Task', 'User Story'];
 let updatedSubtask;
-let containerIndex = 0;
+let allCategories = [
+  {
+    category_name: 'Technical Task',
+    category_color: '#FF0000',
+  },
+
+  {
+    category_name: 'User Story',
+    category_color: '#0000FF',
+  },
+
+  {
+    category_name: 'Marketing',
+    category_color: '#008000',
+  },
+
+  {
+    category_name: 'Development',
+    category_color: '#FFA500',
+  },
+
+  {
+    category_name: 'Design',
+    category_color: '#DA70D6',
+  },
+
+  {
+    category_name: 'Leisure',
+    category_color: '#90EE90',
+  },
+];
+
+let currentCategories = [];
+
+const CATEGORY_LIST_SMALL = document.getElementById('category_list_small');
+const CATEGORY_LIST_BIG = document.getElementById('category_list_big');
+const SELECT_TASK_CATEGORY_ELEMENT_SMALL = document.getElementById(
+  `task_category_text_small`
+);
+const SELECT_TASK_CATEGORY_ELEMENT_BIG = document.getElementById(
+  `task_category_text_big`
+);
 const SUBTASK_CONTAINER_SMALL = document.getElementById(
   'subtask_container_small'
 );
@@ -12,6 +53,7 @@ function initTasks() {
   init();
   showAndHideBoxesAccordingToScreenSize();
   checkforAddTaskPage();
+  renderCategories();
   renderSubtasks();
 }
 
@@ -23,9 +65,9 @@ function initTasks() {
  * @param {string} idArrow  - represents the img element with the arrow
  */
 function toggleDropdownLists(idContainer, idArrow) {
-  const CATEGORY_List = document.getElementById(idContainer);
+  const CATEGORY_LIST = document.getElementById(idContainer);
   const SELECT_ARROW = document.getElementById(idArrow);
-  CATEGORY_List.classList.toggle('show');
+  CATEGORY_LIST.classList.toggle('show');
   SELECT_ARROW.classList.toggle('turn');
 }
 
@@ -66,13 +108,245 @@ function checkforAddTaskPage() {
 }
 
 checkforAddTaskPage();
+/* --------------------------------------------------------------------
+category section in add_task.html
+---------------------------------------------------------------------- */
+function renderCategories() {
+  CATEGORY_LIST_SMALL.innerHTML = '';
+  CATEGORY_LIST_BIG.innerHTML = '';
+  let i;
+  for (i = 0; i < allCategories.length; i++) {
+    const currentCategory = allCategories[i];
+      CATEGORY_LIST_SMALL.innerHTML += generateCategoryListHTML(
+        i,
+        currentCategory,
+        'small'
+      );
+      CATEGORY_LIST_BIG.innerHTML += generateCategoryListHTML(
+        i,
+        currentCategory,
+        'big'
+      );
+  
+  }
+  CATEGORY_LIST_SMALL.innerHTML += generateNewCategoryBoxHTML(i, 'small');
+  CATEGORY_LIST_BIG.innerHTML += generateNewCategoryBoxHTML(i, 'big');
+}
 
+function generateNewCategoryBoxHTML(i, containerType) {
+  return /* html */ `
+    <div id="new_category_${containerType}" class="new-category">
+      <div>New category</div>
+      <div id="new_category_plus_${containerType}" onclick="createNewCategory(${i}, '${containerType}')"><img src="../icons/plus.svg" alt=""></div>
+    </div>
+  `;
+}
+
+function generateCategoryListHTML(i, currentCategory, containerType) {
+  return /* html */ `
+        <li id="category_item_${containerType}_${i}" class="category-item">
+          <div onclick="selectTaskCategory('${currentCategory.category_name}', '${currentCategory.category_color}')" class="icon-and-category-wrapper">
+            <svg id="category_circle_icon_${containerType}_${i}" width="16" height="16">
+            <circle cx="8" cy="8" r="6" fill="${currentCategory.category_color}" stroke="black" stroke-width="1"/>
+            </svg>
+            <div>
+            ${currentCategory.category_name}
+            </div>
+          </div>
+          <div class="category-icon-wrapper">
+            <img onclick="editCategory(${i}, '${currentCategory.category_name}', '${currentCategory.category_color}', '${containerType}')" src="../icons/edit_dark.svg" height="14">
+            <div class="subtask-separator-line"></div>
+            <img src="../icons/delete.svg" height="14">
+          </div>
+        </li>
+    `;
+}
+
+function selectTaskCategory(
+  currentCategoryName,
+  currentCategoryColor
+) {
+  let selectedCategory = {
+    category_name: currentCategoryName,
+    category_color: currentCategoryColor,
+  };
+
+  currentCategories[0] = selectedCategory;
+  renderCurrentCategory();
+  closeCategoryLists(`category_list_small`,
+  `select_arrow_categories_small`);
+  closeCategoryLists(`category_list_big`,
+  `select_arrow_categories_big`);
+}
+
+function renderCurrentCategory() {
+  SELECT_TASK_CATEGORY_ELEMENT_SMALL.innerHTML = '';
+  SELECT_TASK_CATEGORY_ELEMENT_BIG.innerHTML = '';
+  for (let i = 0; i < currentCategories.length; i++) {
+    const currentCategoryName = currentCategories[i].category_name;
+    const currentCategoryColor = currentCategories[i].category_color;
+    SELECT_TASK_CATEGORY_ELEMENT_SMALL.innerHTML = generateCurrentCategoryHTML(
+      i,
+      currentCategoryName,
+      currentCategoryColor,
+      'small'
+    );
+    SELECT_TASK_CATEGORY_ELEMENT_BIG.innerHTML = generateCurrentCategoryHTML(
+      i,
+      currentCategoryName,
+      currentCategoryColor,
+      'big'
+    );
+  }
+}
+
+function closeCategoryLists(idContainer, idArrow) {
+  const CATEGORY_LIST = document.getElementById(idContainer);
+  const SELECT_ARROW = document.getElementById(idArrow);
+  CATEGORY_LIST.classList.remove('show');
+  SELECT_ARROW.classList.remove('turn');
+}
+
+function generateCurrentCategoryHTML(
+  i,
+  currentCategoryName,
+  currentCategoryColor,
+  containerType
+) {
+  return /* html */ `
+     <div id="task_category_text_small_${i}" class="task-category-text">
+          <svg id="category_circle_icon_${containerType}_${i}" width="16" height="16">
+           <circle cx="8" cy="8" r="6" fill="${currentCategoryColor}" stroke="black" stroke-width="1"/>
+          </svg>
+            <div>
+            ${currentCategoryName}
+            </div>
+     </div>
+    `;
+}
+
+function editCategory(
+  i,
+  currentCategoryName,
+  currentCategoryColor,
+  containerType
+) {
+  const categoryElement = document.getElementById(
+    `category_item_${containerType}_${i}`
+  );
+  categoryElement.innerHTML = '';
+  categoryElement.innerHTML = generateCategoryInputHTML(
+    i,
+    currentCategoryName,
+    currentCategoryColor,
+    containerType
+  );
+  changeInputBackgroundColor(i, containerType, 'color_input');
+}
+
+function generateCategoryInputHTML(
+  i,
+  currentCategoryName,
+  currentCategoryColor,
+  containerType
+) {
+  return /* html */ `
+    <div class="icon-and-category-wrapper">
+      <input id="color_input_${containerType}_${i}" type="color" value="${currentCategoryColor}">
+      <input id="category_input_${containerType}_${i}" type="text" class="input-edit-category-text" value="${currentCategoryName}" required>
+      <div class="close-and-check-wrapper-edit-subtask">
+        <img onclick="renderCategories()" class="cancel-edit-subtask" src="../icons/close.svg" alt="">
+        <div class="subtask-separator-line"></div>
+        <img onclick="changeCategoryTextAndColor(${i}, '${containerType}')" class="check-edit-subtask" src="../icons/check.svg" alt="">
+      </div>
+    </div>
+    
+  `;
+}
+
+function changeInputBackgroundColor(i, containerType, containerID) {
+  const colorInputField = document.getElementById(`${containerID}_${containerType}_${i}`);
+  colorInputField.style.backgroundColor = colorInputField.value;
+  colorInputField.addEventListener('input', function () {
+    this.style.backgroundColor = this.value;
+  });
+}
+
+function changeCategoryTextAndColor(i, containerType) {
+  let colorInputField = document.getElementById(
+    `color_input_${containerType}_${i}`
+  );
+  let categoryTextInputField = document.getElementById(
+    `category_input_${containerType}_${i}`
+  );
+  colorInputField.style.backgroundColor = `${colorInputField.value}`;
+  if (categoryTextInputField.value !== '') {
+    let updatedCategory = {
+      category_name: categoryTextInputField.value.trim(),
+      category_color: colorInputField.value,
+    };
+    allCategories[i] = updatedCategory;
+    renderCategories();
+  } else {
+    alert('The input field mustn\'t be empty.');
+    renderCategories();
+  }
+}
+
+
+function createNewCategory(i, containerType) {
+  const randomColor = getRandomColor();
+  const newCategoryBox = document.getElementById(`new_category_${containerType}`);
+  newCategoryBox.innerHTML = '';
+  newCategoryBox.innerHTML = generateInputForNewCategoryHTML(i, containerType, randomColor);
+  changeInputBackgroundColor(i, containerType, 'color_new_input');
+}
+
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+function generateInputForNewCategoryHTML(i, containerType, randomColor) {
+  return /* html */ `
+    <input id="color_new_input_${containerType}_${i}" type="color" value="${randomColor}">
+    <input id="category_new_input_${containerType}" type="text" placeholder="Pick color and add category">
+    <div class="close-and-check-wrapper-edit-subtask">
+        <img onclick="renderCategories()" class="cancel-edit-subtask" src="../icons/close.svg" alt="">
+        <div class="subtask-separator-line"></div>
+        <img onclick="addNewCategory(${i}, '${containerType}')" class="check-edit-subtask" src="../icons/check.svg" alt="">
+      </div>
+  `;
+}
+
+function addNewCategory(i, containerType) {
+  let newCategoryColor = document.getElementById(`color_new_input_${containerType}_${i}`);
+  let newCategoryText = document.getElementById(`category_new_input_${containerType}`);
+  if (newCategoryText.value !== '') {
+    let newCategory = {
+      category_name: newCategoryText.value.trim(),
+      category_color: newCategoryColor.value,
+    }
+    allCategories.push(newCategory);
+    renderCategories();
+  } else {
+    alert('The input field mustn\'t be empty.');
+    renderCategories();
+  }    
+}
+/* --------------------------------------------------------------------
+subtask section in add_task.html
+---------------------------------------------------------------------- */
 /**
  * Shows two buttons that enable the user to either refuse or accept
  * the input value as a new subtask
  * @param {string} wrapperId - id of the div element that contains the x and the accept icon
  * The id can either refer to the div element in the mobile view or the one in the desktop view
- * @param {string} plusIconId - id of the plus icon (either mobile or desktop) 
+ * @param {string} plusIconId - id of the plus icon (either mobile or desktop)
  * that holds the onclick function
  */
 function showCancelAndAcceptSubtask(wrapperId, plusIconId) {
@@ -99,8 +373,8 @@ function clearSubtask(inputId, wrapperId, plusIconId) {
 
 /**
  * This function returns to the view with the plus icon instead of the x or accept icon
- * @param {*} CLOSE_AND_CHECK_WRAPPER 
- * @param {*} SUBTASK_PLUS_ICON 
+ * @param {*} CLOSE_AND_CHECK_WRAPPER
+ * @param {*} SUBTASK_PLUS_ICON
  */
 function hideCancelAndAcceptSubtask(
   CLOSE_AND_CHECK_WRAPPER,
@@ -120,13 +394,12 @@ function deleteSubtask(i) {
   saveSubtasks();
 }
 
-
 /**
  * With this function the user can add subtasks which are shown in a list underneath
- * the input field. 
- * @param {string} inputId - All these strings refer to IDs that are transferred as 
- * parameters in the onclick functions in the html code. There are two different 
- * parameters ('small' and 'big') according to whether the function is executed in 
+ * the input field.
+ * @param {string} inputId - All these strings refer to IDs that are transferred as
+ * parameters in the onclick functions in the html code. There are two different
+ * parameters ('small' and 'big') according to whether the function is executed in
  * the mobile or the desktop version of the app.
  * @param {string} wrapperId - see above
  * @param {string} plusIconId - see above
@@ -138,7 +411,6 @@ function addSubtask(inputId, wrapperId, plusIconId) {
 
   if (SUBTASK_INPUT_BOX.value !== '') {
     subTasks.push(SUBTASK_INPUT_BOX.value);
-    console.log('Subtask-Array: ', subTasks);
   } else {
     alert('Bitte geben Sie Text ein.');
   }
@@ -147,7 +419,6 @@ function addSubtask(inputId, wrapperId, plusIconId) {
   SUBTASK_INPUT_BOX.value = '';
   hideCancelAndAcceptSubtask(CLOSE_AND_CHECK_WRAPPER, SUBTASK_PLUS_ICON);
 }
-
 
 /**
  * With this function the subtasks of the array subTasks are rendered in the browser.
@@ -166,14 +437,13 @@ function renderSubtasks() {
   }
 }
 
-
 /**
  * With this function the html code for rendering the subtask is generated.
  * @param {integer} i - Index of the current task.
  * @param {string} subtask - Value/ text of the current task
  * @param {string} containerType - Container type ('small' or 'big') according to
  * whether the user is working in a small or wide viewport
- * @returns 
+ * @returns
  */
 function generateSubtaskHTML(i, subtask, containerType) {
   return /* html */ `
@@ -195,7 +465,6 @@ function saveSubtasks() {
   localStorage.setItem('Subtasks', subtasksAsText);
 }
 
-
 /**
  * This function loads the subtasks from the local storage and transfers
  * them back into the array subTasks.
@@ -210,7 +479,7 @@ function loadSubtasks() {
 
 /**
  * This function enables the user to edit his subtasks. It accesses the html element
- * that contains the subtask in question by its ID and exchanges the element for an 
+ * that contains the subtask in question by its ID and exchanges the element for an
  * input field.
  * @param {integer} i - This is the index of the current subtask.
  * @param {string} containerType - This is either 'small' or 'big' and refers to the
@@ -230,7 +499,7 @@ function editSubtask(i, containerType, subtask) {
  * @param {integer} i - index of the current subtask
  * @param {string} containerType - 'small' or 'big' according to the viewport size
  * @param {string} subtask - text of the current subtask
- * @returns 
+ * @returns
  */
 function generateInputEditHTML(i, containerType, subtask) {
   return /* html */ `
@@ -253,7 +522,7 @@ function changeSubtaskText(i, containerType) {
     saveSubtasks();
     renderSubtasks();
   } else {
-    alert('Das Eingabefeld darf nicht leer sein.');
+    alert("The input field mustn't be empty.");
     renderSubtasks();
   }
 }
