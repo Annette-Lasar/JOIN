@@ -47,6 +47,6 @@ function successfullyRegistered() {
     setTimeout(() => {
         document.getElementById('messageBox').style.display = 'none';
         toggleSignUpAndLogin();
-    }, 2000); 
+    }, 1500); 
 }
 

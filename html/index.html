@@ -104,8 +104,9 @@
             <div id="sign_up_wrapper" class="sign-up-wrapper">
               <p>Not a Join user?</p>
               <button
+                id="goToSignUp_Btn"
                 type="button"
-                onclick= "toggleSignUpAndLogin()"
+                onclick= "toggleSignUpAndLogin(this.id)"
                 class="button-sign-up dark-button"
               >
                 Sign up
@@ -117,7 +118,8 @@
           <div class="headline-sign-up-content">
             <div class="sign-up-headline-wrapper">
               <img
-                onclick="toggleSignUpAndLogin()"
+                id="backToLogin_Btn"
+                onclick="toggleSignUpAndLogin(this.id)"
                 src="../icons/arrow_left_line_variant2.svg"
                 alt=""
               />
