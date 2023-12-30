@@ -42,7 +42,7 @@ function greet(dayTime) {
 
 function greetingMobile() {
     let windowWidth = window.innerWidth;
-    if(windowWidth < 800  && !greetedMobile) {     // Animation nur bei mobilen Geräten und auch nur 1 Mal nach Login
+    if(windowWidth < 800  && !greetedMobile) {     
         showMobileWelcomeScreen();
     } else {
         showSummary();

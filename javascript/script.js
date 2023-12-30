@@ -94,12 +94,14 @@ function checkIfBoardPage() {
 
 /** 
 *  bei Klick auf 'Logout'
-*  die beiden keys 'userLogin' und 'alreadyGreeted' im localStorage müssen unbedingt wieder gelöscht werden ( localStorage.removeItem(key) ) 
+*  die Daten im localStorage müssen unbedingt wieder gelöscht werden ( localStorage.removeItem(key) ) 
 *  Function logout() muss noch richtig implementiert werden bei Klick auf Logout (vorübergehend oben im header auf den eigenen Initialien platziert) 
-*  Function noch nicht final; zB muss man wieder zur Anmeldemaske zurückkehren
+*  Function wahrscheinlich noch nicht final;
 */
 function logout() {
   localStorage.removeItem('userLogin');
+  localStorage.removeItem('userName');
   localStorage.removeItem('alreadyGreeted');
+  window.location.href = 'index.html';
 }
 
