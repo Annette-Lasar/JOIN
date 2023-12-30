@@ -3,7 +3,6 @@ function login() {
     let password = document.getElementById('password_Login').value;
     let user = users.find(u => u.email == email && u.password == password);
     if(user) {
-        console.log(user);
         loginSuccessful(user);
         window.location.href = 'summary.html';   
     } else {
