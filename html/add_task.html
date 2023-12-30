@@ -120,20 +120,21 @@
                 Category<span class="red">*</span>
               </div>
               <div
-                onclick="toggleDropdownLists('category_list', 'select_arrow_categories')"
+                onclick="toggleDropdownLists('category_list_small', 'select_arrow_categories_small')"
                 class="task-category"
               >
-                Select task category<img
-                  id="select_arrow_categories"
-                  class="select-arrow-categories"
-                  src="../icons/arrow_drop_down.svg"
-                />
+                <div id="task_category_text_small" class="task-category-text">
+                  Select task category
+                </div>
+                <div class="task-category-image">
+                  <img
+                    id="select_arrow_categories_small"
+                    class="select-arrow-categories"
+                    src="../icons/arrow_drop_down.svg"
+                  />
+                </div>
               </div>
-              <ul id="category_list" class="category-list">
-                <li>Technical Task</li>
-                <li>User Story</li>
-                <div class="new-category">Add new category</div>
-              </ul>
+              <ul id="category_list_small" class="category-list"></ul>
             </div>
             <div class="task-input-wrapper contact-wrapper">
               <div class="category-label">
@@ -282,17 +283,18 @@
                 onclick="toggleDropdownLists('category_list_big', 'select_arrow_categories_big')"
                 class="task-category"
               >
-                Select task category<img
-                  id="select_arrow_categories_big"
-                  class="select-arrow-categories"
-                  src="../icons/arrow_drop_down.svg"
-                />
+                <div id="task_category_text_big" class="task-category-text">
+                  Select task category
+                </div>
+                <div class="task-category-image">
+                  <img
+                    id="select_arrow_categories_big"
+                    class="select-arrow-categories"
+                    src="../icons/arrow_drop_down.svg"
+                  />
+                </div>
               </div>
-              <ul id="category_list_big" class="category-list">
-                <li>Technical Task</li>
-                <li>User Story</li>
-                <div class="new-category">Add new category</div>
-              </ul>
+              <ul id="category_list_big" class="category-list"></ul>
             </div>
             <div class="task-input-wrapper">
               <div class="category-label">Subtasks</div>
@@ -354,7 +356,6 @@
           </div>
         </div>
       </div>
-      <!-- end of task-wrapper -->
     </div>
     <nav>
       <div w3-include-html="../templates/navigation_bar.html"></div>
