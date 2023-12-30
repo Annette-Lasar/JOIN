@@ -19,17 +19,30 @@ async function loadUsers(){
     }
 }
 
-// hier noch zusätzlich prüfen, ob password mit confirmPassword übereinstimmt !
+
 async function register() {
-    registerBtn.disabled = true;
-    users.push({
-        name: fullName.value,
-        email: email.value,
-        password: password.value
-    });
-    await setItem('users', JSON.stringify(users));
-    resetForm();
-    successfullyRegistered();
+    if(bothPasswordsMatch()) {
+        registerBtn.disabled = true;
+        users.push({
+            name: fullName.value,
+            email: email.value,
+            password: password.value
+        });
+        await setItem('users', JSON.stringify(users));
+        resetForm();
+        successfullyRegistered();
+    } else {
+        alert('Die beiden Passwörter müssen übereinstimmen !');
+    }
+}
+
+
+function bothPasswordsMatch() {
+    if(password.value === confirmPassword.value) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 
