@@ -1,5 +1,6 @@
 let userLogin = false;                  // Wird true, wenn UserLogin (also kein GuestLogin)
-let greetedMobile = false;    
+let userName;
+let greetedMobile = false;   
 
 
 function initSummary() {
@@ -14,7 +15,7 @@ function initSummary() {
 function greetUser() {
     document.getElementById('greeting').innerHTML = getDaytime();  
     if(userLogin) {
-        document.getElementById('greeting_name').innerHTML = 'Sofia Müller';  // = getUserName();  
+        document.getElementById('greeting_name').innerHTML = userName; 
     } else {
         document.getElementById('greeting_name').innerHTML = 'Guest';
     }
@@ -36,11 +37,6 @@ function greet(dayTime) {
     } else {
         return 'Good evening,'
     }
-}
-
-
-function getUserName() {
-    
 }
 
 
@@ -104,7 +100,10 @@ function checkLocalStorage() {
     if(userLoginAsString) {
         userLogin = JSON.parse(userLoginAsString);
     }
-
+    let userNameAsString = localStorage.getItem('userName');
+    if(userNameAsString) {
+        userName = JSON.parse(userNameAsString);
+    }
     let greetedMobileAsString = localStorage.getItem('alreadyGreeted');
     if(greetedMobileAsString) {
         greetedMobile = JSON.parse(greetedMobileAsString);
