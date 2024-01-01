@@ -1,4 +1,5 @@
 function addGroups() {
+    document.getElementById('contact_list').innerHTML = '';
     for (let i = 0; i < groups.length; i++) {
         const letter = groups[i];
         document.getElementById('contact_list').innerHTML += groupsTemplate(letter);
@@ -82,3 +83,32 @@ function showAddForm() {
     document.getElementById('add_form').classList.add('slide-in');
 }
 
+function randomUserColor() {
+    let random = Math.floor(Math.random() * userColors.length);
+    let randomColor = userColors[random];
+    return randomColor
+}
+
+function addNewContact() {
+    let inputName = document.getElementById('add_name').value;
+    let inputEMail = document.getElementById('add_email').value;
+    let inputPhone = document.getElementById('add_phone').value;
+    let color = randomUserColor();
+    contacts.push(
+        {
+            "name": inputName,
+            "e-mail": inputEMail,
+            "phone": inputPhone,
+            "color": color
+        }
+    );
+    hideAddForm();
+    addGroups();
+    resetAddNewContactValues();
+}
+
+function resetAddNewContactValues() {
+    document.getElementById('add_name').value = '';
+    document.getElementById('add_email').value = '';
+    document.getElementById('add_phone').value = '';
+}

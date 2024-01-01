@@ -112,10 +112,10 @@
           </g>
         </svg>
       </div>
-      <form class="form" action="onsubmit">
-        <input id="add_name" type="text" placeholder="Name">
-        <input type="email" name="" id="add_email" placeholder="E-Mail">
-        <input type="tel" name="" id="add_phone" placeholder="Telefon">
+      <form class="form" onsubmit="addNewContact(); return false">
+        <input id="add_name" type="text" placeholder="Name" required>
+        <input id="add_email" type="email" name=""  placeholder="E-Mail" required>
+        <input id="add_phone" type="tel" name="" placeholder="Telefon" required>
         <div class="form-buttons">
           <button class="cancel-btn white-btn" onclick="hideAddForm()">
             Cancel
