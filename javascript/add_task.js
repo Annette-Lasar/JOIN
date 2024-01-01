@@ -1,3 +1,4 @@
+let allTasks = [];
 let subTasks = [];
 let taskCategories = ['Technical Task', 'User Story'];
 let updatedSubtask;
@@ -48,11 +49,11 @@ const SUBTASK_CONTAINER_SMALL = document.getElementById(
 );
 const SUBTASK_CONTAINER_BIG = document.getElementById('subtask_container_big');
 
+
 function initTasks() {
   loadSubtasks();
   init();
   showAndHideBoxesAccordingToScreenSize();
-  checkforAddTaskPage();
   renderCategories();
   renderSubtasks();
 }
@@ -71,14 +72,14 @@ function toggleDropdownLists(idContainer, idArrow) {
   SELECT_ARROW.classList.toggle('turn');
 }
 
-function showAndHideBoxesAccordingToScreenSize() {
+/* function showAndHideBoxesAccordingToScreenSize() {
   let prioSmallScreen = document.getElementById('prio_small_screen');
   let dueDateSmallScreen = document.getElementById('due_date_small_screen');
   let categorySmallScreen = document.getElementById('category_small_screen');
   let subTasksSmallScreen = document.getElementById('sub_tasks_small_screen');
-  let bigScreen = document.getElementById('form_big_screen');
+  let bigScreen = document.getElementById('big_screen');
   let windowSize = window.innerWidth;
-
+  
   if (windowSize < 800) {
     prioSmallScreen.style.display = 'block';
     dueDateSmallScreen.style.display = 'flex';
@@ -94,20 +95,69 @@ function showAndHideBoxesAccordingToScreenSize() {
     SUBTASK_CONTAINER_SMALL.style.display = 'none';
     bigScreen.style.display = 'block';
   }
+} */
+
+function showAndHideBoxesAccordingToScreenSize() {
+  let prioSmallScreen = document.getElementById('prio_small_screen');
+  let dueDateSmallScreen = document.getElementById('due_date_small_screen');
+  let categorySmallScreen = document.getElementById('category_small_screen');
+  let subTasksSmallScreen = document.getElementById('sub_tasks_small_screen');
+  let bigScreen = document.getElementById('big_screen');
+  let windowSize = window.innerWidth;
+  
+  if (windowSize < 800) {
+    prioSmallScreen.classList.remove('d-none');
+    dueDateSmallScreen.classList.remove('d-none');
+    categorySmallScreen.classList.remove('d-none');
+    subTasksSmallScreen.classList.remove('d-none');
+    SUBTASK_CONTAINER_SMALL.classList.remove('d-none');
+    bigScreen.classList.add('d-none');
+  } else {
+    prioSmallScreen.classList.add('d-none');
+    dueDateSmallScreen.classList.add('d-none');
+    categorySmallScreen.classList.add('d-none');
+    subTasksSmallScreen.classList.add('d-none');
+    SUBTASK_CONTAINER_SMALL.classList.add('d-none');
+    bigScreen.classList.remove('d-none');
+  }
 }
 
-function checkforAddTaskPage() {
+function setAndRemoveAttributeRequired() {
+  let InputDueDateSmallScreen = document.getElementById('task_due_date_small');
+  let InputDueDateBigScreen = document.getElementById('task_due_date_big');
+  let windowSize = window.innerWidth;
+  if(windowSize < 800) {
+    InputDueDateSmallScreen.setAttribute('required', '');
+    InputDueDateBigScreen.removeAttribute('required', '');
+  } else {
+    InputDueDateSmallScreen.removeAttribute('required', '');
+    InputDueDateBigScreen.setAttribute('required', '');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  showAndHideBoxesAccordingToScreenSize();
+  window.addEventListener('resize', showAndHideBoxesAccordingToScreenSize);
+  window.addEventListener('resize', setAndRemoveAttributeRequired);
+});
+
+
+/* function checkForAddTaskPage() {
   let url = window.location.href;
 
   if (url.endsWith('add_task.html')) {
     document.addEventListener('DOMContentLoaded', function () {
-      showAndHideBoxesAccordingToScreenSize(); // Initial check
+      showAndHideBoxesAccordingToScreenSize();
+      setAndRemoveAttributeRequired();
       window.addEventListener('resize', showAndHideBoxesAccordingToScreenSize);
+      window.addEventListener('resize', setAndRemoveAttributeRequired);
     });
   }
-}
+} */
 
-checkforAddTaskPage();
+
+
+/* checkForAddTaskPage(); */
 /* --------------------------------------------------------------------
 category section in add_task.html
 ---------------------------------------------------------------------- */
@@ -177,6 +227,7 @@ function selectTaskCategory(
   `select_arrow_categories_small`);
   closeCategoryLists(`category_list_big`,
   `select_arrow_categories_big`);
+  
 }
 
 function renderCurrentCategory() {
@@ -314,7 +365,7 @@ function getRandomColor() {
 function generateInputForNewCategoryHTML(i, containerType, randomColor) {
   return /* html */ `
     <input id="color_new_input_${containerType}_${i}" type="color" value="${randomColor}">
-    <input id="category_new_input_${containerType}" type="text" placeholder="Pick color and add category">
+    <input id="category_new_input_${containerType}" type="text" class="category-new-input" placeholder="Pick color and add category">
     <div class="close-and-check-wrapper-edit-subtask">
         <img onclick="renderCategories()" class="cancel-edit-subtask" src="../icons/close.svg" alt="">
         <div class="subtask-separator-line"></div>
@@ -525,4 +576,16 @@ function changeSubtaskText(i, containerType) {
     alert("The input field mustn't be empty.");
     renderSubtasks();
   }
+}
+
+
+function createNewTask() {
+  const titleBox = document.getElementById('task_title');
+  let task = {
+    title: titleBox.value,
+    current_category: currentCategories,
+  }
+  allTasks.push(task);
+  console.log('Aufgabe: ', task);
+  console.log('Aufgaben: ', allTasks);
 }

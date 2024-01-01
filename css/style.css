@@ -189,6 +189,7 @@ Header in der Desktop Version
     .page {
         margin: 0 0 0 180px;
         /* max-width: 456px; */
+        border: blue 1px solid;
     }
 
 

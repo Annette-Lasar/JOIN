@@ -13,16 +13,17 @@
     <script src="../javascript/storage.js" defer></script>
     <script src="../javascript/add_task.js" defer></script>
   </head>
+  <!-- Dieses Dokument später wieder löschen, dient nur als Backup! -->
   <body onload="initTasks()">
     <header>
       <div w3-include-html="../templates/header.html"></div>
     </header>
     <div class="page">
-      <h1>Add Task</h1>
-      <form onsubmit="createNewTask(); return false;" action="">
-        <div class="task-wrapper">
-          <div class="small-screen">
-            <section>
+      <div class="task-wrapper">
+        <h1>Add Task</h1>
+        <div class="form-wrapper">
+          <form action="">
+            <div class="task-input-wrapper">
               <label for="task_title">Title<span class="red">*</span></label>
               <input
                 id="task_title"
@@ -30,8 +31,8 @@
                 placeholder="Enter a title"
                 required
               />
-            </section>
-            <section>
+            </div>
+            <div class="task-input-wrapper">
               <label for="task_description">Description</label>
               <textarea
                 name="task-description"
@@ -40,10 +41,10 @@
                 cols="30"
                 rows="5"
               ></textarea>
-            </section>
-            <section id="prio_small_screen">
-              <div class="label">Prio</div>
-              <div id="prio_button_wrapper_small" class="prio-button-wrapper">
+            </div>
+            <div id="prio_small_screen" class="prio-small-screen">
+              <div class="category-label">Prio</div>
+              <div id="prio_button_wrapper" class="prio-button-wrapper">
                 <button class="prio-high">
                   Urgent
                   <svg
@@ -102,21 +103,23 @@
                   </svg>
                 </button>
               </div>
-            </section>
-            <section id="due_date_small_screen">
-              <label for="task_due_date_small"
-                >Due date<span class="red">*</span></label
-              >
+            </div>
+            <div id="due_date_small_screen" class="task-input-wrapper">
+              <label for="task_title">Due date<span class="red">*</span></label>
               <input
                 id="task_due_date_small"
-                name="task_due_date_small"
                 type="date"
                 placeholder="dd/mm/yyyy"
                 required
               />
-            </section>
-            <section id="category_small_screen" class="category-wrapper">
-              <div class="label">Category<span class="red">*</span></div>
+            </div>
+            <div
+              id="category_small_screen"
+              class="task-input-wrapper category-wrapper"
+            >
+              <div class="category-label">
+                Category<span class="red">*</span>
+              </div>
               <div
                 onclick="toggleDropdownLists('category_list_small', 'select_arrow_categories_small')"
                 class="task-category"
@@ -133,9 +136,11 @@
                 </div>
               </div>
               <ul id="category_list_small" class="category-list"></ul>
-            </section>
-            <section class="contact-wrapper">
-              <div class="label">Assigned to</div>
+            </div>
+            <div class="task-input-wrapper contact-wrapper">
+              <div class="category-label">
+                Assigned to<span class="red">*</span>
+              </div>
               <div
                 onclick="toggleDropdownLists('contact_list', 'select_arrow_contacts')"
                 class="task-category"
@@ -151,9 +156,9 @@
                 <li>Hermione Granger</li>
                 <div class="new-category">Add new contact</div>
               </ul>
-            </section>
-            <section id="sub_tasks_small_screen">
-              <div class="label">Subtasks</div>
+            </div>
+            <div id="sub_tasks_small_screen" class="task-input-wrapper">
+              <div class="category-label">Subtasks</div>
               <div id="sub_task_wrapper_small" class="sub-task-wrapper">
                 <input
                   id="sub_tasks_small"
@@ -189,27 +194,26 @@
                   />
                 </div>
               </div>
-            </section>
-            <section
+            </div>
+            <div
               id="subtask_container_small"
               class="subtask-container subtask-container-small"
-            ></section>
-          </div>
+            ></div>
+          </form>
           <div class="separator-line"></div>
-          <div id="big_screen" class="big-screen d-none">
-            <section id="due_date_big_screen">
+          <form id="form_big_screen" action="" class="form-big-screen d-none">
+            <div id="due_date_big_screen" class="task-input-wrapper">
               <label for="task_title">Due date<span class="red">*</span></label>
               <input
                 id="task_due_date_big"
-                name="task_due_date_big"
                 type="date"
                 placeholder="dd/mm/yyyy"
                 required
               />
-            </section>
-            <section id="prio_big_screen" class="prio-big-screen">
-              <div class="label">Prio</div>
-              <div id="prio_button_wrapper_big" class="prio-button-wrapper">
+            </div>
+            <div id="prio_small_screen" class="prio-small-screen">
+              <div class="category-label">Prio</div>
+              <div id="prio_button_wrapper" class="prio-button-wrapper">
                 <button class="prio-high">
                   Urgent
                   <svg
@@ -268,9 +272,14 @@
                   </svg>
                 </button>
               </div>
-            </section>
-            <section id="category_big_screen" class="category-wrapper">
-              <div class="label">Category<span class="red">*</span></div>
+            </div>
+            <div
+              id="category_big_screen"
+              class="task-input-wrapper category-wrapper"
+            >
+              <div class="category-label">
+                Category<span class="red">*</span>
+              </div>
               <div
                 onclick="toggleDropdownLists('category_list_big', 'select_arrow_categories_big')"
                 class="task-category"
@@ -287,9 +296,9 @@
                 </div>
               </div>
               <ul id="category_list_big" class="category-list"></ul>
-            </section>
-            <section>
-              <div class="label">Subtasks</div>
+            </div>
+            <div class="task-input-wrapper">
+              <div class="category-label">Subtasks</div>
               <div id="sub_task_wrapper_big" class="sub-task-wrapper">
                 <input
                   id="sub_tasks_big"
@@ -325,12 +334,12 @@
                   />
                 </div>
               </div>
-            </section>
-            <section
+            </div>
+            <div
               id="subtask_container_big"
               class="subtask-container subtask-container-big"
-            ></section>
-          </div>
+            ></div>
+          </form>
         </div>
         <div class="create-task-wrapper">
           <div class="explanation-container">
@@ -347,7 +356,7 @@
             </button>
           </div>
         </div>
-      </form>
+      </div>
     </div>
     <nav>
       <div w3-include-html="../templates/navigation_bar.html"></div>
