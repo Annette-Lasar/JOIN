@@ -323,7 +323,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow-y: hidden;
+    overflow: hidden;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -403,6 +403,10 @@ header {
     cursor: pointer;
 }
 
+.cancel-btn {
+    display: none;
+}
+
 .form {
     display: flex;
     width: 100%;
@@ -470,6 +474,28 @@ input:focus-visible {
 #add_phone {
     background: url(../icons/call.png) no-repeat scroll;
     background-position: top 8px right 21px;
+}
+
+#edit_contact_button {
+    display: none;
+}
+
+.fade-out {
+    animation: 200ms fadeOut ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.fade-in {
+    animation: 200ms fadeIn ease-in-out;
+}
+
+.slide-in {
+    animation: 200ms slideInBottom ease-in-out;
+}
+
+.slide-out {
+    animation: 200ms slideOutBottom ease-in-out;
+    animation-fill-mode: forwards;
 }
 
 @media (max-width: 350px) {
@@ -620,6 +646,11 @@ input:focus-visible {
         animation: 200ms slideIn ease-in-out;
     }
 
+    .slide-out {
+        animation: 200ms slideOut ease-in-out;
+        animation-fill-mode: forwards;
+    }
+
     .add-form {
         flex-direction: row;
         justify-content: space-between;
@@ -684,16 +715,76 @@ input:focus-visible {
         fill: var(--background-color-darkblue);
         top: 48px;
         right: 48px;
+        height: 32px;
+        width: 32px;
+        padding: 4px;
+    }
+
+    .close-btn:hover {
+        border-radius: 50%;
+        background-color: var(--background-color-lightgray);
+    }
+
+    .cancel-btn {
+        display: flex;
     }
 }
 
 @keyframes slideIn {
     from {
-        transform: translateX(600px);
+        transform: translateX(100vw);
     }
 
     to {
         transform: translateX(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(100vw);
+    }
+}
+
+@keyframes slideInBottom {
+    from {
+        transform: translateY(100vh);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOutBottom {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 25%;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 25%;
+    }
+    to {
+        opacity: 0;
     }
 }
 

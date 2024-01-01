@@ -64,3 +64,21 @@ function showContactInfo(i) {
     document.getElementById("color_large" + i).style.backgroundColor = color;
 }
 
+function hideAddForm() {
+    document.getElementById('background').classList.remove('fade-in');
+    document.getElementById('add_form').classList.remove('slide-in');
+    document.getElementById('add_form').classList.add('slide-out');
+    document.getElementById('background').classList.add('fade-out');
+    setTimeout(() => {
+        document.getElementById('add_new_contact').style.display = 'none';
+    }, 500);
+}
+
+function showAddForm() {
+    document.getElementById('add_new_contact').style.display = 'flex';
+    document.getElementById('add_form').classList.remove('slide-out');
+    document.getElementById('background').classList.remove('fade-out');
+    document.getElementById('background').classList.add('fade-in');
+    document.getElementById('add_form').classList.add('slide-in');
+}
+
