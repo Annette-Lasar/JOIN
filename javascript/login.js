@@ -8,7 +8,6 @@ function login() {
     } else {
         alert('User nicht vorhanden oder Anmeldedaten nicht korrekt !'); 
     }
-    
 }
 
 

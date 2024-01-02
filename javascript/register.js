@@ -22,18 +22,22 @@ async function loadUsers(){
 
 async function register() {
     if(bothPasswordsMatch()) {
-        registerBtn.disabled = true;
-        users.push({
-            name: fullName.value,
-            email: email.value,
-            password: password.value
-        });
-        await setItem('users', JSON.stringify(users));
-        resetForm();
-        successfullyRegistered();
-    } else {
-        alert('Die beiden Passwörter müssen übereinstimmen !');
-    }
+        if(notAUser()) {
+            registerBtn.disabled = true;
+            users.push({
+                name: fullName.value,
+                email: email.value,
+                password: password.value
+            });
+            await setItem('users', JSON.stringify(users));
+            resetForm();
+            successfullyRegistered();
+        } else {
+            alert('Email-Adresse bereits registriert !');
+        }
+        } else {
+            alert('Die beiden Passwörter müssen übereinstimmen !');
+        }
 }
 
 
@@ -41,6 +45,17 @@ function bothPasswordsMatch() {
     if(password.value === confirmPassword.value) {
         return true;
     } else {
+        return false;
+    }
+}
+
+
+function notAUser() {                      
+    let emailInput = document.getElementById('email_SignUp').value;
+    let user = users.find(u => u.email == emailInput);
+    if(!user) {                    
+        return true;
+    } else if(user) {              
         return false;
     }
 }
