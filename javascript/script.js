@@ -27,9 +27,7 @@ function moveLogoOnStartScreen() {
   const URL = window.location.href;
   if (URL.endsWith('index.html')) {
     setTimeout(() => {
-      document
-        .getElementById('login_page')
-        .classList.add('change-background-color');
+      document.getElementById('login_page').classList.add('change-background-color');
       document.getElementById('login_join_logo').classList.add('animate-logo');
       document.getElementById('path_dot').classList.add('change-logo-color');
       document.getElementById('path_j').classList.add('change-logo-color');
