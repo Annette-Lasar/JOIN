@@ -59,13 +59,14 @@
   <div id="add_contact_button" class="add-contact" onclick="showAddForm()">
     <img src="../icons/person_add.svg" alt="">
   </div>
-  <div id="edit_contact_button" class="add-contact">
+  <div id="edit_contact_button" class="add-contact" onclick="showEdit()">
     <img src="../icons/more_vert.svg" alt="">
   </div>
   <div id="add_new_contact" style="display: none;">
     <div id="background" class="background" onclick="hideAddForm()"></div>
     <div id="add_form" class="add-form">
-      <svg onclick="hideAddForm()" class="close-btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <svg onclick="hideAddForm()" class="close-btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+        viewBox="0 0 24 24" fill="none">
         <mask id="mask0_114296_3949" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
           height="24">
           <rect width="24" height="24" fill="#D9D9D9" />
@@ -114,7 +115,7 @@
       </div>
       <form class="form" onsubmit="addNewContact(); return false">
         <input id="add_name" type="text" placeholder="Name" required>
-        <input id="add_email" type="email" name=""  placeholder="E-Mail" required>
+        <input id="add_email" type="email" name="" placeholder="E-Mail" required>
         <input id="add_phone" type="tel" name="" placeholder="Telefon" required>
         <div class="form-buttons">
           <button class="cancel-btn white-btn" onclick="hideAddForm()">
@@ -135,6 +136,18 @@
 
     </div>
 
+  </div>
+  <div id="empty" onclick="hideEdit()">
+    <div id="edit_delete" class="edit-delete">
+      <div>
+        <img src="../icons/edit_dark.svg" alt="">
+        Edit
+      </div>
+      <div>
+        <img class="delete-img" src="../icons/delete.svg" alt="">
+        Delete
+      </div>
+    </div>
   </div>
   <nav>
     <div w3-include-html="../templates/navigation_bar.html"></div>

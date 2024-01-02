@@ -56,7 +56,8 @@ body {
     stroke: var(--background-color-darkblue);
 }
 
-.white-btn:hover, .white-btn:hover svg path {
+.white-btn:hover,
+.white-btn:hover svg path {
     border: var(--accent-color-lightblue) 1px solid;
     color: var(--accent-color-lightblue);
     stroke: var(--accent-color-lightblue);
@@ -498,6 +499,60 @@ input:focus-visible {
     animation-fill-mode: forwards;
 }
 
+.edit-delete {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--accent-color-white);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: 10px;
+    border-radius: 20px;
+    border-bottom-right-radius: 0;
+    position: absolute;
+    bottom: 1.5em;
+    right: 100vw;
+    z-index: 3;
+}
+
+.edit-delete>div {
+    display: flex;
+    width: 96px;
+    padding: 8px;
+    align-items: center;
+    gap: 8px;
+    color: var(--background-color-darkblue);
+}
+
+.edit-delete>div:hover {
+    cursor: pointer;
+}
+
+
+.delete-img {
+    padding: 3px 4px;
+}
+
+#empty {
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    display: none;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.slide-in-edit {
+    animation: 200ms slideInEdit ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.slide-out-edit {
+    animation: 200ms slideOutEdit ease-in-out;
+}
+
 @media (max-width: 350px) {
     .contact-list {
         margin: 0;
@@ -633,7 +688,7 @@ input:focus-visible {
     }
 
     #edit_contact_button {
-        display: block;
+        display: none;
         bottom: 2em;
         right: 2em;
     }
@@ -711,7 +766,8 @@ input:focus-visible {
         margin-top: 16px;
     }
 
-    .close-btn, .close-btn path {
+    .close-btn,
+    .close-btn path {
         fill: var(--background-color-darkblue);
         top: 48px;
         right: 48px;
@@ -727,64 +783,6 @@ input:focus-visible {
 
     .cancel-btn {
         display: flex;
-    }
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateX(100vw);
-    }
-
-    to {
-        transform: translateX(0);
-    }
-}
-
-@keyframes slideOut {
-    from {
-        transform: translateX(0);
-    }
-
-    to {
-        transform: translateX(100vw);
-    }
-}
-
-@keyframes slideInBottom {
-    from {
-        transform: translateY(100vh);
-    }
-
-    to {
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideOutBottom {
-    from {
-        transform: translateY(0);
-    }
-
-    to {
-        transform: translateY(100vh);
-    }
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 25%;
-    }
-}
-
-@keyframes fadeOut {
-    from {
-        opacity: 25%;
-    }
-    to {
-        opacity: 0;
     }
 }
 
@@ -805,7 +803,7 @@ input:focus-visible {
 @media (max-width: 50em) {
     .add-contact {
         bottom: 7em;
-        right: 1em;
+        right: 2em;
     }
 
     .contacts {
@@ -859,5 +857,85 @@ input:focus-visible {
 
     .add-form p {
         font-size: 18px;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100vw);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(100vw);
+    }
+}
+
+@keyframes slideInBottom {
+    from {
+        transform: translateY(100vh);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOutBottom {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 25%;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 25%;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes slideInEdit {
+    from {
+        transform: translateX(120vw);
+    }
+
+    to {
+        transform: translateX(98vw);
+    }
+}
+
+@keyframes slideOutEdit {
+    from {
+        transform: translateX(98vw);
+    }
+
+    to {
+        transform: translateX(120vw);
     }
 }
