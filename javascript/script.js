@@ -5,6 +5,7 @@ async function init() {
   checkIfStartScreen();
   checkIfSummaryPage();
   checkIfBoardPage();
+  showInitials();
 }
 
 
@@ -86,6 +87,25 @@ function checkIfBoardPage() {
   const URL = window.location.href;
   if(URL.endsWith('board.html')) {
     initBoard();
+  }
+}
+
+
+function showInitials() {
+  const URL = window.location.href;
+  if(URL.endsWith('index.html')){
+    return;
+  } else {
+    let userNameAsString = localStorage.getItem('userName');
+    if(userNameAsString) {
+      let userName = JSON.parse(userNameAsString);
+      let nameArray = userName.split(' ');
+      let firstLetter = nameArray[0].charAt(0);
+      let secondLetter = nameArray[1].charAt(0);
+      document.getElementById('user_icon').innerHTML = firstLetter.concat(secondLetter);
+    } else {
+      document.getElementById('user_icon').innerHTML = 'G';
+    }
   }
 }
 
