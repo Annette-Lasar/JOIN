@@ -34,8 +34,37 @@ let allCategories = [
   },
 ];
 
+let allContacts = [
+  {
+    contact_first_name: 'Bilbo',
+    contact_family_name: 'Beutlin',
+    contact_color: '#FF0000',
+  },
+
+  {
+    contact_first_name: 'Hermione',
+    contact_family_name: 'Granger',
+    contact_color: '#0000FF',
+  },
+
+  {
+    contact_first_name: 'Donald',
+    contact_family_name: 'Duck',
+    contact_color: '#008000',
+  },
+];
+let currentContacts = [];
+let currentDueDates = [];
 let currentCategories = [];
 
+const TASK_TITLE_INFO_BOX = document.getElementById('task_title_info');
+const TASK_DUE_INFO_BOX_SMALL = document.getElementById('task_due_info_small');
+const TASK_DUE_INFO_BOX_BIG = document.getElementById('task_due_info_big');
+const TASK_CATEGORY_BOX_SMALL = document.getElementById(
+  'task_category_info_small'
+);
+const TASK_CATEGORY_BOX_BIG = document.getElementById('task_category_info_big');
+const CONTACT_LIST_BOX = document.getElementById('contact_list');
 const CATEGORY_LIST_SMALL = document.getElementById('category_list_small');
 const CATEGORY_LIST_BIG = document.getElementById('category_list_big');
 const SELECT_TASK_CATEGORY_ELEMENT_SMALL = document.getElementById(
@@ -49,11 +78,11 @@ const SUBTASK_CONTAINER_SMALL = document.getElementById(
 );
 const SUBTASK_CONTAINER_BIG = document.getElementById('subtask_container_big');
 
-
 function initTasks() {
   loadSubtasks();
   init();
   showAndHideBoxesAccordingToScreenSize();
+  renderContacts();
   renderCategories();
   renderSubtasks();
 }
@@ -72,31 +101,6 @@ function toggleDropdownLists(idContainer, idArrow) {
   SELECT_ARROW.classList.toggle('turn');
 }
 
-/* function showAndHideBoxesAccordingToScreenSize() {
-  let prioSmallScreen = document.getElementById('prio_small_screen');
-  let dueDateSmallScreen = document.getElementById('due_date_small_screen');
-  let categorySmallScreen = document.getElementById('category_small_screen');
-  let subTasksSmallScreen = document.getElementById('sub_tasks_small_screen');
-  let bigScreen = document.getElementById('big_screen');
-  let windowSize = window.innerWidth;
-  
-  if (windowSize < 800) {
-    prioSmallScreen.style.display = 'block';
-    dueDateSmallScreen.style.display = 'flex';
-    categorySmallScreen.style.display = 'block';
-    subTasksSmallScreen.style.display = 'flex';
-    SUBTASK_CONTAINER_SMALL.style.display = 'block';
-    bigScreen.style.display = 'none';
-  } else {
-    prioSmallScreen.style.display = 'none';
-    dueDateSmallScreen.style.display = 'none';
-    categorySmallScreen.style.display = 'none';
-    subTasksSmallScreen.style.display = 'none';
-    SUBTASK_CONTAINER_SMALL.style.display = 'none';
-    bigScreen.style.display = 'block';
-  }
-} */
-
 function showAndHideBoxesAccordingToScreenSize() {
   let prioSmallScreen = document.getElementById('prio_small_screen');
   let dueDateSmallScreen = document.getElementById('due_date_small_screen');
@@ -104,7 +108,7 @@ function showAndHideBoxesAccordingToScreenSize() {
   let subTasksSmallScreen = document.getElementById('sub_tasks_small_screen');
   let bigScreen = document.getElementById('big_screen');
   let windowSize = window.innerWidth;
-  
+
   if (windowSize < 800) {
     prioSmallScreen.classList.remove('d-none');
     dueDateSmallScreen.classList.remove('d-none');
@@ -122,11 +126,11 @@ function showAndHideBoxesAccordingToScreenSize() {
   }
 }
 
-function setAndRemoveAttributeRequired() {
+/* function setAndRemoveAttributeRequired() {
   let InputDueDateSmallScreen = document.getElementById('task_due_date_small');
   let InputDueDateBigScreen = document.getElementById('task_due_date_big');
   let windowSize = window.innerWidth;
-  if(windowSize < 800) {
+  if (windowSize < 800) {
     InputDueDateSmallScreen.setAttribute('required', '');
     InputDueDateBigScreen.removeAttribute('required', '');
   } else {
@@ -134,13 +138,13 @@ function setAndRemoveAttributeRequired() {
     InputDueDateBigScreen.setAttribute('required', '');
   }
 }
-
+ */
 document.addEventListener('DOMContentLoaded', function () {
   showAndHideBoxesAccordingToScreenSize();
+  /*   setAndRemoveAttributeRequired(); */
   window.addEventListener('resize', showAndHideBoxesAccordingToScreenSize);
-  window.addEventListener('resize', setAndRemoveAttributeRequired);
+  /* window.addEventListener('resize', setAndRemoveAttributeRequired); */
 });
-
 
 /* function checkForAddTaskPage() {
   let url = window.location.href;
@@ -155,9 +159,75 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 } */
 
-
-
 /* checkForAddTaskPage(); */
+
+/* --------------------------------------------------------------------
+contact section in add_task.html
+---------------------------------------------------------------------- */
+function renderContacts() {
+  CONTACT_LIST_BOX.innerHTML = '';
+  for (i = 0; i < allContacts.length; i++) {
+    const oneContact = allContacts[i];
+    CONTACT_LIST_BOX.innerHTML += generateContactListHTML(i, oneContact);
+  }
+}
+
+function generateContactListHTML(i, oneContact) {
+  return /* html */ `
+    <li>
+      <div class="initials-wrapper">
+        <div class="initials-icon" style="background-color: ${oneContact.contact_color}">${oneContact.contact_first_name[0]}${oneContact.contact_family_name[0]}</div>
+        <div>
+        ${oneContact.contact_first_name} ${oneContact.contact_family_name}
+        </div>
+      </div>
+      <div><input onclick="selectContacts()" type="checkbox"></div>
+    </li>
+  `;
+}
+
+/* function selectContacts() {
+  let selectedContact = {
+    category_name: currentCategoryName,
+    category_color: currentCategoryColor,
+  };
+
+  
+} */
+
+function selectContacts(index) {
+  const selectedContact = allContacts[index];
+
+  // Überprüfen, ob der Kontakt bereits ausgewählt ist
+  const isSelected = currentContacts.some(contact => contact === selectedContact);
+
+  // Wenn nicht ausgewählt, füge den Kontakt hinzu; sonst entferne ihn
+  if (!isSelected) {
+    currentContacts.push(selectedContact);
+  } else {
+    const indexToRemove = currentContacts.indexOf(selectedContact);
+    currentContacts.splice(indexToRemove, 1);
+  }
+
+  // Hier kannst du weitere Aktionen basierend auf den ausgewählten Kontakten durchführen
+  console.log("Aktuelle ausgewählte Kontakte:", currentContacts);
+}
+
+/* --------------------------------------------------------------------
+due date section in add_task.html
+---------------------------------------------------------------------- */
+/* function selectDueDate(containerId) {
+  const duedateBox = document.getElementById(containerId);
+  let currentDueDate = currentDueDates[0];
+  const duedateBoxSmall = document.getElementById('task_due_date_small');
+  const duedateBoxBig = document.getElementById('task_due_date_big');
+  currentDueDate = duedateBox.value;
+
+  console.log('Fälligkeitsdatum: ', currentDueDate);
+  duedateBoxSmall.innerHTML = currentDueDate.value;
+  duedateBoxBig.innerHTML = currentDueDate.value;
+} */
+
 /* --------------------------------------------------------------------
 category section in add_task.html
 ---------------------------------------------------------------------- */
@@ -167,17 +237,16 @@ function renderCategories() {
   let i;
   for (i = 0; i < allCategories.length; i++) {
     const currentCategory = allCategories[i];
-      CATEGORY_LIST_SMALL.innerHTML += generateCategoryListHTML(
-        i,
-        currentCategory,
-        'small'
-      );
-      CATEGORY_LIST_BIG.innerHTML += generateCategoryListHTML(
-        i,
-        currentCategory,
-        'big'
-      );
-  
+    CATEGORY_LIST_SMALL.innerHTML += generateCategoryListHTML(
+      i,
+      currentCategory,
+      'small'
+    );
+    CATEGORY_LIST_BIG.innerHTML += generateCategoryListHTML(
+      i,
+      currentCategory,
+      'big'
+    );
   }
   CATEGORY_LIST_SMALL.innerHTML += generateNewCategoryBoxHTML(i, 'small');
   CATEGORY_LIST_BIG.innerHTML += generateNewCategoryBoxHTML(i, 'big');
@@ -206,16 +275,13 @@ function generateCategoryListHTML(i, currentCategory, containerType) {
           <div class="category-icon-wrapper">
             <img onclick="editCategory(${i}, '${currentCategory.category_name}', '${currentCategory.category_color}', '${containerType}')" src="../icons/edit_dark.svg" height="14">
             <div class="subtask-separator-line"></div>
-            <img src="../icons/delete.svg" height="14">
+            <img onclick="deleteCategory(${i})" src="../icons/delete.svg" height="14">
           </div>
         </li>
     `;
 }
 
-function selectTaskCategory(
-  currentCategoryName,
-  currentCategoryColor
-) {
+function selectTaskCategory(currentCategoryName, currentCategoryColor) {
   let selectedCategory = {
     category_name: currentCategoryName,
     category_color: currentCategoryColor,
@@ -223,32 +289,38 @@ function selectTaskCategory(
 
   currentCategories[0] = selectedCategory;
   renderCurrentCategory();
-  closeCategoryLists(`category_list_small`,
-  `select_arrow_categories_small`);
-  closeCategoryLists(`category_list_big`,
-  `select_arrow_categories_big`);
-  
+  closeCategoryLists(`category_list_small`, `select_arrow_categories_small`);
+  closeCategoryLists(`category_list_big`, `select_arrow_categories_big`);
 }
 
-function renderCurrentCategory() {
-  SELECT_TASK_CATEGORY_ELEMENT_SMALL.innerHTML = '';
-  SELECT_TASK_CATEGORY_ELEMENT_BIG.innerHTML = '';
-  for (let i = 0; i < currentCategories.length; i++) {
-    const currentCategoryName = currentCategories[i].category_name;
-    const currentCategoryColor = currentCategories[i].category_color;
-    SELECT_TASK_CATEGORY_ELEMENT_SMALL.innerHTML = generateCurrentCategoryHTML(
-      i,
-      currentCategoryName,
-      currentCategoryColor,
-      'small'
-    );
-    SELECT_TASK_CATEGORY_ELEMENT_BIG.innerHTML = generateCurrentCategoryHTML(
-      i,
-      currentCategoryName,
-      currentCategoryColor,
-      'big'
-    );
+/* function deleteCategory(i) {
+  let categoryToBeDeleted = allCategories[i];
+  console.log('Zu löschende Kategorie', categoryToBeDeleted);
+  let currentCategory = currentCategories[0];
+  console.log('Aktuelle Kategorie: ', currentCategory);
+  allCategories.splice(i, 1);
+  if (categoryToBeDeleted === currentCategory) {
+    currentCategories.splice(0, 1);
+    renderCurrentCategory();
   }
+  renderCategories();
+  closeCategoryLists(`category_list_small`, `select_arrow_categories_small`);
+  closeCategoryLists(`category_list_big`, `select_arrow_categories_big`);
+} */
+
+function deleteCategory(i) {
+  let categoryToBeDeleted = allCategories[i];
+  let categoryIndex = currentCategories.findIndex(function (item) {
+    return item.category_name === categoryToBeDeleted.category_name;
+  });
+  allCategories.splice(i, 1);
+  if (categoryIndex === 0) {
+    currentCategories.splice(categoryIndex, 1);
+    renderCurrentCategory();
+  }
+  renderCategories();
+  closeCategoryLists(`category_list_small`, `select_arrow_categories_small`);
+  closeCategoryLists(`category_list_big`, `select_arrow_categories_big`);
 }
 
 function closeCategoryLists(idContainer, idArrow) {
@@ -258,15 +330,33 @@ function closeCategoryLists(idContainer, idArrow) {
   SELECT_ARROW.classList.remove('turn');
 }
 
+function renderCurrentCategory() {
+  SELECT_TASK_CATEGORY_ELEMENT_SMALL.innerHTML = '';
+  SELECT_TASK_CATEGORY_ELEMENT_BIG.innerHTML = '';
+  if (currentCategories.length > 0) {
+    const currentCategoryName = currentCategories[0].category_name;
+    const currentCategoryColor = currentCategories[0].category_color;
+    SELECT_TASK_CATEGORY_ELEMENT_SMALL.innerHTML = generateCurrentCategoryHTML(
+      currentCategoryName,
+      currentCategoryColor
+    );
+    SELECT_TASK_CATEGORY_ELEMENT_BIG.innerHTML = generateCurrentCategoryHTML(
+      currentCategoryName,
+      currentCategoryColor
+    );
+  } else {
+    SELECT_TASK_CATEGORY_ELEMENT_SMALL.innerHTML = 'Select task category';
+    SELECT_TASK_CATEGORY_ELEMENT_BIG.innerHTML = 'Select task category';
+  }
+}
+
 function generateCurrentCategoryHTML(
-  i,
   currentCategoryName,
-  currentCategoryColor,
-  containerType
+  currentCategoryColor
 ) {
   return /* html */ `
-     <div id="task_category_text_small_${i}" class="task-category-text">
-          <svg id="category_circle_icon_${containerType}_${i}" width="16" height="16">
+     <div  class="task-category-text">
+          <svg  width="16" height="16">
            <circle cx="8" cy="8" r="6" fill="${currentCategoryColor}" stroke="black" stroke-width="1"/>
           </svg>
             <div>
@@ -316,7 +406,9 @@ function generateCategoryInputHTML(
 }
 
 function changeInputBackgroundColor(i, containerType, containerID) {
-  const colorInputField = document.getElementById(`${containerID}_${containerType}_${i}`);
+  const colorInputField = document.getElementById(
+    `${containerID}_${containerType}_${i}`
+  );
   colorInputField.style.backgroundColor = colorInputField.value;
   colorInputField.addEventListener('input', function () {
     this.style.backgroundColor = this.value;
@@ -339,17 +431,22 @@ function changeCategoryTextAndColor(i, containerType) {
     allCategories[i] = updatedCategory;
     renderCategories();
   } else {
-    alert('The input field mustn\'t be empty.');
+    alert("The input field mustn't be empty.");
     renderCategories();
   }
 }
 
-
 function createNewCategory(i, containerType) {
   const randomColor = getRandomColor();
-  const newCategoryBox = document.getElementById(`new_category_${containerType}`);
+  const newCategoryBox = document.getElementById(
+    `new_category_${containerType}`
+  );
   newCategoryBox.innerHTML = '';
-  newCategoryBox.innerHTML = generateInputForNewCategoryHTML(i, containerType, randomColor);
+  newCategoryBox.innerHTML = generateInputForNewCategoryHTML(
+    i,
+    containerType,
+    randomColor
+  );
   changeInputBackgroundColor(i, containerType, 'color_new_input');
 }
 
@@ -375,19 +472,23 @@ function generateInputForNewCategoryHTML(i, containerType, randomColor) {
 }
 
 function addNewCategory(i, containerType) {
-  let newCategoryColor = document.getElementById(`color_new_input_${containerType}_${i}`);
-  let newCategoryText = document.getElementById(`category_new_input_${containerType}`);
+  let newCategoryColor = document.getElementById(
+    `color_new_input_${containerType}_${i}`
+  );
+  let newCategoryText = document.getElementById(
+    `category_new_input_${containerType}`
+  );
   if (newCategoryText.value !== '') {
     let newCategory = {
       category_name: newCategoryText.value.trim(),
       category_color: newCategoryColor.value,
-    }
+    };
     allCategories.push(newCategory);
     renderCategories();
   } else {
-    alert('The input field mustn\'t be empty.');
+    alert("The input field mustn't be empty.");
     renderCategories();
-  }    
+  }
 }
 /* --------------------------------------------------------------------
 subtask section in add_task.html
@@ -578,14 +679,31 @@ function changeSubtaskText(i, containerType) {
   }
 }
 
-
 function createNewTask() {
   const titleBox = document.getElementById('task_title');
-  let task = {
-    title: titleBox.value,
-    current_category: currentCategories,
+  const descriptionBox = document.getElementById('task_description');
+  let inputFields = document.querySelectorAll('input');
+  if (titleBox.value === '' || currentCategories.length === 0) {
+    if (titleBox.value === '') {
+      TASK_TITLE_INFO_BOX.classList.add('visible');
+      inputFields[0].classList.add('red-border');
+    }
+    if (currentCategories.length === 0) {
+      TASK_CATEGORY_BOX_SMALL.classList.add('visible');
+      TASK_CATEGORY_BOX_BIG.classList.add('visible');
+    }
+  } else {
+    let task = {
+      title: titleBox.value,
+      description: descriptionBox.value,
+      current_category: currentCategories,
+      subtasks: subTasks,
+    };
+    allTasks.push(task);
+    console.log('Aufgaben: ', allTasks);
+    TASK_TITLE_INFO_BOX.classList.remove('visible');
+    inputFields[0].classList.remove('red-border');
+    TASK_CATEGORY_BOX_SMALL.classList.remove('visible');
+    TASK_CATEGORY_BOX_BIG.classList.remove('visible');
   }
-  allTasks.push(task);
-  console.log('Aufgabe: ', task);
-  console.log('Aufgaben: ', allTasks);
 }

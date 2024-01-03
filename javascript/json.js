@@ -10,7 +10,7 @@ let contacts = [
         "color": "#ff7a00"
     },
     {
-        "name": "Hermoine Granger",
+        "name": "Hermione Granger",
         "e-mail": "grangerh@hotmail.com",
         "phone": "123-456-7890",
         "color": "#9327ff"

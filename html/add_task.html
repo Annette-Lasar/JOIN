@@ -19,17 +19,15 @@
     </header>
     <div class="page">
       <h1>Add Task</h1>
-      <form onsubmit="createNewTask(); return false;" action="">
+      <div action="">
         <div class="task-wrapper">
           <div class="small-screen">
             <section>
               <label for="task_title">Title<span class="red">*</span></label>
-              <input
-                id="task_title"
-                type="text"
-                placeholder="Enter a title"
-                required
-              />
+              <input id="task_title" type="text" class="task-title" placeholder="Enter a title" />
+              <div>
+                <span id="task_title_info" class="red info-text">Please enter a title.</span>
+              </div>
             </section>
             <section>
               <label for="task_description">Description</label>
@@ -112,8 +110,10 @@
                 name="task_due_date_small"
                 type="date"
                 placeholder="dd/mm/yyyy"
-                required
               />
+              <div>
+                <span id="task_due_info_small" class="red info-text"></span>
+              </div>
             </section>
             <section id="category_small_screen" class="category-wrapper">
               <div class="label">Category<span class="red">*</span></div>
@@ -132,6 +132,12 @@
                   />
                 </div>
               </div>
+              <div>
+                <span
+                  id="task_category_info_small"
+                  class="red info-text"
+                >Please select a category.</span>
+              </div>
               <ul id="category_list_small" class="category-list"></ul>
             </section>
             <section class="contact-wrapper">
@@ -147,11 +153,10 @@
                 />
               </div>
               <ul id="contact_list" class="contact-list">
-                <li>Bilbo Beutlin</li>
-                <li>Hermione Granger</li>
                 <div class="new-category">Add new contact</div>
               </ul>
             </section>
+            <section id="contacts_container" class="contacts-container"></section>
             <section id="sub_tasks_small_screen">
               <div class="label">Subtasks</div>
               <div id="sub_task_wrapper_small" class="sub-task-wrapper">
@@ -204,8 +209,10 @@
                 name="task_due_date_big"
                 type="date"
                 placeholder="dd/mm/yyyy"
-                required
               />
+              <div>
+                <span id="task_due_info_big" class="red info-text">Select a due date.</span>
+              </div>
             </section>
             <section id="prio_big_screen" class="prio-big-screen">
               <div class="label">Prio</div>
@@ -286,6 +293,9 @@
                   />
                 </div>
               </div>
+              <div>
+                <span id="task_category_info_big" class="red info-text">Please select a category.</span>
+              </div>
               <ul id="category_list_big" class="category-list"></ul>
             </section>
             <section>
@@ -341,13 +351,13 @@
               Clear
               <img src="../icons/close.svg" alt="" />
             </button>
-            <button class="dark-button">
+            <button onclick="createNewTask()" class="dark-button">
               Create task
               <img src="../icons/check.svg" alt="" />
             </button>
           </div>
         </div>
-      </form>
+      </div>
     </div>
     <nav>
       <div w3-include-html="../templates/navigation_bar.html"></div>

@@ -112,3 +112,4 @@ function resetAddNewContactValues() {
     document.getElementById('add_email').value = '';
     document.getElementById('add_phone').value = '';
 }
+
