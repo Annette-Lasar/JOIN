@@ -39,30 +39,30 @@ function initBoard() {
 
 function showToDos() {
     let toDos = todos.filter(t => t['category'] == 'toDo');
-    document.getElementById('toDo').innerHTML = '';
+    document.getElementById('to_Do').innerHTML = '';
     for (let i = 0; i < toDos.length; i++) {
         const element = toDos[i];
-        document.getElementById('toDo').innerHTML += generateToDoHTML(element);
+        document.getElementById('to_Do').innerHTML += generateToDoHTML(element);
     }
 }
 
 
 function showTasksInProgress() {
     let inProgress = todos.filter(t => t['category'] == 'inProgress');
-    document.getElementById('inProgress').innerHTML = '';
+    document.getElementById('in_Progress').innerHTML = '';
     for (let j = 0; j < inProgress.length; j++) {
         const element = inProgress[j];
-        document.getElementById('inProgress').innerHTML += generateToDoHTML(element);
+        document.getElementById('in_Progress').innerHTML += generateToDoHTML(element);
     }
 }
 
 
 function showAwaitFeedback() {
     let awaitFeedback = todos.filter(t => t['category'] == 'awaitFeedback');
-    document.getElementById('awaitFeedback').innerHTML = '';
+    document.getElementById('await_Feedback').innerHTML = '';
     for (let j = 0; j < awaitFeedback.length; j++) {
         const element = awaitFeedback[j];
-        document.getElementById('awaitFeedback').innerHTML += generateToDoHTML(element);
+        document.getElementById('await_Feedback').innerHTML += generateToDoHTML(element);
     }
 }
 
