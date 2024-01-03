@@ -1,4 +1,4 @@
-let userLogin = false;                  // Wird true, wenn UserLogin (also kein GuestLogin)
+let userLogin = false;    
 let userName;
 let greetedMobile = false;   
 

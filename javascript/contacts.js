@@ -113,3 +113,16 @@ function resetAddNewContactValues() {
     document.getElementById('add_phone').value = '';
 }
 
+function showEdit() {
+    document.getElementById('empty').style.display = 'block';
+    document.getElementById('edit_delete').classList.remove('slide-out-edit');
+    document.getElementById('edit_delete').classList.add('slide-in-edit');
+}
+
+function hideEdit() {
+    document.getElementById('edit_delete').classList.remove('slide-in-edit');
+    document.getElementById('edit_delete').classList.add('slide-out-edit');
+    setTimeout(() => {
+        document.getElementById('empty').style.display = 'none';
+    }, 300);
+}

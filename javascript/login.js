@@ -8,15 +8,9 @@ function login() {
     } else {
         alert('User nicht vorhanden oder Anmeldedaten nicht korrekt !'); 
     }
-    
 }
 
 
-/** 
-*  folgende Function ist nur für erfolgreichen USER-Login, NICHT bei GuestLogin !
-*  Name für key 'userLogin' wurde bewusst gewählt, da genau dieser key in summary.js abgerufen wird ( dort in der Function 'checkLocalStorage()' )
-*  Function loginSuccessful() muss noch richtig implementiert werden in index.html (vorübergehend zu Testzwecken auf dem Login-Button platziert )
-*/
 function loginSuccessful(user) {
     let successfulLogin = true;
     successfulLogin = JSON.stringify(successfulLogin);
@@ -26,4 +20,3 @@ function loginSuccessful(user) {
     userName = JSON.stringify(userName);
     localStorage.setItem('userName', userName);
 }
-

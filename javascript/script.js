@@ -5,6 +5,7 @@ async function init() {
   checkIfStartScreen();
   checkIfSummaryPage();
   checkIfBoardPage();
+  showInitials();
 }
 
 
@@ -27,9 +28,7 @@ function moveLogoOnStartScreen() {
   const URL = window.location.href;
   if (URL.endsWith('index.html')) {
     setTimeout(() => {
-      document
-        .getElementById('login_page')
-        .classList.add('change-background-color');
+      document.getElementById('login_page').classList.add('change-background-color');
       document.getElementById('login_join_logo').classList.add('animate-logo');
       document.getElementById('path_dot').classList.add('change-logo-color');
       document.getElementById('path_j').classList.add('change-logo-color');
@@ -88,6 +87,25 @@ function checkIfBoardPage() {
   const URL = window.location.href;
   if(URL.endsWith('board.html')) {
     initBoard();
+  }
+}
+
+
+function showInitials() {
+  const URL = window.location.href;
+  if(URL.endsWith('index.html')){
+    return;
+  } else {
+    let userNameAsString = localStorage.getItem('userName');
+    if(userNameAsString) {
+      let userName = JSON.parse(userNameAsString);
+      let nameArray = userName.split(' ');
+      let firstLetter = nameArray[0].charAt(0);
+      let secondLetter = nameArray[1].charAt(0);
+      document.getElementById('user_icon').innerHTML = firstLetter.concat(secondLetter);
+    } else {
+      document.getElementById('user_icon').innerHTML = 'G';
+    }
   }
 }
 
