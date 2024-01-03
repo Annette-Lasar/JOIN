@@ -1,4 +1,4 @@
-let todos = [
+let todos = [                                  // JSON-Array nur beispielhaft; wird später ersetzt, indem man das JSON-Array mit den Tasks vom Server lädt
     {
         'id': 0,
         'title': 'Putzen',
@@ -42,7 +42,7 @@ function showToDos() {
     document.getElementById('toDo').innerHTML = '';
     for (let i = 0; i < toDos.length; i++) {
         const element = toDos[i];
-        document.getElementById('toDo').innerHTML += generateTodoHTML(element);
+        document.getElementById('toDo').innerHTML += generateToDoHTML(element);
     }
 }
 
@@ -51,8 +51,8 @@ function showTasksInProgress() {
     let inProgress = todos.filter(t => t['category'] == 'inProgress');
     document.getElementById('inProgress').innerHTML = '';
     for (let j = 0; j < inProgress.length; j++) {
-    const element = inProgress[j];
-    document.getElementById('inProgress').innerHTML += generateTodoHTML(element);
+        const element = inProgress[j];
+        document.getElementById('inProgress').innerHTML += generateToDoHTML(element);
     }
 }
 
@@ -61,8 +61,8 @@ function showAwaitFeedback() {
     let awaitFeedback = todos.filter(t => t['category'] == 'awaitFeedback');
     document.getElementById('awaitFeedback').innerHTML = '';
     for (let j = 0; j < awaitFeedback.length; j++) {
-    const element = awaitFeedback[j];
-    document.getElementById('awaitFeedback').innerHTML += generateTodoHTML(element);
+        const element = awaitFeedback[j];
+        document.getElementById('awaitFeedback').innerHTML += generateToDoHTML(element);
     }
 }
 
@@ -71,24 +71,19 @@ function showFinishedTasks() {
     let done = todos.filter(t => t['category'] == 'done');
     document.getElementById('done').innerHTML = '';
     for (let j = 0; j < done.length; j++) {
-    const element = done[j];
-    document.getElementById('done').innerHTML += generateTodoHTML(element);
+        const element = done[j];
+        document.getElementById('done').innerHTML += generateToDoHTML(element);
     }
+}
+
+
+function generateToDoHTML(element) {
+    return `<div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">${element['title']}</div>`;
 }
 
 
 function startDragging(id) {
     currentDraggedElement = id;
-}
-
-
-function generateTodoHTML(element) {
-    return `<div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">${element['title']}</div>`;
-}
-
-
-function allowDrop(ev) {
-    ev.preventDefault();
 }
 
 
@@ -98,12 +93,17 @@ function moveTo(category) {
 }
 
 
-function highlight(id) {
-    document.getElementById(id).classList.add('drag-area-highlight');
+function removeHighlight(id) {
+    document.getElementById(id).classList.remove('drag-area-highlight');
 }
 
 
-function removeHighlight(id) {
-    document.getElementById(id).classList.remove('drag-area-highlight');
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+
+function highlight(id) {
+    document.getElementById(id).classList.add('drag-area-highlight');
 }
 
