@@ -17,10 +17,12 @@
     <header>
       <div w3-include-html="../templates/header.html"></div>
     </header>
+    <h1>Board</h1>
     <div class="page">
-      <h1>Board</h1>
-      <div class="drag-area" id="open" ondrop="moveTo('open')" ondragleave="removeHighlight('open')" ondragover="allowDrop(event); highlight('open')"></div>
-      <div class="drag-area" id="closed" ondrop="moveTo('closed')" ondragleave="removeHighlight('closed')" ondragover="allowDrop(event); highlight('closed')"></div>
+    <div class="drag-area" id="toDo" ondrop="moveTo('toDo')" ondragleave="removeHighlight('toDo')" ondragover="allowDrop(event); highlight('toDo')"></div>
+    <div class="drag-area" id="inProgress" ondrop="moveTo('inProgress')" ondragleave="removeHighlight('inProgress')" ondragover="allowDrop(event); highlight('inProgress')"></div>
+    <div class="drag-area" id="awaitFeedback" ondrop="moveTo('awaitFeedback')" ondragleave="removeHighlight('awaitFeedback')" ondragover="allowDrop(event); highlight('awaitFeedback')"></div>
+    <div class="drag-area" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')" ondragover="allowDrop(event); highlight('done')"></div>
     </div>
     <nav>
       <div w3-include-html="../templates/navigation_bar.html"></div>

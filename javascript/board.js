@@ -2,17 +2,27 @@ let todos = [
     {
         'id': 0,
         'title': 'Putzen',
-        'category': 'open'
+        'category': 'toDo'
     },
     {
         'id': 1,
         'title': 'Kochen',
-        'category': 'open'
+        'category': 'toDo'
     },
     {
         'id': 2,
         'title': 'Einkaufen',
-        'category': 'closed'
+        'category': 'inProgress'
+    },
+    {
+        'id': 3,
+        'title': 'Coden',
+        'category': 'awaitFeedback'
+    },
+    {
+        'id': 4,
+        'title': 'Lesen',
+        'category': 'done'
     }
 ];
 
@@ -20,18 +30,49 @@ let currentDraggedElement;
 
 
 function initBoard() {
-    let open = todos.filter(t => t['category'] == 'open');
-    document.getElementById('open').innerHTML = '';
-    for (let i = 0; i < open.length; i++) {
-        const element = open[i];
-        document.getElementById('open').innerHTML += generateTodoHTML(element);
-    }
+    showToDos();
+    showTasksInProgress();
+    showAwaitFeedback();
+    showFinishedTasks();
+}
 
-    let closed = todos.filter(t => t['category'] == 'closed');
-    document.getElementById('closed').innerHTML = '';
-    for (let j = 0; j < closed.length; j++) {
-    const element = closed[j];
-    document.getElementById('closed').innerHTML += generateTodoHTML(element);
+
+function showToDos() {
+    let toDos = todos.filter(t => t['category'] == 'toDo');
+    document.getElementById('toDo').innerHTML = '';
+    for (let i = 0; i < toDos.length; i++) {
+        const element = toDos[i];
+        document.getElementById('toDo').innerHTML += generateTodoHTML(element);
+    }
+}
+
+
+function showTasksInProgress() {
+    let inProgress = todos.filter(t => t['category'] == 'inProgress');
+    document.getElementById('inProgress').innerHTML = '';
+    for (let j = 0; j < inProgress.length; j++) {
+    const element = inProgress[j];
+    document.getElementById('inProgress').innerHTML += generateTodoHTML(element);
+    }
+}
+
+
+function showAwaitFeedback() {
+    let awaitFeedback = todos.filter(t => t['category'] == 'awaitFeedback');
+    document.getElementById('awaitFeedback').innerHTML = '';
+    for (let j = 0; j < awaitFeedback.length; j++) {
+    const element = awaitFeedback[j];
+    document.getElementById('awaitFeedback').innerHTML += generateTodoHTML(element);
+    }
+}
+
+
+function showFinishedTasks() {
+    let done = todos.filter(t => t['category'] == 'done');
+    document.getElementById('done').innerHTML = '';
+    for (let j = 0; j < done.length; j++) {
+    const element = done[j];
+    document.getElementById('done').innerHTML += generateTodoHTML(element);
     }
 }
 
