@@ -126,3 +126,8 @@ function hideEdit() {
         document.getElementById('empty').style.display = 'none';
     }, 300);
 }
+
+function deleteAnUser() {
+    let userId = document.getElementById('contact_details').innerHTML;
+    console.log(userId);
+}
