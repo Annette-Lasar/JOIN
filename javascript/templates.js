@@ -37,7 +37,7 @@ function contactInfoTemplate(i) {
     let initials = loadInitials(i);
     return `
         <div class="name">
-          <div id="color_large${i}" class="initials large">
+          <div id="color_large_${i}" class="initials large">
             <h3>${initials}</h3>
           </div>
           <div class="contact-info">
@@ -56,7 +56,7 @@ function contactInfoTemplate(i) {
                 </svg>
                 Edit
               </div>
-              <div class="icon">
+              <div class="icon" onclick="deleteAnUser()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <mask id="mask0_114296_4124" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
                     height="24">

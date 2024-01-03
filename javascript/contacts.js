@@ -56,13 +56,16 @@ function hideContactInfo() {
 }
 
 function showContactInfo(i) {
+    setTimeout(() => {
+        document.getElementById('contact_details').classList.remove('slide-in');
+    }, 200);
     document.getElementById('contacts').style.display = 'block';
     document.getElementById('edit_contact_button').style.display = 'block';
     document.getElementById('contact_details').style.display = 'flex';
     document.getElementById('contact_details').classList.add('slide-in');
     document.getElementById('contact_details').innerHTML = contactInfoTemplate(i);
     let color = document.getElementById("initials" + i).style.backgroundColor;
-    document.getElementById("color_large" + i).style.backgroundColor = color;
+    document.getElementById("color_large_" + i).style.backgroundColor = color;
 }
 
 function hideAddForm() {
@@ -128,6 +131,11 @@ function hideEdit() {
 }
 
 function deleteAnUser() {
-    let userId = document.getElementById('contact_details').innerHTML;
-    console.log(userId);
+    let contactHTML = document.getElementById('contact_details').getElementsByTagName('div');
+    let elementId = contactHTML[1].getAttribute('id');
+    let sliceFrom = elementId.lastIndexOf('_') + 1;
+    let index = elementId.slice(sliceFrom);
+    contacts.splice(index, 1);
+    addGroups();
+    hideContactInfo();
 }
