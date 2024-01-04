@@ -1,4 +1,5 @@
-let todos = [                                  // JSON-Array nur beispielhaft; wird später ersetzt, indem man das JSON-Array mit den Tasks vom Server lädt
+// JSON-Array nur beispielhaft; wird später ersetzt, indem man das JSON-Array mit den Tasks vom Server lädt ( siehe function initBoard() )
+let todos = [                                  
     {
         'id': 0,
         'title': 'Putzen',
@@ -30,6 +31,7 @@ let currentDraggedElement;
 
 
 function initBoard() {
+    // hier Funktion einfügen, die das Array mit den ToDos/Tasks vom Server lädt ( await getItem(.....) )
     showToDos();
     showTasksInProgress();
     showAwaitFeedback();
@@ -77,6 +79,7 @@ function showFinishedTasks() {
 }
 
 
+// bisher wird nur der Titel des ToDo´s angezeigt
 function generateToDoHTML(element) {
     return `<div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">${element['title']}</div>`;
 }
@@ -87,9 +90,10 @@ function startDragging(id) {
 }
 
 
-// status ist entweder toDo, inProgress, awaitFeedback oder done (siehe board.html)
+// status ist entweder 'toDo', 'inProgress', 'awaitFeedback' oder 'done' (siehe board.html)
 function moveTo(status) {
     todos[currentDraggedElement]['status'] = status;
+    // Hier eine Funktion einfügen, die das geänderte JSON-Array wieder an den Server sendet ( await setItem(........) )
     initBoard();
 }
 
