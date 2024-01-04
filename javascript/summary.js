@@ -112,6 +112,9 @@ function checkLocalStorage() {
 
 
 function showSummaryValues() {
+
+    // vorher noch todos-Array vom Server laden ?
+
     let toDos = todos.filter(t => t['status'] == 'toDo');
     let toDosCounter = toDos.length;
     document.getElementById('toDo_counter').innerHTML = toDosCounter;
