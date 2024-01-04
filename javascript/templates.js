@@ -171,7 +171,9 @@ function addNewContactFormTemplate() {
     `
 }
 
-function editContactFormTemplate() {
+function editContactFormTemplate(i) {
+    let initials = loadInitials(i);
+    let color = contacts[i]['color'];
     return `
     <div id="background" class="background" onclick="hideAddForm()"></div>
     <div id="add_form" class="add-form">
@@ -209,8 +211,8 @@ function editContactFormTemplate() {
           <path d="M92 2L2 2" stroke="#29ABE2" stroke-width="3" stroke-linecap="round" />
         </svg>
       </div>
-      <div class="initials position text">
-        <h3>BB</h3>
+      <div class="initials position text" style="background-color: ${color}">
+        <h3>${initials}</h3>
       </div>
       <form class="form" onsubmit="addNewContact(); return false">
         <input id="add_name" type="text" placeholder="Name" required>

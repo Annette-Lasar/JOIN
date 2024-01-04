@@ -822,6 +822,9 @@ input:focus-visible {
         left: 0;
     }
 
+    .edit-delete {
+        bottom: 6.5em;
+    }
 }
 
 @media (min-width: 50em) {
