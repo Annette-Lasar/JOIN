@@ -4,29 +4,44 @@
 */
 let todos = [                                  
     {
-        'id': 0,
-        'title': 'Putzen',
-        'status': 'toDo'
+        id: 0,
+        title: 'Putzen',
+        description: '',
+        current_category: [],     // Array mit nur einem einzigen Objekt / 1 ausgewählte Category mit Farbe und Titel
+        subtasks: [],             // mehrere Einträge mit mehreren Subtasks
+        status: 'toDo'
     },
     {
-        'id': 1,
-        'title': 'Kochen',
-        'status': 'toDo'
+        id: 1,
+        title: 'Kochen',
+        description: '',
+        current_category: [],     
+        subtasks: [],             
+        status: 'toDo'
     },
     {
-        'id': 2,
-        'title': 'Einkaufen',
-        'status': 'inProgress'
+        id: 2,
+        title: 'Einkaufen',
+        description: '',
+        current_category: [],     
+        subtasks: [],
+        status: 'inProgress'
     },
     {
-        'id': 3,
-        'title': 'Coden',
-        'status': 'awaitFeedback'
+        id: 3,
+        title: 'Coden',
+        description: '',
+        current_category: [],     
+        subtasks: [],
+        status: 'awaitFeedback'
     },
     {
-        'id': 4,
-        'title': 'Lesen',
-        'status': 'done'
+        id: 4,
+        title: 'Lesen',
+        description: '',
+        current_category: [],     
+        subtasks: [],
+        status: 'done'
     }
 ];
 
