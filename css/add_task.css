@@ -134,7 +134,24 @@ input[type='date'] {
 
 .contacts-container {
   height: 50px;
+  padding: 0.25em;
+  flex-direction: row;
+  gap: 2px;
+  overflow: hidden;
   border: orchid 1px solid;
+}
+
+.overflow-indicator {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin-right: 5px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .category-wrapper,
@@ -186,6 +203,10 @@ input[type='date'] {
   border-top: none;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.contact-list.show {
+  z-index: 0;
 }
 
 li,
@@ -326,11 +347,6 @@ subtasks section
   margin-right: 8px;
 }
 
-.subtask-container-big::-webkit-scrollbar,
-.category-list::-webkit-scrollbar {
-  width: 12px;
-}
-
 .subtask-list-small,
 .subtask-list-big {
   padding: 4px;
@@ -405,9 +421,15 @@ subtasks section
   background-color: var(--accent-color-darkgray);
 }
 
+#contact_list::-webkit-scrollbar,
+.subtask-container-big::-webkit-scrollbar,
+.category-list::-webkit-scrollbar {
+  width: 12px;
+}
+
 .create-task-wrapper {
   margin: 0.5em 0 6rem;
-  padding: 0 1em;
+  padding: 0 0.25em;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -496,10 +518,6 @@ breakpoint: 50em
   .category-list.show {
     padding: 0 0.25em 1em;
   }
-
-  /* .form-big-screen {
-    overflow: hidden;
-  } */
 
   .big-screen,
   .small-screen {

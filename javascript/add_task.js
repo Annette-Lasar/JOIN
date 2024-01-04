@@ -52,6 +52,98 @@ let allContacts = [
     contact_family_name: 'Duck',
     contact_color: '#008000',
   },
+
+  {
+    contact_first_name: 'Donald',
+    contact_family_name: 'Trump',
+    contact_color: '#125476',
+  },
+
+  {
+    contact_first_name: 'Dagobert',
+    contact_family_name: 'Duck',
+    contact_color: '#008FD1',
+  },
+  {
+    contact_first_name: 'Daisy',
+    contact_family_name: 'Duck',
+    contact_color: '#7429FD',
+  },
+  {
+    contact_first_name: 'Darth',
+    contact_family_name: 'Vader',
+    contact_color: '#000000',
+  },
+  {
+    contact_first_name: 'Luke',
+    contact_family_name: 'Skywalker',
+    contact_color: '#8630BC',
+  },
+  {
+    contact_first_name: 'Jim',
+    contact_family_name: 'Knopf',
+    contact_color: '#1234FD',
+  },
+  {
+    contact_first_name: 'Salágia',
+    contact_family_name: 'Nirlak',
+    contact_color: '#765CBA',
+  },
+  {
+    contact_first_name: 'John',
+    contact_family_name: 'Silver',
+    contact_color: '#0984AB',
+  },
+  {
+    contact_first_name: 'Fanny',
+    contact_family_name: 'Price',
+    contact_color: '#AC7643',
+  },
+  {
+    contact_first_name: 'Elizabeth',
+    contact_family_name: 'Bennet',
+    contact_color: '#AFDCAA',
+  },
+  {
+    contact_first_name: 'Julia',
+    contact_family_name: 'Wiegand',
+    contact_color: '#123456',
+  },
+  {
+    contact_first_name: 'Fozzy',
+    contact_family_name: 'Bear',
+    contact_color: '#987DDD',
+  },
+  {
+    contact_first_name: 'Ronald',
+    contact_family_name: 'Weasley',
+    contact_color: '#777555',
+  },
+  {
+    contact_first_name: 'Mary',
+    contact_family_name: 'Crawley',
+    contact_color: '#555555',
+  },
+  {
+    contact_first_name: 'Mickey',
+    contact_family_name: 'Mouse',
+    contact_color: '#8866BB',
+  },
+  {
+    contact_first_name: 'Emil',
+    contact_family_name: 'Tischbein',
+    contact_color: '#EE66EE',
+  },
+  {
+    contact_first_name: 'Willi',
+    contact_family_name: 'Bayer',
+    contact_color: '#6D6D6D',
+  },
+  {
+    contact_first_name: 'Edward',
+    contact_family_name: 'Farres',
+    contact_color: '#4E4E4E',
+  },
 ];
 let currentContacts = [];
 let currentDueDates = [];
@@ -83,6 +175,8 @@ function initTasks() {
   init();
   showAndHideBoxesAccordingToScreenSize();
   renderContacts();
+  renderCurrentContacts();
+  addCheckboxEventListeners();
   renderCategories();
   renderSubtasks();
 }
@@ -181,37 +275,133 @@ function generateContactListHTML(i, oneContact) {
         ${oneContact.contact_first_name} ${oneContact.contact_family_name}
         </div>
       </div>
-      <div><input onclick="selectContacts()" type="checkbox"></div>
+      <div><input id="contact_checkbox_${i}" type="checkbox"></div>
     </li>
   `;
 }
 
-/* function selectContacts() {
-  let selectedContact = {
-    category_name: currentCategoryName,
-    category_color: currentCategoryColor,
-  };
+function addCheckboxEventListeners() {
+  for (let i = 0; i < allContacts.length; i++) {
+    const contactCheckbox = document.getElementById(`contact_checkbox_${i}`);
+    let oneContact = allContacts[i];
+    contactCheckbox.addEventListener('change', function () {
+      selectContacts(i, contactCheckbox, oneContact);
+    });
+  }
+}
 
-  
+function selectContacts(i, contactCheckbox, oneContact) {
+  let selectedContact = {
+    contact_first_name: oneContact.contact_first_name,
+    contact_family_name: oneContact.contact_family_name,
+    contact_color: oneContact.contact_color,
+  };
+  if (contactCheckbox.checked == true) {
+    currentContacts.push(selectedContact);
+    renderCurrentContacts();
+  }
+  if (contactCheckbox.checked == false) {
+    let contactsIndex = currentContacts.findIndex(function (item) {
+      return isEqual(item, selectedContact);
+    });
+    currentContacts.splice(contactsIndex, 1);
+    renderCurrentContacts();
+  }
+}
+
+/* function isEqual(obj1, obj2) {
+  const entries1 = Object.entries(obj1);
+  const entries2 = Object.entries(obj2);
+  if (entries1.length !== entries2.length) {
+    return false;
+  }
+  for (let [key, value] of entries1) {
+    if (value !== obj2[key]) {
+      return false;
+    }
+  }
+  return true;
 } */
 
-function selectContacts(index) {
-  const selectedContact = allContacts[index];
-
-  // Überprüfen, ob der Kontakt bereits ausgewählt ist
-  const isSelected = currentContacts.some(contact => contact === selectedContact);
-
-  // Wenn nicht ausgewählt, füge den Kontakt hinzu; sonst entferne ihn
-  if (!isSelected) {
-    currentContacts.push(selectedContact);
-  } else {
-    const indexToRemove = currentContacts.indexOf(selectedContact);
-    currentContacts.splice(indexToRemove, 1);
+function isEqual(obj1, obj2) {
+  const entries1 = Object.entries(obj1);
+  const entries2 = Object.entries(obj2);
+  if (entries1.length !== entries2.length) {
+    return false;
   }
-
-  // Hier kannst du weitere Aktionen basierend auf den ausgewählten Kontakten durchführen
-  console.log("Aktuelle ausgewählte Kontakte:", currentContacts);
+  for (let i = 0; i < entries1.length; i++) {
+    const key = entries1[i][0];
+    const value = entries1[i][1];
+    if (value !== obj2[key]) {
+      return false;
+    }
+  }
+  return true;
 }
+
+
+/* function renderCurrentContacts() {
+  const contactsContainer = document.getElementById('contacts_container');
+  contactsContainer.innerHTML = '';
+  const maxWidth = contactsContainer.offsetWidth; // neu!!
+  let visibleContacts = currentContacts.slice();
+  let hiddenContactsCount = 0;
+  while (calculateTotalWidth(visibleContacts) > maxWidth && visibleContacts.length > 1) {
+    hiddenContactsCount++;
+    visibleContacts.pop();
+  }
+  for (let i = 0; i < currentContacts.length; i++) {
+    const oneContact = currentContacts[i];
+    contactsContainer.innerHTML += generateContactsIconsHTML(oneContact);
+  }
+  if (hiddenContactsCount > 0) {
+    contactsContainer.innerHTML = generateOverflowIndicatorHTML(hiddenContactsCount);
+  }
+} */
+
+function renderCurrentContacts() {
+  const contactsContainer = document.getElementById('contacts_container');
+  contactsContainer.innerHTML = '';
+  const maxWidth = contactsContainer.offsetWidth;
+  let visibleContacts = currentContacts.slice();
+  let hiddenContactsCount = 0;
+
+  while (calculateTotalWidth(visibleContacts) > maxWidth && visibleContacts.length > 1) {
+    hiddenContactsCount++;
+    visibleContacts.pop();
+  }
+  for (let i = 0; i < visibleContacts.length; i++) {
+    const oneContact = visibleContacts[i];
+    contactsContainer.innerHTML += generateContactsIconsHTML(oneContact);
+  }
+  if (hiddenContactsCount > 0) {
+    const overflowIndicatorHTML = generateOverflowIndicatorHTML(hiddenContactsCount);
+    contactsContainer.innerHTML += overflowIndicatorHTML;
+  }
+}
+
+function calculateTotalWidth(contacts) {
+  const contactWidth = 25;
+  return contacts.length * contactWidth;
+}
+
+function generateContactsIconsHTML(oneContact) {
+  return /* html */ `
+    <span class="initials-icon" style="background-color: ${oneContact.contact_color}">${oneContact.contact_first_name[0]}${oneContact.contact_family_name[0]}</span>
+  `;
+}
+
+function generateOverflowIndicatorHTML(hiddenContactsCount) {
+  return /* html */ `
+    <div id="overflow_indicator" class="overflow-indicator">
+      +${hiddenContactsCount}
+    </div>
+  `;
+}
+
+window.addEventListener('resize', function() {
+  renderCurrentContacts();
+});
 
 /* --------------------------------------------------------------------
 due date section in add_task.html
@@ -292,21 +482,6 @@ function selectTaskCategory(currentCategoryName, currentCategoryColor) {
   closeCategoryLists(`category_list_small`, `select_arrow_categories_small`);
   closeCategoryLists(`category_list_big`, `select_arrow_categories_big`);
 }
-
-/* function deleteCategory(i) {
-  let categoryToBeDeleted = allCategories[i];
-  console.log('Zu löschende Kategorie', categoryToBeDeleted);
-  let currentCategory = currentCategories[0];
-  console.log('Aktuelle Kategorie: ', currentCategory);
-  allCategories.splice(i, 1);
-  if (categoryToBeDeleted === currentCategory) {
-    currentCategories.splice(0, 1);
-    renderCurrentCategory();
-  }
-  renderCategories();
-  closeCategoryLists(`category_list_small`, `select_arrow_categories_small`);
-  closeCategoryLists(`category_list_big`, `select_arrow_categories_big`);
-} */
 
 function deleteCategory(i) {
   let categoryToBeDeleted = allCategories[i];
@@ -478,13 +653,25 @@ function addNewCategory(i, containerType) {
   let newCategoryText = document.getElementById(
     `category_new_input_${containerType}`
   );
+  let categoryIndex = allCategories.findIndex(function (item) {
+    return item.category_name === newCategoryText.value;
+  });
+  console.log(categoryIndex);
   if (newCategoryText.value !== '') {
-    let newCategory = {
-      category_name: newCategoryText.value.trim(),
-      category_color: newCategoryColor.value,
-    };
-    allCategories.push(newCategory);
-    renderCategories();
+    if (categoryIndex === -1) {
+      let newCategory = {
+        category_name: newCategoryText.value.trim(),
+        category_color: newCategoryColor.value,
+      };
+      allCategories.push(newCategory);
+      console.log('Neue Kategorie: ', newCategory);
+      renderCategories();
+    } else {
+      alert(
+        'This category already exists! Please choose another category name.'
+      );
+      renderCategories();
+    }
   } else {
     alert("The input field mustn't be empty.");
     renderCategories();
@@ -694,10 +881,13 @@ function createNewTask() {
     }
   } else {
     let task = {
+      id: 1, // immer um 1 erhöhen!
       title: titleBox.value,
       description: descriptionBox.value,
+      current_contacts: currentContacts,
       current_category: currentCategories,
       subtasks: subTasks,
+      status: 'toDo',
     };
     allTasks.push(task);
     console.log('Aufgaben: ', allTasks);
