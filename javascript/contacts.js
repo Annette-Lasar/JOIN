@@ -84,7 +84,9 @@ function showAddForm() {
 }
 
 function showEditForm() {
-    document.getElementById('contact_form').innerHTML = editContactFormTemplate();
+    let i = currentContactIndex();
+    document.getElementById('contact_form').innerHTML = editContactFormTemplate(i);
+    loadContactValues(i);
     formAnimation();
 }
 
@@ -118,6 +120,12 @@ function addNewContact() {
     hideAddForm();
     addGroups();
     resetAddNewContactValues();
+}
+
+function loadContactValues(i) {
+    document.getElementById('add_name').value = contacts[i]['name'];
+    document.getElementById('add_email').value = contacts[i]['e-mail'];
+    document.getElementById('add_phone').value = contacts[i]['phone'];
 }
 
 function resetAddNewContactValues() {
