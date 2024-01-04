@@ -679,7 +679,7 @@ function changeSubtaskText(i, containerType) {
   }
 }
 
-function createNewTask() {
+async function createNewTask() {
   const titleBox = document.getElementById('task_title');
   const descriptionBox = document.getElementById('task_description');
   let inputFields = document.querySelectorAll('input');
@@ -705,5 +705,6 @@ function createNewTask() {
     inputFields[0].classList.remove('red-border');
     TASK_CATEGORY_BOX_SMALL.classList.remove('visible');
     TASK_CATEGORY_BOX_BIG.classList.remove('visible');
+    await setItem('allTasks', JSON.stringify(allTasks));            // Test Julian: Array an Server senden, damit man sie in board.js wieder abrufen kann
   }
 }
