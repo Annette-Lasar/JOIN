@@ -43,7 +43,7 @@ function contactInfoTemplate(i) {
           <div class="contact-info">
             <h3>${name}</h3>
             <div class="icons">
-              <div class="icon">
+              <div class="icon" onclick="showEditForm()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                   <mask id="mask0_114296_1661" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
                     height="24">
@@ -206,7 +206,7 @@ function editContactFormTemplate(i) {
       <div class="initials position text" style="background-color: ${color}">
         <h3>${initials}</h3>
       </div>
-      <form class="form" onsubmit="addNewContact(); return false">
+      <form class="form" onsubmit="saveContactChanges(${i}); return false">
         <input id="add_name" type="text" placeholder="Name" required>
         <input id="add_email" type="email" name="" placeholder="E-Mail" required>
         <input id="add_phone" type="tel" name="" placeholder="Telefon" required>

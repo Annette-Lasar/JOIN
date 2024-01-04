@@ -122,6 +122,20 @@ function addNewContact() {
     resetAddNewContactValues();
 }
 
+function saveContactChanges(i) {
+    let inputName = document.getElementById('add_name').value;
+    let inputEMail = document.getElementById('add_email').value;
+    let inputPhone = document.getElementById('add_phone').value;
+    let color = randomUserColor();
+    contacts[i]['name'] = inputName;
+    contacts[i]['e-mail'] = inputEMail;
+    contacts[i]['phone'] = inputPhone;
+    contacts[i]['color'] = color;
+    hideAddForm();
+    addGroups();
+    hideContactInfo();
+}
+
 function loadContactValues(i) {
     document.getElementById('add_name').value = contacts[i]['name'];
     document.getElementById('add_email').value = contacts[i]['e-mail'];
