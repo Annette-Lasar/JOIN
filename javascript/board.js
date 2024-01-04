@@ -2,27 +2,27 @@ let todos = [                                  // JSON-Array nur beispielhaft; w
     {
         'id': 0,
         'title': 'Putzen',
-        'category': 'toDo'
+        'status': 'toDo'
     },
     {
         'id': 1,
         'title': 'Kochen',
-        'category': 'toDo'
+        'status': 'toDo'
     },
     {
         'id': 2,
         'title': 'Einkaufen',
-        'category': 'inProgress'
+        'status': 'inProgress'
     },
     {
         'id': 3,
         'title': 'Coden',
-        'category': 'awaitFeedback'
+        'status': 'awaitFeedback'
     },
     {
         'id': 4,
         'title': 'Lesen',
-        'category': 'done'
+        'status': 'done'
     }
 ];
 
@@ -38,7 +38,7 @@ function initBoard() {
 
 
 function showToDos() {
-    let toDos = todos.filter(t => t['category'] == 'toDo');
+    let toDos = todos.filter(t => t['status'] == 'toDo');
     document.getElementById('to_Do').innerHTML = '';
     for (let i = 0; i < toDos.length; i++) {
         const element = toDos[i];
@@ -48,7 +48,7 @@ function showToDos() {
 
 
 function showTasksInProgress() {
-    let inProgress = todos.filter(t => t['category'] == 'inProgress');
+    let inProgress = todos.filter(t => t['status'] == 'inProgress');
     document.getElementById('in_Progress').innerHTML = '';
     for (let j = 0; j < inProgress.length; j++) {
         const element = inProgress[j];
@@ -58,7 +58,7 @@ function showTasksInProgress() {
 
 
 function showAwaitFeedback() {
-    let awaitFeedback = todos.filter(t => t['category'] == 'awaitFeedback');
+    let awaitFeedback = todos.filter(t => t['status'] == 'awaitFeedback');
     document.getElementById('await_Feedback').innerHTML = '';
     for (let j = 0; j < awaitFeedback.length; j++) {
         const element = awaitFeedback[j];
@@ -68,7 +68,7 @@ function showAwaitFeedback() {
 
 
 function showFinishedTasks() {
-    let done = todos.filter(t => t['category'] == 'done');
+    let done = todos.filter(t => t['status'] == 'done');
     document.getElementById('done').innerHTML = '';
     for (let j = 0; j < done.length; j++) {
         const element = done[j];
@@ -87,8 +87,9 @@ function startDragging(id) {
 }
 
 
-function moveTo(category) {
-    todos[currentDraggedElement]['category'] = category;
+// status ist entweder toDo, inProgress, awaitFeedback oder done (siehe board.html)
+function moveTo(status) {
+    todos[currentDraggedElement]['status'] = status;
     initBoard();
 }
 
