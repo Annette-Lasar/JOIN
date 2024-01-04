@@ -1,4 +1,7 @@
-// JSON-Array nur beispielhaft; wird später ersetzt, indem man das JSON-Array mit den Tasks vom Server lädt ( siehe function initBoard() )
+/* 
+ * JSON-Array nur beispielhaft; wird später ersetzt, indem man das JSON-Array mit den Tasks vom Server lädt ( siehe function initBoard() )
+ * status ist entweder 'toDo', 'inProgress', 'awaitFeedback' oder 'done'
+*/
 let todos = [                                  
     {
         'id': 0,
