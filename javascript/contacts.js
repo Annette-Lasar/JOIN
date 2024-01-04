@@ -74,12 +74,22 @@ function hideAddForm() {
     document.getElementById('add_form').classList.add('slide-out');
     document.getElementById('background').classList.add('fade-out');
     setTimeout(() => {
-        document.getElementById('add_new_contact').style.display = 'none';
+        document.getElementById('contact_form').style.display = 'none';
     }, 500);
 }
 
 function showAddForm() {
-    document.getElementById('add_new_contact').style.display = 'flex';
+    document.getElementById('contact_form').innerHTML = addNewContactFormTemplate();
+    formAnimation();
+}
+
+function showEditForm() {
+    document.getElementById('contact_form').innerHTML = editContactFormTemplate();
+    formAnimation();
+}
+
+function formAnimation() {
+    document.getElementById('contact_form').style.display = 'flex';
     document.getElementById('add_form').classList.remove('slide-out');
     document.getElementById('background').classList.remove('fade-out');
     document.getElementById('background').classList.add('fade-in');
@@ -116,13 +126,13 @@ function resetAddNewContactValues() {
     document.getElementById('add_phone').value = '';
 }
 
-function showEdit() {
+function showOptions() {
     document.getElementById('empty').style.display = 'block';
     document.getElementById('edit_delete').classList.remove('slide-out-edit');
     document.getElementById('edit_delete').classList.add('slide-in-edit');
 }
 
-function hideEdit() {
+function hideOptions() {
     document.getElementById('edit_delete').classList.remove('slide-in-edit');
     document.getElementById('edit_delete').classList.add('slide-out-edit');
     setTimeout(() => {
@@ -131,11 +141,16 @@ function hideEdit() {
 }
 
 function deleteAnUser() {
+    let index = currentContactIndex();
+    contacts.splice(index, 1);
+    addGroups();
+    hideContactInfo();
+}
+
+function currentContactIndex() {
     let contactHTML = document.getElementById('contact_details').getElementsByTagName('div');
     let elementId = contactHTML[1].getAttribute('id');
     let sliceFrom = elementId.lastIndexOf('_') + 1;
     let index = elementId.slice(sliceFrom);
-    contacts.splice(index, 1);
-    addGroups();
-    hideContactInfo();
+    return index;
 }
