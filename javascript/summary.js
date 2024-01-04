@@ -8,7 +8,7 @@ function initSummary() {
     greetUser();
     greetingMobile();
     saveLoginType();
-    getSummaryValues();
+    showSummaryValues();
 }
 
 
@@ -111,7 +111,27 @@ function checkLocalStorage() {
 }
 
 
-function getSummaryValues() {
+function showSummaryValues() {
+    let toDos = todos.filter(t => t['status'] == 'toDo');
+    let toDosCounter = toDos.length;
+    document.getElementById('toDo_counter').innerHTML = toDosCounter;
 
+    let done = todos.filter(t => t['status'] == 'done');
+    let doneCounter = done.length;
+    document.getElementById('done_counter').innerHTML = doneCounter;
+
+    // noch abfragen wieviele 'Urgent' Tasks existieren 
+    // und abfragen welches die nächste Deadline ist (Date)
+
+    let tasksInProgress = todos.filter(t => t['status'] == 'inProgress');
+    let inProgressCounter = tasksInProgress.length;
+    document.getElementById('inProgress_counter').innerHTML = inProgressCounter;
+
+    let awaitFeedback = todos.filter(t => t['status'] == 'awaitFeedback');
+    let awaitFeedbackCounter = awaitFeedback.length;
+    document.getElementById('awaitFeedback_counter').innerHTML = awaitFeedbackCounter;
+
+    let tasksInBoard = toDosCounter + inProgressCounter + awaitFeedbackCounter;
+    document.getElementById('tasksInBoard_counter').innerHTML = tasksInBoard;
 }
 

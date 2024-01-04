@@ -13,6 +13,7 @@
     <script src="../javascript/storage.js" defer></script>
     <script src="../javascript/register.js" defer></script>
     <script src="../javascript/summary.js" defer></script>
+    <script src="../javascript/board.js" defer></script>
   </head>
   <body onload="init()">
     <div id="startScreen_mobile">
@@ -37,7 +38,7 @@
                 <img src="../icons/edit.png" class="summary-icon" />
               </div>
               <div class="toDo">
-                <div class="counter">1</div>
+                <div id="toDo_counter" class="counter"></div>
                 <span>To-do</span>
               </div>
             </a>
@@ -46,7 +47,7 @@
                 <img src="../icons/check_big.png" class="summary-icon" />
               </div>
               <div class="done">
-                <div class="counter">1</div>
+                <div id="done_counter" class="counter"></div>
                 <span>Done</span>
               </div>
             </a>
@@ -67,17 +68,17 @@
           </a>
           <div class="other-boardSummary">
             <a href="./board.html" class="lower-boardSummary">
-              <div class="counter">5</div>
+              <div id="tasksInBoard_counter" class="counter"></div>
               <span>Tasks in</span>
               <span>Board</span>
             </a>
             <a href="./board.html" class="lower-boardSummary">
-              <div class="counter">2</div>
+              <div id="inProgress_counter" class="counter"></div>
               <span>Tasks in</span>
               <span>Progress</span>
             </a>
             <a href="./board.html" class="lower-boardSummary">
-              <div class="counter">2</div>
+              <div id="awaitFeedback_counter" class="counter"></div>
               <span>Awaiting</span>
               <span>Feedback</span>
             </a>
