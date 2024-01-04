@@ -153,6 +153,7 @@ function deleteAnUser() {
     contacts.splice(index, 1);
     addGroups();
     hideContactInfo();
+    hideAddForm();
 }
 
 function currentContactIndex() {
