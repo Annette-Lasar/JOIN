@@ -26,25 +26,31 @@ let todos = [
     {
         id: 2,
         title: 'Einkaufen',
-        description: '',
-        current_category: [],     
+        description: 'Kartoffeln und Sprudel einkaufen',
+        current_category: ['Technical Task'],     
         subtasks: [],
+        current_contacts: ['BS', 'SM', 'UZ'],   
+        prio: 'low',
         status: 'inProgress'
     },
     {
         id: 3,
         title: 'Coden',
-        description: '',
-        current_category: [],     
+        description: 'Projekt Join fertig stellen und abgeben',
+        current_category: ['Technical Task'],     
         subtasks: [],
+        current_contacts: ['AS', 'SM', 'JH'],   
+        prio: 'urgent',
         status: 'awaitFeedback'
     },
     {
         id: 4,
         title: 'Lesen',
-        description: '',
-        current_category: [],     
+        description: 'Den neuen Hit von Annette lesen und Feedback geben',
+        current_category: ['User Story'],     
         subtasks: [],
+        current_contacts: ['AS','JH'],   
+        prio: 'medium',
         status: 'done'
     }
 ];
