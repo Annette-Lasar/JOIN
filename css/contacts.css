@@ -22,7 +22,7 @@ body {
     gap: 4px;
 }
 
-.dark-btn:hover {
+.dark-btn:hover:not(.contact-created) {
     background-color: var(--accent-color-lightblue);
     border: var(--accent-color-lightblue) 1px solid;
     color: var(--accent-color-white);
@@ -63,8 +63,6 @@ body {
     stroke: var(--accent-color-lightblue);
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
-
-
 
 * {
     scrollbar-width: auto;
@@ -563,6 +561,14 @@ input:focus-visible {
     animation: 200ms slideOutEdit ease-in-out;
 }
 
+.contact-created {
+    position: fixed;
+    bottom: 10em;
+    left: 35em;
+    font-weight: 400;
+    font-size: 20px;
+}
+
 @media (max-width: 350px) {
     .contact-list {
         margin: 0;
@@ -824,6 +830,10 @@ input:focus-visible {
 
     .edit-delete {
         bottom: 6.5em;
+    }
+
+    .contact-created {
+        left: 1em;
     }
 }
 

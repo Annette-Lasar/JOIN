@@ -105,6 +105,31 @@ function randomUserColor() {
 }
 
 function addNewContact() {
+    pushNewContact();
+    hideAddForm();
+    addGroups();
+    resetAddNewContactValues();
+    document.getElementById(contacts.length - 1).focus();
+    showContactInfo(contacts.length - 1);
+    createdContactAnimation();
+}
+
+function createdContactAnimation() {
+    setTimeout(() => {
+        document.getElementById('contact_created').style.display = 'block';
+        document.getElementById('contact_created').classList.add('slide-in');
+    }, 300);
+    setTimeout(() => {
+        document.getElementById('contact_created').classList.add('slide-out');
+    }, 1300);
+    setTimeout(() => {
+        document.getElementById('contact_created').classList.remove('slide-in');
+        document.getElementById('contact_created').classList.remove('slide-out');
+        document.getElementById('contact_created').style.display = 'none';
+    }, 1400);
+}
+
+function pushNewContact() {
     let inputName = document.getElementById('add_name').value;
     let inputEMail = document.getElementById('add_email').value;
     let inputPhone = document.getElementById('add_phone').value;
@@ -117,12 +142,17 @@ function addNewContact() {
             "color": color
         }
     );
-    hideAddForm();
-    addGroups();
-    resetAddNewContactValues();
 }
 
 function saveContactChanges(i) {
+    updateContact(i);
+    hideAddForm();
+    addGroups();
+    document.getElementById(i).focus();
+    showContactInfo(i);
+}
+
+function updateContact(i) {
     let inputName = document.getElementById('add_name').value;
     let inputEMail = document.getElementById('add_email').value;
     let inputPhone = document.getElementById('add_phone').value;
@@ -131,9 +161,6 @@ function saveContactChanges(i) {
     contacts[i]['e-mail'] = inputEMail;
     contacts[i]['phone'] = inputPhone;
     contacts[i]['color'] = color;
-    hideAddForm();
-    addGroups();
-    hideContactInfo();
 }
 
 function loadContactValues(i) {
@@ -167,7 +194,6 @@ function deleteAnUser() {
     contacts.splice(index, 1);
     addGroups();
     hideContactInfo();
-    hideAddForm();
 }
 
 function currentContactIndex() {

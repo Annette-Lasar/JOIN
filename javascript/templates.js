@@ -211,7 +211,7 @@ function editContactFormTemplate(i) {
         <input id="add_email" type="email" name="" placeholder="E-Mail" required>
         <input id="add_phone" type="tel" name="" placeholder="Telefon" required>
         <div class="form-buttons">
-          <button type="button" id="delete_btn" class="delete-btn white-btn" onclick="deleteAnUser()">
+          <button type="button" id="delete_btn" class="delete-btn white-btn" onclick="deleteAnUser(), hideAddForm()">
             Delete
           </button>
           <button type="submit" class="create-contact-btn dark-btn">
