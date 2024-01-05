@@ -17,12 +17,20 @@
     <header>
       <div w3-include-html="../templates/header.html"></div>
     </header>
-    <h1>Board</h1>
-    <div class="board">
-    <div class="drag-area" id="to_Do" ondrop="moveTo('toDo')" ondragleave="removeHighlight('to_Do')" ondragover="allowDrop(event); highlight('to_Do')"></div>
-    <div class="drag-area" id="in_Progress" ondrop="moveTo('inProgress')" ondragleave="removeHighlight('in_Progress')" ondragover="allowDrop(event); highlight('in_Progress')"></div>
-    <div class="drag-area" id="await_Feedback" ondrop="moveTo('awaitFeedback')" ondragleave="removeHighlight('await_Feedback')" ondragover="allowDrop(event); highlight('await_Feedback')"></div>
-    <div class="drag-area" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')" ondragover="allowDrop(event); highlight('done')"></div>
+    
+    <div class="headline-searchbar-addTask-wrapper">
+      <h1 class="board-headline">Board</h1>
+      <div class="searchbar-and-addTaskBtn">
+        <input class="searchbar" placeholder="Find Task">
+        <button class="addTaskToBoard-btn">Add Task + </button>
+      </div>
+    </div>
+    
+    <div class="board"> 
+      <div class="drag-area" id="to_Do" ondrop="moveTo('toDo')" ondragleave="removeHighlight('to_Do')" ondragover="allowDrop(event); highlight('to_Do')"></div>
+      <div class="drag-area" id="in_Progress" ondrop="moveTo('inProgress')" ondragleave="removeHighlight('in_Progress')" ondragover="allowDrop(event); highlight('in_Progress')"></div>
+      <div class="drag-area" id="await_Feedback" ondrop="moveTo('awaitFeedback')" ondragleave="removeHighlight('await_Feedback')" ondragover="allowDrop(event); highlight('await_Feedback')"></div>
+      <div class="drag-area" id="done" ondrop="moveTo('done')" ondragleave="removeHighlight('done')" ondragover="allowDrop(event); highlight('done')"></div>  
     </div>
     <nav>
       <div w3-include-html="../templates/navigation_bar.html"></div>

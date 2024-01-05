@@ -1,7 +1,43 @@
+.headline-searchbar-addTask-wrapper {
+    display: flex;
+    justify-content: space-between;   
+    padding: 20px; 
+}
+
+.board-headline {
+    font-size: 44px;
+    font-weight: 700;
+    color: var(--background-color-darkblue);
+}
+
+.searchbar-and-addTaskBtn {
+    display: flex;
+}
+
+.searchbar {
+    border: 1px solid grey;
+    border-radius: 12px;
+}
+
+.searchbar:hover {
+    cursor: pointer;
+}
+
+.addTaskToBoard-btn {
+    border: none;
+    border-radius: 12px;
+    color: var(--background-color-lightgray);
+    background-color: var(--background-color-darkblue);
+}
+
+.addTaskToBoard-btn:hover {
+    cursor: pointer;
+    background-color: var(--accent-color-lightblue);
+}
+
 .board {
     display: flex;
-    width: 90%;
-    margin: 0 0 0 180px;
+    width: 90%;   
 }
 
 .drag-area {
@@ -22,7 +58,7 @@
 .todo {
     background-color: white;
     border: 1px solid black;
-    border-radius: 5px;
+    border-radius: 16px;
     padding: 10px;
     margin: 20px;
     display: flex;
@@ -32,5 +68,18 @@
 .contacts-and-prio {
     display: flex;
     justify-content: space-between;
+}
+
+
+
+
+@media (min-width: 800px) {
+    .headline-searchbar-addTask-wrapper {
+        margin: 0 0 0 180px;
+    }
+    
+    .board {
+        margin: 0 0 0 180px;
+    }
 }
 
