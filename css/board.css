@@ -1,6 +1,7 @@
-.page {
+.board {
     display: flex;
-    width: 80%;
+    width: 90%;
+    margin: 0 0 0 180px;
 }
 
 .drag-area {
