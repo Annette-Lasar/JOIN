@@ -264,6 +264,7 @@ function renderContacts() {
     const oneContact = allContacts[i];
     CONTACT_LIST_BOX.innerHTML += generateContactListHTML(i, oneContact);
   }
+  CONTACT_LIST_BOX.innerHTML += generateSelectAllHTML();
 }
 
 function generateContactListHTML(i, oneContact) {
@@ -280,48 +281,105 @@ function generateContactListHTML(i, oneContact) {
   `;
 }
 
+function generateSelectAllHTML() {
+  return /* html */ `
+    <li>
+      <div>Select and unselect all contacts</div>
+      <input id="select_all_checkbox" type="checkbox">
+    </li>
+  `;
+}
+
+/* function selectAndUnselectAllContacts(i, contactCheckbox, oneContact, checkAllCheckbox) {
+  let individualCheckboxes = document.getElementById(`contact_checkbox_${i}`);
+  currentContacts = [];
+  if (checkAllCheckbox.checked && !individualCheckboxes.checked) {
+    individualCheckboxes.checked = true;
+    allContacts.forEach(contact => {
+      if (!currentContacts.some(existingContact => isEqual(existingContact, contact))) {
+        currentContacts.push(contact);
+      }
+    });
+  } else if (!checkAllCheckbox.checked && individualCheckboxes.checked) {
+    individualCheckboxes.checked = false;
+  }
+  selectContacts(contactCheckbox, oneContact);
+  renderCurrentContacts();
+} */
+
+function selectAndUnselectAllContacts(
+  i,
+  contactCheckbox,
+  oneContact,
+  checkAllCheckbox
+) {
+  let individualCheckboxes = document.getElementById(`contact_checkbox_${i}`);
+  // Leere das currentContacts-Array vor den Bedingungen
+  currentContacts = [];
+
+  if (checkAllCheckbox.checked && !individualCheckboxes.checked) {
+    individualCheckboxes.checked = true;
+
+    // Iteriere durch allContacts und füge Kontakte hinzu, die noch nicht in currentContacts sind
+    for (let j = 0; j < allContacts.length; j++) {
+      const newContact = allContacts[j];
+      if (
+        !currentContacts.some((existingContact) =>
+          areContactsEqual(existingContact, newContact)
+        )
+      ) {
+        currentContacts.push(newContact);
+      }
+    }
+  } else if (!checkAllCheckbox.checked && individualCheckboxes.checked) {
+    individualCheckboxes.checked = false;
+  }
+  selectContacts(contactCheckbox, oneContact);
+  renderCurrentContacts();
+}
+
+function areContactsEqual(contact1, contact2) {
+  return isEqual(contact1, contact2);
+}
+
 function addCheckboxEventListeners() {
   for (let i = 0; i < allContacts.length; i++) {
     const contactCheckbox = document.getElementById(`contact_checkbox_${i}`);
+    const checkAllCheckbox = document.getElementById('select_all_checkbox');
     let oneContact = allContacts[i];
     contactCheckbox.addEventListener('change', function () {
-      selectContacts(i, contactCheckbox, oneContact);
+      selectContacts(contactCheckbox, oneContact);
+    });
+    checkAllCheckbox.addEventListener('change', function () {
+      selectAndUnselectAllContacts(
+        i,
+        contactCheckbox,
+        oneContact,
+        checkAllCheckbox
+      );
     });
   }
 }
 
-function selectContacts(i, contactCheckbox, oneContact) {
+function selectContacts(contactCheckbox, oneContact) {
   let selectedContact = {
     contact_first_name: oneContact.contact_first_name,
     contact_family_name: oneContact.contact_family_name,
     contact_color: oneContact.contact_color,
   };
+  currentContacts = currentContacts.filter(existingContact => !isEqual(existingContact, selectedContact));
   if (contactCheckbox.checked == true) {
     currentContacts.push(selectedContact);
-    renderCurrentContacts();
   }
   if (contactCheckbox.checked == false) {
     let contactsIndex = currentContacts.findIndex(function (item) {
       return isEqual(item, selectedContact);
     });
     currentContacts.splice(contactsIndex, 1);
-    renderCurrentContacts();
+    /* renderCurrentContacts(); */
   }
+  renderCurrentContacts();
 }
-
-/* function isEqual(obj1, obj2) {
-  const entries1 = Object.entries(obj1);
-  const entries2 = Object.entries(obj2);
-  if (entries1.length !== entries2.length) {
-    return false;
-  }
-  for (let [key, value] of entries1) {
-    if (value !== obj2[key]) {
-      return false;
-    }
-  }
-  return true;
-} */
 
 function isEqual(obj1, obj2) {
   const entries1 = Object.entries(obj1);
@@ -339,26 +397,6 @@ function isEqual(obj1, obj2) {
   return true;
 }
 
-
-/* function renderCurrentContacts() {
-  const contactsContainer = document.getElementById('contacts_container');
-  contactsContainer.innerHTML = '';
-  const maxWidth = contactsContainer.offsetWidth; // neu!!
-  let visibleContacts = currentContacts.slice();
-  let hiddenContactsCount = 0;
-  while (calculateTotalWidth(visibleContacts) > maxWidth && visibleContacts.length > 1) {
-    hiddenContactsCount++;
-    visibleContacts.pop();
-  }
-  for (let i = 0; i < currentContacts.length; i++) {
-    const oneContact = currentContacts[i];
-    contactsContainer.innerHTML += generateContactsIconsHTML(oneContact);
-  }
-  if (hiddenContactsCount > 0) {
-    contactsContainer.innerHTML = generateOverflowIndicatorHTML(hiddenContactsCount);
-  }
-} */
-
 function renderCurrentContacts() {
   const contactsContainer = document.getElementById('contacts_container');
   contactsContainer.innerHTML = '';
@@ -366,7 +404,10 @@ function renderCurrentContacts() {
   let visibleContacts = currentContacts.slice();
   let hiddenContactsCount = 0;
 
-  while (calculateTotalWidth(visibleContacts) > maxWidth && visibleContacts.length > 1) {
+  while (
+    calculateTotalWidth(visibleContacts) > maxWidth &&
+    visibleContacts.length > 1
+  ) {
     hiddenContactsCount++;
     visibleContacts.pop();
   }
@@ -375,7 +416,8 @@ function renderCurrentContacts() {
     contactsContainer.innerHTML += generateContactsIconsHTML(oneContact);
   }
   if (hiddenContactsCount > 0) {
-    const overflowIndicatorHTML = generateOverflowIndicatorHTML(hiddenContactsCount);
+    const overflowIndicatorHTML =
+      generateOverflowIndicatorHTML(hiddenContactsCount);
     contactsContainer.innerHTML += overflowIndicatorHTML;
   }
 }
@@ -399,7 +441,7 @@ function generateOverflowIndicatorHTML(hiddenContactsCount) {
   `;
 }
 
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
   renderCurrentContacts();
 });
 

@@ -144,14 +144,15 @@ input[type='date'] {
 .overflow-indicator {
   width: 20px;
   height: 20px;
-  border-radius: 50%;
-  background-color: #ccc;
   margin-right: 5px;
-  font-size: 0.6rem;
-  font-weight: 700;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 0.6rem;
+  font-weight: 700;
+  border: var(--accent-color-anthracite) 1px solid;
+  border-radius: 50%;
+  background-color: var(--accent-color-gray);
 }
 
 .category-wrapper,
