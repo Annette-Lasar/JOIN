@@ -5,18 +5,22 @@
 let todos = [                                  
     {
         id: 0,
-        title: 'Putzen',
-        description: '',
-        current_category: [],     // Array mit nur einem einzigen Objekt / 1 ausgewählte Category mit Farbe und Titel
-        subtasks: [],             // mehrere Einträge mit mehreren Subtasks
+        title: 'Kochwelt Page & Recipe Recommender',
+        description: 'Build start page with recipe recommendation...',
+        current_category: ['User Story'],                           // Array mit nur einem einzigen Objekt / 1 ausgewählte Category mit Farbe und Titel
+        subtasks: ['bla bla bla', 'noch mehr bla bla bla'],         // mehrere Einträge mit mehreren Subtasks
+        current_contacts: ['AL', 'SM', 'JH'],                       // mehrere Kontakte
+        prio: 'urgent',                                             // 'urgent', 'medium' oder 'low' (mit Annette absprechen!)
         status: 'toDo'
     },
     {
         id: 1,
         title: 'Kochen',
-        description: '',
-        current_category: [],     
-        subtasks: [],             
+        description: 'Etwas Leckeres Kochen für die Familie...',
+        current_category: ['Technical Task'],     
+        subtasks: ['Gemüse schneiden', 'Küche vorbereiten'], 
+        current_contacts: ['BS', 'SM', 'UZ'],   
+        prio: 'urgent',         
         status: 'toDo'
     },
     {
@@ -97,9 +101,18 @@ function showFinishedTasks() {
 }
 
 
-// bisher wird nur der Titel des ToDo´s angezeigt
+// diese Funktion rendert die einzelnen Tasks auf das Board ( in Bearbeitung )
 function generateToDoHTML(element) {
-    return `<div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">${element['title']}</div>`;
+    return `<div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">
+              <div>${element['current_category']}</div>
+              <div>${element['title']}</div>
+              <div>${element['description']}</div>
+              <div>${element['subtasks'].length}/2 Subtasks</div>
+              <div class='contacts-and-prio'>
+                <div>${element['current_contacts']}</div>
+                <div>${element['prio']}</div>
+              </div>
+            </div>`;
 }
 
 

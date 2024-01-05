@@ -123,7 +123,11 @@ function showSummaryValues() {
     let doneCounter = done.length;
     document.getElementById('done_counter').innerHTML = doneCounter;
 
-    // noch abfragen wieviele 'Urgent' Tasks existieren 
+     
+    let urgent = todos.filter(t => t['prio'] == 'urgent');           // mit Annette klären, ob keys und values so bleiben (prio: 'urgent','medium','low')
+    let urgentCounter = urgent.length;
+    document.getElementById('urgent_counter').innerHTML = urgentCounter;
+
     // und abfragen welches die nächste Deadline ist (Date)
 
     let tasksInProgress = todos.filter(t => t['status'] == 'inProgress');
