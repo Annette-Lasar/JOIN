@@ -24,20 +24,23 @@ async function loadUsers(){
 // Passwortlänge mindestens 6 Zeichen
 async function register() {
     if(bothPasswordsMatch()) {
-        if(notAUser()) {
-            registerBtn.disabled = true;
-            users.push({
-                name: fullName.value,
-                email: email.value,
-                password: password.value
-
-            });
-            await setItem('users', JSON.stringify(users));
-            resetForm();
-            successfullyRegistered();
-        } else {
-            alert('Email address already registered !');
-        }
+        if(passwordMinimumLength()) {
+            if(notAUser()) {
+                registerBtn.disabled = true;
+                users.push({
+                    name: fullName.value,
+                    email: email.value,
+                    password: password.value
+                });
+                await setItem('users', JSON.stringify(users));
+                resetForm();
+                successfullyRegistered();
+            } else {
+                alert('Email address already registered !');
+            }
+         } else {
+               alert('Minimum password length is 6 characters !');
+            }
         } else {
             alert('Both passwords must match !');
         }
@@ -46,6 +49,15 @@ async function register() {
 
 function bothPasswordsMatch() {
     if(password.value === confirmPassword.value) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+function passwordMinimumLength() {
+    if((password.value).length >= 6) {
         return true;
     } else {
         return false;
