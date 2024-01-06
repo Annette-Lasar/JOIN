@@ -59,8 +59,8 @@ let currentDraggedElement;
 
 
 function initBoard() {
-    // hier Funktion einfügen, die das Array mit den ToDos/Tasks vom Server lädt ( await getItem(.....) );  userLogin = true
-    // wenn guestLogin dann test-Array
+    // hier Funktion einfügen, die das Array mit den ToDos vom Server lädt (await getItem(.....) ); wenn userLogin = true (userLogin aus localStorage laden und prüfen)
+    // wenn guestLogin dann test-Array (s.o.) verwenden und anzeigen
     showToDos();
     showTasksInProgress();
     showAwaitFeedback();
