@@ -21,7 +21,6 @@ async function loadUsers(){
 
 
 // dem User ein Array mitgeben, in das zukünftig seine Tasks gespeichert werden
-// Passwortlänge mindestens 6 Zeichen
 async function register() {
     if(bothPasswordsMatch()) {
         if(passwordMinimumLength()) {
