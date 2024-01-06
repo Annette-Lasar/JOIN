@@ -112,7 +112,7 @@ function showFinishedTasks() {
 function generateToDoHTML(element) {
     return `<div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">
               <div>${element['current_category']}</div>
-              <div>${element['title']}</div>
+              <div class="toDo-title">${element['title']}</div>
               <div>${element['description']}</div>
               <div>${element['subtasks'].length}/2 Subtasks</div>
               <div class='contacts-and-prio'>

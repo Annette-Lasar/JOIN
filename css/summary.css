@@ -115,6 +115,7 @@ h1 {
   color: var(--background-color-darkblue);
   background-color: var(--accent-color-white);
   border-radius: 15px;
+  box-shadow: -2px 0px 6px 0px rgb(0, 0, 0, 0.2);
   transition: transform 0.1s ease-in-out;
 }
 
@@ -171,6 +172,7 @@ h1 {
   color: var(--background-color-darkblue);
   background-color: var(--accent-color-white);
   border-radius: 15px;
+  box-shadow: -2px 0px 6px 0px rgb(0, 0, 0, 0.2);
   margin-left: 15px;
   transition: transform 0.1s ease-in-out;
 }
@@ -207,6 +209,7 @@ h1 {
   color: var(--background-color-darkblue);
   background-color: var(--accent-color-white);
   border-radius: 15px;
+  box-shadow: -2px 0px 6px 0px rgb(0, 0, 0, 0.2);
   margin: 15px 0px 15px 0px;
   transition: transform 0.1s ease-in-out;
 }
@@ -276,6 +279,7 @@ h1 {
   color: var(--background-color-darkblue);
   background-color: var(--accent-color-white);
   border-radius: 15px;
+  box-shadow: -2px 0px 6px 0px rgb(0, 0, 0, 0.2);
   transition: transform 0.1s ease-in-out;
 }
 
