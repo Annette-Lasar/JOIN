@@ -20,29 +20,43 @@ async function loadUsers(){
 }
 
 
+// dem User ein Array mitgeben, in das zukünftig seine Tasks gespeichert werden
 async function register() {
     if(bothPasswordsMatch()) {
-        if(notAUser()) {
-            registerBtn.disabled = true;
-            users.push({
-                name: fullName.value,
-                email: email.value,
-                password: password.value
-            });
-            await setItem('users', JSON.stringify(users));
-            resetForm();
-            successfullyRegistered();
+        if(passwordMinimumLength()) {
+            if(notAUser()) {
+                registerBtn.disabled = true;
+                users.push({
+                    name: fullName.value,
+                    email: email.value,
+                    password: password.value
+                });
+                await setItem('users', JSON.stringify(users));
+                resetForm();
+                successfullyRegistered();
+            } else {
+                alert('Email address already registered !');
+            }
+         } else {
+               alert('Minimum password length is 6 characters !');
+            }
         } else {
-            alert('Email-Adresse bereits registriert !');
-        }
-        } else {
-            alert('Die beiden Passwörter müssen übereinstimmen !');
+            alert('Both passwords must match !');
         }
 }
 
 
 function bothPasswordsMatch() {
     if(password.value === confirmPassword.value) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+function passwordMinimumLength() {
+    if((password.value).length >= 6) {
         return true;
     } else {
         return false;

@@ -6,7 +6,7 @@ function login() {
         loginSuccessful(user);
         window.location.href = 'summary.html';   
     } else {
-        alert('User nicht vorhanden oder Anmeldedaten nicht korrekt !'); 
+        alert('User not found or login credentials incorrect !'); 
     }
 }
 

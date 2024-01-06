@@ -9,7 +9,7 @@
     display: flex;
     justify-content: space-between;   
     width: 80%;
-    padding: 30px; 
+    padding: 80px 30px 30px 30px; 
 }
 
 .board-headline {
@@ -61,17 +61,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--accent-color-anthracite);
+    color: var(--background-color-darkblue);
     font-size: 20px;
     font-weight: 600;
-    margin: 0 0 15px 0;
     width: 80%;
 }
 
 .addTask-btn {
     border: 2px solid var(--accent-color-anthracite);
     border-radius: 6px;
-    padding: 0 3px 0 3px;
+    padding: 0 3px 1px 3px;
 }
 
 .addTask-btn:hover {
@@ -79,7 +78,7 @@
 }
 
 .drag-area {
-    height: 600px;
+    height: 550px;
     margin-bottom: 50px;
     display: flex;
     flex-direction: column;
@@ -92,13 +91,26 @@
 
 .todo {
     background-color: white;
-    border: 1px solid black;
     border-radius: 16px;
+    box-shadow: -2px 0px 6px 0px rgb(0, 0, 0, 0.2);
     padding: 12px;
     margin: 15px 0 0 0;
     display: flex;
     flex-direction: column;
     width: 95%;
+}
+
+.toDo-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--background-color-darkblue);
+    margin: 16px 0 10px 0;
+}
+
+.toDo-description {
+    font-size: 17px;
+    color: var(--accent-color-darkgray);
+    margin: 0 0 16px 0;
 }
 
 .contacts-and-prio {
