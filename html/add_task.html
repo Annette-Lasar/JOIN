@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../css/add_task.css" />
     <script src="../javascript/script.js" defer></script>
     <script src="../javascript/storage.js" defer></script>
+    <script src="../javascript/add_task_data.js" defer></script>
     <script src="../javascript/add_task.js" defer></script>
   </head>
   <body onload="initTasks()">
@@ -24,9 +25,16 @@
           <div class="small-screen">
             <section>
               <label for="task_title">Title<span class="red">*</span></label>
-              <input id="task_title" type="text" class="task-title" placeholder="Enter a title" />
+              <input
+                id="task_title"
+                type="text"
+                class="task-title"
+                placeholder="Enter a title"
+              />
               <div>
-                <span id="task_title_info" class="red info-text">Please enter a title.</span>
+                <span id="task_title_info" class="red info-text"
+                  >Please enter a title.</span
+                >
               </div>
             </section>
             <section>
@@ -42,9 +50,14 @@
             <section id="prio_small_screen">
               <div class="label">Prio</div>
               <div id="prio_button_wrapper_small" class="prio-button-wrapper">
-                <button class="prio-high">
+                <button
+                  id="prio_button_urgent_small"
+                  onclick="changePrioStatus('urgent', 'small')"
+                  class="prio-button"
+                >
                   Urgent
                   <svg
+                    class="svg-urgent"
                     width="18"
                     height="12"
                     viewBox="0 0 21 15"
@@ -61,9 +74,14 @@
                     />
                   </svg>
                 </button>
-                <button class="prio-medium">
+                <button
+                  id="prio_button_medium_small"
+                  onclick="changePrioStatus('medium', 'small')"
+                  class="prio-button prio-marked-medium"
+                >
                   Medium
                   <svg
+                    class="svg-medium"
                     width="20"
                     height="9"
                     viewBox="0 0 20 9"
@@ -72,17 +90,22 @@
                   >
                     <path
                       d="M18.9041 8.22528H1.09589C0.805242 8.22528 0.526498 8.10898 0.320979 7.90197C0.11546 7.69495 0 7.41419 0 7.12143C0 6.82867 0.11546 6.5479 0.320979 6.34089C0.526498 6.13388 0.805242 6.01758 1.09589 6.01758H18.9041C19.1948 6.01758 19.4735 6.13388 19.679 6.34089C19.8845 6.5479 20 6.82867 20 7.12143C20 7.41419 19.8845 7.69495 19.679 7.90197C19.4735 8.10898 19.1948 8.22528 18.9041 8.22528Z"
-                      fill="#FFA800"
+                      fill="#FFA35e"
                     />
                     <path
                       d="M18.9041 2.98211H1.09589C0.805242 2.98211 0.526498 2.86581 0.320979 2.6588C0.11546 2.45179 0 2.17102 0 1.87826C0 1.5855 0.11546 1.30474 0.320979 1.09772C0.526498 0.890712 0.805242 0.774414 1.09589 0.774414L18.9041 0.774414C19.1948 0.774414 19.4735 0.890712 19.679 1.09772C19.8845 1.30474 20 1.5855 20 1.87826C20 2.17102 19.8845 2.45179 19.679 2.6588C19.4735 2.86581 19.1948 2.98211 18.9041 2.98211Z"
-                      fill="#FFA800"
+                      fill="#FFA35e"
                     />
                   </svg>
                 </button>
-                <button class="prio-low">
+                <button
+                  id="prio_button_low_small"
+                  onclick="changePrioStatus('low', 'small')"
+                  class="prio-button"
+                >
                   Low
                   <svg
+                    class="svg-low"
                     width="18"
                     height="12"
                     viewBox="0 0 21 15"
@@ -106,19 +129,24 @@
                 >Due date<span class="red">*</span></label
               >
               <input
+                onblur="selectDueDate('task_due_date_small')"
                 id="task_due_date_small"
                 name="task_due_date_small"
+                class="task-due-date"
                 type="date"
                 placeholder="dd/mm/yyyy"
               />
               <div>
-                <span id="task_due_info_small" class="red info-text"></span>
+                <span id="task_due_info_small" class="red info-text"
+                  >Please select a due date.</span
+                >
               </div>
             </section>
             <section id="category_small_screen" class="category-wrapper">
               <div class="label">Category<span class="red">*</span></div>
               <div
                 onclick="toggleDropdownLists('category_list_small', 'select_arrow_categories_small')"
+                id="task_category_small"
                 class="task-category"
               >
                 <div id="task_category_text_small" class="task-category-text">
@@ -133,10 +161,9 @@
                 </div>
               </div>
               <div>
-                <span
-                  id="task_category_info_small"
-                  class="red info-text"
-                >Please select a category.</span>
+                <span id="task_category_info_small" class="red info-text"
+                  >Please select a category.</span
+                >
               </div>
               <ul id="category_list_small" class="category-list"></ul>
             </section>
@@ -156,7 +183,10 @@
                 <div class="new-category">Add new contact</div>
               </ul>
             </section>
-            <section id="contacts_container" class="contacts-container"></section>
+            <section
+              id="contacts_container"
+              class="contacts-container"
+            ></section>
             <section id="sub_tasks_small_screen">
               <div class="label">Subtasks</div>
               <div id="sub_task_wrapper_small" class="sub-task-wrapper">
@@ -205,21 +235,30 @@
             <section id="due_date_big_screen">
               <label for="task_title">Due date<span class="red">*</span></label>
               <input
+                onblur="selectDueDate('task_due_date_big')"
                 id="task_due_date_big"
                 name="task_due_date_big"
+                class="task-due-date"
                 type="date"
                 placeholder="dd/mm/yyyy"
               />
               <div>
-                <span id="task_due_info_big" class="red info-text">Select a due date.</span>
+                <span id="task_due_info_big" class="red info-text"
+                  >Please select a due date.</span
+                >
               </div>
             </section>
             <section id="prio_big_screen" class="prio-big-screen">
               <div class="label">Prio</div>
               <div id="prio_button_wrapper_big" class="prio-button-wrapper">
-                <button class="prio-high">
+                <button
+                  id="prio_button_urgent_big"
+                  onclick="changePrioStatus('urgent', 'big')"
+                  class="prio-button"
+                >
                   Urgent
                   <svg
+                    class="svg-urgent"
                     width="18"
                     height="12"
                     viewBox="0 0 21 15"
@@ -236,9 +275,14 @@
                     />
                   </svg>
                 </button>
-                <button class="prio-medium">
+                <button
+                  id="prio_button_medium_big""
+                  onclick="changePrioStatus('medium', 'big')"
+                  class="prio-button prio-marked-medium"
+                >
                   Medium
                   <svg
+                    class="svg-medium"
                     width="20"
                     height="9"
                     viewBox="0 0 20 9"
@@ -255,9 +299,14 @@
                     />
                   </svg>
                 </button>
-                <button class="prio-low">
+                <button
+                  id="prio_button_low_big"
+                  onclick="changePrioStatus('low', 'big')"
+                  class="prio-button"
+                >
                   Low
                   <svg
+                    class="svg-low"
                     width="18"
                     height="12"
                     viewBox="0 0 21 15"
@@ -280,6 +329,7 @@
               <div class="label">Category<span class="red">*</span></div>
               <div
                 onclick="toggleDropdownLists('category_list_big', 'select_arrow_categories_big')"
+                id="task_category_big"
                 class="task-category"
               >
                 <div id="task_category_text_big" class="task-category-text">
@@ -294,7 +344,9 @@
                 </div>
               </div>
               <div>
-                <span id="task_category_info_big" class="red info-text">Please select a category.</span>
+                <span id="task_category_info_big" class="red info-text"
+                  >Please select a category.</span
+                >
               </div>
               <ul id="category_list_big" class="category-list"></ul>
             </section>

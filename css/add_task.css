@@ -63,7 +63,9 @@ section {
   flex-direction: column;
 }
 
-.task-title.red-border {
+.task-title.red-border,
+.task-due-date.red-border,
+.task-category.red-border {
   border: var(--accent-color-red-asterisk) 1px solid;
   border-radius: 3px;
 }
@@ -96,7 +98,7 @@ input[type='date'] {
   height: 12px;
 }
 
-.prio-button-wrapper button {
+.prio-button {
   width: 80px;
   padding: 8px 0.25em;
   display: flex;
@@ -109,8 +111,38 @@ input[type='date'] {
   cursor: pointer;
 }
 
-.prio-button-wrapper button:hover {
+.prio-button:hover {
   box-shadow: 0px 4px 4px var(--shadow-color);
+}
+
+.prio-button.prio-marked-urgent {
+  background-color: var(--accent-color-red);
+  border: var(--accent-color-red) 1px solid;
+  color: var(--accent-color-white);
+}
+
+.prio-marked-urgent .svg-urgent path {
+  fill: var(--accent-color-white);
+}
+
+.prio-button.prio-marked-medium {
+  background-color: var(--color-variant2);
+  border: var(--color-variant2) 1px solid;
+  color: var(--accent-color-white);
+}
+
+.prio-marked-medium .svg-medium path {
+  fill: var(--accent-color-white);
+}
+
+.prio-button.prio-marked-low {
+  background-color: var(--accent-color-green);
+  border: var(--accent-color-green) 1px solid;
+  color: var(--accent-color-white);
+}
+
+.prio-marked-low .svg-low path {
+  fill: var(--accent-color-white);
 }
 
 .initials-wrapper {

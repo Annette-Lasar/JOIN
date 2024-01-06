@@ -1,175 +1,3 @@
-let allTasks = [];
-let subTasks = [];
-let taskCategories = ['Technical Task', 'User Story'];
-let updatedSubtask;
-let allCategories = [
-  {
-    category_name: 'Technical Task',
-    category_color: '#FF0000',
-  },
-
-  {
-    category_name: 'User Story',
-    category_color: '#0000FF',
-  },
-
-  {
-    category_name: 'Marketing',
-    category_color: '#008000',
-  },
-
-  {
-    category_name: 'Development',
-    category_color: '#FFA500',
-  },
-
-  {
-    category_name: 'Design',
-    category_color: '#DA70D6',
-  },
-
-  {
-    category_name: 'Leisure',
-    category_color: '#90EE90',
-  },
-];
-
-let allContacts = [
-  {
-    contact_first_name: 'Bilbo',
-    contact_family_name: 'Beutlin',
-    contact_color: '#FF0000',
-  },
-
-  {
-    contact_first_name: 'Hermione',
-    contact_family_name: 'Granger',
-    contact_color: '#0000FF',
-  },
-
-  {
-    contact_first_name: 'Donald',
-    contact_family_name: 'Duck',
-    contact_color: '#008000',
-  },
-
-  {
-    contact_first_name: 'Donald',
-    contact_family_name: 'Trump',
-    contact_color: '#125476',
-  },
-
-  {
-    contact_first_name: 'Dagobert',
-    contact_family_name: 'Duck',
-    contact_color: '#008FD1',
-  },
-  {
-    contact_first_name: 'Daisy',
-    contact_family_name: 'Duck',
-    contact_color: '#7429FD',
-  },
-  {
-    contact_first_name: 'Darth',
-    contact_family_name: 'Vader',
-    contact_color: '#000000',
-  },
-  {
-    contact_first_name: 'Luke',
-    contact_family_name: 'Skywalker',
-    contact_color: '#8630BC',
-  },
-  {
-    contact_first_name: 'Jim',
-    contact_family_name: 'Knopf',
-    contact_color: '#1234FD',
-  },
-  {
-    contact_first_name: 'Salágia',
-    contact_family_name: 'Nirlak',
-    contact_color: '#765CBA',
-  },
-  {
-    contact_first_name: 'John',
-    contact_family_name: 'Silver',
-    contact_color: '#0984AB',
-  },
-  {
-    contact_first_name: 'Fanny',
-    contact_family_name: 'Price',
-    contact_color: '#AC7643',
-  },
-  {
-    contact_first_name: 'Elizabeth',
-    contact_family_name: 'Bennet',
-    contact_color: '#AFDCAA',
-  },
-  {
-    contact_first_name: 'Julia',
-    contact_family_name: 'Wiegand',
-    contact_color: '#123456',
-  },
-  {
-    contact_first_name: 'Fozzy',
-    contact_family_name: 'Bear',
-    contact_color: '#987DDD',
-  },
-  {
-    contact_first_name: 'Ronald',
-    contact_family_name: 'Weasley',
-    contact_color: '#777555',
-  },
-  {
-    contact_first_name: 'Mary',
-    contact_family_name: 'Crawley',
-    contact_color: '#555555',
-  },
-  {
-    contact_first_name: 'Mickey',
-    contact_family_name: 'Mouse',
-    contact_color: '#8866BB',
-  },
-  {
-    contact_first_name: 'Emil',
-    contact_family_name: 'Tischbein',
-    contact_color: '#EE66EE',
-  },
-  {
-    contact_first_name: 'Willi',
-    contact_family_name: 'Bayer',
-    contact_color: '#6D6D6D',
-  },
-  {
-    contact_first_name: 'Edward',
-    contact_family_name: 'Farres',
-    contact_color: '#4E4E4E',
-  },
-];
-let currentContacts = [];
-let currentDueDates = [];
-let currentCategories = [];
-
-const TASK_TITLE_INFO_BOX = document.getElementById('task_title_info');
-const TASK_DUE_INFO_BOX_SMALL = document.getElementById('task_due_info_small');
-const TASK_DUE_INFO_BOX_BIG = document.getElementById('task_due_info_big');
-const TASK_CATEGORY_BOX_SMALL = document.getElementById(
-  'task_category_info_small'
-);
-const TASK_CATEGORY_BOX_BIG = document.getElementById('task_category_info_big');
-const CONTACT_LIST_BOX = document.getElementById('contact_list');
-const CATEGORY_LIST_SMALL = document.getElementById('category_list_small');
-const CATEGORY_LIST_BIG = document.getElementById('category_list_big');
-const SELECT_TASK_CATEGORY_ELEMENT_SMALL = document.getElementById(
-  `task_category_text_small`
-);
-const SELECT_TASK_CATEGORY_ELEMENT_BIG = document.getElementById(
-  `task_category_text_big`
-);
-const SUBTASK_CONTAINER_SMALL = document.getElementById(
-  'subtask_container_small'
-);
-const SUBTASK_CONTAINER_BIG = document.getElementById('subtask_container_big');
-
 function initTasks() {
   loadSubtasks();
   init();
@@ -193,6 +21,12 @@ function toggleDropdownLists(idContainer, idArrow) {
   const SELECT_ARROW = document.getElementById(idArrow);
   CATEGORY_LIST.classList.toggle('show');
   SELECT_ARROW.classList.toggle('turn');
+  if (
+    idContainer === 'category_list_small' ||
+    idContainer === 'category_list_big'
+  ) {
+    addCategoriesEventListeners();
+  }
 }
 
 function showAndHideBoxesAccordingToScreenSize() {
@@ -220,24 +54,9 @@ function showAndHideBoxesAccordingToScreenSize() {
   }
 }
 
-/* function setAndRemoveAttributeRequired() {
-  let InputDueDateSmallScreen = document.getElementById('task_due_date_small');
-  let InputDueDateBigScreen = document.getElementById('task_due_date_big');
-  let windowSize = window.innerWidth;
-  if (windowSize < 800) {
-    InputDueDateSmallScreen.setAttribute('required', '');
-    InputDueDateBigScreen.removeAttribute('required', '');
-  } else {
-    InputDueDateSmallScreen.removeAttribute('required', '');
-    InputDueDateBigScreen.setAttribute('required', '');
-  }
-}
- */
 document.addEventListener('DOMContentLoaded', function () {
   showAndHideBoxesAccordingToScreenSize();
-  /*   setAndRemoveAttributeRequired(); */
   window.addEventListener('resize', showAndHideBoxesAccordingToScreenSize);
-  /* window.addEventListener('resize', setAndRemoveAttributeRequired); */
 });
 
 /* function checkForAddTaskPage() {
@@ -290,24 +109,25 @@ function generateSelectAllHTML() {
   `;
 }
 
-/* function selectAndUnselectAllContacts(i, contactCheckbox, oneContact, checkAllCheckbox) {
+function selectAndUnselectAllContacts(
+  i,
+  contactCheckbox,
+  oneContact,
+  checkAllCheckbox
+) {
   let individualCheckboxes = document.getElementById(`contact_checkbox_${i}`);
+  const numberOfContacts = allContacts.length;
   currentContacts = [];
   if (checkAllCheckbox.checked && !individualCheckboxes.checked) {
     individualCheckboxes.checked = true;
-    allContacts.forEach(contact => {
-      if (!currentContacts.some(existingContact => isEqual(existingContact, contact))) {
-        currentContacts.push(contact);
-      }
-    });
   } else if (!checkAllCheckbox.checked && individualCheckboxes.checked) {
     individualCheckboxes.checked = false;
   }
   selectContacts(contactCheckbox, oneContact);
   renderCurrentContacts();
-} */
+}
 
-function selectAndUnselectAllContacts(
+/* function selectAndUnselectAllContacts(
   i,
   contactCheckbox,
   oneContact,
@@ -340,7 +160,7 @@ function selectAndUnselectAllContacts(
 
 function areContactsEqual(contact1, contact2) {
   return isEqual(contact1, contact2);
-}
+} */
 
 function addCheckboxEventListeners() {
   for (let i = 0; i < allContacts.length; i++) {
@@ -367,7 +187,9 @@ function selectContacts(contactCheckbox, oneContact) {
     contact_family_name: oneContact.contact_family_name,
     contact_color: oneContact.contact_color,
   };
-  currentContacts = currentContacts.filter(existingContact => !isEqual(existingContact, selectedContact));
+  currentContacts = currentContacts.filter(
+    (existingContact) => !isEqual(existingContact, selectedContact)
+  );
   if (contactCheckbox.checked == true) {
     currentContacts.push(selectedContact);
   }
@@ -446,19 +268,122 @@ window.addEventListener('resize', function () {
 });
 
 /* --------------------------------------------------------------------
+prio section in add_task.html
+---------------------------------------------------------------------- */
+function changePrioStatus(prioStatus, containerSize) {
+  document.getElementById(`prio_button_${prioStatus}_${containerSize}`);
+  if (prioStatus === 'urgent') {
+    PRIO_BUTTON_URGENT_SMALL.classList.add('prio-marked-urgent');
+    PRIO_BUTTON_URGENT_BIG.classList.add('prio-marked-urgent');
+    PRIO_BUTTON_MEDIUM_SMALL.classList.remove('prio-marked-medium');
+    PRIO_BUTTON_MEDIUM_BIG.classList.remove('prio-marked-medium');
+    PRIO_BUTTON_LOW_SMALL.classList.remove('prio-marked-low');
+    PRIO_BUTTON_LOW_BIG.classList.remove('prio-marked-low');
+  } else if (prioStatus === 'medium') {
+    PRIO_BUTTON_MEDIUM_SMALL.classList.add('prio-marked-medium');
+    PRIO_BUTTON_MEDIUM_BIG.classList.add('prio-marked-medium');
+    PRIO_BUTTON_URGENT_SMALL.classList.remove('prio-marked-urgent');
+    PRIO_BUTTON_URGENT_BIG.classList.remove('prio-marked-urgent');
+    PRIO_BUTTON_LOW_SMALL.classList.remove('prio-marked-low');
+    PRIO_BUTTON_LOW_BIG.classList.remove('prio-marked-low');
+  } else if (prioStatus === 'low') {
+    PRIO_BUTTON_LOW_SMALL.classList.add('prio-marked-low');
+    PRIO_BUTTON_LOW_BIG.classList.add('prio-marked-low');
+    PRIO_BUTTON_URGENT_SMALL.classList.remove('prio-marked-urgent');
+    PRIO_BUTTON_URGENT_BIG.classList.remove('prio-marked-urgent');
+    PRIO_BUTTON_MEDIUM_SMALL.classList.remove('prio-marked-medium');
+    PRIO_BUTTON_MEDIUM_BIG.classList.remove('prio-marked-medium');
+  }
+}
+
+/* function changePrioStatus(prioStatus, containerSize) {
+  const buttons = {
+    'urgent': ['URGENT_SMALL', 'URGENT_BIG'],
+    'medium': ['MEDIUM_SMALL', 'MEDIUM_BIG'],
+    'low': ['LOW_SMALL', 'LOW_BIG']
+  };
+
+  for (const key in buttons) {
+    const buttonPair = buttons[key];
+    const [small, big] = buttonPair;
+
+    buttonPair.forEach(button => {
+      const element = document.getElementById(`prio_button_${key}_${containerSize}`);
+      if (prioStatus === key) {
+        element.classList.add(`prio-marked-${key.toLowerCase()}`);
+      } else {
+        element.classList.remove(`prio-marked-${key.toLowerCase()}`);
+      }
+    });
+  }
+} */
+
+/* Code durchgehen und überarbeiten!! */
+
+/* function changePrioStatus(prioStatus, containerSize) {
+  const sizes = ['SMALL', 'BIG'];
+
+  for (const size of sizes) {
+    const element = document.getElementById(`prio_button_${prioStatus}_${size}_${containerSize}`);
+    
+    sizes.forEach(otherSize => {
+      if (otherSize !== size) {
+        element.classList.remove(`prio-marked-${prioStatus.toLowerCase()}-${otherSize.toLowerCase()}`);
+      }
+    });
+
+    element.classList.add(`prio-marked-${prioStatus.toLowerCase()}-${size.toLowerCase()}`);
+  }
+} */
+
+
+
+
+/* --------------------------------------------------------------------
 due date section in add_task.html
 ---------------------------------------------------------------------- */
-/* function selectDueDate(containerId) {
+function selectDueDate(containerId) {
   const duedateBox = document.getElementById(containerId);
-  let currentDueDate = currentDueDates[0];
+  let currentDateAsTimeStamp = new Date().getTime();
+  let currentDueDate = duedateBox.value.trim();
+  let currentDueDateAsTimeStamp = new Date(currentDueDate).getTime();
+  if (
+    checkIfNotInThePast(
+      currentDueDate,
+      currentDateAsTimeStamp,
+      currentDueDateAsTimeStamp
+    )
+  ) {
+    currentDueDates[0] = currentDueDate;
+    renderCurrentDueDate(currentDueDate);
+  } else {
+    currentDueDates = [];
+    renderCurrentDueDate(currentDueDate);
+    duedateBox.value = '';
+    alert('Please, choose a due date in the future.');
+  }
+}
+
+function renderCurrentDueDate(currentDueDate) {
   const duedateBoxSmall = document.getElementById('task_due_date_small');
   const duedateBoxBig = document.getElementById('task_due_date_big');
-  currentDueDate = duedateBox.value;
+  duedateBoxSmall.value = '';
+  duedateBoxBig.value = '';
+  duedateBoxSmall.value = currentDueDate;
+  duedateBoxBig.value = currentDueDate;
+}
 
-  console.log('Fälligkeitsdatum: ', currentDueDate);
-  duedateBoxSmall.innerHTML = currentDueDate.value;
-  duedateBoxBig.innerHTML = currentDueDate.value;
-} */
+function checkIfNotInThePast(
+  currentDueDate,
+  currentDateAsTimestamp,
+  currentDueDateAsTimeStamp
+) {
+  if (currentDueDate !== '') {
+    return currentDateAsTimestamp < currentDueDateAsTimeStamp;
+  } else {
+    return true;
+  }
+}
 
 /* --------------------------------------------------------------------
 category section in add_task.html
@@ -496,7 +421,7 @@ function generateNewCategoryBoxHTML(i, containerType) {
 function generateCategoryListHTML(i, currentCategory, containerType) {
   return /* html */ `
         <li id="category_item_${containerType}_${i}" class="category-item">
-          <div onclick="selectTaskCategory('${currentCategory.category_name}', '${currentCategory.category_color}')" class="icon-and-category-wrapper">
+          <div id="icon_and_category_wrapper_${containerType}_${i}" onclick="selectTaskCategory('${currentCategory.category_name}', '${currentCategory.category_color}')" class="icon-and-category-wrapper">
             <svg id="category_circle_icon_${containerType}_${i}" width="16" height="16">
             <circle cx="8" cy="8" r="6" fill="${currentCategory.category_color}" stroke="black" stroke-width="1"/>
             </svg>
@@ -698,7 +623,6 @@ function addNewCategory(i, containerType) {
   let categoryIndex = allCategories.findIndex(function (item) {
     return item.category_name === newCategoryText.value;
   });
-  console.log(categoryIndex);
   if (newCategoryText.value !== '') {
     if (categoryIndex === -1) {
       let newCategory = {
@@ -706,7 +630,6 @@ function addNewCategory(i, containerType) {
         category_color: newCategoryColor.value,
       };
       allCategories.push(newCategory);
-      console.log('Neue Kategorie: ', newCategory);
       renderCategories();
     } else {
       alert(
@@ -908,24 +831,41 @@ function changeSubtaskText(i, containerType) {
   }
 }
 
+/* ---------------------------------------------------------------
+create new task section in add_task.html
+------------------------------------------------------------------- */
+
 function createNewTask() {
-  const titleBox = document.getElementById('task_title');
   const descriptionBox = document.getElementById('task_description');
-  let inputFields = document.querySelectorAll('input');
-  if (titleBox.value === '' || currentCategories.length === 0) {
-    if (titleBox.value === '') {
+
+  if (
+    TITLE_BOX.value === '' ||
+    DUE_DATE_BOX_SMALL.value === '' ||
+    DUE_DATE_BOX_BIG.value === '' ||
+    currentCategories.length === 0
+  ) {
+    if (TITLE_BOX.value === '') {
       TASK_TITLE_INFO_BOX.classList.add('visible');
-      inputFields[0].classList.add('red-border');
+      TITLE_BOX.classList.add('red-border');
+    }
+    if (currentDueDates.length === 0) {
+      TASK_DUE_INFO_BOX_SMALL.classList.add('visible');
+      TASK_DUE_INFO_BOX_BIG.classList.add('visible');
+      DUE_DATE_BOX_SMALL.classList.add('red-border');
+      DUE_DATE_BOX_BIG.classList.add('red-border');
     }
     if (currentCategories.length === 0) {
       TASK_CATEGORY_BOX_SMALL.classList.add('visible');
       TASK_CATEGORY_BOX_BIG.classList.add('visible');
+      TASK_CATEGORY_SELECT_SMALL.classList.add('red-border');
+      TASK_CATEGORY_SELECT_BIG.classList.add('red-border');
     }
   } else {
     let task = {
       id: 1, // immer um 1 erhöhen!
-      title: titleBox.value,
+      title: TITLE_BOX.value,
       description: descriptionBox.value,
+      current_due_date: currentDueDates,
       current_contacts: currentContacts,
       current_category: currentCategories,
       subtasks: subTasks,
@@ -934,8 +874,70 @@ function createNewTask() {
     allTasks.push(task);
     console.log('Aufgaben: ', allTasks);
     TASK_TITLE_INFO_BOX.classList.remove('visible');
-    inputFields[0].classList.remove('red-border');
+    TITLE_BOX.classList.remove('red-border');
+    TASK_DUE_INFO_BOX_SMALL.classList.remove('visible');
+    TASK_DUE_INFO_BOX_BIG.classList.remove('visible');
+    DUE_DATE_BOX_SMALL.classList.remove('red-border');
+    DUE_DATE_BOX_BIG.classList.remove('red-border');
     TASK_CATEGORY_BOX_SMALL.classList.remove('visible');
     TASK_CATEGORY_BOX_BIG.classList.remove('visible');
+    TASK_CATEGORY_SELECT_SMALL.classList.remove('red-border');
+    TASK_CATEGORY_SELECT_BIG.classList.remove('red-border');
+  }
+}
+
+function removeTitleWarning() {
+  if (TITLE_BOX.value !== '') {
+    TASK_TITLE_INFO_BOX.classList.remove('visible');
+    TITLE_BOX.classList.remove('red-border');
+  }
+}
+
+function removeDueDateWarning() {
+  if (currentDueDates.length > 0) {
+    if (currentDueDates[0] !== '') {
+      TASK_DUE_INFO_BOX_SMALL.classList.remove('visible');
+      DUE_DATE_BOX_SMALL.classList.remove('red-border');
+      TASK_DUE_INFO_BOX_BIG.classList.remove('visible');
+      DUE_DATE_BOX_BIG.classList.remove('red-border');
+    }
+  }
+}
+
+function removeCategoryWarning() {
+  if (currentCategories.length === 1) {
+    TASK_CATEGORY_BOX_SMALL.classList.remove('visible');
+    TASK_CATEGORY_BOX_BIG.classList.remove('visible');
+    TASK_CATEGORY_SELECT_SMALL.classList.remove('red-border');
+    TASK_CATEGORY_SELECT_BIG.classList.remove('red-border');
+  }
+}
+
+TITLE_BOX.addEventListener('blur', function () {
+  removeTitleWarning();
+});
+
+DUE_DATE_BOX_BIG.addEventListener('blur', function () {
+  removeDueDateWarning();
+});
+
+DUE_DATE_BOX_SMALL.addEventListener('blur', function () {
+  removeDueDateWarning();
+});
+
+function addCategoriesEventListeners() {
+  for (let i = 0; i < allCategories.length; i++) {
+    const categoryWrapperSmall = document.getElementById(
+      `icon_and_category_wrapper_small_${i}`
+    );
+    const categoryWrapperBig = document.getElementById(
+      `icon_and_category_wrapper_big_${i}`
+    );
+    categoryWrapperSmall.addEventListener('click', function () {
+      removeCategoryWarning();
+    });
+    categoryWrapperBig.addEventListener('click', function () {
+      removeCategoryWarning();
+    });
   }
 }
