@@ -81,8 +81,8 @@ function showToDos() {
 function showTasksInProgress() {
     let inProgress = todos.filter(t => t['status'] == 'inProgress');
     document.getElementById('in_Progress').innerHTML = '';
-    for (let j = 0; j < inProgress.length; j++) {
-        const element = inProgress[j];
+    for (let i = 0; i < inProgress.length; i++) {
+        const element = inProgress[i];
         document.getElementById('in_Progress').innerHTML += generateToDoHTML(element);
     }
 }
@@ -91,8 +91,8 @@ function showTasksInProgress() {
 function showAwaitFeedback() {
     let awaitFeedback = todos.filter(t => t['status'] == 'awaitFeedback');
     document.getElementById('await_Feedback').innerHTML = '';
-    for (let j = 0; j < awaitFeedback.length; j++) {
-        const element = awaitFeedback[j];
+    for (let i = 0; i < awaitFeedback.length; i++) {
+        const element = awaitFeedback[i];
         document.getElementById('await_Feedback').innerHTML += generateToDoHTML(element);
     }
 }
@@ -101,8 +101,8 @@ function showAwaitFeedback() {
 function showFinishedTasks() {
     let done = todos.filter(t => t['status'] == 'done');
     document.getElementById('done').innerHTML = '';
-    for (let j = 0; j < done.length; j++) {
-        const element = done[j];
+    for (let i = 0; i < done.length; i++) {
+        const element = done[i];
         document.getElementById('done').innerHTML += generateToDoHTML(element);
     }
 }
@@ -113,7 +113,7 @@ function generateToDoHTML(element) {
     return `<div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">
               <div>${element['current_category']}</div>
               <div class="toDo-title">${element['title']}</div>
-              <div>${element['description']}</div>
+              <div class="toDo-description">${element['description']}</div>         
               <div>${element['subtasks'].length}/2 Subtasks</div>
               <div class='contacts-and-prio'>
                 <div>${element['current_contacts']}</div>

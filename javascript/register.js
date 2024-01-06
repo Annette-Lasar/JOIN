@@ -36,10 +36,10 @@ async function register() {
             resetForm();
             successfullyRegistered();
         } else {
-            alert('Email-Adresse bereits registriert !');
+            alert('Email address already registered !');
         }
         } else {
-            alert('Die beiden Passwörter müssen übereinstimmen !');
+            alert('Both passwords must match !');
         }
 }
 
