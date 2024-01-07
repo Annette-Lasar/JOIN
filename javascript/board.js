@@ -1,70 +1,19 @@
-/* 
- * Guest-Array: muss auch noch auf den Server hoch geladen werden !
- * status ist entweder 'toDo', 'inProgress', 'awaitFeedback' oder 'done'
-*/
-let tasksGuest = [                                  
-    {
-        id: 0,
-        title: 'Kochwelt Page & Recipe Recommender',
-        description: 'Build start page with recipe recommendation...',
-        current_category: ['User Story'],                           // Array mit nur einem einzigen Objekt / 1 ausgewählte Category mit Farbe und Titel
-        subtasks: ['bla bla bla', 'noch mehr bla bla bla'],         // mehrere Einträge mit mehreren Subtasks
-        current_contacts: ['AL', 'SM', 'JH'],                       // mehrere Kontakte mit jeweiligen Farben
-        prio: 'urgent',                                             // 'urgent', 'medium' oder 'low' (mit Annette absprechen!)
-        status: 'toDo'
-    },
-    {
-        id: 1,
-        title: 'Kochen',
-        description: 'Etwas Leckeres Kochen für die Familie...',
-        current_category: ['Technical Task'],     
-        subtasks: ['Gemüse schneiden', 'Küche vorbereiten'], 
-        current_contacts: ['BS', 'SM', 'UZ'],   
-        prio: 'urgent',         
-        status: 'toDo'
-    },
-    {
-        id: 2,
-        title: 'Einkaufen',
-        description: 'Kartoffeln und Sprudel einkaufen',
-        current_category: ['Technical Task'],     
-        subtasks: [],
-        current_contacts: ['BS', 'SM', 'UZ'],   
-        prio: 'low',
-        status: 'inProgress'
-    },
-    {
-        id: 3,
-        title: 'Coden',
-        description: 'Projekt Join fertig stellen und abgeben',
-        current_category: ['Technical Task'],     
-        subtasks: [],
-        current_contacts: ['AS', 'SM', 'JH'],   
-        prio: 'urgent',
-        status: 'awaitFeedback'
-    },
-    {
-        id: 4,
-        title: 'Lesen',
-        description: 'Den neuen Hit von Annette lesen und Feedback geben',
-        current_category: ['User Story'],     
-        subtasks: [],
-        current_contacts: ['AS','JH'],   
-        prio: 'medium',
-        status: 'done'
-    }
-];
-
-let tasksUser = [];           // falls userLogin, dann hier das JSON-Array des jeweiligen Users runterladen und speichern
+// falls User-Login, dann das JSON-Array des jeweiligen Users vom Server hier rein laden; ansonsten das Array 'guestsTasks' vom Server holen
+// egal welche Login-Art: Die Arrays werden immer in tasks[] geladen
+let tasks = [];     
 
 let currentDraggedElement;
 
 
 async function initBoard() {
-    let userLogin = localStorage.getItem('userLogin');    // wenn userLogin, dann Task-Array des jeweiligen Users anzeigen; ansonsten Guest-Array anzeigen
-    if(userLogin == 'true') {
-        todos = await getItem('keyVonAnnettesTask-Array');
-    } 
+    let userLogin = localStorage.getItem('userLogin');    
+    if(userLogin == 'true') {                                    // User-Login hat stattgefunden
+        let userEmail = localStorage.getItem('userEmail');       // zuerst herausfinden, welcher User sich angemeldet hat (in localStorage vermerkt)
+        let user = users.find(u => u.email == userEmail); 
+        tasks = JSON.parse(await getItem(user['tasks']));        // Task-Array dieses Users in tasks[] laden
+    } else {
+        tasks = JSON.parse(await getItem('guestTasks'));         // GuestLogin: wir holen das Gast-Array vom Server (key: 'guestTasks')
+    }
     showToDos();
     showTasksInProgress();
     showAwaitFeedback();
@@ -73,7 +22,7 @@ async function initBoard() {
 
 
 function showToDos() {
-    let toDos = tasksGuest.filter(t => t['status'] == 'toDo');
+    let toDos = tasks.filter(t => t['status'] == 'toDo');
     document.getElementById('to_Do').innerHTML = '';
     for (let i = 0; i < toDos.length; i++) {
         const element = toDos[i];
@@ -83,7 +32,7 @@ function showToDos() {
 
 
 function showTasksInProgress() {
-    let inProgress = tasksGuest.filter(t => t['status'] == 'inProgress');
+    let inProgress = tasks.filter(t => t['status'] == 'inProgress');
     document.getElementById('in_Progress').innerHTML = '';
     for (let i = 0; i < inProgress.length; i++) {
         const element = inProgress[i];
@@ -93,7 +42,7 @@ function showTasksInProgress() {
 
 
 function showAwaitFeedback() {
-    let awaitFeedback = tasksGuest.filter(t => t['status'] == 'awaitFeedback');
+    let awaitFeedback = tasks.filter(t => t['status'] == 'awaitFeedback');
     document.getElementById('await_Feedback').innerHTML = '';
     for (let i = 0; i < awaitFeedback.length; i++) {
         const element = awaitFeedback[i];
@@ -103,7 +52,7 @@ function showAwaitFeedback() {
 
 
 function showFinishedTasks() {
-    let done = tasksGuest.filter(t => t['status'] == 'done');
+    let done = tasks.filter(t => t['status'] == 'done');
     document.getElementById('done').innerHTML = '';
     for (let i = 0; i < done.length; i++) {
         const element = done[i];
@@ -133,9 +82,16 @@ function startDragging(id) {
 
 
 // status ist entweder 'toDo', 'inProgress', 'awaitFeedback' oder 'done' (siehe board.html)
-function moveTo(status) {
-    tasksGuest[currentDraggedElement]['status'] = status;
-    // Hier eine Funktion einfügen, die das geänderte JSON-Array wieder an den Server sendet ( await setItem(........) )
+async function moveTo(status) {
+    tasks[currentDraggedElement]['status'] = status;
+    let userLogin = localStorage.getItem('userLogin');    
+    if(userLogin == 'true') {                                    
+        let userEmail = localStorage.getItem('userEmail');       
+        let user = users.find(u => u.email == userEmail); 
+        await setItem(user['tasks'], JSON.stringify(tasks));      
+    } else {
+        await setItem('users', JSON.stringify(users));         
+    }
     initBoard();
 }
 

@@ -19,4 +19,9 @@ function loginSuccessful(user) {
     let userName = user.name;
     userName = JSON.stringify(userName);
     localStorage.setItem('userName', userName);
+
+    let userEmail = user.email;
+    userEmail = JSON.stringify(userEmail);
+    localStorage.setItem('userEmail', userEmail);
 }
+

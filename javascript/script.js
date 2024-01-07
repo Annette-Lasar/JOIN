@@ -119,6 +119,7 @@ function showInitials() {
 function logout() {
   localStorage.removeItem('userLogin');
   localStorage.removeItem('userName');
+  localStorage.removeItem('userEmail');
   localStorage.removeItem('alreadyGreeted');
   window.location.href = 'index.html';
 }

@@ -111,30 +111,31 @@ function checkLocalStorage() {
 }
 
 
-function showSummaryValues() {
+async function showSummaryValues() {
 
-    // vorher noch todos-Array vom Server laden ?
+    // checken ob guestLogin/userLogin: Je nachdem das GuestArray laden und anzeigen ('tasksGuest'); ansonsten Array des jeweiligen Users filtern und anzeigen 
+    tasks = JSON.parse(await getItem('guestTasks'));
 
-    let toDos = tasksGuest.filter(t => t['status'] == 'toDo');
+    let toDos = tasks.filter(t => t['status'] == 'toDo');
     let toDosCounter = toDos.length;
     document.getElementById('toDo_counter').innerHTML = toDosCounter;
 
-    let done = tasksGuest.filter(t => t['status'] == 'done');
+    let done = tasks.filter(t => t['status'] == 'done');
     let doneCounter = done.length;
     document.getElementById('done_counter').innerHTML = doneCounter;
 
      
-    let urgent = tasksGuest.filter(t => t['prio'] == 'urgent');           // mit Annette klären, ob keys und values so bleiben (prio: 'urgent','medium','low')
+    let urgent = tasks.filter(t => t['prio'] == 'urgent');           // mit Annette klären, ob keys und values so bleiben (prio: 'urgent','medium','low')
     let urgentCounter = urgent.length;
     document.getElementById('urgent_counter').innerHTML = urgentCounter;
 
     // und abfragen welches die nächste Deadline ist (Date)
 
-    let tasksInProgress = tasksGuest.filter(t => t['status'] == 'inProgress');
+    let tasksInProgress = tasks.filter(t => t['status'] == 'inProgress');
     let inProgressCounter = tasksInProgress.length;
     document.getElementById('inProgress_counter').innerHTML = inProgressCounter;
 
-    let awaitFeedback = tasksGuest.filter(t => t['status'] == 'awaitFeedback');
+    let awaitFeedback = tasks.filter(t => t['status'] == 'awaitFeedback');
     let awaitFeedbackCounter = awaitFeedback.length;
     document.getElementById('awaitFeedback_counter').innerHTML = awaitFeedbackCounter;
 
