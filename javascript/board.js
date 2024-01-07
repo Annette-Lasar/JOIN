@@ -11,10 +11,9 @@ async function initBoard() {
         let userEmail = localStorage.getItem('userEmail');       // zuerst herausfinden, welcher User sich angemeldet hat (in localStorage vermerkt)
         users = JSON.parse(await getItem('users'));
         let user = users.find(u => u.email == userEmail);
-        if(user) {
-          tasks = JSON.parse(await getItem(user['tasks']));      // Task-Array dieses Users in tasks[] laden
+        if(user) {                                               // Wieso 'user' undefined ??
+          tasks = JSON.parse(await getItem(user['tasks']));      // Task-Array dieses Users in tasks[] laden                          
         }
-        console.log(user);      // WIESO undefined ???????????
     } else {
         tasks = JSON.parse(await getItem('guestTasks'));         // GuestLogin: wir holen das Gast-Array vom Server (key: 'guestTasks')
     }
