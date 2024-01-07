@@ -1,4 +1,4 @@
-function login() {
+async function login() {
     let email = document.getElementById('email_Login').value;
     let password = document.getElementById('password_Login').value;
     let user = users.find(u => u.email == email && u.password == password);

@@ -7,7 +7,7 @@ let users = [];
 
 
 async function initRegister(){
-    loadUsers();
+    await loadUsers();
 }
 
 

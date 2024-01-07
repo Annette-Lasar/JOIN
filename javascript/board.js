@@ -1,4 +1,4 @@
-// falls User-Login, dann das JSON-Array des jeweiligen Users vom Server hier rein laden; ansonsten das Array 'guestsTasks' vom Server holen
+// falls User-Login, dann das JSON-Array des jeweiligen Users vom Server hier rein laden; ansonsten das Array 'guestTasks' vom Server holen
 // egal welche Login-Art: Die Arrays werden immer in tasks[] geladen
 let tasks = [];     
 
@@ -9,8 +9,12 @@ async function initBoard() {
     let userLogin = localStorage.getItem('userLogin');    
     if(userLogin == 'true') {                                    // User-Login hat stattgefunden
         let userEmail = localStorage.getItem('userEmail');       // zuerst herausfinden, welcher User sich angemeldet hat (in localStorage vermerkt)
-        let user = users.find(u => u.email == userEmail); 
-        tasks = JSON.parse(await getItem(user['tasks']));        // Task-Array dieses Users in tasks[] laden
+        users = JSON.parse(await getItem('users'));
+        let user = users.find(u => u.email == userEmail);
+        if(user) {
+          tasks = JSON.parse(await getItem(user['tasks']));      // Task-Array dieses Users in tasks[] laden
+        }
+        console.log(user);      // WIESO undefined ???????????
     } else {
         tasks = JSON.parse(await getItem('guestTasks'));         // GuestLogin: wir holen das Gast-Array vom Server (key: 'guestTasks')
     }
@@ -88,9 +92,11 @@ async function moveTo(status) {
     if(userLogin == 'true') {                                    
         let userEmail = localStorage.getItem('userEmail');       
         let user = users.find(u => u.email == userEmail); 
-        await setItem(user['tasks'], JSON.stringify(tasks));      
+        if(user) {
+          await setItem(user['tasks'], JSON.stringify(tasks)); 
+        }     
     } else {
-        await setItem('users', JSON.stringify(users));         
+        await setItem('guestTasks', JSON.stringify(tasks));         
     }
     initBoard();
 }
