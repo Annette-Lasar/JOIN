@@ -314,48 +314,36 @@ prio section in add_task.html
   }
 } */
 
-function changePrioStatus(prioStatus, containerSize) {
-  const buttons = {
-    'urgent': ['URGENT_SMALL', 'URGENT_BIG'],
-    'medium': ['MEDIUM_SMALL', 'MEDIUM_BIG'],
-    'low': ['LOW_SMALL', 'LOW_BIG']
-  };
+function updateButtons(buttonType, isActive) {
+  const smallButton = document.getElementById(`prio_button_${buttonType}_small`);
+  const bigButton = document.getElementById(`prio_button_${buttonType}_big`);
 
-  for (const key in buttons) {
-    const buttonPair = buttons[key];
-    const [small, big] = buttonPair;
-
-    buttonPair.forEach(button => {
-      const element = document.getElementById(`prio_button_${key}_${containerSize}`);
-      if (prioStatus === key) {
-        element.classList.add(`prio-marked-${key.toLowerCase()}`);
-      } else {
-        element.classList.remove(`prio-marked-${key.toLowerCase()}`);
-      }
-    });
+  if (isActive) {
+    smallButton.classList.add(`prio-marked-${buttonType}`);
+    bigButton.classList.add(`prio-marked-${buttonType}`);
+  } else {
+    smallButton.classList.remove(`prio-marked-${buttonType}`);
+    bigButton.classList.remove(`prio-marked-${buttonType}`);
   }
 }
 
+function changePrioStatus(prioStatus, containerSize) {
+  // Zurücksetzen aller Buttons
+  const buttonTypes = ['urgent', 'medium', 'low'];
+  buttonTypes.forEach(type => updateButtons(type, false));
 
-/* Code durchgehen und überarbeiten!! */
+  // Aktualisieren des angeklickten Buttons und seines Pendants
+  updateButtons(prioStatus, true);
 
-/* function changePrioStatus(prioStatus, containerSize) {
-  const sizes = ['SMALL', 'BIG'];
-
-  for (const size of sizes) {
-    const element = document.getElementById(`prio_button_${prioStatus}_${size}_${containerSize}`);
-    
-    sizes.forEach(otherSize => {
-      if (otherSize !== size) {
-        element.classList.remove(`prio-marked-${prioStatus.toLowerCase()}-${otherSize.toLowerCase()}`);
-      }
-    });
-
-    element.classList.add(`prio-marked-${prioStatus.toLowerCase()}-${size.toLowerCase()}`);
+  // Hier kannst du dann weitere spezifische Anpassungen für jeden Prio-Status vornehmen, wenn nötig
+  if (prioStatus === 'urgent') {
+    currentPrio = 'urgent';
+  } else if (prioStatus === 'medium') {
+    currentPrio = 'medium';
+  } else if (prioStatus === 'low') {
+    currentPrio = 'low';
   }
-} */
-
-
+}
 
 
 /* --------------------------------------------------------------------
@@ -884,6 +872,7 @@ function createNewTask() {
       id: 1, // immer um 1 erhöhen!
       title: TITLE_BOX.value,
       description: descriptionBox.value,
+      current_prio: currentPrio,
       current_due_date: currentDueDates,
       current_contacts: currentContacts,
       current_category: currentCategories,
