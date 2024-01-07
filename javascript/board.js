@@ -1,15 +1,15 @@
 /* 
- * JSON-Array nur beispielhaft; wird später ersetzt, indem man das JSON-Array mit den Tasks vom Server lädt ( siehe function initBoard() )
+ * Guest-Array: muss auch noch auf den Server hoch geladen werden !
  * status ist entweder 'toDo', 'inProgress', 'awaitFeedback' oder 'done'
 */
-let todos = [                                  
+let tasksGuest = [                                  
     {
         id: 0,
         title: 'Kochwelt Page & Recipe Recommender',
         description: 'Build start page with recipe recommendation...',
         current_category: ['User Story'],                           // Array mit nur einem einzigen Objekt / 1 ausgewählte Category mit Farbe und Titel
         subtasks: ['bla bla bla', 'noch mehr bla bla bla'],         // mehrere Einträge mit mehreren Subtasks
-        current_contacts: ['AL', 'SM', 'JH'],                       // mehrere Kontakte
+        current_contacts: ['AL', 'SM', 'JH'],                       // mehrere Kontakte mit jeweiligen Farben
         prio: 'urgent',                                             // 'urgent', 'medium' oder 'low' (mit Annette absprechen!)
         status: 'toDo'
     },
@@ -55,12 +55,16 @@ let todos = [
     }
 ];
 
+let tasksUser = [];           // falls userLogin, dann hier das JSON-Array des jeweiligen Users runterladen und speichern
+
 let currentDraggedElement;
 
 
-function initBoard() {
-    // hier Funktion einfügen, die das Array mit den ToDos vom Server lädt (await getItem(.....) ); wenn userLogin = true (userLogin aus localStorage laden und prüfen)
-    // wenn guestLogin dann test-Array (s.o.) verwenden und anzeigen
+async function initBoard() {
+    let userLogin = localStorage.getItem('userLogin');    // wenn userLogin, dann Task-Array des jeweiligen Users anzeigen; ansonsten Guest-Array anzeigen
+    if(userLogin == 'true') {
+        todos = await getItem('keyVonAnnettesTask-Array');
+    } 
     showToDos();
     showTasksInProgress();
     showAwaitFeedback();
@@ -69,7 +73,7 @@ function initBoard() {
 
 
 function showToDos() {
-    let toDos = todos.filter(t => t['status'] == 'toDo');
+    let toDos = tasksGuest.filter(t => t['status'] == 'toDo');
     document.getElementById('to_Do').innerHTML = '';
     for (let i = 0; i < toDos.length; i++) {
         const element = toDos[i];
@@ -79,7 +83,7 @@ function showToDos() {
 
 
 function showTasksInProgress() {
-    let inProgress = todos.filter(t => t['status'] == 'inProgress');
+    let inProgress = tasksGuest.filter(t => t['status'] == 'inProgress');
     document.getElementById('in_Progress').innerHTML = '';
     for (let i = 0; i < inProgress.length; i++) {
         const element = inProgress[i];
@@ -89,7 +93,7 @@ function showTasksInProgress() {
 
 
 function showAwaitFeedback() {
-    let awaitFeedback = todos.filter(t => t['status'] == 'awaitFeedback');
+    let awaitFeedback = tasksGuest.filter(t => t['status'] == 'awaitFeedback');
     document.getElementById('await_Feedback').innerHTML = '';
     for (let i = 0; i < awaitFeedback.length; i++) {
         const element = awaitFeedback[i];
@@ -99,7 +103,7 @@ function showAwaitFeedback() {
 
 
 function showFinishedTasks() {
-    let done = todos.filter(t => t['status'] == 'done');
+    let done = tasksGuest.filter(t => t['status'] == 'done');
     document.getElementById('done').innerHTML = '';
     for (let i = 0; i < done.length; i++) {
         const element = done[i];
@@ -130,7 +134,7 @@ function startDragging(id) {
 
 // status ist entweder 'toDo', 'inProgress', 'awaitFeedback' oder 'done' (siehe board.html)
 function moveTo(status) {
-    todos[currentDraggedElement]['status'] = status;
+    tasksGuest[currentDraggedElement]['status'] = status;
     // Hier eine Funktion einfügen, die das geänderte JSON-Array wieder an den Server sendet ( await setItem(........) )
     initBoard();
 }

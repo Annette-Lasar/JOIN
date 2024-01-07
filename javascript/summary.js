@@ -115,26 +115,26 @@ function showSummaryValues() {
 
     // vorher noch todos-Array vom Server laden ?
 
-    let toDos = todos.filter(t => t['status'] == 'toDo');
+    let toDos = tasksGuest.filter(t => t['status'] == 'toDo');
     let toDosCounter = toDos.length;
     document.getElementById('toDo_counter').innerHTML = toDosCounter;
 
-    let done = todos.filter(t => t['status'] == 'done');
+    let done = tasksGuest.filter(t => t['status'] == 'done');
     let doneCounter = done.length;
     document.getElementById('done_counter').innerHTML = doneCounter;
 
      
-    let urgent = todos.filter(t => t['prio'] == 'urgent');           // mit Annette klären, ob keys und values so bleiben (prio: 'urgent','medium','low')
+    let urgent = tasksGuest.filter(t => t['prio'] == 'urgent');           // mit Annette klären, ob keys und values so bleiben (prio: 'urgent','medium','low')
     let urgentCounter = urgent.length;
     document.getElementById('urgent_counter').innerHTML = urgentCounter;
 
     // und abfragen welches die nächste Deadline ist (Date)
 
-    let tasksInProgress = todos.filter(t => t['status'] == 'inProgress');
+    let tasksInProgress = tasksGuest.filter(t => t['status'] == 'inProgress');
     let inProgressCounter = tasksInProgress.length;
     document.getElementById('inProgress_counter').innerHTML = inProgressCounter;
 
-    let awaitFeedback = todos.filter(t => t['status'] == 'awaitFeedback');
+    let awaitFeedback = tasksGuest.filter(t => t['status'] == 'awaitFeedback');
     let awaitFeedbackCounter = awaitFeedback.length;
     document.getElementById('awaitFeedback_counter').innerHTML = awaitFeedbackCounter;
 

@@ -20,7 +20,6 @@ async function loadUsers(){
 }
 
 
-// dem User ein Array mitgeben, in das zukünftig seine Tasks gespeichert werden
 async function register() {
     if(bothPasswordsMatch()) {
         if(passwordMinimumLength()) {
@@ -29,7 +28,8 @@ async function register() {
                 users.push({
                     name: fullName.value,
                     email: email.value,
-                    password: password.value
+                    password: password.value,
+                    tasks: []
                 });
                 await setItem('users', JSON.stringify(users));
                 resetForm();
