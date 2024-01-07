@@ -113,8 +113,10 @@ function checkLocalStorage() {
 
 async function showSummaryValues() {
 
-    // checken ob guestLogin/userLogin: Je nachdem das GuestArray laden und anzeigen ('tasksGuest'); ansonsten Array des jeweiligen Users filtern und anzeigen 
-    tasks = JSON.parse(await getItem('guestTasks'));
+    // checken ob guestLogin/userLogin: Je nachdem das GuestArray laden und anzeigen ('tasksGuest'); ansonsten Array des jeweiligen Users filtern und anzeigen
+    if(!userLogin) {
+        tasks = JSON.parse(await getItem('guestTasks'));
+    }
 
     let toDos = tasks.filter(t => t['status'] == 'toDo');
     let toDosCounter = toDos.length;
