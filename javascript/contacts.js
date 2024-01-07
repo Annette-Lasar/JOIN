@@ -20,31 +20,25 @@ function checkContactsInGroup() {
 }
 
 function addContactToGroup() {
-    for (let i = 0; i < contacts.length; i++) {
-        let name = contacts[i]['name'];
+    for (let i = 0; i < allContacts.length; i++) {
+        let name = allContacts[i]['name'];
         let firstLetter = name.slice(0, 1);
         document.getElementById('contacts' + firstLetter).innerHTML += addContactToGroupTemplate(name, i);
     }
 }
 
 function loadInitials(i) {
-    let name = contacts[i]['name'];
-    let initials = name[0];
+    let name = allContacts[i]['name'].split(' ');
+    let initials = '';
     for (let j = 0; j < name.length; j++) {
-        let spaceIndex = name.indexOf(' ', j);
-        if (spaceIndex == -1) {
-            break
-        } else {
-            initials += name[spaceIndex + 1];
-            j = spaceIndex;
-        }
+        initials += name[j][0]
     }
     return initials;
 }
 
 function loadColors() {
-    for (let i = 0; i < contacts.length; i++) {
-        const color = contacts[i]['color'];
+    for (let i = 0; i < allContacts.length; i++) {
+        const color = allContacts[i]['color'];
         document.getElementById("initials" + i).style.backgroundColor = color;
     }
 }
@@ -109,8 +103,8 @@ function addNewContact() {
     hideAddForm();
     addGroups();
     resetAddNewContactValues();
-    document.getElementById(contacts.length - 1).focus();
-    showContactInfo(contacts.length - 1);
+    document.getElementById(allContacts.length - 1).focus();
+    showContactInfo(allContacts.length - 1);
     createdContactAnimation();
 }
 
@@ -134,12 +128,12 @@ function pushNewContact() {
     let inputEMail = document.getElementById('add_email').value;
     let inputPhone = document.getElementById('add_phone').value;
     let color = randomUserColor();
-    contacts.push(
+    allContacts.push(
         {
-            "name": inputName,
-            "e-mail": inputEMail,
-            "phone": inputPhone,
-            "color": color
+            name: inputName,
+            e_mail: inputEMail,
+            phone: inputPhone,
+            color: color
         }
     );
 }
@@ -157,16 +151,16 @@ function updateContact(i) {
     let inputEMail = document.getElementById('add_email').value;
     let inputPhone = document.getElementById('add_phone').value;
     let color = randomUserColor();
-    contacts[i]['name'] = inputName;
-    contacts[i]['e-mail'] = inputEMail;
-    contacts[i]['phone'] = inputPhone;
-    contacts[i]['color'] = color;
+    allContacts[i]['name'] = inputName;
+    allContacts[i]['e_mail'] = inputEMail;
+    allContacts[i]['phone'] = inputPhone;
+    allContacts[i]['color'] = color;
 }
 
 function loadContactValues(i) {
-    document.getElementById('add_name').value = contacts[i]['name'];
-    document.getElementById('add_email').value = contacts[i]['e-mail'];
-    document.getElementById('add_phone').value = contacts[i]['phone'];
+    document.getElementById('add_name').value = allContacts[i]['name'];
+    document.getElementById('add_email').value = allContacts[i]['e_mail'];
+    document.getElementById('add_phone').value = allContacts[i]['phone'];
 }
 
 function resetAddNewContactValues() {
@@ -191,7 +185,7 @@ function hideOptions() {
 
 function deleteAnUser() {
     let index = currentContactIndex();
-    contacts.splice(index, 1);
+    allContacts.splice(index, 1);
     addGroups();
     hideContactInfo();
 }
