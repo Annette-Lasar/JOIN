@@ -15,7 +15,7 @@ function groupsTemplate(letter) {
 }
 
 function addContactToGroupTemplate(name, i) {
-    let eMail = contacts[i]['e-mail'];
+    let eMail = allContacts[i]['e_mail'];
     let initials = loadInitials(i);
     return `
         <button id="${i}" onclick="showContactInfo(${i})"class="contact">
@@ -31,9 +31,9 @@ function addContactToGroupTemplate(name, i) {
 }
 
 function contactInfoTemplate(i) {
-    let name = contacts[i]['name'];
-    let phone = contacts[i]['phone'];
-    let eMail = contacts[i]['e-mail'];
+    let name = allContacts[i]['name'];
+    let phone = allContacts[i]['phone'];
+    let eMail = allContacts[i]['e_mail'];
     let initials = loadInitials(i);
     return `
         <div class="name">
@@ -165,7 +165,7 @@ function addNewContactFormTemplate() {
 
 function editContactFormTemplate(i) {
     let initials = loadInitials(i);
-    let color = contacts[i]['color'];
+    let color = allContacts[i]['color'];
     return `
     <div id="background" class="background" onclick="hideAddForm()"></div>
     <div id="add_form" class="add-form">
