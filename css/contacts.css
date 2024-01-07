@@ -575,6 +575,7 @@ input:focus-visible {
         margin: 0;
         margin-bottom: 80px;
         padding: 8px;
+        padding-bottom: 80px;
     }
 }
 
@@ -589,7 +590,8 @@ input:focus-visible {
     }
 
     #arrow {
-        top: 2em;
+        position: fixed;
+        top: 6em;
         right: 1em;
     }
 }
@@ -855,7 +857,6 @@ input:focus-visible {
     #contact_list {
         padding: 0 24px 24px 24px;
     }
-
 }
 
 @media (max-height: 800px) {
@@ -871,10 +872,14 @@ input:focus-visible {
     }
 
     .dark-btn {
-        margin-top: 16px;
+        margin-top: 0;
         padding: 12px 10px;
     }
 
+    .white-btn {
+        margin-top: 0;
+        padding: 12px 10px;
+    }
     .add-form h1 {
         font-size: 32px;
     }
@@ -882,11 +887,26 @@ input:focus-visible {
     .add-form p {
         font-size: 18px;
     }
+
+    .text h3 {
+        font-size: 32px;
+    }
 }
 
 @media (max-height: 660px) {
     .add-form {
-        max-width: 400px;
+        width: 100%;
+        min-height: 100%;
+        border-radius: 0;
+    }
+
+    .add-form-header {
+        border-top-right-radius: 0;
+        border-top-left-radius: 0;
+    }
+
+    .contacts {
+        height: 100%;
     }
 }
 
