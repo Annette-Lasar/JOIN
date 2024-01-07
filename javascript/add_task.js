@@ -86,19 +86,36 @@ function renderContacts() {
   CONTACT_LIST_BOX.innerHTML += generateSelectAllHTML();
 }
 
+/* function generateContactListHTML(i, oneContact) {
+  return */ /* html */ /* `
+    <li>
+      <div class="initials-wrapper">
+        <div class="initials-icon" style="background-color: ${oneContact.color}">${oneContact.name[0]}</div>
+        <div>
+        ${oneContact.name}
+        </div>
+      </div>
+      <div><input id="contact_checkbox_${i}" type="checkbox"></div>
+    </li>
+  `;
+} */
+
 function generateContactListHTML(i, oneContact) {
+  // Splitten des Namens in Vor- und Nachname
+  const [firstName, lastName] = oneContact.name.split(' ');
   return /* html */ `
     <li>
       <div class="initials-wrapper">
-        <div class="initials-icon" style="background-color: ${oneContact.contact_color}">${oneContact.contact_first_name[0]}${oneContact.contact_family_name[0]}</div>
+        <div class="initials-icon" style="background-color: ${oneContact.color}">${firstName[0]}${lastName ? lastName[0] : ''}</div>
         <div>
-        ${oneContact.contact_first_name} ${oneContact.contact_family_name}
+        ${oneContact.name}
         </div>
       </div>
       <div><input id="contact_checkbox_${i}" type="checkbox"></div>
     </li>
   `;
 }
+
 
 function generateSelectAllHTML() {
   return /* html */ `
@@ -183,9 +200,10 @@ function addCheckboxEventListeners() {
 
 function selectContacts(contactCheckbox, oneContact) {
   let selectedContact = {
-    contact_first_name: oneContact.contact_first_name,
-    contact_family_name: oneContact.contact_family_name,
-    contact_color: oneContact.contact_color,
+    name: oneContact.name,
+    e_mail: oneContact.e_mail,
+    phone: oneContact.phone,
+    color: oneContact.color,
   };
   currentContacts = currentContacts.filter(
     (existingContact) => !isEqual(existingContact, selectedContact)
@@ -198,7 +216,6 @@ function selectContacts(contactCheckbox, oneContact) {
       return isEqual(item, selectedContact);
     });
     currentContacts.splice(contactsIndex, 1);
-    /* renderCurrentContacts(); */
   }
   renderCurrentContacts();
 }
@@ -250,8 +267,9 @@ function calculateTotalWidth(contacts) {
 }
 
 function generateContactsIconsHTML(oneContact) {
+  const [firstName, lastName] = oneContact.name.split(' ');
   return /* html */ `
-    <span class="initials-icon" style="background-color: ${oneContact.contact_color}">${oneContact.contact_first_name[0]}${oneContact.contact_family_name[0]}</span>
+    <span class="initials-icon" style="background-color: ${oneContact.color}">${firstName[0]}${lastName ? lastName[0] : ''}</span>
   `;
 }
 
@@ -270,7 +288,7 @@ window.addEventListener('resize', function () {
 /* --------------------------------------------------------------------
 prio section in add_task.html
 ---------------------------------------------------------------------- */
-function changePrioStatus(prioStatus, containerSize) {
+/* function changePrioStatus(prioStatus, containerSize) {
   document.getElementById(`prio_button_${prioStatus}_${containerSize}`);
   if (prioStatus === 'urgent') {
     PRIO_BUTTON_URGENT_SMALL.classList.add('prio-marked-urgent');
@@ -294,9 +312,9 @@ function changePrioStatus(prioStatus, containerSize) {
     PRIO_BUTTON_MEDIUM_SMALL.classList.remove('prio-marked-medium');
     PRIO_BUTTON_MEDIUM_BIG.classList.remove('prio-marked-medium');
   }
-}
+} */
 
-/* function changePrioStatus(prioStatus, containerSize) {
+function changePrioStatus(prioStatus, containerSize) {
   const buttons = {
     'urgent': ['URGENT_SMALL', 'URGENT_BIG'],
     'medium': ['MEDIUM_SMALL', 'MEDIUM_BIG'],
@@ -316,7 +334,8 @@ function changePrioStatus(prioStatus, containerSize) {
       }
     });
   }
-} */
+}
+
 
 /* Code durchgehen und überarbeiten!! */
 

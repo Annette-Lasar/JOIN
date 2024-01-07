@@ -36,115 +36,153 @@ let allCategories = [
 
 let allContacts = [
   {
-    contact_first_name: 'Bilbo',
-    contact_family_name: 'Beutlin',
-    contact_color: '#FF0000',
+    name: 'Bilbo Beutlin',
+    e_mail: 'bilbo@gmail.com',
+    phone: '0151-98765432',
+    color: '#ff7a00',
+  },
+  {
+    name: 'Hermione Granger',
+    e_mail: 'grangerh@hotmail.com',
+    phone: '0172-4567890',
+    color: '#9327ff',
+  },
+  {
+    name: 'Donald Duck',
+    e_mail: 'duckduckduck@gmail.com',
+    phone: '030-987654321',
+    color: '#6e52ff',
+  },
+  {
+    name: 'Fred Feuerstein',
+    e_mail: 'fredyf@gmail.com',
+    phone: '040-456789012',
+    color: '#fc71ff',
+  },
+  {
+    name: 'Bart Simpson',
+    e_mail: 'barty@gmail.com',
+    phone: '089-345678901',
+    color: '#ffbb2b',
+  },
+  {
+    name: 'Sheldon Cooper',
+    e_mail: 'dr.sheldoncooper@gmail.com',
+    phone: '0160-87654321',
+    color: '#1fd7c1',
+  },
+  {
+    name: 'Spongebob Schwammkopf',
+    e_mail: 'bikini.bottom@gmail.com',
+    phone: '0157-34567890',
+    color: '#462F8A',
+  },
+  {
+    name: 'Leia Organa',
+    e_mail: 'l.organa@gmail.com',
+    phone: '0152-54321678',
+    color: '#ff4646',
   },
 
   {
-    contact_first_name: 'Hermione',
-    contact_family_name: 'Granger',
-    contact_color: '#0000FF',
+    name: 'Dagobert Duck',
+    e_mail: 'quacktown@yahoo.com',
+    phone: '0163-87654321',
+    color: '#1fd7c1',
   },
 
   {
-    contact_first_name: 'Donald',
-    contact_family_name: 'Duck',
-    contact_color: '#008000',
+    name: 'Daisy Duck',
+    e_mail: 'daisymail@hotmail.com',
+    phone: '0221-890123456',
+    color: '#fc71ff',
   },
 
   {
-    contact_first_name: 'Donald',
-    contact_family_name: 'Trump',
-    contact_color: '#125476',
+    name: 'Darth Vader',
+    e_mail: 'darkside@vadermail.com',
+    phone: '0351-567890123',
+    color: '#462F8A',
   },
 
   {
-    contact_first_name: 'Dagobert',
-    contact_family_name: 'Duck',
-    contact_color: '#008FD1',
+    name: 'Luke Skywalker',
+    e_mail: 'falcon@universe.com',
+    phone: '0174-23456789',
+    color: '#ff745e',
   },
+
   {
-    contact_first_name: 'Daisy',
-    contact_family_name: 'Duck',
-    contact_color: '#7429FD',
+    name: 'Jim Knopf',
+    e_mail: 'lummerland_waas@ocean.com',
+    phone: '0155-76543210',
+    color: '#007cee',
   },
+
   {
-    contact_first_name: 'Darth',
-    contact_family_name: 'Vader',
-    contact_color: '#000000',
+    name: 'John Silver',
+    e_mail: 'treasure-island@gallows.com',
+    phone: '0911-234567890',
+    color: '#6e52ff',
   },
+
   {
-    contact_first_name: 'Luke',
-    contact_family_name: 'Skywalker',
-    contact_color: '#8630BC',
+    name: 'Fanny Price',
+    e_mail: 'mansfield_park@freenet.com',
+    phone: '0711-890123456',
+    color: '#ff4646',
   },
+
   {
-    contact_first_name: 'Jim',
-    contact_family_name: 'Knopf',
-    contact_color: '#1234FD',
+    name: 'Elizabeth Bennet',
+    e_mail: 'pride_and_prejudice@web.com',
+    phone: '0201-901234567',
+    color: '#ffa35e',
   },
+
   {
-    contact_first_name: 'Salágia',
-    contact_family_name: 'Nirlak',
-    contact_color: '#765CBA',
+    name: 'Fozzy Bear',
+    e_mail: 'muppet_show@bear_mail.com',
+    phone: '0611-345678901',
+    color: '#ff745e',
   },
+
   {
-    contact_first_name: 'John',
-    contact_family_name: 'Silver',
-    contact_color: '#0984AB',
+    name: 'Ronald Weasley',
+    e_mail: 'the_burrow@weasley.com',
+    phone: '0511-789012345',
+    color: '#1fd7c1',
   },
+
   {
-    contact_first_name: 'Fanny',
-    contact_family_name: 'Price',
-    contact_color: '#AC7643',
+    name: 'Mary Crawley',
+    e_mail: 'downton_abbey@yorkshire_mail.com',
+    phone: '0173-98765432',
+    color: '#c3ff2b',
   },
+
   {
-    contact_first_name: 'Elizabeth',
-    contact_family_name: 'Bennet',
-    contact_color: '#AFDCAA',
+    name: 'Mickey Mouse',
+    e_mail: 'mousetown@disney.com',
+    phone: '0170-12345678',
+    color: '#ffc701',
   },
+
   {
-    contact_first_name: 'Julia',
-    contact_family_name: 'Wiegand',
-    contact_color: '#123456',
+    name: 'Emil Tischbein',
+    e_mail: 'parole_emil@detektive.com',
+    phone: '0156 45678901',
+    color: '#0038ff',
   },
+
   {
-    contact_first_name: 'Fozzy',
-    contact_family_name: 'Bear',
-    contact_color: '#987DDD',
-  },
-  {
-    contact_first_name: 'Ronald',
-    contact_family_name: 'Weasley',
-    contact_color: '#777555',
-  },
-  {
-    contact_first_name: 'Mary',
-    contact_family_name: 'Crawley',
-    contact_color: '#555555',
-  },
-  {
-    contact_first_name: 'Mickey',
-    contact_family_name: 'Mouse',
-    contact_color: '#8866BB',
-  },
-  {
-    contact_first_name: 'Emil',
-    contact_family_name: 'Tischbein',
-    contact_color: '#EE66EE',
-  },
-  {
-    contact_first_name: 'Willi',
-    contact_family_name: 'Bayer',
-    contact_color: '#6D6D6D',
-  },
-  {
-    contact_first_name: 'Edward',
-    contact_family_name: 'Farres',
-    contact_color: '#4E4E4E',
+    name: 'Edward Ferrars',
+    e_mail: 'norland_park@hotmail.com',
+    phone: '0781-321098765',
+    color: '#9327ff',
   },
 ];
+
 let currentContacts = [];
 let currentDueDates = [];
 let currentCategories = [];
@@ -154,21 +192,31 @@ let currentPrio = 'medium';
 const TITLE_BOX = document.getElementById('task_title');
 const TASK_TITLE_INFO_BOX = document.getElementById('task_title_info');
 const CONTACT_LIST_BOX = document.getElementById('contact_list');
-const PRIO_BUTTON_URGENT_SMALL = document.getElementById('prio_button_urgent_small');
-const PRIO_BUTTON_MEDIUM_SMALL = document.getElementById('prio_button_medium_small');
+const PRIO_BUTTON_URGENT_SMALL = document.getElementById(
+  'prio_button_urgent_small'
+);
+const PRIO_BUTTON_MEDIUM_SMALL = document.getElementById(
+  'prio_button_medium_small'
+);
 const PRIO_BUTTON_LOW_SMALL = document.getElementById('prio_button_low_small');
-const PRIO_BUTTON_URGENT_BIG = document.getElementById('prio_button_urgent_big');
-const PRIO_BUTTON_MEDIUM_BIG = document.getElementById('prio_button_medium_big');
+const PRIO_BUTTON_URGENT_BIG = document.getElementById(
+  'prio_button_urgent_big'
+);
+const PRIO_BUTTON_MEDIUM_BIG = document.getElementById(
+  'prio_button_medium_big'
+);
 const PRIO_BUTTON_LOW_BIG = document.getElementById('prio_button_low_big');
 const DUE_DATE_BOX_SMALL = document.getElementById('task_due_date_small');
-  const DUE_DATE_BOX_BIG = document.getElementById('task_due_date_big');
+const DUE_DATE_BOX_BIG = document.getElementById('task_due_date_big');
 const TASK_DUE_INFO_BOX_SMALL = document.getElementById('task_due_info_small');
 const TASK_DUE_INFO_BOX_BIG = document.getElementById('task_due_info_big');
 const TASK_CATEGORY_BOX_SMALL = document.getElementById(
   'task_category_info_small'
 );
 const TASK_CATEGORY_BOX_BIG = document.getElementById('task_category_info_big');
-const TASK_CATEGORY_SELECT_SMALL = document.getElementById('task_category_small');
+const TASK_CATEGORY_SELECT_SMALL = document.getElementById(
+  'task_category_small'
+);
 const TASK_CATEGORY_SELECT_BIG = document.getElementById('task_category_big');
 const CATEGORY_LIST_SMALL = document.getElementById('category_list_small');
 const CATEGORY_LIST_BIG = document.getElementById('category_list_big');
