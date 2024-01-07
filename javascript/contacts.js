@@ -28,16 +28,10 @@ function addContactToGroup() {
 }
 
 function loadInitials(i) {
-    let name = allContacts[i]['name'];
-    let initials = name[0];
+    let name = allContacts[i]['name'].split(' ');
+    let initials = '';
     for (let j = 0; j < name.length; j++) {
-        let spaceIndex = name.indexOf(' ', j);
-        if (spaceIndex == -1) {
-            break
-        } else {
-            initials += name[spaceIndex + 1];
-            j = spaceIndex;
-        }
+        initials += name[j][0]
     }
     return initials;
 }
