@@ -114,14 +114,17 @@ function checkLocalStorage() {
 async function showSummaryValues() {
 
     if(userLogin) {                                               
-        let userEmail = localStorage.getItem('userEmail');       
+        let userEmail = localStorage.getItem('userEmail'); 
+        userEmail = userEmail.replace(/"/g, '');      
         users = JSON.parse(await getItem('users'));
         let user = users.find(u => u.email == userEmail);
         if(user) {
-          tasks = JSON.parse(await getItem(user['tasks']));        // Task-Array des jeweiligen Users abrufen   
+            if(user['tasks'].length > 0) {
+              tasks = JSON.parse(await getItem(user['tasks']));        // Task-Array des jeweiligen Users abrufen  
+            } 
         }
     } else {
-        tasks = JSON.parse(await getItem('guestTasks'));           // Gäste-Array abrufen und anzeigen
+        tasks = JSON.parse(await getItem('guestTasks'));               // Gäste-Array abrufen und anzeigen
     }    
 
     
@@ -134,11 +137,15 @@ async function showSummaryValues() {
     document.getElementById('done_counter').innerHTML = doneCounter;
 
      
-    let urgent = tasks.filter(t => t['prio'] == 'urgent');           // mit Annette klären, ob keys und values so bleiben (prio: 'urgent','medium','low')
+    let urgent = tasks.filter(t => t['current_prio'] == 'urgent');                        
     let urgentCounter = urgent.length;
     document.getElementById('urgent_counter').innerHTML = urgentCounter;
 
-    // und abfragen welches die nächste Deadline ist (Date)
+
+
+    // und abfragen welches die nächste Deadline ist (Date) => key 'current_due_date'
+
+
 
     let tasksInProgress = tasks.filter(t => t['status'] == 'inProgress');
     let inProgressCounter = tasksInProgress.length;

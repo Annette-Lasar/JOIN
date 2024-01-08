@@ -9,10 +9,13 @@ async function initBoard() {
     let userLogin = localStorage.getItem('userLogin');    
     if(userLogin == 'true') {                                    // User-Login hat stattgefunden
         let userEmail = localStorage.getItem('userEmail');       // zuerst herausfinden, welcher User sich angemeldet hat (in localStorage vermerkt)
-        users = JSON.parse(await getItem('users'));
-        let user = users.find(u => u.email == userEmail);
-        if(user) {                                               // Wieso 'user' undefined ??
-          tasks = JSON.parse(await getItem(user['tasks']));      // Task-Array dieses Users in tasks[] laden                          
+        userEmail = userEmail.replace(/"/g, '');                 // Anführungszeichen entfernen damit man danach vergleichen kann
+        users = JSON.parse(await getItem('users'));              // Array 'users' vom Server laden
+        let user = users.find(u => u.email === userEmail);       // Angemeldeten User im Array 'users' finden
+        if(user) {                                               // User vorhanden
+          if(user['tasks'].length > 0) {                         // User hat bei sich mindestens 1 Aufgabe hinterlegt
+            tasks = JSON.parse(await getItem(user['tasks']));    // Task-Array dieses Users in tasks[] laden    
+          }                   
         }
     } else {
         tasks = JSON.parse(await getItem('guestTasks'));         // GuestLogin: wir holen das Gast-Array vom Server (key: 'guestTasks')
@@ -85,16 +88,20 @@ function startDragging(id) {
 
 
 // status ist entweder 'toDo', 'inProgress', 'awaitFeedback' oder 'done' (siehe board.html)
+// Status der Task wird geändert und das Array 'tasks' wird wieder auf den Server hochgeladen
 async function moveTo(status) {
     tasks[currentDraggedElement]['status'] = status;
     let userLogin = localStorage.getItem('userLogin');    
     if(userLogin == 'true') {                                    
-        let userEmail = localStorage.getItem('userEmail');       
+        let userEmail = localStorage.getItem('userEmail');  
+        userEmail = userEmail.replace(/"/g, '');     
         let user = users.find(u => u.email == userEmail); 
         if(user) {
-          await setItem(user['tasks'], JSON.stringify(tasks)); 
+            if(tasks.length > 0) {
+              await setItem(user['tasks'], JSON.stringify(tasks));
+            } 
         }     
-    } else {
+    } else {     
         await setItem('guestTasks', JSON.stringify(tasks));         
     }
     initBoard();

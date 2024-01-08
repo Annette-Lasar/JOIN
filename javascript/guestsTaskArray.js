@@ -1,4 +1,5 @@
-// liegt auf dem Server unter dem key 'guestTasks'
+// liegt auf dem Server unter dem key 'guestTasks'   => key 'current_due_date' muss noch eingebaut werden  !
+// Diese Datei dient als Backup
 let tasksGuest = [
 
     {
@@ -8,7 +9,7 @@ let tasksGuest = [
         current_category: ['User Story'],                           // Array mit nur einem einzigen Objekt / 1 ausgewählte Category mit Farbe und Titel
         subtasks: ['bla bla bla', 'noch mehr bla bla bla'],         // mehrere Einträge mit mehreren Subtasks
         current_contacts: ['AL', 'SM', 'JH'],                       // mehrere Kontakte mit jeweiligen Farben
-        prio: 'urgent',                                             // 'urgent', 'medium' oder 'low' (mit Annette absprechen!)
+        current_prio: 'urgent',                                     // 'urgent', 'medium' oder 'low' 
         status: 'toDo'
     },
     {
@@ -18,7 +19,7 @@ let tasksGuest = [
         current_category: ['Technical Task'],     
         subtasks: ['Gemüse schneiden', 'Küche vorbereiten'], 
         current_contacts: ['BS', 'SM', 'UZ'],   
-        prio: 'urgent',         
+        current_prio: 'urgent',         
         status: 'toDo'
     },
     {
@@ -28,7 +29,7 @@ let tasksGuest = [
         current_category: ['Technical Task'],     
         subtasks: [],
         current_contacts: ['BS', 'SM', 'UZ'],   
-        prio: 'low',
+        current_prio: 'low',
         status: 'inProgress'
     },
     {
@@ -38,7 +39,7 @@ let tasksGuest = [
         current_category: ['Technical Task'],     
         subtasks: [],
         current_contacts: ['AS', 'SM', 'JH'],   
-        prio: 'urgent',
+        current_prio: 'urgent',
         status: 'awaitFeedback'
     },
     {
@@ -48,7 +49,7 @@ let tasksGuest = [
         current_category: ['User Story'],     
         subtasks: [],
         current_contacts: ['AS','JH'],   
-        prio: 'medium',
+        current_prio: 'medium',
         status: 'done'
     }
 ];
