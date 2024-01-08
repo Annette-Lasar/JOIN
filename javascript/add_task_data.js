@@ -189,9 +189,12 @@ let currentCategories = [];
 
 let id = 0;
 let currentPrio = 'medium';
+/* ---------------- title -------------------------- */
 const TITLE_BOX = document.getElementById('task_title');
 const TASK_TITLE_INFO_BOX = document.getElementById('task_title_info');
-const CONTACT_LIST_BOX = document.getElementById('contact_list');
+/* ----------------- contacts ------------------------ */
+const CONTACT_LIST_BOX = document.getElementById('contact_list'); // contact_list
+/* ------------------- prio --------------------------- */
 const PRIO_BUTTON_URGENT_SMALL = document.getElementById(
   'prio_button_urgent_small'
 );
@@ -206,10 +209,12 @@ const PRIO_BUTTON_MEDIUM_BIG = document.getElementById(
   'prio_button_medium_big'
 );
 const PRIO_BUTTON_LOW_BIG = document.getElementById('prio_button_low_big');
+/* -------------------- due date --------------------- */
 const DUE_DATE_BOX_SMALL = document.getElementById('task_due_date_small');
 const DUE_DATE_BOX_BIG = document.getElementById('task_due_date_big');
 const TASK_DUE_INFO_BOX_SMALL = document.getElementById('task_due_info_small');
 const TASK_DUE_INFO_BOX_BIG = document.getElementById('task_due_info_big');
+/* --------------------- category -------------------- */
 const TASK_CATEGORY_BOX_SMALL = document.getElementById(
   'task_category_info_small'
 );
@@ -226,6 +231,7 @@ const SELECT_TASK_CATEGORY_ELEMENT_SMALL = document.getElementById(
 const SELECT_TASK_CATEGORY_ELEMENT_BIG = document.getElementById(
   `task_category_text_big`
 );
+/* ---------------------- subtask ----------------------- */
 const SUBTASK_CONTAINER_SMALL = document.getElementById(
   'subtask_container_small'
 );

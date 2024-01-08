@@ -8,9 +8,9 @@ let currentDraggedElement;
 async function initBoard() {
     let userLogin = localStorage.getItem('userLogin');    
     if(userLogin == 'true') {                                    // User-Login hat stattgefunden
-        let userEmail = localStorage.getItem('userEmail');       // zuerst herausfinden, welcher User sich angemeldet hat (in localStorage vermerkt)
-        users = JSON.parse(await getItem('users'));
-        let user = users.find(u => u.email == userEmail);
+        let userEmail = localStorage.getItem('userEmail'); 
+        users = JSON.parse(await getItem('users'));      // zuerst herausfinden, welcher User sich angemeldet hat (in localStorage vermerkt)
+        let user = users.find(u => u.email === userEmail);
         if(user) {
           tasks = JSON.parse(await getItem(user['tasks']));      // Task-Array dieses Users in tasks[] laden
         }
