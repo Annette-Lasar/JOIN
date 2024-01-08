@@ -79,29 +79,15 @@ contact section in add_task.html
 ---------------------------------------------------------------------- */
 function renderContacts() {
   CONTACT_LIST_BOX.innerHTML = '';
+  CONTACT_LIST_BOX.innerHTML += generateSelectAllHTML();
   for (i = 0; i < allContacts.length; i++) {
     const oneContact = allContacts[i];
     CONTACT_LIST_BOX.innerHTML += generateContactListHTML(i, oneContact);
   }
-  CONTACT_LIST_BOX.innerHTML += generateSelectAllHTML();
+  
 }
 
-/* function generateContactListHTML(i, oneContact) {
-  return */ /* html */ /* `
-    <li>
-      <div class="initials-wrapper">
-        <div class="initials-icon" style="background-color: ${oneContact.color}">${oneContact.name[0]}</div>
-        <div>
-        ${oneContact.name}
-        </div>
-      </div>
-      <div><input id="contact_checkbox_${i}" type="checkbox"></div>
-    </li>
-  `;
-} */
-
 function generateContactListHTML(i, oneContact) {
-  // Splitten des Namens in Vor- und Nachname
   const [firstName, lastName] = oneContact.name.split(' ');
   return /* html */ `
     <li>
@@ -120,7 +106,7 @@ function generateContactListHTML(i, oneContact) {
 function generateSelectAllHTML() {
   return /* html */ `
     <li>
-      <div>Select and unselect all contacts</div>
+      <div>Select or unselect all contacts</div>
       <input id="select_all_checkbox" type="checkbox">
     </li>
   `;
@@ -133,31 +119,10 @@ function selectAndUnselectAllContacts(
   checkAllCheckbox
 ) {
   let individualCheckboxes = document.getElementById(`contact_checkbox_${i}`);
-  const numberOfContacts = allContacts.length;
-  currentContacts = [];
-  if (checkAllCheckbox.checked && !individualCheckboxes.checked) {
-    individualCheckboxes.checked = true;
-  } else if (!checkAllCheckbox.checked && individualCheckboxes.checked) {
-    individualCheckboxes.checked = false;
-  }
-  selectContacts(contactCheckbox, oneContact);
-  renderCurrentContacts();
-}
-
-/* function selectAndUnselectAllContacts(
-  i,
-  contactCheckbox,
-  oneContact,
-  checkAllCheckbox
-) {
-  let individualCheckboxes = document.getElementById(`contact_checkbox_${i}`);
-  // Leere das currentContacts-Array vor den Bedingungen
   currentContacts = [];
 
   if (checkAllCheckbox.checked && !individualCheckboxes.checked) {
     individualCheckboxes.checked = true;
-
-    // Iteriere durch allContacts und füge Kontakte hinzu, die noch nicht in currentContacts sind
     for (let j = 0; j < allContacts.length; j++) {
       const newContact = allContacts[j];
       if (
@@ -175,9 +140,10 @@ function selectAndUnselectAllContacts(
   renderCurrentContacts();
 }
 
+
 function areContactsEqual(contact1, contact2) {
   return isEqual(contact1, contact2);
-} */
+}
 
 function addCheckboxEventListeners() {
   for (let i = 0; i < allContacts.length; i++) {
@@ -210,12 +176,6 @@ function selectContacts(contactCheckbox, oneContact) {
   );
   if (contactCheckbox.checked == true) {
     currentContacts.push(selectedContact);
-  }
-  if (contactCheckbox.checked == false) {
-    let contactsIndex = currentContacts.findIndex(function (item) {
-      return isEqual(item, selectedContact);
-    });
-    currentContacts.splice(contactsIndex, 1);
   }
   renderCurrentContacts();
 }
@@ -327,7 +287,7 @@ function updateButtons(buttonType, isActive) {
   }
 }
 
-function changePrioStatus(prioStatus, containerSize) {
+function changePrioStatus(prioStatus) {
   // Zurücksetzen aller Buttons
   const buttonTypes = ['urgent', 'medium', 'low'];
   buttonTypes.forEach(type => updateButtons(type, false));
@@ -844,7 +804,6 @@ create new task section in add_task.html
 
 function createNewTask() {
   const descriptionBox = document.getElementById('task_description');
-
   if (
     TITLE_BOX.value === '' ||
     DUE_DATE_BOX_SMALL.value === '' ||

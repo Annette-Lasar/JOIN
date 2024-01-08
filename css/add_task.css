@@ -165,12 +165,13 @@ input[type='date'] {
 }
 
 .contacts-container {
-  height: 50px;
+  /* height: 50px; */
+  margin: 0 0 1em;
   padding: 0.25em;
+  display: flex;
   flex-direction: row;
   gap: 2px;
   overflow: hidden;
-  border: orchid 1px solid;
 }
 
 .overflow-indicator {

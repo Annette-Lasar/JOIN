@@ -5,7 +5,7 @@ async function init() {
   checkIfStartScreen();
   checkIfSummaryPage();
   checkIfBoardPage();
-  showInitials();
+  /* showInitials(); */
 }
 
 
