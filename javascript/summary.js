@@ -117,7 +117,7 @@ async function showSummaryValues() {
         let userEmail = localStorage.getItem('userEmail'); 
         userEmail = userEmail.replace(/"/g, '');      
         users = JSON.parse(await getItem('users'));
-        let user = users.find(u => u.email == userEmail);
+        let user = users.find(u => u.email === userEmail);
         if(user) {
             if(user['tasks'].length > 0) {
               tasks = JSON.parse(await getItem(user['tasks']));        // Task-Array des jeweiligen Users abrufen  
