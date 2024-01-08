@@ -14,7 +14,6 @@ async function initBoard() {
         if(user) {
           tasks = JSON.parse(await getItem(user['tasks']));      // Task-Array dieses Users in tasks[] laden
         }
-        console.log(user);      // WIESO undefined ???????????
     } else {
         tasks = JSON.parse(await getItem('guestTasks'));         // GuestLogin: wir holen das Gast-Array vom Server (key: 'guestTasks')
     }
