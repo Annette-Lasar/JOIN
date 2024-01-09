@@ -141,12 +141,6 @@ async function showSummaryValues() {
     let urgentCounter = urgent.length;
     document.getElementById('urgent_counter').innerHTML = urgentCounter;
 
-
-
-    // und abfragen welches die nächste Deadline ist (Date) => key 'current_due_date'
-
-
-
     let tasksInProgress = tasks.filter(t => t['status'] == 'inProgress');
     let inProgressCounter = tasksInProgress.length;
     document.getElementById('inProgress_counter').innerHTML = inProgressCounter;
@@ -157,5 +151,28 @@ async function showSummaryValues() {
 
     let tasksInBoard = toDosCounter + inProgressCounter + awaitFeedbackCounter;
     document.getElementById('tasksInBoard_counter').innerHTML = tasksInBoard;
+
+
+    // alle dates rausfiltern von Tasks, die 'urgent' sind und in Array 'urgentDeadlines' speichern
+    let urgentDeadlines = [];
+    tasks.forEach(task => { 
+        if(task['current_prio'] == 'urgent') {                       // Nur Deadline filtern wenn Prio dieser Task 'urgent' ist
+            urgentDeadlines.push(task['current_due_date']);          // Datum ist Pflichtfeld; also ist pro Task immer 1 Datum hinterlegt
+        }
+   });  
+                                                                  
+   if(urgentDeadlines.length == 0) {                                 // Keine Tasks vorhanden oder keine urgent Tasks
+    document.getElementById('next_due_date').innerHTML = 'No urgent due dates';
+   } else {
+
+    // herausfinden welches Datum am nähesten ist
+
+    // das näheste Datum in die andere Schreibweise umwandeln
+
+    // Datum in summary.js anzeigen
+
+
+   }
+
 }
 

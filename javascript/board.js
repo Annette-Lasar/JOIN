@@ -97,9 +97,7 @@ async function moveTo(status) {
         userEmail = userEmail.replace(/"/g, '');     
         let user = users.find(u => u.email == userEmail); 
         if(user) {
-            if(tasks.length > 0) {
-              await setItem(user['tasks'], JSON.stringify(tasks));
-            } 
+            await setItem(user['tasks'], JSON.stringify(tasks)); 
         }     
     } else {       
         await setItem('guestTasks', JSON.stringify(tasks));         
