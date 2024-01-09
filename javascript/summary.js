@@ -136,7 +136,6 @@ async function showSummaryValues() {
     let doneCounter = done.length;
     document.getElementById('done_counter').innerHTML = doneCounter;
 
-     
     let urgent = tasks.filter(t => t['current_prio'] == 'urgent');                        
     let urgentCounter = urgent.length;
     document.getElementById('urgent_counter').innerHTML = urgentCounter;
@@ -163,14 +162,15 @@ async function showSummaryValues() {
                                                                   
    if(urgentDeadlines.length == 0) {                                 // Keine Tasks vorhanden oder keine urgent Tasks
     document.getElementById('next_due_date').innerHTML = 'No urgent due dates';
-   } else {
+   } else if(urgentDeadlines.length == 1) {                          // genau 1 urgent deadline vorhanden
+    document.getElementById('next_due_date').innerHTML = urgentDeadlines[0];
+   } else {                                                          // mehr als 1 urgent deadline vorhanden
 
     // herausfinden welches Datum am nähesten ist
 
     // das näheste Datum in die andere Schreibweise umwandeln
 
     // Datum in summary.js anzeigen
-
 
    }
 

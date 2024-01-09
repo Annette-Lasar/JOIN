@@ -1,4 +1,4 @@
-// liegt auf dem Server unter dem key 'guestTasks'   => key 'current_due_date' muss noch eingebaut werden  !
+// liegt auf dem Server unter dem key 'guestTasks'   
 // Diese Datei dient als Backup
 let tasksGuest = [
 
