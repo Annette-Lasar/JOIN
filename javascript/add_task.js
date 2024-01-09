@@ -2,6 +2,8 @@ function initTasks() {
   loadSubtasks();
   init();
   showAndHideBoxesAccordingToScreenSize();
+  setStandardDateToToday('task_due_date_small');
+  setStandardDateToToday('task_due_date_big');
   renderContacts();
   renderCurrentContacts();
   addCheckboxEventListeners();
@@ -84,7 +86,6 @@ function renderContacts() {
     const oneContact = allContacts[i];
     CONTACT_LIST_BOX.innerHTML += generateContactListHTML(i, oneContact);
   }
-  
 }
 
 function generateContactListHTML(i, oneContact) {
@@ -92,7 +93,9 @@ function generateContactListHTML(i, oneContact) {
   return /* html */ `
     <li>
       <div class="initials-wrapper">
-        <div class="initials-icon" style="background-color: ${oneContact.color}">${firstName[0]}${lastName ? lastName[0] : ''}</div>
+        <div class="initials-icon" style="background-color: ${
+          oneContact.color
+        }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
         <div>
         ${oneContact.name}
         </div>
@@ -101,7 +104,6 @@ function generateContactListHTML(i, oneContact) {
     </li>
   `;
 }
-
 
 function generateSelectAllHTML() {
   return /* html */ `
@@ -139,7 +141,6 @@ function selectAndUnselectAllContacts(
   selectContacts(contactCheckbox, oneContact);
   renderCurrentContacts();
 }
-
 
 function areContactsEqual(contact1, contact2) {
   return isEqual(contact1, contact2);
@@ -229,7 +230,9 @@ function calculateTotalWidth(contacts) {
 function generateContactsIconsHTML(oneContact) {
   const [firstName, lastName] = oneContact.name.split(' ');
   return /* html */ `
-    <span class="initials-icon" style="background-color: ${oneContact.color}">${firstName[0]}${lastName ? lastName[0] : ''}</span>
+    <span class="initials-icon" style="background-color: ${oneContact.color}">${
+    firstName[0]
+  }${lastName ? lastName[0] : ''}</span>
   `;
 }
 
@@ -248,34 +251,10 @@ window.addEventListener('resize', function () {
 /* --------------------------------------------------------------------
 prio section in add_task.html
 ---------------------------------------------------------------------- */
-/* function changePrioStatus(prioStatus, containerSize) {
-  document.getElementById(`prio_button_${prioStatus}_${containerSize}`);
-  if (prioStatus === 'urgent') {
-    PRIO_BUTTON_URGENT_SMALL.classList.add('prio-marked-urgent');
-    PRIO_BUTTON_URGENT_BIG.classList.add('prio-marked-urgent');
-    PRIO_BUTTON_MEDIUM_SMALL.classList.remove('prio-marked-medium');
-    PRIO_BUTTON_MEDIUM_BIG.classList.remove('prio-marked-medium');
-    PRIO_BUTTON_LOW_SMALL.classList.remove('prio-marked-low');
-    PRIO_BUTTON_LOW_BIG.classList.remove('prio-marked-low');
-  } else if (prioStatus === 'medium') {
-    PRIO_BUTTON_MEDIUM_SMALL.classList.add('prio-marked-medium');
-    PRIO_BUTTON_MEDIUM_BIG.classList.add('prio-marked-medium');
-    PRIO_BUTTON_URGENT_SMALL.classList.remove('prio-marked-urgent');
-    PRIO_BUTTON_URGENT_BIG.classList.remove('prio-marked-urgent');
-    PRIO_BUTTON_LOW_SMALL.classList.remove('prio-marked-low');
-    PRIO_BUTTON_LOW_BIG.classList.remove('prio-marked-low');
-  } else if (prioStatus === 'low') {
-    PRIO_BUTTON_LOW_SMALL.classList.add('prio-marked-low');
-    PRIO_BUTTON_LOW_BIG.classList.add('prio-marked-low');
-    PRIO_BUTTON_URGENT_SMALL.classList.remove('prio-marked-urgent');
-    PRIO_BUTTON_URGENT_BIG.classList.remove('prio-marked-urgent');
-    PRIO_BUTTON_MEDIUM_SMALL.classList.remove('prio-marked-medium');
-    PRIO_BUTTON_MEDIUM_BIG.classList.remove('prio-marked-medium');
-  }
-} */
-
 function updateButtons(buttonType, isActive) {
-  const smallButton = document.getElementById(`prio_button_${buttonType}_small`);
+  const smallButton = document.getElementById(
+    `prio_button_${buttonType}_small`
+  );
   const bigButton = document.getElementById(`prio_button_${buttonType}_big`);
 
   if (isActive) {
@@ -288,14 +267,9 @@ function updateButtons(buttonType, isActive) {
 }
 
 function changePrioStatus(prioStatus) {
-  // Zurücksetzen aller Buttons
   const buttonTypes = ['urgent', 'medium', 'low'];
-  buttonTypes.forEach(type => updateButtons(type, false));
-
-  // Aktualisieren des angeklickten Buttons und seines Pendants
+  buttonTypes.forEach((type) => updateButtons(type, false));
   updateButtons(prioStatus, true);
-
-  // Hier kannst du dann weitere spezifische Anpassungen für jeden Prio-Status vornehmen, wenn nötig
   if (prioStatus === 'urgent') {
     currentPrio = 'urgent';
   } else if (prioStatus === 'medium') {
@@ -305,30 +279,19 @@ function changePrioStatus(prioStatus) {
   }
 }
 
-
 /* --------------------------------------------------------------------
 due date section in add_task.html
 ---------------------------------------------------------------------- */
+function setStandardDateToToday(containerID) {
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById(containerID).setAttribute('min', today);
+}
+
 function selectDueDate(containerId) {
   const duedateBox = document.getElementById(containerId);
-  let currentDateAsTimeStamp = new Date().getTime();
   let currentDueDate = duedateBox.value.trim();
-  let currentDueDateAsTimeStamp = new Date(currentDueDate).getTime();
-  if (
-    checkIfNotInThePast(
-      currentDueDate,
-      currentDateAsTimeStamp,
-      currentDueDateAsTimeStamp
-    )
-  ) {
     currentDueDates[0] = currentDueDate;
     renderCurrentDueDate(currentDueDate);
-  } else {
-    currentDueDates = [];
-    renderCurrentDueDate(currentDueDate);
-    duedateBox.value = '';
-    alert('Please, choose a due date in the future.');
-  }
 }
 
 function renderCurrentDueDate(currentDueDate) {
@@ -339,19 +302,6 @@ function renderCurrentDueDate(currentDueDate) {
   duedateBoxSmall.value = currentDueDate;
   duedateBoxBig.value = currentDueDate;
 }
-
-function checkIfNotInThePast(
-  currentDueDate,
-  currentDateAsTimestamp,
-  currentDueDateAsTimeStamp
-) {
-  if (currentDueDate !== '') {
-    return currentDateAsTimestamp < currentDueDateAsTimeStamp;
-  } else {
-    return true;
-  }
-}
-
 /* --------------------------------------------------------------------
 category section in add_task.html
 ---------------------------------------------------------------------- */
