@@ -76,7 +76,7 @@ function generateToDoHTML(element) {
               <div>${element['subtasks'].length}/2 Subtasks</div>
               <div class='contacts-and-prio'>
                 <div>${element['current_contacts']}</div>
-                <div>${element['prio']}</div>
+                <div>${element['current_prio']}</div>
               </div>
             </div>`;
 }
@@ -101,7 +101,7 @@ async function moveTo(status) {
               await setItem(user['tasks'], JSON.stringify(tasks));
             } 
         }     
-    } else {     
+    } else {       
         await setItem('guestTasks', JSON.stringify(tasks));         
     }
     initBoard();

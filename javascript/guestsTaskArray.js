@@ -10,6 +10,7 @@ let tasksGuest = [
         subtasks: ['bla bla bla', 'noch mehr bla bla bla'],         // mehrere Einträge mit mehreren Subtasks
         current_contacts: ['AL', 'SM', 'JH'],                       // mehrere Kontakte mit jeweiligen Farben
         current_prio: 'urgent',                                     // 'urgent', 'medium' oder 'low' 
+        current_due_date: '2024-01-23',
         status: 'toDo'
     },
     {
@@ -19,7 +20,8 @@ let tasksGuest = [
         current_category: ['Technical Task'],     
         subtasks: ['Gemüse schneiden', 'Küche vorbereiten'], 
         current_contacts: ['BS', 'SM', 'UZ'],   
-        current_prio: 'urgent',         
+        current_prio: 'urgent', 
+        current_due_date: '2024-01-26',        
         status: 'toDo'
     },
     {
@@ -30,6 +32,7 @@ let tasksGuest = [
         subtasks: [],
         current_contacts: ['BS', 'SM', 'UZ'],   
         current_prio: 'low',
+        current_due_date: '2024-01-23',
         status: 'inProgress'
     },
     {
@@ -40,6 +43,7 @@ let tasksGuest = [
         subtasks: [],
         current_contacts: ['AS', 'SM', 'JH'],   
         current_prio: 'urgent',
+        current_due_date: '2024-02-23',
         status: 'awaitFeedback'
     },
     {
@@ -50,6 +54,7 @@ let tasksGuest = [
         subtasks: [],
         current_contacts: ['AS','JH'],   
         current_prio: 'medium',
+        current_due_date: '2024-01-28',
         status: 'done'
     }
 ];
