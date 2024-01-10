@@ -112,9 +112,13 @@ function checkLocalStorage() {
 
 
 async function showSummaryValues() {
-
     await loadTasksUserOrGuest();
-    
+    showCounter();
+    showNextUrgentDeadline();
+}
+
+
+function showCounter() {
     let toDos = tasks.filter(t => t['status'] == 'toDo');
     let toDosCounter = toDos.length;
     document.getElementById('toDo_counter').innerHTML = toDosCounter;
@@ -137,8 +141,10 @@ async function showSummaryValues() {
 
     let tasksInBoard = toDosCounter + inProgressCounter + awaitFeedbackCounter;
     document.getElementById('tasksInBoard_counter').innerHTML = tasksInBoard;
+}
 
 
+function showNextUrgentDeadline() {
     let urgentDeadlines = [];
     tasks.forEach(task => { 
         if(task['current_prio'] == 'urgent') {                       
@@ -178,7 +184,7 @@ function closestUrgentDeadline(deadlines) {
 
 function getOtherDeadlineFormat(deadline) {
     const deadlineFormat = { year: 'numeric', month: 'long', day: 'numeric' };
-    const datum = new Date(deadline);
-    return datum.toLocaleDateString('en-US', deadlineFormat); 
+    const date = new Date(deadline);
+    return date.toLocaleDateString('en-US', deadlineFormat); 
 }
 
