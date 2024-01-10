@@ -1,5 +1,5 @@
 // falls User-Login, dann das JSON-Array des jeweiligen Users vom Server hier rein laden; ansonsten das Array 'guestTasks' vom Server holen
-// egal welche Login-Art: Die Arrays werden immer in tasks[] geladen
+// egal welche Login-Art: Die Arrays werden immer in das Array tasks[] geladen; danach wird das Array tasks[] gerendert
 let tasks = [];     
 
 let currentDraggedElement;
@@ -7,10 +7,10 @@ let currentDraggedElement;
 
 async function initBoard() {
     await loadTasksUserOrGuest();
-    showToDos();
-    showTasksInProgress();
-    showAwaitFeedback();
-    showFinishedTasks();
+    showTasksOnBoard('toDo');
+    showTasksOnBoard('inProgress');
+    showTasksOnBoard('awaitFeedback');
+    showTasksOnBoard('done');
 }
 
 
@@ -33,42 +33,12 @@ async function loadTasksUserOrGuest() {
 }
 
 
-function showToDos() {
-    let toDos = tasks.filter(t => t['status'] == 'toDo');
-    document.getElementById('to_Do').innerHTML = '';
-    for (let i = 0; i < toDos.length; i++) {
-        const element = toDos[i];
-        document.getElementById('to_Do').innerHTML += generateToDoHTML(element);
-    }
-}
-
-
-function showTasksInProgress() {
-    let inProgress = tasks.filter(t => t['status'] == 'inProgress');
-    document.getElementById('in_Progress').innerHTML = '';
-    for (let i = 0; i < inProgress.length; i++) {
-        const element = inProgress[i];
-        document.getElementById('in_Progress').innerHTML += generateToDoHTML(element);
-    }
-}
-
-
-function showAwaitFeedback() {
-    let awaitFeedback = tasks.filter(t => t['status'] == 'awaitFeedback');
-    document.getElementById('await_Feedback').innerHTML = '';
-    for (let i = 0; i < awaitFeedback.length; i++) {
-        const element = awaitFeedback[i];
-        document.getElementById('await_Feedback').innerHTML += generateToDoHTML(element);
-    }
-}
-
-
-function showFinishedTasks() {
-    let done = tasks.filter(t => t['status'] == 'done');
-    document.getElementById('done').innerHTML = '';
-    for (let i = 0; i < done.length; i++) {
-        const element = done[i];
-        document.getElementById('done').innerHTML += generateToDoHTML(element);
+function showTasksOnBoard(status) {
+    let filtered = tasks.filter(t => t['status'] == status);
+    document.getElementById(status).innerHTML = '';
+    for (let i = 0; i < filtered.length; i++) {
+        const element = filtered[i];
+        document.getElementById(status).innerHTML += generateToDoHTML(element);
     }
 }
 
