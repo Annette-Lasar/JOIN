@@ -14,6 +14,7 @@ async function initBoard() {
 }
 
 
+// prüfen ob Gäste- oder User-Login: je nachdem wird das jeweilige JSON-Array vom Server geladen, d.h. entweder das jeweilige UserTaskArray oder das Gäste-Array
 async function loadTasksUserOrGuest() {
     let userLogin = localStorage.getItem('userLogin');    
     if(userLogin == 'true') {                                    
@@ -72,7 +73,7 @@ function showFinishedTasks() {
 }
 
 
-// diese Funktion rendert die einzelnen Tasks auf das Board ( in Bearbeitung )
+// diese Funktion rendert die einzelnen Tasks auf das Board
 function generateToDoHTML(element) {
     return `<div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">
               <div>${element['current_category']}</div>
