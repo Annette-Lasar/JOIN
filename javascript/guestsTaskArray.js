@@ -10,7 +10,7 @@ let tasksGuest = [
         subtasks: ['bla bla bla', 'noch mehr bla bla bla'],         // mehrere Einträge mit mehreren Subtasks
         current_contacts: ['AL', 'SM', 'JH'],                       // mehrere Kontakte mit jeweiligen Farben
         current_prio: 'urgent',                                     // 'urgent', 'medium' oder 'low' 
-        current_due_date: '2024-01-23',
+        current_due_date: '2024-01-28',
         status: 'toDo'
     },
     {
@@ -32,7 +32,7 @@ let tasksGuest = [
         subtasks: [],
         current_contacts: ['BS', 'SM', 'UZ'],   
         current_prio: 'low',
-        current_due_date: '2024-01-23',
+        current_due_date: '2024-01-24',
         status: 'inProgress'
     },
     {

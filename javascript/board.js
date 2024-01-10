@@ -6,24 +6,29 @@ let currentDraggedElement;
 
 
 async function initBoard() {
-    let userLogin = localStorage.getItem('userLogin');    
-    if(userLogin == 'true') {                                    // User-Login hat stattgefunden
-        let userEmail = localStorage.getItem('userEmail');       // zuerst herausfinden, welcher User sich angemeldet hat (in localStorage vermerkt)
-        userEmail = userEmail.replace(/"/g, '');                 // Anführungszeichen entfernen damit man danach vergleichen kann
-        users = JSON.parse(await getItem('users'));              // Array 'users' vom Server laden
-        let user = users.find(u => u.email === userEmail);       // Angemeldeten User im Array 'users' finden
-        if(user) {                                               // User vorhanden
-          if(user['tasks'].length > 0) {                         // User hat bei sich mindestens 1 Aufgabe hinterlegt
-            tasks = JSON.parse(await getItem(user['tasks']));    // Task-Array dieses Users in tasks[] laden    
-          }                   
-        }
-    } else {
-        tasks = JSON.parse(await getItem('guestTasks'));         // GuestLogin: wir holen das Gast-Array vom Server (key: 'guestTasks')
-    }
+    await loadTasksUserOrGuest();
     showToDos();
     showTasksInProgress();
     showAwaitFeedback();
     showFinishedTasks();
+}
+
+
+async function loadTasksUserOrGuest() {
+    let userLogin = localStorage.getItem('userLogin');    
+    if(userLogin == 'true') {                                    
+        let userEmail = localStorage.getItem('userEmail');       
+        userEmail = userEmail.replace(/"/g, '');                 
+        users = JSON.parse(await getItem('users'));              
+        let user = users.find(u => u.email === userEmail);       
+        if(user) {                                               
+          if(user['tasks'].length > 0) {                         
+            tasks = JSON.parse(await getItem(user['tasks']));        
+          }                   
+        }
+    } else {
+        tasks = JSON.parse(await getItem('guestTasks'));         
+    }
 }
 
 
@@ -99,7 +104,7 @@ async function moveTo(status) {
         if(user) {
             await setItem(user['tasks'], JSON.stringify(tasks)); 
         }     
-    } else {       
+    } else {  
         await setItem('guestTasks', JSON.stringify(tasks));         
     }
     initBoard();

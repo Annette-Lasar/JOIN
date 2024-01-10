@@ -113,20 +113,7 @@ function checkLocalStorage() {
 
 async function showSummaryValues() {
 
-    if(userLogin) {                                               
-        let userEmail = localStorage.getItem('userEmail'); 
-        userEmail = userEmail.replace(/"/g, '');      
-        users = JSON.parse(await getItem('users'));
-        let user = users.find(u => u.email === userEmail);
-        if(user) {
-            if(user['tasks'].length > 0) {
-              tasks = JSON.parse(await getItem(user['tasks']));        // Task-Array des jeweiligen Users abrufen  
-            } 
-        }
-    } else {
-        tasks = JSON.parse(await getItem('guestTasks'));               // Gäste-Array abrufen und anzeigen
-    }    
-
+    await loadTasksUserOrGuest();
     
     let toDos = tasks.filter(t => t['status'] == 'toDo');
     let toDosCounter = toDos.length;
@@ -152,27 +139,46 @@ async function showSummaryValues() {
     document.getElementById('tasksInBoard_counter').innerHTML = tasksInBoard;
 
 
-    // alle dates rausfiltern von Tasks, die 'urgent' sind und in Array 'urgentDeadlines' speichern
     let urgentDeadlines = [];
     tasks.forEach(task => { 
-        if(task['current_prio'] == 'urgent') {                       // Nur Deadline filtern wenn Prio dieser Task 'urgent' ist
-            urgentDeadlines.push(task['current_due_date']);          // Datum ist Pflichtfeld; also ist pro Task immer 1 Datum hinterlegt
+        if(task['current_prio'] == 'urgent') {                       
+            urgentDeadlines.push(task['current_due_date']);          
         }
    });  
                                                                   
-   if(urgentDeadlines.length == 0) {                                 // Keine Tasks vorhanden oder keine urgent Tasks
+   if(urgentDeadlines.length == 0) {                                 
     document.getElementById('next_due_date').innerHTML = 'No urgent due dates';
-   } else if(urgentDeadlines.length == 1) {                          // genau 1 urgent deadline vorhanden
+   } else if(urgentDeadlines.length == 1) {                          
     document.getElementById('next_due_date').innerHTML = urgentDeadlines[0];
-   } else {                                                          // mehr als 1 urgent deadline vorhanden
-
-    // herausfinden welches Datum am nähesten ist
-
-    // das näheste Datum in die andere Schreibweise umwandeln
-
-    // Datum in summary.js anzeigen
-
+   } else {                                                          
+    let nextUrgentDeadline = closestUrgentDeadline(urgentDeadlines);
+    document.getElementById('next_due_date').innerHTML = nextUrgentDeadline;
    }
+}
 
+
+function closestUrgentDeadline(deadlines) {
+    let today = new Date().getTime();            
+    let nextDeadline = null;                       
+    let smallestDifference = Infinity;             
+
+    deadlines.forEach(deadline => {
+        const comparedDate = new Date(deadline).getTime();
+        const difference = comparedDate - today;
+        if (difference < smallestDifference) {
+            smallestDifference = difference;
+            nextDeadline = deadline;
+        }
+    });
+
+    nextDeadline = getOtherDeadlineFormat(nextDeadline);
+    return nextDeadline;
+}
+
+
+function getOtherDeadlineFormat(deadline) {
+    const deadlineFormat = { year: 'numeric', month: 'long', day: 'numeric' };
+    const datum = new Date(deadline);
+    return datum.toLocaleDateString('en-US', deadlineFormat); 
 }
 
