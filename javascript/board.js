@@ -23,9 +23,9 @@ async function loadTasksUserOrGuest() {
         users = JSON.parse(await getItem('users'));              
         let user = users.find(u => u.email === userEmail);       
         if(user) {                                               
-          if(user['tasks'].length > 0) {                         
-            tasks = JSON.parse(await getItem(user['tasks']));        
-          }                   
+            if(`${user.email}`) {
+                tasks = JSON.parse(await getItem(`${user.email}`));        
+            }                   
         }
     } else {
         tasks = JSON.parse(await getItem('guestTasks'));         
@@ -82,7 +82,7 @@ async function moveTo(status) {
         userEmail = userEmail.replace(/"/g, '');     
         let user = users.find(u => u.email == userEmail); 
         if(user) {
-            await setItem(user['tasks'], JSON.stringify(tasks)); 
+            await setItem(`${user.email}`, JSON.stringify(tasks)); 
         }     
     } else {  
         await setItem('guestTasks', JSON.stringify(tasks));         

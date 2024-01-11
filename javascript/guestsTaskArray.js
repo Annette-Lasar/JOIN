@@ -6,10 +6,10 @@ let tasksGuest = [
         id: 0,
         title: 'Kochwelt Page & Recipe Recommender',
         description: 'Build start page with recipe recommendation...',
-        current_category: ['User Story'],                           // Array mit nur einem einzigen Objekt / 1 ausgewählte Category mit Farbe und Titel
-        subtasks: ['bla bla bla', 'noch mehr bla bla bla'],         // mehrere Einträge mit mehreren Subtasks
-        current_contacts: ['AL', 'SM', 'JH'],                       // mehrere Kontakte mit jeweiligen Farben
-        current_prio: 'urgent',                                     // 'urgent', 'medium' oder 'low' 
+        current_category: ['Technical Task'],                       
+        subtasks: ['HTML & CSS', 'JavaScript'],         
+        current_contacts: ['AL', 'SM', 'JH'],                       
+        current_prio: 'urgent',                                     
         current_due_date: '2024-01-28',
         status: 'toDo'
     },
