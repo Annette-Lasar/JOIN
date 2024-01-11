@@ -6,7 +6,12 @@ let tasksGuest = [
         id: 0,
         title: 'Kochwelt Page & Recipe Recommender',
         description: 'Build start page with recipe recommendation...',
-        current_category: ['Technical Task'],                       
+        current_category: [
+            {
+                category_name: 'Technical Story', 
+                category_color: '#333333'
+            } 
+        ],         
         subtasks: ['HTML & CSS', 'JavaScript'],         
         current_contacts: ['AL', 'SM', 'JH'],                       
         current_prio: 'urgent',                                     
