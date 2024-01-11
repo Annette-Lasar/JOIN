@@ -45,16 +45,25 @@ function showTasksOnBoard(status) {
 
 // diese Funktion rendert die einzelnen Tasks auf das Board
 function generateToDoHTML(element) {
-    return `<div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">
-              <div>${element['current_category']}</div>
-              <div class="toDo-title">${element['title']}</div>
-              <div class="toDo-description">${element['description']}</div>         
-              <div>${element['subtasks'].length}/2 Subtasks</div>
-              <div class='contacts-and-prio'>
-                <div>${element['current_contacts']}</div>
-                <div>${element['current_prio']}</div>
+    return /* html */ `
+        <div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">
+          <div class="todo-category">${element['current_category']}</div>
+            <div class="todo-title">${element['title']}</div>
+              <div class="todo-description">${element['description']}</div>
+              <div class="progress-wrapper">
+                <progress id="progress_bar" class="progress-bar" value="32" max="100"> 32% </progress>  
+                <label class="label-for-progress" for="progress_bar">${element['subtasks'].length}/2 Subtasks</label>
               </div>
-            </div>`;
+              <div class="contacts-and-prio-wrapper">
+                <div class="task-contact-wrapper">
+                <div class="task-contact">${element['current_contacts'][0]}</div>
+                </div>
+                <div class="task-prio">
+                    <!-- <img src="../icons/prio_${element['current_prio'].svg}" alt="" height="32"> -->
+                    <img class="prio-icon" src="../icons/prio_medium.svg">
+                </div>
+            </div>
+        </div>`;
 }
 
 

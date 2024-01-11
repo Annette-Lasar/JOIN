@@ -171,7 +171,6 @@ input[type='date'] {
 }
 
 .contacts-container {
-  /* height: 50px; */
   margin: 0 0 1em;
   padding: 0.25em;
   display: flex;
