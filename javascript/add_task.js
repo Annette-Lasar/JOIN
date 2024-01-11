@@ -78,6 +78,23 @@ document.addEventListener('DOMContentLoaded', function () {
   window.addEventListener('resize', showAndHideBoxesAccordingToScreenSize);
 });
 
+function renderAlert(alertMessage) {
+  openAlertContainer();
+  const alertContent = document.getElementById('alert_content');
+  alertContent.innerHTML = '';
+  alertContent.innerHTML = generateAlertContentHTML(alertMessage);
+}
+
+function openAlertContainer() {
+  const alertContainer = document.getElementById('alert_container');
+  alertContainer.classList.remove('d-none');
+}
+
+function closeAlertContainer() {
+  const alertContainer = document.getElementById('alert_container');
+  alertContainer.classList.add('d-none');
+}
+
 /* --------------------------------------------------------------------
 contact section in add_task.html
 ---------------------------------------------------------------------- */
@@ -384,7 +401,7 @@ function changeCategoryTextAndColor(i, containerType) {
     allCategories[i] = updatedCategory;
     renderCategories();
   } else {
-    alert("The input field mustn't be empty.");
+    renderAlert('Please enter a category name!');
     renderCategories();
   }
 }
@@ -431,13 +448,13 @@ function addNewCategory(i, containerType) {
       allCategories.push(newCategory);
       renderCategories();
     } else {
-      alert(
+      renderAlert(
         'This category already exists! Please choose another category name.'
       );
       renderCategories();
     }
   } else {
-    alert("The input field mustn't be empty.");
+    renderAlert('Please enter a new category name!');
     renderCategories();
   }
 }
@@ -515,7 +532,7 @@ function addSubtask(inputId, wrapperId, plusIconId) {
   if (SUBTASK_INPUT_BOX.value !== '') {
     subTasks.push(SUBTASK_INPUT_BOX.value);
   } else {
-    alert('Bitte geben Sie Text ein.');
+    renderAlert('Please enter text for your subtask!');
   }
   /* saveSubtasks(); */ // Kommentar
   renderSubtasks();
@@ -605,7 +622,7 @@ function changeSubtaskText(i, containerType) {
     /* saveSubtasks(); */ // Kommentar: löschen
     renderSubtasks();
   } else {
-    alert("The input field mustn't be empty.");
+    renderAlert('Please enter text for your subtask');
     renderSubtasks();
   }
 }
@@ -627,7 +644,7 @@ function checkIfBoxesAreEmpty() {
   } else {
     let task = createTaskObject();
     createdTasks.push(task);
-    taskId = task.id +1;
+    taskId = task.id + 1;
     removeClassLists();
   }
 }

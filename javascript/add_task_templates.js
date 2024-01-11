@@ -1,3 +1,9 @@
+function generateAlertContentHTML(alertMessage) {
+    return /* html */ `
+      <div class="alert-message">${alertMessage}</div>
+    `;
+  }
+
 function generateContactListHTML(i, oneContact) {
   const [firstName, lastName] = oneContact.name.split(' ');
   return /* html */ `
