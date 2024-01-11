@@ -145,6 +145,7 @@ h1 {
 
 .todo {
   min-width: 200px;
+  width: 200px;
   margin: 8px 0.75em;
   padding: 12px;
   display: flex;

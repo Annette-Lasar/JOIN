@@ -35,17 +35,32 @@ async function loadTasksUserOrGuest() {
 
 function showTasksOnBoard(status) {
     let filtered = tasks.filter(t => t['status'] == status);
+    console.log('Gefiltertes Array: ', filtered);
     document.getElementById(status).innerHTML = '';
     for (let i = 0; i < filtered.length; i++) {
         const element = filtered[i];
-        document.getElementById(status).innerHTML += generateToDoHTML(element);
+        document.getElementById(status).innerHTML += generateToDoHTML(i, element);
     }
 }
 
+/* function showTasksOnBoard(status) {
+    let filtered = tasks.filter(t => t['status'] == status);
+    console.log('Gefiltertes Array: ', filtered);
+    document.getElementById(status).innerHTML = '';
+    for (let i = 0; i < filtered.length; i++) {
+        const element = filtered[i];
+        
+        for (let j = 0; j < element.current_contacts.length; j++) {
+            const contactElement = element.current_contacts[j];
+            document.getElementById(status).innerHTML += generateToDoHTML(i, element, contactElement);
+        }
+    }
+} */
 
-// diese Funktion rendert die einzelnen Tasks auf das Board
-function generateToDoHTML(element) {
-    return /* html */ `
+
+/* // diese Funktion rendert die einzelnen Tasks auf das Board
+function generateToDoHTML(i, element, contactElement) {
+    return  *//* html */ /* `
         <div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">
           <div class="todo-category">${element['current_category']}</div>
             <div class="todo-title">${element['title']}</div>
@@ -56,7 +71,30 @@ function generateToDoHTML(element) {
               </div>
               <div class="contacts-and-prio-wrapper">
                 <div class="task-contact-wrapper">
-                <div class="task-contact">${element['current_contacts'][0]}</div>
+                <div class="task-contact">${element.contactElement}</div>
+                </div>
+                <div class="task-prio">
+                    <!-- <img src="../icons/prio_${element['current_prio'].svg}" alt="" height="32"> -->
+                    <img class="prio-icon" src="../icons/prio_medium.svg">
+                </div>
+            </div>
+        </div>`;
+} */
+
+// diese Funktion rendert die einzelnen Tasks auf das Board
+function generateToDoHTML(i, element) {
+    return `
+        <div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">
+          <div class="todo-category">${element['current_category']}</div>
+            <div class="todo-title">${element['title']}</div>
+              <div class="todo-description">${element['description']}</div>
+              <div class="progress-wrapper">
+                <progress id="progress_bar" class="progress-bar" value="32" max="100"> 32% </progress>  
+                <label class="label-for-progress" for="progress_bar">${element['subtasks'].length}/2 Subtasks</label>
+              </div>
+              <div class="contacts-and-prio-wrapper">
+                <div class="task-contact-wrapper">
+                <div class="task-contact">${element.current_contacts[i]}</div>
                 </div>
                 <div class="task-prio">
                     <!-- <img src="../icons/prio_${element['current_prio'].svg}" alt="" height="32"> -->

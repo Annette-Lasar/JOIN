@@ -38,7 +38,7 @@ let tasksGuest = [
     {
         id: 3,
         title: 'Coden',
-        description: 'Projekt Join fertig stellen und abgeben',
+        description: 'Projekt Join fertigstellen und abgeben',
         current_category: ['Technical Task'],     
         subtasks: [],
         current_contacts: ['AS', 'SM', 'JH'],   
