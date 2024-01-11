@@ -1,16 +1,16 @@
 *::-webkit-scrollbar {
-    width: 16px;
-  }
-  
-  *::-webkit-scrollbar-track {
-    background: var(--background-color-lightgray);
-  }
-  
-  *::-webkit-scrollbar-thumb {
-    background-color: var(--background-color-darkblue);
-    border: var(--accent-color-white) 3px solid;
-    border-radius: 10px;
-  }
+  width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--background-color-lightgray);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--background-color-darkblue);
+  border: var(--accent-color-white) 3px solid;
+  border-radius: 10px;
+}
 
 .main {
   padding: 1em 0.5em;
@@ -136,7 +136,7 @@ h1 {
 }
 
 .drag-area::-webkit-scrollbar {
-    height: 12px;
+  height: 12px;
 }
 
 .drag-area-highlight {
@@ -146,8 +146,10 @@ h1 {
 .todo {
   min-width: 200px;
   width: 200px;
+  min-height: 200px;
   margin: 8px 0.75em;
   padding: 12px;
+  position: relative;
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -156,13 +158,13 @@ h1 {
 }
 
 .todo-category {
-    width: fit-content;
-    padding: 2px 8px;
-    font-size: 0.9rem;
-    border: blue 1px solid;
-    background-color: blue;
-    border-radius: 8px;
-    color: var(--accent-color-white);
+  width: fit-content;
+  padding: 2px 8px;
+  font-size: 0.9rem;
+  border: blue 1px solid;
+  background-color: blue;
+  border-radius: 8px;
+  color: var(--accent-color-white);
 }
 
 .todo-title {
@@ -179,52 +181,115 @@ h1 {
 }
 
 .progress-wrapper {
-    padding: 2px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: orchid 1px solid;
+  padding: 2px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: orchid 1px solid;
 }
 
 .progress-bar {
-    width: 60%;
-    height: 20px;
+  width: 60%;
+  height: 20px;
 }
 
 .label-for-progress {
-    font-size: 0.6rem;
+  font-size: 0.6rem;
 }
 
 .contacts-and-prio-wrapper {
-    margin: 8px 0;
-    padding: 4px 0;
+  margin: 8px 0;
+  padding: 4px 0;
   display: flex;
   justify-content: space-between;
   border: lightblue 1px solid;
 }
 
 .task-contact-wrapper {
-    margin: 0 0.2em 0 0;
-    border: red 1px solid;
-    flex: 1 1 0;
+  margin: 0 0.2em 0 0;
+  border: red 1px solid;
+  flex: 1 1 0;
 }
 
 .task-contact {
-    width: 20px;
-    height: 20px;
-    padding: 2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.5rem;
-    color: var(--accent-color-white);
-    border: var(--accent-color-anthracite) 1px solid;
-    border-radius: 50%;
-    background-color: chocolate;
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5rem;
+  color: var(--accent-color-white);
+  border: var(--accent-color-anthracite) 1px solid;
+  border-radius: 50%;
+  background-color: chocolate;
 }
 
 .prio-icon {
-    height: 8px;
+  height: 8px;
+}
+
+.context-menu-card {
+  width: 110px;
+  height: 200px;
+  position: absolute;
+  top: 0;
+  right: 0px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  background-color: var(--background-color-lightgray);
+  border: var(--background-color-darkblue) 1.5px solid;
+  border-radius: 10px;
+}
+
+.context-menu-move-to-wrapper {
+  height: 30px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.6rem;
+  color: var(--accent-color-white);
+  background-color: var(--background-color-darkblue);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.context-menu-close {
+  height: 10px;
+  cursor: pointer;
+}
+
+.context-menu-card ul {
+  padding: 0.5em;
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.context-menu-card li {
+    margin: 0 0 0.25em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1 1 0;
+    border: var(--background-color-mediumgray) 1px solid;
+    background-color: var(--background-color-mediumgray);
+    cursor: pointer;
+}
+
+.context-menu-card li:hover {
+    color: var(--accent-color-white);
+    background-color: var(--accent-color-darkgray);
+}
+
+.d-none {
+    display: none;
 }
 
 /* ---------------------------------------------------
@@ -238,21 +303,26 @@ breakpoint: 50em
   }
 
   .board {
-    margin: 0 0 0 180px;
+    width: 85%;
+    margin: 1em 0 0 170px;
+    /* padding: 30px; */
     display: flex;
-    width: 80%;
-    padding: 30px;
+    justify-content: space-between;
+    border: purple 1px solid;
   }
 
   .headline-searchbar-addTask-wrapper {
-    margin: 0 0 0 180px;
+    width: 85%;
+    margin: 0 0 0 170px;
+    /* padding: 80px 30px 30px 30px; */
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    width: 80%;
-    padding: 80px 30px 30px 30px;
+    border: red 1px solid;
   }
 
-  .searchbar-and-addTaskBtn {
+  .searchbar-and-addTaskBtn-wrapper {
+    width: 36%;
     display: flex;
     justify-content: space-between;
   }
@@ -262,24 +332,26 @@ breakpoint: 50em
   }
 
   .addTaskToBoard-btn-big {
-    display: inline;
     height: 32px;
+    /* margin: 0 150px 0 30px; */
+    padding: 8px;
+    display: inline;
     border: none;
-    border-radius: 12px;
+    border-radius: 8px;
     color: var(--background-color-lightgray);
     background-color: var(--background-color-darkblue);
-    padding: 8px;
-    margin: 0 150px 0 30px;
   }
 
   .status {
+    width: 24%;
     display: flex;
     flex-direction: column;
-    width: 400px;
+    
   }
 
   .status-headline {
-    width: 80%;
+    /* width: 80%; */
+    height: 28px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -290,10 +362,21 @@ breakpoint: 50em
   }
 
   .drag-area {
-    height: 550px;
+    height: 100%;
     margin-bottom: 50px;
     display: flex;
     flex-direction: column;
     margin-right: 50px;
+    overflow-x: unset;
+  }
+
+  .drag-area-highlight {
+    width: 100%;
+  }
+
+  .todo {
+    max-width: 150px;
+    width: 150px;
+    border: red 1px solid;
   }
 }
