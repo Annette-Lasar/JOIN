@@ -1,5 +1,5 @@
 function initTasks() {
-  loadSubtasks();
+  /* loadSubtasks(); */
   init();
   showAndHideBoxesAccordingToScreenSize();
   setStandardDateToToday('task_due_date_small');
@@ -31,50 +31,52 @@ function toggleDropdownLists(idContainer, idArrow) {
   }
 }
 
-function showAndHideBoxesAccordingToScreenSize() {
-  let prioSmallScreen = document.getElementById('prio_small_screen');
-  let dueDateSmallScreen = document.getElementById('due_date_small_screen');
-  let categorySmallScreen = document.getElementById('category_small_screen');
-  let subTasksSmallScreen = document.getElementById('sub_tasks_small_screen');
-  let bigScreen = document.getElementById('big_screen');
-  let windowSize = window.innerWidth;
-
-  if (windowSize < 800) {
-    prioSmallScreen.classList.remove('d-none');
-    dueDateSmallScreen.classList.remove('d-none');
-    categorySmallScreen.classList.remove('d-none');
-    subTasksSmallScreen.classList.remove('d-none');
-    SUBTASK_CONTAINER_SMALL.classList.remove('d-none');
-    bigScreen.classList.add('d-none');
-  } else {
-    prioSmallScreen.classList.add('d-none');
-    dueDateSmallScreen.classList.add('d-none');
-    categorySmallScreen.classList.add('d-none');
-    subTasksSmallScreen.classList.add('d-none');
-    SUBTASK_CONTAINER_SMALL.classList.add('d-none');
-    bigScreen.classList.remove('d-none');
+function addCategoriesEventListeners() {
+  for (let i = 0; i < allCategories.length; i++) {
+    const categoryWrapperSmall = document.getElementById(
+      `icon_and_category_wrapper_small_${i}`
+    );
+    const categoryWrapperBig = document.getElementById(
+      `icon_and_category_wrapper_big_${i}`
+    );
+    categoryWrapperSmall.addEventListener('click', function () {
+      removeCategoryWarning();
+    });
+    categoryWrapperBig.addEventListener('click', function () {
+      removeCategoryWarning();
+    });
   }
+}
+
+function showAndHideBoxesAccordingToScreenSize() {
+  const SMALL_SCREEN_ELEMENTS = [
+    'prio_small_screen',
+    'due_date_small_screen',
+    'category_small_screen',
+    'sub_tasks_small_screen',
+    'subtask_container_small',
+  ];
+
+  const BIG_SCREEN_ELEMENTS = ['big_screen'];
+
+  const windowSize = window.innerWidth;
+  const showClass = (element) =>
+    document.getElementById(element).classList.remove('d-none');
+  const hideClass = (element) =>
+    document.getElementById(element).classList.add('d-none');
+
+  SMALL_SCREEN_ELEMENTS.forEach((element) =>
+    windowSize < 800 ? showClass(element) : hideClass(element)
+  );
+  BIG_SCREEN_ELEMENTS.forEach((element) =>
+    windowSize >= 800 ? showClass(element) : hideClass(element)
+  );
 }
 
 document.addEventListener('DOMContentLoaded', function () {
   showAndHideBoxesAccordingToScreenSize();
   window.addEventListener('resize', showAndHideBoxesAccordingToScreenSize);
 });
-
-/* function checkForAddTaskPage() {
-  let url = window.location.href;
-
-  if (url.endsWith('add_task.html')) {
-    document.addEventListener('DOMContentLoaded', function () {
-      showAndHideBoxesAccordingToScreenSize();
-      setAndRemoveAttributeRequired();
-      window.addEventListener('resize', showAndHideBoxesAccordingToScreenSize);
-      window.addEventListener('resize', setAndRemoveAttributeRequired);
-    });
-  }
-} */
-
-/* checkForAddTaskPage(); */
 
 /* --------------------------------------------------------------------
 contact section in add_task.html
@@ -86,32 +88,6 @@ function renderContacts() {
     const oneContact = allContacts[i];
     CONTACT_LIST_BOX.innerHTML += generateContactListHTML(i, oneContact);
   }
-}
-
-function generateContactListHTML(i, oneContact) {
-  const [firstName, lastName] = oneContact.name.split(' ');
-  return /* html */ `
-    <li>
-      <div class="initials-wrapper">
-        <div class="initials-icon" style="background-color: ${
-          oneContact.color
-        }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
-        <div>
-        ${oneContact.name}
-        </div>
-      </div>
-      <div><input id="contact_checkbox_${i}" type="checkbox"></div>
-    </li>
-  `;
-}
-
-function generateSelectAllHTML() {
-  return /* html */ `
-    <li>
-      <div>Select or unselect all contacts</div>
-      <input id="select_all_checkbox" type="checkbox">
-    </li>
-  `;
 }
 
 function selectAndUnselectAllContacts(
@@ -227,23 +203,6 @@ function calculateTotalWidth(contacts) {
   return contacts.length * contactWidth;
 }
 
-function generateContactsIconsHTML(oneContact) {
-  const [firstName, lastName] = oneContact.name.split(' ');
-  return /* html */ `
-    <span class="initials-icon" style="background-color: ${oneContact.color}">${
-    firstName[0]
-  }${lastName ? lastName[0] : ''}</span>
-  `;
-}
-
-function generateOverflowIndicatorHTML(hiddenContactsCount) {
-  return /* html */ `
-    <div id="overflow_indicator" class="overflow-indicator">
-      +${hiddenContactsCount}
-    </div>
-  `;
-}
-
 window.addEventListener('resize', function () {
   renderCurrentContacts();
 });
@@ -289,18 +248,18 @@ function setStandardDateToToday(containerID) {
 
 function selectDueDate(containerId) {
   const duedateBox = document.getElementById(containerId);
-  let currentDueDate = duedateBox.value.trim();
-    currentDueDates[0] = currentDueDate;
-    renderCurrentDueDate(currentDueDate);
+  let newCurrentDueDate = duedateBox.value.trim();
+  currentDueDate = newCurrentDueDate;
+  renderCurrentDueDate(newCurrentDueDate);
 }
 
-function renderCurrentDueDate(currentDueDate) {
+function renderCurrentDueDate(newCurrentDueDate) {
   const duedateBoxSmall = document.getElementById('task_due_date_small');
   const duedateBoxBig = document.getElementById('task_due_date_big');
   duedateBoxSmall.value = '';
   duedateBoxBig.value = '';
-  duedateBoxSmall.value = currentDueDate;
-  duedateBoxBig.value = currentDueDate;
+  duedateBoxSmall.value = newCurrentDueDate;
+  duedateBoxBig.value = newCurrentDueDate;
 }
 /* --------------------------------------------------------------------
 category section in add_task.html
@@ -324,35 +283,6 @@ function renderCategories() {
   }
   CATEGORY_LIST_SMALL.innerHTML += generateNewCategoryBoxHTML(i, 'small');
   CATEGORY_LIST_BIG.innerHTML += generateNewCategoryBoxHTML(i, 'big');
-}
-
-function generateNewCategoryBoxHTML(i, containerType) {
-  return /* html */ `
-    <div id="new_category_${containerType}" class="new-category">
-      <div>New category</div>
-      <div id="new_category_plus_${containerType}" onclick="createNewCategory(${i}, '${containerType}')"><img src="../icons/plus.svg" alt=""></div>
-    </div>
-  `;
-}
-
-function generateCategoryListHTML(i, currentCategory, containerType) {
-  return /* html */ `
-        <li id="category_item_${containerType}_${i}" class="category-item">
-          <div id="icon_and_category_wrapper_${containerType}_${i}" onclick="selectTaskCategory('${currentCategory.category_name}', '${currentCategory.category_color}')" class="icon-and-category-wrapper">
-            <svg id="category_circle_icon_${containerType}_${i}" width="16" height="16">
-            <circle cx="8" cy="8" r="6" fill="${currentCategory.category_color}" stroke="black" stroke-width="1"/>
-            </svg>
-            <div>
-            ${currentCategory.category_name}
-            </div>
-          </div>
-          <div class="category-icon-wrapper">
-            <img onclick="editCategory(${i}, '${currentCategory.category_name}', '${currentCategory.category_color}', '${containerType}')" src="../icons/edit_dark.svg" height="14">
-            <div class="subtask-separator-line"></div>
-            <img onclick="deleteCategory(${i})" src="../icons/delete.svg" height="14">
-          </div>
-        </li>
-    `;
 }
 
 function selectTaskCategory(currentCategoryName, currentCategoryColor) {
@@ -409,22 +339,6 @@ function renderCurrentCategory() {
   }
 }
 
-function generateCurrentCategoryHTML(
-  currentCategoryName,
-  currentCategoryColor
-) {
-  return /* html */ `
-     <div  class="task-category-text">
-          <svg  width="16" height="16">
-           <circle cx="8" cy="8" r="6" fill="${currentCategoryColor}" stroke="black" stroke-width="1"/>
-          </svg>
-            <div>
-            ${currentCategoryName}
-            </div>
-     </div>
-    `;
-}
-
 function editCategory(
   i,
   currentCategoryName,
@@ -442,26 +356,6 @@ function editCategory(
     containerType
   );
   changeInputBackgroundColor(i, containerType, 'color_input');
-}
-
-function generateCategoryInputHTML(
-  i,
-  currentCategoryName,
-  currentCategoryColor,
-  containerType
-) {
-  return /* html */ `
-    <div class="icon-and-category-wrapper">
-      <input id="color_input_${containerType}_${i}" type="color" value="${currentCategoryColor}">
-      <input id="category_input_${containerType}_${i}" type="text" class="input-edit-category-text" value="${currentCategoryName}" required>
-      <div class="close-and-check-wrapper-edit-subtask">
-        <img onclick="renderCategories()" class="cancel-edit-subtask" src="../icons/close.svg" alt="">
-        <div class="subtask-separator-line"></div>
-        <img onclick="changeCategoryTextAndColor(${i}, '${containerType}')" class="check-edit-subtask" src="../icons/check.svg" alt="">
-      </div>
-    </div>
-    
-  `;
 }
 
 function changeInputBackgroundColor(i, containerType, containerID) {
@@ -516,18 +410,6 @@ function getRandomColor() {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
-}
-
-function generateInputForNewCategoryHTML(i, containerType, randomColor) {
-  return /* html */ `
-    <input id="color_new_input_${containerType}_${i}" type="color" value="${randomColor}">
-    <input id="category_new_input_${containerType}" type="text" class="category-new-input" placeholder="Pick color and add category">
-    <div class="close-and-check-wrapper-edit-subtask">
-        <img onclick="renderCategories()" class="cancel-edit-subtask" src="../icons/close.svg" alt="">
-        <div class="subtask-separator-line"></div>
-        <img onclick="addNewCategory(${i}, '${containerType}')" class="check-edit-subtask" src="../icons/check.svg" alt="">
-      </div>
-  `;
 }
 
 function addNewCategory(i, containerType) {
@@ -612,7 +494,7 @@ function hideCancelAndAcceptSubtask(
 function deleteSubtask(i) {
   subTasks.splice(i, 1);
   renderSubtasks();
-  saveSubtasks();
+  /* saveSubtasks(); */ // Kommentar
 }
 
 /**
@@ -635,7 +517,7 @@ function addSubtask(inputId, wrapperId, plusIconId) {
   } else {
     alert('Bitte geben Sie Text ein.');
   }
-  saveSubtasks();
+  /* saveSubtasks(); */ // Kommentar
   renderSubtasks();
   SUBTASK_INPUT_BOX.value = '';
   hideCancelAndAcceptSubtask(CLOSE_AND_CHECK_WRAPPER, SUBTASK_PLUS_ICON);
@@ -678,25 +560,26 @@ function generateSubtaskHTML(i, subtask, containerType) {
   `;
 }
 
+// Kommentar: löschen!
 /**
  * This function saves the added subtasks in the local storage.
  */
-function saveSubtasks() {
+/* function saveSubtasks() {
   let subtasksAsText = JSON.stringify(subTasks);
   localStorage.setItem('Subtasks', subtasksAsText);
-}
+} */
 
 /**
  * This function loads the subtasks from the local storage and transfers
  * them back into the array subTasks.
  */
-function loadSubtasks() {
+/* function loadSubtasks() {
   let subtasksAsText = localStorage.getItem('Subtasks');
   if (subtasksAsText) {
     subTasks = JSON.parse(subtasksAsText);
   }
   renderSubtasks();
-}
+} */
 
 /**
  * This function enables the user to edit his subtasks. It accesses the html element
@@ -714,33 +597,12 @@ function editSubtask(i, containerType, subtask) {
   subtaskElement.innerHTML = generateInputEditHTML(i, containerType, subtask);
 }
 
-/**
- * This function generates an input field that contains the text of the former
- * subtask and two buttons (x and accept) which are separated by a vertical line.
- * @param {integer} i - index of the current subtask
- * @param {string} containerType - 'small' or 'big' according to the viewport size
- * @param {string} subtask - text of the current subtask
- * @returns
- */
-function generateInputEditHTML(i, containerType, subtask) {
-  return /* html */ `
-    <div class="edit-subtask-wrapper">
-      <input type="text" id="edit_input_${containerType}_${i}" value="${subtask}" class="edit-input" placeholder="Enter your edited subtask text">
-      <div class="close-and-check-wrapper-edit-subtask">
-        <img onclick="renderSubtasks()" class="cancel-edit-subtask" src="../icons/close.svg" alt="">
-        <div class="subtask-separator-line"></div>
-        <img onclick="changeSubtaskText(${i}, '${containerType}', '${subtask}')" class="check-edit-subtask" src="../icons/check.svg" alt="">
-      </div>
-    </div>
-  `;
-}
-
 function changeSubtaskText(i, containerType) {
   let editedInput = document.getElementById(`edit_input_${containerType}_${i}`);
   let editedSubtask = editedInput.value.trim();
   if (editedSubtask !== '') {
     subTasks[i] = editedSubtask;
-    saveSubtasks();
+    /* saveSubtasks(); */ // Kommentar: löschen
     renderSubtasks();
   } else {
     alert("The input field mustn't be empty.");
@@ -751,56 +613,93 @@ function changeSubtaskText(i, containerType) {
 /* ---------------------------------------------------------------
 create new task section in add_task.html
 ------------------------------------------------------------------- */
+async function createNewTask() {
+  createdTasks = [];
+  checkIfBoxesAreEmpty();
+  await sendCreatedTask();
+}
 
-function createNewTask() {
-  const descriptionBox = document.getElementById('task_description');
-  if (
+function checkIfBoxesAreEmpty() {
+  if (checkAllRequiredBoxes()) {
+    checkIfTitleIsEmpty();
+    checkIfDueDateIsEmpty();
+    checkIfCategoriesIsEmpty();
+  } else {
+    let task = createTaskObject();
+    createdTasks.push(task);
+    taskId = task.id +1;
+    removeClassLists();
+  }
+}
+
+function checkAllRequiredBoxes() {
+  return (
     TITLE_BOX.value === '' ||
     DUE_DATE_BOX_SMALL.value === '' ||
     DUE_DATE_BOX_BIG.value === '' ||
     currentCategories.length === 0
-  ) {
-    if (TITLE_BOX.value === '') {
-      TASK_TITLE_INFO_BOX.classList.add('visible');
-      TITLE_BOX.classList.add('red-border');
-    }
-    if (currentDueDates.length === 0) {
-      TASK_DUE_INFO_BOX_SMALL.classList.add('visible');
-      TASK_DUE_INFO_BOX_BIG.classList.add('visible');
-      DUE_DATE_BOX_SMALL.classList.add('red-border');
-      DUE_DATE_BOX_BIG.classList.add('red-border');
-    }
-    if (currentCategories.length === 0) {
-      TASK_CATEGORY_BOX_SMALL.classList.add('visible');
-      TASK_CATEGORY_BOX_BIG.classList.add('visible');
-      TASK_CATEGORY_SELECT_SMALL.classList.add('red-border');
-      TASK_CATEGORY_SELECT_BIG.classList.add('red-border');
-    }
-  } else {
-    let task = {
-      id: 1, // immer um 1 erhöhen!
-      title: TITLE_BOX.value,
-      description: descriptionBox.value,
-      current_prio: currentPrio,
-      current_due_date: currentDueDates,
-      current_contacts: currentContacts,
-      current_category: currentCategories,
-      subtasks: subTasks,
-      status: 'toDo',
-    };
-    allTasks.push(task);
-    console.log('Aufgaben: ', allTasks);
-    TASK_TITLE_INFO_BOX.classList.remove('visible');
-    TITLE_BOX.classList.remove('red-border');
-    TASK_DUE_INFO_BOX_SMALL.classList.remove('visible');
-    TASK_DUE_INFO_BOX_BIG.classList.remove('visible');
-    DUE_DATE_BOX_SMALL.classList.remove('red-border');
-    DUE_DATE_BOX_BIG.classList.remove('red-border');
-    TASK_CATEGORY_BOX_SMALL.classList.remove('visible');
-    TASK_CATEGORY_BOX_BIG.classList.remove('visible');
-    TASK_CATEGORY_SELECT_SMALL.classList.remove('red-border');
-    TASK_CATEGORY_SELECT_BIG.classList.remove('red-border');
+  );
+}
+
+function checkIfTitleIsEmpty() {
+  if (TITLE_BOX.value === '') {
+    TASK_TITLE_INFO_BOX.classList.add('visible');
+    TITLE_BOX.classList.add('red-border');
   }
+}
+
+function checkIfDueDateIsEmpty() {
+  if (currentDueDate === '') {
+    TASK_DUE_INFO_BOX_SMALL.classList.add('visible');
+    TASK_DUE_INFO_BOX_BIG.classList.add('visible');
+    DUE_DATE_BOX_SMALL.classList.add('red-border');
+    DUE_DATE_BOX_BIG.classList.add('red-border');
+  }
+}
+
+function checkIfCategoriesIsEmpty() {
+  if (currentCategories.length === 0) {
+    TASK_CATEGORY_BOX_SMALL.classList.add('visible');
+    TASK_CATEGORY_BOX_BIG.classList.add('visible');
+    TASK_CATEGORY_SELECT_SMALL.classList.add('red-border');
+    TASK_CATEGORY_SELECT_BIG.classList.add('red-border');
+  }
+}
+
+/* function getTaskIndex() {
+  for (let i = 0; i < createdTasks.length; i++) {
+    console.log('Eine Aufgabe: ', createdTasks[i]);
+    console.log('Index: ', i);
+      return i;
+  }
+} */
+
+function createTaskObject() {
+  let newTask = {
+    id: '',
+    title: TITLE_BOX.value,
+    description: DESCRIPTION_BOX.value,
+    current_prio: currentPrio,
+    current_due_date: currentDueDate,
+    current_contacts: currentContacts,
+    current_category: currentCategories,
+    subtasks: subTasks,
+    status: 'toDo',
+  };
+  return newTask;
+}
+
+function removeClassLists() {
+  TASK_TITLE_INFO_BOX.classList.remove('visible');
+  TITLE_BOX.classList.remove('red-border');
+  TASK_DUE_INFO_BOX_SMALL.classList.remove('visible');
+  TASK_DUE_INFO_BOX_BIG.classList.remove('visible');
+  DUE_DATE_BOX_SMALL.classList.remove('red-border');
+  DUE_DATE_BOX_BIG.classList.remove('red-border');
+  TASK_CATEGORY_BOX_SMALL.classList.remove('visible');
+  TASK_CATEGORY_BOX_BIG.classList.remove('visible');
+  TASK_CATEGORY_SELECT_SMALL.classList.remove('red-border');
+  TASK_CATEGORY_SELECT_BIG.classList.remove('red-border');
 }
 
 function removeTitleWarning() {
@@ -811,13 +710,11 @@ function removeTitleWarning() {
 }
 
 function removeDueDateWarning() {
-  if (currentDueDates.length > 0) {
-    if (currentDueDates[0] !== '') {
-      TASK_DUE_INFO_BOX_SMALL.classList.remove('visible');
-      DUE_DATE_BOX_SMALL.classList.remove('red-border');
-      TASK_DUE_INFO_BOX_BIG.classList.remove('visible');
-      DUE_DATE_BOX_BIG.classList.remove('red-border');
-    }
+  if (currentDueDate !== '') {
+    TASK_DUE_INFO_BOX_SMALL.classList.remove('visible');
+    DUE_DATE_BOX_SMALL.classList.remove('red-border');
+    TASK_DUE_INFO_BOX_BIG.classList.remove('visible');
+    DUE_DATE_BOX_BIG.classList.remove('red-border');
   }
 }
 
@@ -842,19 +739,62 @@ DUE_DATE_BOX_SMALL.addEventListener('blur', function () {
   removeDueDateWarning();
 });
 
-function addCategoriesEventListeners() {
-  for (let i = 0; i < allCategories.length; i++) {
-    const categoryWrapperSmall = document.getElementById(
-      `icon_and_category_wrapper_small_${i}`
-    );
-    const categoryWrapperBig = document.getElementById(
-      `icon_and_category_wrapper_big_${i}`
-    );
-    categoryWrapperSmall.addEventListener('click', function () {
-      removeCategoryWarning();
-    });
-    categoryWrapperBig.addEventListener('click', function () {
-      removeCategoryWarning();
-    });
+function clearAllTaskContainers() {
+  TITLE_BOX.value = '';
+  DESCRIPTION_BOX.value = '';
+  currentPrio = 'medium';
+  currentDueDate = '';
+  renderCurrentDueDate(currentDueDate);
+  currentContacts = [];
+  renderCurrentContacts();
+  currentCategories = [];
+  renderCurrentCategory();
+  subTasks = [];
+  renderSubtasks();
+}
+
+/* ---------------------------------------------------------------
+send task to server section in add_task.html
+------------------------------------------------------------------- */
+async function sendCreatedTask() {
+  await checkIfUserIsLoggedIn('getFromServer');
+  await checkIfUserIsLoggedIn('sendToServer');
+}
+
+async function checkIfUserIsLoggedIn(action) {
+  let userLogin = localStorage.getItem('userLogin');
+  if (userLogin == 'true') {
+    let userEmail = localStorage.getItem('userEmail');
+    userEmail = userEmail.replace(/"/g, '');
+    users = JSON.parse(await getItem('users'));
+    let user = users.find((u) => u.email == userEmail);
+    if (action === 'getFromServer') {
+      await getTasksFromServer(user);
+    } else if (action === 'sendToServer') {
+      await sendNewTaskToServer(user);
+    }
+  }
+}
+
+async function getTasksFromServer(user) {
+  if (user) {
+    if (`${user.email}`) {
+      tasks = JSON.parse(await getItem(`${user.email}`));
+      tasks.forEach((oneTask) => createdTasks.push(oneTask));
+    }
+  } else {
+    tasks = JSON.parse(await getItem('guestTasks'));
+  }
+}
+
+async function sendNewTaskToServer(user) {
+  if (user) {
+    if (createdTasks.length > 0) {
+      await setItem(`${user.email}`, JSON.stringify(createdTasks));
+      clearAllTaskContainers();
+    } else {
+      await setItem('guestTasks', JSON.stringify(createdTasks));
+      clearAllTaskContainers();
+    }
   }
 }

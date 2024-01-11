@@ -13,6 +13,7 @@
     <script src="../javascript/storage.js" defer></script>
     <script src="../javascript/add_task_data.js" defer></script>
     <script src="../javascript/add_task.js" defer></script>
+    <script src="../javascript/add_task_templates.js" defer></script>
   </head>
   <body onload="initTasks()">
     <header>
@@ -232,7 +233,7 @@
             ></section>
           </div>
           <div class="separator-line"></div>
-          <div id="big_screen" class="big-screen d-none">
+          <div id="big_screen" class="big-screen">
             <section id="due_date_big_screen">
               <label for="task_title">Due date<span class="red">*</span></label>
               <input
@@ -401,7 +402,7 @@
             <span class="red">*</span>This field is required
           </div>
           <div class="task-and-clear-button-wrapper">
-            <button class="clear-button">
+            <button onclick="clearAllTaskContainers()" class="clear-button">
               Clear
               <img src="../icons/close.svg" alt="" />
             </button>

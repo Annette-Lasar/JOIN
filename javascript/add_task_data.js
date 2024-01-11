@@ -1,4 +1,4 @@
-let allTasks = [];
+let createdTasks = [];
 let subTasks = [];
 let taskCategories = ['Technical Task', 'User Story'];
 let updatedSubtask;
@@ -184,17 +184,21 @@ let allContacts = [
 ];
 
 let currentContacts = [];
-let currentDueDates = [];
+/* let currentDueDates = []; */
+let currentDueDate = '';
 let currentCategories = [];
 
-let id = 0;
+let taskId = 0;
 let currentPrio = 'medium';
 /* ---------------- title -------------------------- */
 const TITLE_BOX = document.getElementById('task_title');
 const TASK_TITLE_INFO_BOX = document.getElementById('task_title_info');
+/* ----------------- description --------------------- */
+const DESCRIPTION_BOX = document.getElementById('task_description');
 /* ----------------- contacts ------------------------ */
 const CONTACT_LIST_BOX = document.getElementById('contact_list'); // contact_list
 /* ------------------- prio --------------------------- */
+/* const PRIO_SMALL_SCREEN = document.getElementById('prio_small_screen'); */
 const PRIO_BUTTON_URGENT_SMALL = document.getElementById(
   'prio_button_urgent_small'
 );
@@ -210,11 +214,13 @@ const PRIO_BUTTON_MEDIUM_BIG = document.getElementById(
 );
 const PRIO_BUTTON_LOW_BIG = document.getElementById('prio_button_low_big');
 /* -------------------- due date --------------------- */
+/* const DUE_DATE_SMALL_SCREEN = document.getElementById('due_date_small_screen'); */
 const DUE_DATE_BOX_SMALL = document.getElementById('task_due_date_small');
 const DUE_DATE_BOX_BIG = document.getElementById('task_due_date_big');
 const TASK_DUE_INFO_BOX_SMALL = document.getElementById('task_due_info_small');
 const TASK_DUE_INFO_BOX_BIG = document.getElementById('task_due_info_big');
 /* --------------------- category -------------------- */
+/* const CATEGORY_SMALL_SCREEN = document.getElementById('category_small_screen'); */
 const TASK_CATEGORY_BOX_SMALL = document.getElementById(
   'task_category_info_small'
 );
@@ -231,8 +237,11 @@ const SELECT_TASK_CATEGORY_ELEMENT_SMALL = document.getElementById(
 const SELECT_TASK_CATEGORY_ELEMENT_BIG = document.getElementById(
   `task_category_text_big`
 );
-/* ---------------------- subtask ----------------------- */
+/* ---------------------- subtasks ----------------------- */
+const SUBTASKS_SMALL_SCREEN = document.getElementById('sub_tasks_small_screen');
 const SUBTASK_CONTAINER_SMALL = document.getElementById(
   'subtask_container_small'
 );
 const SUBTASK_CONTAINER_BIG = document.getElementById('subtask_container_big');
+
+/* const BIG_SCREEN = document.getElementById('big_screen'); */
