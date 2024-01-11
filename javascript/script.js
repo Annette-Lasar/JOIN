@@ -124,3 +124,19 @@ function logout() {
   window.location.href = 'index.html';
 }
 
+function renderAlert(alertMessage) {
+  openAlertContainer();
+  const alertContent = document.getElementById('alert_content');
+  alertContent.innerHTML = '';
+  alertContent.innerHTML = generateAlertContentHTML(alertMessage);
+}
+
+function openAlertContainer() {
+  const alertContainer = document.getElementById('alert_container');
+  alertContainer.classList.remove('d-none');
+}
+
+function closeAlertContainer() {
+  const alertContainer = document.getElementById('alert_container');
+  alertContainer.classList.add('d-none');
+}

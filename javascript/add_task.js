@@ -1,5 +1,4 @@
 function initTasks() {
-  /* loadSubtasks(); */
   init();
   showAndHideBoxesAccordingToScreenSize();
   setStandardDateToToday('task_due_date_small');
@@ -78,22 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
   window.addEventListener('resize', showAndHideBoxesAccordingToScreenSize);
 });
 
-function renderAlert(alertMessage) {
-  openAlertContainer();
-  const alertContent = document.getElementById('alert_content');
-  alertContent.innerHTML = '';
-  alertContent.innerHTML = generateAlertContentHTML(alertMessage);
-}
-
-function openAlertContainer() {
-  const alertContainer = document.getElementById('alert_container');
-  alertContainer.classList.remove('d-none');
-}
-
-function closeAlertContainer() {
-  const alertContainer = document.getElementById('alert_container');
-  alertContainer.classList.add('d-none');
-}
 
 /* --------------------------------------------------------------------
 contact section in add_task.html
@@ -511,7 +494,6 @@ function hideCancelAndAcceptSubtask(
 function deleteSubtask(i) {
   subTasks.splice(i, 1);
   renderSubtasks();
-  /* saveSubtasks(); */ // Kommentar
 }
 
 /**
@@ -534,7 +516,6 @@ function addSubtask(inputId, wrapperId, plusIconId) {
   } else {
     renderAlert('Please enter text for your subtask!');
   }
-  /* saveSubtasks(); */ // Kommentar
   renderSubtasks();
   SUBTASK_INPUT_BOX.value = '';
   hideCancelAndAcceptSubtask(CLOSE_AND_CHECK_WRAPPER, SUBTASK_PLUS_ICON);
@@ -577,27 +558,6 @@ function generateSubtaskHTML(i, subtask, containerType) {
   `;
 }
 
-// Kommentar: löschen!
-/**
- * This function saves the added subtasks in the local storage.
- */
-/* function saveSubtasks() {
-  let subtasksAsText = JSON.stringify(subTasks);
-  localStorage.setItem('Subtasks', subtasksAsText);
-} */
-
-/**
- * This function loads the subtasks from the local storage and transfers
- * them back into the array subTasks.
- */
-/* function loadSubtasks() {
-  let subtasksAsText = localStorage.getItem('Subtasks');
-  if (subtasksAsText) {
-    subTasks = JSON.parse(subtasksAsText);
-  }
-  renderSubtasks();
-} */
-
 /**
  * This function enables the user to edit his subtasks. It accesses the html element
  * that contains the subtask in question by its ID and exchanges the element for an
@@ -619,7 +579,6 @@ function changeSubtaskText(i, containerType) {
   let editedSubtask = editedInput.value.trim();
   if (editedSubtask !== '') {
     subTasks[i] = editedSubtask;
-    /* saveSubtasks(); */ // Kommentar: löschen
     renderSubtasks();
   } else {
     renderAlert('Please enter text for your subtask');
@@ -682,14 +641,6 @@ function checkIfCategoriesIsEmpty() {
     TASK_CATEGORY_SELECT_BIG.classList.add('red-border');
   }
 }
-
-/* function getTaskIndex() {
-  for (let i = 0; i < createdTasks.length; i++) {
-    console.log('Eine Aufgabe: ', createdTasks[i]);
-    console.log('Index: ', i);
-      return i;
-  }
-} */
 
 function createTaskObject() {
   let newTask = {
