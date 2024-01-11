@@ -85,7 +85,7 @@ function generateToDoHTML(i, element, contactElement) {
 function generateToDoHTML(i, element) {
     return `
         <div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">
-          <div class="todo-category">${element['current_category']}</div>
+          <div class="todo-category">${element['current_category'][0]['category_name']}</div>
             <div class="todo-title">${element['title']}</div>
               <div class="todo-description">${element['description']}</div>
               <div class="progress-wrapper">
