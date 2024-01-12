@@ -1,6 +1,7 @@
 // falls User-Login, dann das JSON-Array des jeweiligen Users vom Server hier rein laden; ansonsten das Array 'guestTasks' vom Server holen
 // egal welche Login-Art: Die Arrays werden immer in das Array tasks[] geladen; danach wird das Array tasks[] gerendert
 let tasks = [];
+let filteredTasks = [];
 let completedSubtasks = 2;
 
 let currentDraggedElement;
@@ -33,6 +34,7 @@ async function loadTasksUserOrGuest() {
 
 function showTasksOnBoard(status) {
   let filtered = tasks.filter((t) => t['status'] == status);
+  filtered.forEach((item) => filteredTasks.push(item));
   console.log('Gefiltertes Array: ', filtered);
   document.getElementById(status).innerHTML = '';
   for (let i = 0; i < filtered.length; i++) {
@@ -49,62 +51,140 @@ function showTasksOnBoard(status) {
       newTruncatedSentence,
       completedSubtasksInPercent
     );
-    
     console.log('Prozent: ', completedSubtasksInPercent);
-    renderTaskContacts(i, element, status);
+
+    window.addEventListener('resize', function () {
+      renderTaskContacts(i, element, status);
+    });
   }
+  renderTaskContacts();
 }
 
 function truncateSentence(sentence, wordsCount) {
-    // Teile den Satz in Wörter auf: 
-    const words = sentence.split(' ');
-    // Überprüfe, ob die Anzahl der Wörter im Satz größer oder gleich der gewünschten Anzahl ist
-    if (words.length <= wordsCount) {
-      // Wenn der Satz weniger oder gleich viele Wörter hat wie gewünscht, gib den Originalsatz zurück
-      return sentence;
-    } else {
-      // Andernfalls extrahiere die ersten N Wörter und füge drei Punkte hinzu
-      const truncatedSentence = words.slice(0, wordsCount).join(' ') + ' ...';
-      return truncatedSentence;
-    }
+  const words = sentence.split(' ');
+  if (words.length <= wordsCount) {
+    return sentence;
+  } else {
+    const truncatedSentence = words.slice(0, wordsCount).join(' ') + ' ...';
+    return truncatedSentence;
   }
+}
 
-  function calculateSubtaskPercentage(element) {
-    if (element.subtasks.length > 0) {
-        return completedSubtasks / element.subtasks.length * 100;
-    } else {
-        return 0;
-    }
-    
+function calculateSubtaskPercentage(element) {
+  if (element.subtasks.length > 0) {
+    return (completedSubtasks / element.subtasks.length) * 100;
+  } else {
+    return 0;
   }
-
+}
 
 // Kommentar: Hier die Berechnung für den Overflow-Indikator einfügen!!
+function renderTaskContacts() {
+  let taskContactContainer;
+  let i = 0;
+  let filteredTask;
+  for (i = 0; i < filteredTasks.length; i++) {
+    filteredTask = filteredTasks[i];
+    let taskStatus = filteredTask.status;
+    taskContactContainer = document.getElementById(
+      `task_contact_${taskStatus}_${i}`
+    );
+    taskContactContainer.innerHTML = '';
+    const maxWidth = taskContactContainer.offsetWidth;
+    console.log('maximale Breite: ', maxWidth);
+    let visibleContacts = filteredTask.current_contacts.slice();
+    let hiddenContactsCount = 0;
+
+    while (
+      calculateTotalWidth(visibleContacts) > maxWidth &&
+      visibleContacts.length > 1
+    ) {
+      console.log('Sichtbare Kontakte: ', visibleContacts);
+      hiddenContactsCount++;
+      visibleContacts.pop();
+    }
+    for (let j = 0; j < visibleContacts.length; j++) {
+      const oneContact = visibleContacts[j];
+      console.log('Hallo.');
+      taskContactContainer.innerHTML += generateTaskContactHTML(j, oneContact);
+    }
+    if (hiddenContactsCount > 0) {
+      const overflowIndicatorHTML =
+        generateOverflowIndicatorHTML(hiddenContactsCount);
+      taskContactContainer.innerHTML += overflowIndicatorHTML;
+    }
+  }
+}
+
+/* // Kommentar: Hier die Berechnung für den Overflow-Indikator einfügen!!
 function renderTaskContacts(i, element, status) {
   const taskContactContainer = document.getElementById(
     `task_contact_${status}_${i}`
   );
   taskContactContainer.innerHTML = '';
-  for (let j = 0; j < element.current_contacts.length; j++) {
-    taskContactContainer.innerHTML += generateTaskContactHTML(j, element);
+  const maxWidth = taskContactContainer.offsetWidth;
+  console.log('maximale Breite: ', maxWidth);
+  let visibleContacts = element.current_contacts.slice();
+  let hiddenContactsCount = 0;
+
+  while (
+    calculateTotalWidth(visibleContacts) > maxWidth &&
+    visibleContacts.length > 1
+  ) {
+    hiddenContactsCount++;
+    visibleContacts.pop();
   }
+  for (let j = 0; j < visibleContacts.length; j++) {
+    const oneContact = visibleContacts[i];
+    taskContactContainer.innerHTML += generateTaskContactHTML(
+      j,
+      element,
+      oneContact
+    );
+  }
+  if (hiddenContactsCount > 0) {
+    const overflowIndicatorHTML =
+      generateOverflowIndicatorHTML(hiddenContactsCount);
+    taskContactContainer.innerHTML += overflowIndicatorHTML;
+  }
+} */
+
+function calculateTotalWidth(contacts) {
+  const contactWidth = 25;
+  return contacts.length * contactWidth;
 }
 
-// Kommentar: background-color durch Variable ersetzen
-function generateTaskContactHTML(j, element) {
-  const [firstName, lastName] = element.current_contacts[j].name.split(' ');
+function generateOverflowIndicatorHTML(hiddenContactsCount) {
+  return /* html */ `
+      <div id="overflow_indicator" class="overflow-indicator">
+        +${hiddenContactsCount}
+      </div>
+    `;
+}
+
+window.addEventListener('resize', function () {
+  renderTaskContacts();
+});
+
+function generateTaskContactHTML(j, oneContact) {
+  const [firstName, lastName] = oneContact.name.split(' ');
   return /* html */ `
         <div class="initials-icon" style="background-color: ${
-          element.current_contacts[j].color
+          oneContact.color
         }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
     `;
 }
 
-// Kommentar: style-Attribute für category durch Variablen ersetzen!!
 // Kommentar: Anzahl der erledigten Subtasks rendern
-function generateToDoHTML(i, element, status, newTruncatedSentence, completedSubtasksInPercent) {
+function generateToDoHTML(
+  i,
+  element,
+  status,
+  newTruncatedSentence,
+  completedSubtasksInPercent
+) {
   return /* html */ `
-          <div draggable="true" oncontextmenu="openOrCloseContextMenu(${i}, '${status}', 'open')" ondragstart="startDragging(${element['id']})" class="todo">
+          <div draggable="true" onclick="openOrCloseContainer(${i}, 'edit_task_wrapper_${status}_${i}', 'open')" oncontextmenu="openOrCloseContainer(${i}, 'context_menu_${status}_${i}', 'open')" ondragstart="startDragging(${element['id']})" class="todo">
             <div class="todo-category" style="background-color: ${element.current_category[0].category_color}; border: 1px solid ${element.current_category[0].category_color};">${element.current_category[0].category_name}</div>
               <div class="todo-title">${element['title']}</div>
                 <div class="todo-description">${newTruncatedSentence}</div>
@@ -122,7 +202,7 @@ function generateToDoHTML(i, element, status, newTruncatedSentence, completedSub
                 <div>
                   <div class="context-menu-move-to-wrapper">
                     <h3>Move card to ...</h3>  
-                    <img onclick="openOrCloseContextMenu(${i}, '${status}', 'close')" id="context_menu_${status}_close_${i}" class="context-menu-close" src="../icons/close_white.svg" alt="">
+                    <img onclick="openOrCloseContainer(${i}, 'context_menu_${status}_${i}', 'close')" id="context_menu_${status}_close_${i}" class="context-menu-close" src="../icons/close_white.svg" alt="">
                   </div>
                 </div>  
                 <ul>
@@ -132,7 +212,55 @@ function generateToDoHTML(i, element, status, newTruncatedSentence, completedSub
                   <li>Done</li>
                 </ul>
               </div>
-          </div>`;
+          </div>
+          <div id="edit_task_wrapper_${status}_${i}" class="edit-task-wrapper d-none">
+              <div class="category-and-close-wrapper">
+                <div class="todo-category" style="background-color: ${element.current_category[0].category_color}; border: 1px solid ${element.current_category[0].category_color};">${element.current_category[0].category_name}</div>
+                <img class="edit-close-button" onclick="openOrCloseContainer(${i}, 'edit_task_wrapper_${status}_${i}', 'close')" src="../icons/close.svg" alt="">
+              </div>
+              <h4>${element.title}</h4>
+              <div class="task-description">${element.description}</div>
+              <div class="task-due-date-wrapper">
+              <span>Due date: </span>
+              <span>${element.current_due_date}</span>
+              </div>
+              <div class="task-priority-wrapper">
+                <span>Priority: </span>
+                <span>${element.current_prio}</span>
+                <img src="../icons/prio_${element.current_prio}.svg" alt="">
+              </div>
+              <div class="edit-task-contacts-wrapper">
+                <div>Assigned To:</div>
+                <div>
+                  <div>
+                    <div class="initials"></div>
+                    <div class="contact-name"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="edit-task-subtasks-wrapper">
+                <div>Subtasks:</div>
+                <div>
+                  <div>
+                    <div class="checkbox"><input type="checkbox"></div>
+                    <div class="subtask-name">Hier Subtask einfügen</div>
+                  </div>
+                </div>
+              </div>
+              <div class="delete-and-edit-wrapper">
+                <div class="delete-and-edit">
+                  <div class="delete-wrapper">
+                    <img src="../icons/delete.svg" alt="">
+                    <div>Delete</div>
+                  </div>
+                  <div class="edit-wrapper">
+                    <img src="../icons/edit_dark.svg" alt="">
+                    <div>Edit</div>
+                  </div>
+                </div>
+                </div>
+          </div>
+          `;
 }
 
 function startDragging(id) {
@@ -169,11 +297,22 @@ function highlight(id) {
   document.getElementById(id).classList.add('drag-area-highlight');
 }
 
-function openOrCloseContextMenu(i, status, action) {
-  const cardMenuContainer = document.getElementById(
-    `context_menu_${status}_${i}`
-  );
-  if (action === 'open') {
+function openOrCloseContainer(i, containerId, action) {
+  const cardMenuContainer = document.getElementById(containerId);
+  if (
+    containerId === `edit_task_wrapper_toDo_${i}` ||
+    containerId === `edit_task_wrapper_inProgress_${i}` ||
+    containerId === `edit_task_wrapper_awaitFeedback_${i}` ||
+    containerId === `edit_task_wrapper_done_${i}`
+  ) {
+    if (action === 'open') {
+      cardMenuContainer.classList.remove('d-none');
+      document.body.style.overflow = 'hidden';
+    } else if (action === 'close') {
+      cardMenuContainer.classList.add('d-none');
+      document.body.style.overflow = 'visible';
+    }
+  } else if (action === 'open') {
     cardMenuContainer.classList.remove('d-none');
   } else if (action === 'close') {
     cardMenuContainer.classList.add('d-none');

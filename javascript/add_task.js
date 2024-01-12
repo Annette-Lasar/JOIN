@@ -77,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
   window.addEventListener('resize', showAndHideBoxesAccordingToScreenSize);
 });
 
-
 /* --------------------------------------------------------------------
 contact section in add_task.html
 ---------------------------------------------------------------------- */
@@ -384,7 +383,11 @@ function changeCategoryTextAndColor(i, containerType) {
     allCategories[i] = updatedCategory;
     renderCategories();
   } else {
-    renderAlert('Please enter a category name!');
+    renderAlert(
+      'alert_container',
+      'alert_content',
+      'Please enter a category name!'
+    );
     renderCategories();
   }
 }
@@ -432,12 +435,18 @@ function addNewCategory(i, containerType) {
       renderCategories();
     } else {
       renderAlert(
+        'alert_container',
+        'alert_content',
         'This category already exists! Please choose another category name.'
       );
       renderCategories();
     }
   } else {
-    renderAlert('Please enter a new category name!');
+    renderAlert(
+      'alert_container',
+      'alert_content',
+      'Please enter a new category name!'
+    );
     renderCategories();
   }
 }
@@ -514,7 +523,11 @@ function addSubtask(inputId, wrapperId, plusIconId) {
   if (SUBTASK_INPUT_BOX.value !== '') {
     subTasks.push(SUBTASK_INPUT_BOX.value);
   } else {
-    renderAlert('Please enter text for your subtask!');
+    renderAlert(
+      'alert_container',
+      'alert_content',
+      'Please enter text for your subtask!'
+    );
   }
   renderSubtasks();
   SUBTASK_INPUT_BOX.value = '';
@@ -581,7 +594,11 @@ function changeSubtaskText(i, containerType) {
     subTasks[i] = editedSubtask;
     renderSubtasks();
   } else {
-    renderAlert('Please enter text for your subtask');
+    renderAlert(
+      'alert_container',
+      'alert_content',
+      'Please enter text for your subtask'
+    );
     renderSubtasks();
   }
 }
