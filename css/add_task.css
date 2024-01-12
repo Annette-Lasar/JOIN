@@ -1,5 +1,6 @@
 body {
   background-color: var(--background-color-lightgray);
+  /* overflow: hidden; */
 }
 
 * {
@@ -23,10 +24,13 @@ body {
 }
 
 .task-wrapper {
+  /* margin: 80px 0 300px;
+  height: calc(100vh - 160px); */
   padding: 1em;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  /* overflow-y: auto;  */
   border: orchid 1px solid;
 }
 
@@ -86,6 +90,10 @@ textarea:focus {
 textarea {
   font-family: 'Inter', sans-serif;
   resize: none;
+}
+
+textarea::-webkit-scrollbar {
+  width: 12px;
 }
 
 textarea::placeholder,

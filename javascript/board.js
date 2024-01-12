@@ -12,6 +12,7 @@ async function initBoard() {
   showTasksOnBoard('inProgress');
   showTasksOnBoard('awaitFeedback');
   showTasksOnBoard('done');
+  addTaskCardEventListener();
 }
 
 // prüfen ob Gäste- oder User-Login: je nachdem wird das jeweilige JSON-Array vom Server geladen, d.h. entweder das jeweilige UserTaskArray oder das Gäste-Array
@@ -39,9 +40,6 @@ function showTasksOnBoard(status) {
   document.getElementById(status).innerHTML = '';
   for (let i = 0; i < filtered.length; i++) {
     const element = filtered[i];
-    const numberOfSubtasks = element.subtasks.length;
-    console.log('Wie viele Subtasks: ', numberOfSubtasks);
-    console.log('Element: ', element);
     let newTruncatedSentence = truncateSentence(element.description, 6);
     let completedSubtasksInPercent = calculateSubtaskPercentage(element);
     document.getElementById(status).innerHTML += generateToDoHTML(
@@ -51,13 +49,8 @@ function showTasksOnBoard(status) {
       newTruncatedSentence,
       completedSubtasksInPercent
     );
-    console.log('Prozent: ', completedSubtasksInPercent);
-
-    window.addEventListener('resize', function () {
-      renderTaskContacts(i, element, status);
-    });
   }
-  renderTaskContacts();
+  getFilteredTask();
 }
 
 function truncateSentence(sentence, wordsCount) {
@@ -78,53 +71,47 @@ function calculateSubtaskPercentage(element) {
   }
 }
 
-// Kommentar: Hier die Berechnung für den Overflow-Indikator einfügen!!
-function renderTaskContacts() {
-  let taskContactContainer;
-  let i = 0;
-  let filteredTask;
-  for (i = 0; i < filteredTasks.length; i++) {
-    filteredTask = filteredTasks[i];
-    let taskStatus = filteredTask.status;
-    taskContactContainer = document.getElementById(
-      `task_contact_${taskStatus}_${i}`
-    );
-    taskContactContainer.innerHTML = '';
-    const maxWidth = taskContactContainer.offsetWidth;
-    console.log('maximale Breite: ', maxWidth);
-    let visibleContacts = filteredTask.current_contacts.slice();
-    let hiddenContactsCount = 0;
-
-    while (
-      calculateTotalWidth(visibleContacts) > maxWidth &&
-      visibleContacts.length > 1
-    ) {
-      console.log('Sichtbare Kontakte: ', visibleContacts);
-      hiddenContactsCount++;
-      visibleContacts.pop();
-    }
-    for (let j = 0; j < visibleContacts.length; j++) {
-      const oneContact = visibleContacts[j];
-      console.log('Hallo.');
-      taskContactContainer.innerHTML += generateTaskContactHTML(j, oneContact);
-    }
-    if (hiddenContactsCount > 0) {
-      const overflowIndicatorHTML =
-        generateOverflowIndicatorHTML(hiddenContactsCount);
-      taskContactContainer.innerHTML += overflowIndicatorHTML;
-    }
+function getFilteredTask() {
+  for (let i = 0; i < filteredTasks.length; i++) {
+    const filteredTask = filteredTasks[i];
+    renderContactsOnOutsideCard(i, filteredTask);
+    renderContactsInsideCard(i, filteredTask);
+    renderSubtasks(i, filteredTask);
+    getFilteredDueDate(i, filteredTask);
   }
 }
 
-/* // Kommentar: Hier die Berechnung für den Overflow-Indikator einfügen!!
-function renderTaskContacts(i, element, status) {
+function renderSubtasks(i, filteredTask) {
+  const subtaskContainer = document.getElementById(
+    `edit_subtasks_wrapper_${filteredTask.status}_${i}`
+  );
+  subtaskContainer.innerHTML = '';
+  for (let j = 0; j < filteredTask.subtasks.length; j++) {
+    const oneSubtask = filteredTask.subtasks[j];
+    subtaskContainer.innerHTML += generateSubtaskHTML(oneSubtask);
+  }
+}
+
+function generateSubtaskHTML(oneSubtask) {
+  return /* html */ `
+      <div class="inner-subtask-wrapper">
+        <div class="subtask-checkbox"><input type="checkbox"></div>
+        <div class="subtask-name">${oneSubtask}</div>
+      </div>
+  `;
+}
+
+function renderContactsOnOutsideCard(i, filteredTask) {
   const taskContactContainer = document.getElementById(
-    `task_contact_${status}_${i}`
+    `task_contact_${filteredTask.status}_${i}`
   );
   taskContactContainer.innerHTML = '';
+  calculateNumberOfVisibleContacts(filteredTask, taskContactContainer);
+}
+
+function calculateNumberOfVisibleContacts(filteredTask, taskContactContainer) {
   const maxWidth = taskContactContainer.offsetWidth;
-  console.log('maximale Breite: ', maxWidth);
-  let visibleContacts = element.current_contacts.slice();
+  let visibleContacts = filteredTask.current_contacts.slice();
   let hiddenContactsCount = 0;
 
   while (
@@ -134,24 +121,32 @@ function renderTaskContacts(i, element, status) {
     hiddenContactsCount++;
     visibleContacts.pop();
   }
+  showVisibleContactsAndOverflowIndicator(
+    visibleContacts,
+    hiddenContactsCount,
+    taskContactContainer
+  );
+}
+
+function showVisibleContactsAndOverflowIndicator(
+  visibleContacts,
+  hiddenContactsCount,
+  taskContactContainer
+) {
   for (let j = 0; j < visibleContacts.length; j++) {
-    const oneContact = visibleContacts[i];
-    taskContactContainer.innerHTML += generateTaskContactHTML(
-      j,
-      element,
-      oneContact
-    );
+    const oneContact = visibleContacts[j];
+    taskContactContainer.innerHTML += generateTaskContactHTML(j, oneContact);
   }
   if (hiddenContactsCount > 0) {
     const overflowIndicatorHTML =
       generateOverflowIndicatorHTML(hiddenContactsCount);
     taskContactContainer.innerHTML += overflowIndicatorHTML;
   }
-} */
+}
 
 function calculateTotalWidth(contacts) {
   const contactWidth = 25;
-  return contacts.length * contactWidth;
+  return contacts.length * contactWidth + contactWidth;
 }
 
 function generateOverflowIndicatorHTML(hiddenContactsCount) {
@@ -162,8 +157,20 @@ function generateOverflowIndicatorHTML(hiddenContactsCount) {
     `;
 }
 
+function renderContactsInsideCard(i, filteredTask) {
+  const editTaskContactNameContainer = document.getElementById(
+    `edit_contacts_name_${filteredTask.status}_${i}`
+  );
+  editTaskContactNameContainer.innerHTML = '';
+  for (let j = 0; j < filteredTask.current_contacts.length; j++) {
+    const oneContact = filteredTask.current_contacts[j];
+    editTaskContactNameContainer.innerHTML +=
+      generateEditTaskContactNamesHTML(oneContact);
+  }
+}
+
 window.addEventListener('resize', function () {
-  renderTaskContacts();
+  getFilteredTask();
 });
 
 function generateTaskContactHTML(j, oneContact) {
@@ -175,6 +182,39 @@ function generateTaskContactHTML(j, oneContact) {
     `;
 }
 
+function generateEditTaskContactNamesHTML(oneContact) {
+  const [firstName, lastName] = oneContact.name.split(' ');
+  return /* html */ `
+      <div class="initials-and-name-wrapper">
+        <div class="initials-icon" style="background-color: ${
+          oneContact.color
+        }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
+        <div>${oneContact.name}</div>
+        
+      </div>
+    `;
+}
+
+function getFilteredDueDate(i, filteredTask) {
+  const dueDateContainer = document.getElementById(
+    `current_due_date_${filteredTask.status}_${i}`
+  );
+  dueDateContainer.innerHTML = '';
+  let inputDate = filteredTask.current_due_date;
+  let currentDueDate = formatDateString(inputDate);
+  dueDateContainer.innerHTML = currentDueDate;
+}
+
+function formatDateString(inputDate) {
+  const inputDateObject = new Date(inputDate);
+  const day = inputDateObject.getDate();
+  const month = inputDateObject.getMonth() + 1;
+  const year = inputDateObject.getFullYear();
+  const formattedDay = day < 10 ? '0' + day : day;
+  const formattedMonth = month < 10 ? '0' + month : month;
+  return `${formattedDay}/${formattedMonth}/${year}`;
+}
+
 // Kommentar: Anzahl der erledigten Subtasks rendern
 function generateToDoHTML(
   i,
@@ -184,7 +224,7 @@ function generateToDoHTML(
   completedSubtasksInPercent
 ) {
   return /* html */ `
-          <div draggable="true" onclick="openOrCloseContainer(${i}, 'edit_task_wrapper_${status}_${i}', 'open')" oncontextmenu="openOrCloseContainer(${i}, 'context_menu_${status}_${i}', 'open')" ondragstart="startDragging(${element['id']})" class="todo">
+          <div id="taskCard_${status}_${i}" draggable="true" onclick="openOrCloseContainer(${i}, 'edit_task_wrapper_${status}_${i}', 'open')" oncontextmenu="openOrCloseContainer(${i}, 'context_menu_${status}_${i}', 'open')" ondragstart="startDragging(${element['id']})" class="todo">
             <div class="todo-category" style="background-color: ${element.current_category[0].category_color}; border: 1px solid ${element.current_category[0].category_color};">${element.current_category[0].category_name}</div>
               <div class="todo-title">${element['title']}</div>
                 <div class="todo-description">${newTruncatedSentence}</div>
@@ -221,30 +261,28 @@ function generateToDoHTML(
               <h4>${element.title}</h4>
               <div class="task-description">${element.description}</div>
               <div class="task-due-date-wrapper">
-              <span>Due date: </span>
-              <span>${element.current_due_date}</span>
+              <span class="due-date">Due date: </span>
+              <span id="current_due_date_${status}_${i}">${element.current_due_date}</span>
               </div>
               <div class="task-priority-wrapper">
-                <span>Priority: </span>
-                <span>${element.current_prio}</span>
-                <img src="../icons/prio_${element.current_prio}.svg" alt="">
+                <div class="priority">Priority: </div>
+                <div class="prio-wrapper">
+                  <div>${element.current_prio}</div>
+                  <img class="prio-icon" src="../icons/prio_${element.current_prio}.svg" alt="">
+                </div>
               </div>
               <div class="edit-task-contacts-wrapper">
-                <div>Assigned To:</div>
+                <div class="assigned-to">Assigned To:</div>
                 <div>
-                  <div>
-                    <div class="initials"></div>
-                    <div class="contact-name"></div>
+                  <div class="edit-contacts-wrapper">
+                    <!-- <div id="edit_contacts_initials_${status}_${i}"class="initials"></div> -->
+                    <div id="edit_contacts_name_${status}_${i}" class="contact-name"></div>
                   </div>
                 </div>
               </div>
               <div class="edit-task-subtasks-wrapper">
-                <div>Subtasks:</div>
-                <div>
-                  <div>
-                    <div class="checkbox"><input type="checkbox"></div>
-                    <div class="subtask-name">Hier Subtask einfügen</div>
-                  </div>
+                <div class="subtasks-title">Subtasks:</div>
+                <div id="edit_subtasks_wrapper_${status}_${i}" class="edit-subtasks-wrapper">
                 </div>
               </div>
               <div class="delete-and-edit-wrapper">
@@ -296,6 +334,21 @@ function allowDrop(ev) {
 function highlight(id) {
   document.getElementById(id).classList.add('drag-area-highlight');
 }
+
+function addTaskCardEventListener() {
+  for (let i = 0; i < filteredTasks.length; i++) {
+    const filteredTask = filteredTasks[i];
+    const taskCard = document.getElementById(
+      `taskCard_${filteredTask.status}_${i}`
+    );
+    taskCard.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+    });
+  }
+}
+
+addTaskCardEventListener();
+
 
 function openOrCloseContainer(i, containerId, action) {
   const cardMenuContainer = document.getElementById(containerId);
