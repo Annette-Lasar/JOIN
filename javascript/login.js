@@ -6,7 +6,7 @@ async function login() {
         loginSuccessful(user);
         window.location.href = 'summary.html';   
     } else {
-        alert('User not found or login credentials incorrect !'); 
+        alert('User not found or login credentials incorrect !');
     }
 }
 
