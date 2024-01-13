@@ -36,23 +36,25 @@ async function loadTasksUserOrGuest() {
 
 function showTasksOnBoard(status) {
   let filtered = tasks.filter((t) => t['status'] == status);
-  filtered.forEach((item) => filteredTasks.push(item));
-  console.log('Gefiltertes Array: ', filtered);
-  document.getElementById(status).innerHTML = '';
-  for (let i = 0; i < filtered.length; i++) {
-    const element = filtered[i];
+  filtered.forEach((element, index) => {
+    console.log('Index:', index);
+    filteredTasks.push(element);
     let newTruncatedSentence = truncateSentence(element.description, 6);
     let completedSubtasksInPercent = calculateSubtaskPercentage(element);
+
     document.getElementById(status).innerHTML += generateToDoHTML(
-      i,
+      index,  // Hier wird der Index als Argument übergeben
       element,
       status,
       newTruncatedSentence,
       completedSubtasksInPercent
     );
-  }
+  });
+
   getFilteredTask();
 }
+
+
 
 function truncateSentence(sentence, wordsCount) {
   const words = sentence.split(' ');
@@ -342,6 +344,7 @@ function generateToDoHTML(
 }
 
 function startDragging(id) {
+  console.log('id: ', id);
   currentDraggedElement = id;
 }
 
