@@ -609,6 +609,7 @@ create new task section in add_task.html
 async function createNewTask() {
   createdTasks = [];
   checkIfBoxesAreEmpty();
+  renderAlert('alert_container', 'alert_content', 'A new task has successfully been created');
   await sendCreatedTask();
 }
 

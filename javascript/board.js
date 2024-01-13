@@ -1,7 +1,6 @@
 // falls User-Login, dann das JSON-Array des jeweiligen Users vom Server hier rein laden; ansonsten das Array 'guestTasks' vom Server holen
 // egal welche Login-Art: Die Arrays werden immer in das Array tasks[] geladen; danach wird das Array tasks[] gerendert
 let tasks = [];
-let filteredTasks = []; // Kommentar: später löschen!!
 let completedSubtasks = 2;
 
 let currentDraggedElement;
@@ -11,6 +10,15 @@ async function initBoard() {
   showTasksOnBoard();
   addTaskCardEventListener();
   /* addSubtasksEventlistener(); */
+}
+
+function clearContainers(...containerIDs) {
+  containerIDs.forEach(function (id) {
+    const container = document.getElementById(id);
+    if (container) {
+      container.innerHTML = '';
+    }
+  });
 }
 
 // prüfen ob Gäste- oder User-Login: je nachdem wird das jeweilige JSON-Array vom Server geladen, d.h. entweder das jeweilige UserTaskArray oder das Gäste-Array
@@ -32,38 +40,28 @@ async function loadTasksUserOrGuest() {
 }
 
 function showTasksOnBoard() {
-  const containerToDo = document.getElementById('toDo');
-  const containerInProgress = document.getElementById('inProgress');
-  const containerAwaitFeedback = document.getElementById('awaitFeedback');
-  const containerDone = document.getElementById('done');
-  containerToDo.innerHTML = '';
-  containerInProgress.innerHTML = '';
-  containerAwaitFeedback.innerHTML = '';
-  containerDone.innerHTML = '';
-  /* clearAllContainers(); */
+  clearContainers('toDo', 'inProgress', 'awaitFeedback', 'done');
   for (let i = 0; i < tasks.length; i++) {
     const oneTask = tasks[i];
-    const index = i;
     let status = oneTask.status;
-    let newTruncatedSentence = truncateSentence(oneTask.description, 6);
-    let completedSubtasksInPercent = calculateSubtaskPercentage(oneTask);
-    
-    
-    const listContainer = document.getElementById(status);
-    /* listContainer.innerHTML = ''; */
-    listContainer.innerHTML += generateToDoHTML(
-      index,
-      oneTask,
-      status,
-      newTruncatedSentence,
-      completedSubtasksInPercent
-    );
-
-    renderContactsOnOutsideCard(i, oneTask);
-    renderContactsInsideCard(i, oneTask);
-    renderSubtasks(i, oneTask);
-    getFilteredDueDate(i, oneTask);
+    callFurtherFunctionsToRenderTasks(i, oneTask, status);
   }
+}
+
+function callFurtherFunctionsToRenderTasks(i, oneTask, status) {
+  let newTruncatedSentence = truncateSentence(oneTask.description, 6);
+  let completedSubtasksInPercent = calculateSubtaskPercentage(oneTask);
+  document.getElementById(status).innerHTML += generateToDoHTML(
+    i,
+    oneTask,
+    status,
+    newTruncatedSentence,
+    completedSubtasksInPercent
+  );
+  renderContactsOnOutsideCard(i, oneTask);
+  renderContactsInsideCard(i, oneTask);
+  renderSubtasks(i, oneTask);
+  getFilteredDueDate(i, oneTask);
 }
 
 function truncateSentence(sentence, wordsCount) {
@@ -89,7 +87,12 @@ function renderContactsOnOutsideCard(i, oneTask) {
     `task_contact_${oneTask.status}_${i}`
   );
   taskContactContainer.innerHTML = '';
-  calculateNumberOfVisibleContacts(oneTask, taskContactContainer);
+  if (oneTask.current_contacts.length <= 0) {
+    taskContactContainer.innerHTML =
+      '<div class="not-assigned">No contacts assigned</>';
+  } else {
+    calculateNumberOfVisibleContacts(oneTask, taskContactContainer);
+  }
 }
 
 function calculateNumberOfVisibleContacts(oneTask, taskContactContainer) {
@@ -205,55 +208,82 @@ function renderSubtasks(i, oneTask) {
   subtaskContainer.innerHTML = '';
   for (let j = 0; j < oneTask.subtasks.length; j++) {
     const oneSubtask = oneTask.subtasks[j];
-    subtaskContainer.innerHTML += generateSubtaskHTML(
-      i,
-      oneTask,
-      oneSubtask
-    );
+    subtaskContainer.innerHTML += generateSubtaskHTML(i, oneTask, oneSubtask);
   }
 }
 
 function generateSubtaskHTML(i, oneTask, oneSubtask) {
   return /* html */ `
       <div class="inner-subtask-wrapper">
-        <div id="individual_subtask_checkbox_${oneTask.status}_${i}" class="subtask-checkbox"><input type="checkbox"></div>
+        <div class="subtask-checkbox">
+          <input id="individual_subtask_checkbox_${oneTask.status}_${i}" type="checkbox">
+        </div>
         <div class="subtask-name">${oneSubtask}</div>
       </div>
   `;
 }
 
 /* function addSubtasksEventlistener() {
-  for (let i = 0; i < filteredTasks.length; i++) {
-    const filteredTask = filteredTasks[i];
-    const individualSubtaskCheckbox = document.getElementById(
-      `individual_subtask_checkbox_${filteredTask.status}_${i}`
-    );
-    let completedSubtasks = filteredTask.completed_subtasks;
-    console.log('completedSubtasks: ', completedSubtasks);
-    if (completedSubtasks) {
-      individualSubtaskCheckbox.addEventListener('change', function() {
-        checkForCompletedSubtasks(individualSubtaskCheckbox, completedSubtasks)
+  for (let i = 0; i < tasks.length; i++) {
+    const oneTask = tasks[i];
+    console.log('oneTask: ', oneTask);
+    let finallyCompletedSubtasks = oneTask.completed_subtasks;
+    const indiviualSubtaskCheckbox = document.getElementById(`individual_subtask_checkbox_${oneTask.status}_${i}`);
+    for (let j = 0; j < oneTask.subtasks.length; j++) {
+      const oneSubtask = oneTask.subtasks[j];
+      indiviualSubtaskCheckbox.addEventListener('change', function() {
+        checkForCompletedSubtasks(indiviualSubtaskCheckbox, finallyCompletedSubtasks, oneSubtask)
       });
-    } else {
-      completedSubtasks = 0;
     }
-    
   }
 } */
 
-/* function checkForCompletedSubtasks(individualSubtaskCheckbox, completedSubtasks) {
-  if (individualSubtaskCheckbox.checked) {
-    individualSubtaskCheckbox.checked = true;
-    completedSubtasks++;
-    console.log('abgehakte Aufgaben: ', filteredTasks);
-  } else if (!individualSubtaskCheckbox) {
-    individualSubtaskCheckbox.checked = false;
-    completedSubtasks--;
-    console.log('zu erledigende Aufgaben: ', filteredTasks);
+/* function addSubtasksEventlistener() {
+  for (let i = 0; i < tasks.length; i++) {
+    const oneTask = tasks[i];
+    let finallyCompletedSubtasks = oneTask.completed_subtasks;
+    const individualSubtaskCheckbox = document.getElementById(
+      `individual_subtask_checkbox_${oneTask.status}_${i}`
+    );
+    let oneSubtask;
+    for (let j = 0; j < oneTask.subtasks.length; j++) {
+      const oneSubtask = oneTask.subtasks[j];
+    }
+    individualSubtaskCheckbox.addEventListener('change', function () {
+      checkForCompletedSubtasks(
+        individualSubtaskCheckbox,
+        finallyCompletedSubtasks,
+        oneSubtask
+      );
+    });
   }
 }
 
-addSubtasksEventlistener(); */
+function checkForCompletedSubtasks(
+  individualSubtaskCheckbox,
+  finallyCompletedSubtasks,
+  oneSubtask
+) {
+  if (individualSubtaskCheckbox.checked) {
+    finallyCompletedSubtasks++;
+    console.log('abgehakte Aufgaben: ', oneSubtask);
+  } else {
+    finallyCompletedSubtasks--;
+    console.log('zu erledigende Aufgaben: ', oneSubtask);
+  }
+} */
+
+/* function checkForCompletedSubtasks(individualSubtaskCheckbox, finallyCompletedSubtasks, oneSubtask) {
+  if (individualSubtaskCheckbox.checked) {
+    individualSubtaskCheckbox.checked = true;
+    finallyCompletedSubtasks++;
+    console.log('abgehakte Aufgaben: ', oneSubtask);
+  } else if (!individualSubtaskCheckbox.checked) {
+    individualSubtaskCheckbox.checked = false;
+    completedSubtasks--;
+    console.log('zu erledigende Aufgaben: ', oneSubtask);
+  }
+} */
 
 // Kommentar: Anzahl der erledigten Subtasks rendern
 function generateToDoHTML(
@@ -315,8 +345,7 @@ function generateToDoHTML(
                 <div class="assigned-to">Assigned To:</div>
                 <div>
                   <div class="edit-contacts-wrapper">
-                    <!-- <div id="edit_contacts_initials_${status}_${i}"class="initials"></div> -->
-                    <div id="edit_contacts_name_${status}_${i}" class="contact-name"></div>
+                  <div id="edit_contacts_name_${status}_${i}" class="contact-name"></div>
                   </div>
                 </div>
               </div>
@@ -327,7 +356,7 @@ function generateToDoHTML(
               </div>
               <div class="delete-and-edit-wrapper">
                 <div class="delete-and-edit">
-                  <div class="delete-wrapper">
+                  <div onclick="renderAlert('confirm_container', 'confirm_content', 'Are you sure you want to delete this task permanently? This process is irreversible.');" class="delete-wrapper">
                     <img src="../icons/delete.svg" alt="">
                     <div>Delete</div>
                   </div>
@@ -342,7 +371,6 @@ function generateToDoHTML(
 }
 
 function startDragging(id) {
-  console.log('id: ', id);
   currentDraggedElement = id;
 }
 
@@ -351,6 +379,12 @@ function startDragging(id) {
 async function moveTo(status) {
   tasks[currentDraggedElement].status = '';
   tasks[currentDraggedElement].status = status;
+  sendDataToServer();
+  await loadTasksUserOrGuest();
+  showTasksOnBoard();
+}
+
+async function sendDataToServer() {
   let userLogin = localStorage.getItem('userLogin');
   if (userLogin == 'true') {
     let userEmail = localStorage.getItem('userEmail');
@@ -359,11 +393,26 @@ async function moveTo(status) {
     if (user) {
       await setItem(`${user.email}`, JSON.stringify(tasks));
     }
-  } else {         
+  } else {
     await setItem('guestTasks', JSON.stringify(tasks));
   }
+}
+
+async function deleteTask() {
+  let index = getTaskIndex();
+  tasks.splice(index, 1);
+  console.log('tasks: ', tasks);
+  openOrCloseAlertContainer('confirm_container', 'close');
+  await sendDataToServer();
+  console.log('tasks: ', tasks);
   await loadTasksUserOrGuest();
   showTasksOnBoard();
+}
+
+function getTaskIndex() {
+  for (let i = 0; i < tasks.length; i++) {
+    return i;
+  }
 }
 
 function removeHighlight(id) {
@@ -379,11 +428,9 @@ function highlight(id) {
 }
 
 function addTaskCardEventListener() {
-  for (let i = 0; i < filteredTasks.length; i++) {
-    const filteredTask = filteredTasks[i];
-    const taskCard = document.getElementById(
-      `taskCard_${filteredTask.status}_${i}`
-    );
+  for (let i = 0; i < tasks.length; i++) {
+    const oneTask = tasks[i];
+    const taskCard = document.getElementById(`taskCard_${oneTask.status}_${i}`);
     taskCard.addEventListener('contextmenu', (e) => {
       e.preventDefault();
     });
@@ -401,6 +448,7 @@ function openOrCloseContainer(i, containerId, action) {
     containerId === `edit_task_wrapper_done_${i}`
   ) {
     if (action === 'open') {
+      /* addSubtasksEventlistener(); */
       cardMenuContainer.classList.remove('d-none');
       document.body.style.overflow = 'hidden';
     } else if (action === 'close') {
