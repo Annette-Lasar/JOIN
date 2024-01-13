@@ -143,6 +143,15 @@ function renderAlert(containerId, messageId, alertMessage) {
   }
 }
 
+function renderConfirmDelete(i, containerId, messageId, alertMessage) {
+  openOrCloseAlertContainer(containerId, 'open');
+  const confirmContent = document.getElementById(messageId);
+  confirmContent.innerHTML = '';
+    console.log('tasks', tasks);
+    confirmContent.innerHTML = generateConfirmContentHTML(i, alertMessage);
+  
+}
+
 function openOrCloseAlertContainer(containerId, action) {
   const alertContainer = document.getElementById(containerId);
   if (action === 'open') {
@@ -158,11 +167,11 @@ function generateAlertContentHTML(alertMessage) {
   `;
 }
 
-function generateConfirmContentHTML(alertMessage) {
+function generateConfirmContentHTML(i, alertMessage) {
   return /* html */ `
     <div class="alert-message">${alertMessage}</div>
     <div id="confirm_button_wrapper" class="confirm-button-wrapper">
-      <button onclick="deleteTask()" class="dark-button">Yes, proceed</button>
+      <button onclick="deleteTask(${i})" class="dark-button">Yes, proceed</button>
       <button onclick="openOrCloseAlertContainer('confirm_container', 'close')" class="dark-button">No, preserve</button>
     </div>
   `;

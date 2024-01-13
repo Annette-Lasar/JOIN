@@ -84,7 +84,7 @@ function calculateSubtaskPercentage(element) {
 
 function renderContactsOnOutsideCard(i, oneTask) {
   const taskContactContainer = document.getElementById(
-    `task_contact_${oneTask.status}_${i}`
+    `task_contact_${i}`
   );
   taskContactContainer.innerHTML = '';
   if (oneTask.current_contacts.length <= 0) {
@@ -121,7 +121,7 @@ function showVisibleContactsAndOverflowIndicator(
 ) {
   for (let j = 0; j < visibleContacts.length; j++) {
     const oneContact = visibleContacts[j];
-    taskContactContainer.innerHTML += generateTaskContactHTML(j, oneContact);
+    taskContactContainer.innerHTML += generateTaskContactHTML(oneContact);
   }
   if (hiddenContactsCount > 0) {
     const overflowIndicatorHTML =
@@ -145,7 +145,7 @@ function generateOverflowIndicatorHTML(hiddenContactsCount) {
 
 function renderContactsInsideCard(i, oneTask) {
   const editTaskContactNameContainer = document.getElementById(
-    `edit_contacts_name_${oneTask.status}_${i}`
+    `edit_contacts_name_${i}`
   );
   editTaskContactNameContainer.innerHTML = '';
   for (let j = 0; j < oneTask.current_contacts.length; j++) {
@@ -159,7 +159,7 @@ window.addEventListener('resize', function () {
   showTasksOnBoard();
 });
 
-function generateTaskContactHTML(j, oneContact) {
+function generateTaskContactHTML(oneContact) {
   const [firstName, lastName] = oneContact.name.split(' ');
   return /* html */ `
         <div class="initials-icon" style="background-color: ${
@@ -183,7 +183,7 @@ function generateEditTaskContactNamesHTML(oneContact) {
 
 function getFilteredDueDate(i, oneTask) {
   const dueDateContainer = document.getElementById(
-    `current_due_date_${oneTask.status}_${i}`
+    `current_due_date_${i}`
   );
   dueDateContainer.innerHTML = '';
   let inputDate = oneTask.current_due_date;
@@ -203,20 +203,20 @@ function formatDateString(inputDate) {
 
 function renderSubtasks(i, oneTask) {
   const subtaskContainer = document.getElementById(
-    `edit_subtasks_wrapper_${oneTask.status}_${i}`
+    `edit_subtasks_wrapper_${i}`
   );
   subtaskContainer.innerHTML = '';
   for (let j = 0; j < oneTask.subtasks.length; j++) {
     const oneSubtask = oneTask.subtasks[j];
-    subtaskContainer.innerHTML += generateSubtaskHTML(i, oneTask, oneSubtask);
+    subtaskContainer.innerHTML += generateSubtaskHTML(i, oneSubtask);
   }
 }
 
-function generateSubtaskHTML(i, oneTask, oneSubtask) {
+function generateSubtaskHTML(i, oneSubtask) {
   return /* html */ `
       <div class="inner-subtask-wrapper">
         <div class="subtask-checkbox">
-          <input id="individual_subtask_checkbox_${oneTask.status}_${i}" type="checkbox">
+          <input id="individual_subtask_checkbox_${i}" type="checkbox">
         </div>
         <div class="subtask-name">${oneSubtask}</div>
       </div>
@@ -243,7 +243,7 @@ function generateSubtaskHTML(i, oneTask, oneSubtask) {
     const oneTask = tasks[i];
     let finallyCompletedSubtasks = oneTask.completed_subtasks;
     const individualSubtaskCheckbox = document.getElementById(
-      `individual_subtask_checkbox_${oneTask.status}_${i}`
+      `individual_subtask_checkbox_${i}`
     );
     let oneSubtask;
     for (let j = 0; j < oneTask.subtasks.length; j++) {
@@ -294,7 +294,7 @@ function generateToDoHTML(
   completedSubtasksInPercent
 ) {
   return /* html */ `
-          <div id="taskCard_${status}_${i}" draggable="true" onclick="openOrCloseContainer(${i}, 'edit_task_wrapper_${status}_${i}', 'open')" oncontextmenu="openOrCloseContainer(${i}, 'context_menu_${status}_${i}', 'open')" ondragstart="startDragging(${i})" class="todo">
+          <div id="taskCard_${i}" draggable="true" onclick="openOrCloseContainer(${i}, 'edit_task_wrapper_${i}', 'open')" oncontextmenu="openOrCloseContainer(${i}, 'context_menu_${i}', 'open')" ondragstart="startDragging(${i})" class="todo">
             <div class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
               <div class="todo-title">${oneTask['title']}</div>
                 <div class="todo-description">${newTruncatedSentence}</div>
@@ -303,16 +303,16 @@ function generateToDoHTML(
                   <label class="label-for-progress" for="progress_bar">0/${oneTask.subtasks.length} Subtasks</label>
                 </div>
                 <div class="contacts-and-prio-wrapper">
-                  <div id="task_contact_${status}_${i}" class="task-contact-wrapper"></div>
+                  <div id="task_contact_${i}" class="task-contact-wrapper"></div>
                   <div class="task-prio">
                       <img class="prio-icon" src="../icons/prio_${oneTask.current_prio}.svg">
                   </div>
               </div>
-              <div id="context_menu_${status}_${i}" class="context-menu-card d-none">  
+              <div id="context_menu_${i}" class="context-menu-card d-none">  
                 <div>
                   <div class="context-menu-move-to-wrapper">
                     <h3>Move card to ...</h3>  
-                    <img onclick="openOrCloseContainer(${i}, 'context_menu_${status}_${i}', 'close')" id="context_menu_${status}_close_${i}" class="context-menu-close" src="../icons/close_white.svg" alt="">
+                    <img onclick="openOrCloseContainer(${i}, 'context_menu_${i}', 'close')" id="context_menu_close_${i}" class="context-menu-close" src="../icons/close_white.svg" alt="">
                   </div>
                 </div>  
                 <ul>
@@ -323,16 +323,16 @@ function generateToDoHTML(
                 </ul>
               </div>
           </div>
-          <div id="edit_task_wrapper_${status}_${i}" class="edit-task-wrapper d-none">
+          <div id="edit_task_wrapper_${i}" class="edit-task-wrapper d-none">
               <div class="category-and-close-wrapper">
                 <div class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
-                <img class="edit-close-button" onclick="openOrCloseContainer(${i}, 'edit_task_wrapper_${status}_${i}', 'close')" src="../icons/close.svg" alt="">
+                <img class="edit-close-button" onclick="openOrCloseContainer(${i}, 'edit_task_wrapper_${i}', 'close')" src="../icons/close.svg" alt="">
               </div>
               <h4>${oneTask.title}</h4>
               <div class="task-description">${oneTask.description}</div>
               <div class="task-due-date-wrapper">
               <span class="due-date">Due date: </span>
-              <span id="current_due_date_${status}_${i}">${oneTask.current_due_date}</span>
+              <span id="current_due_date_${i}">${oneTask.current_due_date}</span>
               </div>
               <div class="task-priority-wrapper">
                 <div class="priority">Priority: </div>
@@ -345,18 +345,18 @@ function generateToDoHTML(
                 <div class="assigned-to">Assigned To:</div>
                 <div>
                   <div class="edit-contacts-wrapper">
-                  <div id="edit_contacts_name_${status}_${i}" class="contact-name"></div>
+                  <div id="edit_contacts_name_${i}" class="contact-name"></div>
                   </div>
                 </div>
               </div>
               <div class="edit-task-subtasks-wrapper">
                 <div class="subtasks-title">Subtasks:</div>
-                <div id="edit_subtasks_wrapper_${status}_${i}" class="edit-subtasks-wrapper">
+                <div id="edit_subtasks_wrapper_${i}" class="edit-subtasks-wrapper">
                 </div>
               </div>
               <div class="delete-and-edit-wrapper">
                 <div class="delete-and-edit">
-                  <div onclick="renderAlert('confirm_container', 'confirm_content', 'Are you sure you want to delete this task permanently? This process is irreversible.');" class="delete-wrapper">
+                  <div onclick="renderConfirmDelete(${i}, 'confirm_container', 'confirm_content', 'Are you sure you want to delete this task permanently? This process is irreversible.');" class="delete-wrapper">
                     <img src="../icons/delete.svg" alt="">
                     <div>Delete</div>
                   </div>
@@ -398,9 +398,8 @@ async function sendDataToServer() {
   }
 }
 
-async function deleteTask() {
-  let index = getTaskIndex();
-  tasks.splice(index, 1);
+async function deleteTask(i) {
+  tasks.splice(i, 1);
   console.log('tasks: ', tasks);
   openOrCloseAlertContainer('confirm_container', 'close');
   await sendDataToServer();
@@ -430,7 +429,7 @@ function highlight(id) {
 function addTaskCardEventListener() {
   for (let i = 0; i < tasks.length; i++) {
     const oneTask = tasks[i];
-    const taskCard = document.getElementById(`taskCard_${oneTask.status}_${i}`);
+    const taskCard = document.getElementById(`taskCard_${i}`);
     taskCard.addEventListener('contextmenu', (e) => {
       e.preventDefault();
     });
