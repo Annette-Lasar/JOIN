@@ -2,6 +2,7 @@ async function init() {
   moveLogoOnStartScreen();
   await includeHTML();
   hideHelpLinkOnHelpPage();
+  hideNavIconsOnExternalSites();
   checkIfStartScreen();
   checkIfSummaryPage();
   checkIfBoardPage();
@@ -36,6 +37,18 @@ function moveLogoOnStartScreen() {
       document.getElementById('path_i').classList.add('change-logo-color');
       document.getElementById('path_n').classList.add('change-logo-color');
     }, 500);
+  }
+}
+
+function hideNavIconsOnExternalSites() {
+  let menuWrapper = document.getElementById('menu_items_wrapper');
+  let legalNoticeLink = document.getElementById('legal_notice_link');
+  let privacyPolicyLink = document.getElementById('privacy_policy_link');
+  const URL = window.location.href;
+  if (URL.endsWith('external.html')) {
+    menuWrapper.style.display = 'none';
+    legalNoticeLink.href = './legal_notice_external.html';
+    privacyPolicyLink.href = './privacy_policy_external.html';
   }
 }
 
