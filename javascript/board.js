@@ -1,17 +1,14 @@
 // falls User-Login, dann das JSON-Array des jeweiligen Users vom Server hier rein laden; ansonsten das Array 'guestTasks' vom Server holen
 // egal welche Login-Art: Die Arrays werden immer in das Array tasks[] geladen; danach wird das Array tasks[] gerendert
 let tasks = [];
-let filteredTasks = [];
+let filteredTasks = []; // Kommentar: später löschen!!
 let completedSubtasks = 2;
 
 let currentDraggedElement;
 
 async function initBoard() {
   await loadTasksUserOrGuest();
-  showTasksOnBoard('toDo');
-  showTasksOnBoard('inProgress');
-  showTasksOnBoard('awaitFeedback');
-  showTasksOnBoard('done');
+  showTasksOnBoard();
   addTaskCardEventListener();
   /* addSubtasksEventlistener(); */
 }
@@ -34,27 +31,40 @@ async function loadTasksUserOrGuest() {
   }
 }
 
-function showTasksOnBoard(status) {
-  let filtered = tasks.filter((t) => t['status'] == status);
-  filtered.forEach((element, index) => {
-    console.log('Index:', index);
-    filteredTasks.push(element);
-    let newTruncatedSentence = truncateSentence(element.description, 6);
-    let completedSubtasksInPercent = calculateSubtaskPercentage(element);
-
-    document.getElementById(status).innerHTML += generateToDoHTML(
-      index,  // Hier wird der Index als Argument übergeben
-      element,
+function showTasksOnBoard() {
+  const containerToDo = document.getElementById('toDo');
+  const containerInProgress = document.getElementById('inProgress');
+  const containerAwaitFeedback = document.getElementById('awaitFeedback');
+  const containerDone = document.getElementById('done');
+  containerToDo.innerHTML = '';
+  containerInProgress.innerHTML = '';
+  containerAwaitFeedback.innerHTML = '';
+  containerDone.innerHTML = '';
+  /* clearAllContainers(); */
+  for (let i = 0; i < tasks.length; i++) {
+    const oneTask = tasks[i];
+    const index = i;
+    let status = oneTask.status;
+    let newTruncatedSentence = truncateSentence(oneTask.description, 6);
+    let completedSubtasksInPercent = calculateSubtaskPercentage(oneTask);
+    
+    
+    const listContainer = document.getElementById(status);
+    /* listContainer.innerHTML = ''; */
+    listContainer.innerHTML += generateToDoHTML(
+      index,
+      oneTask,
       status,
       newTruncatedSentence,
       completedSubtasksInPercent
     );
-  });
 
-  getFilteredTask();
+    renderContactsOnOutsideCard(i, oneTask);
+    renderContactsInsideCard(i, oneTask);
+    renderSubtasks(i, oneTask);
+    getFilteredDueDate(i, oneTask);
+  }
 }
-
-
 
 function truncateSentence(sentence, wordsCount) {
   const words = sentence.split(' ');
@@ -74,27 +84,17 @@ function calculateSubtaskPercentage(element) {
   }
 }
 
-function getFilteredTask() {
-  for (let i = 0; i < filteredTasks.length; i++) {
-    const filteredTask = filteredTasks[i];
-    renderContactsOnOutsideCard(i, filteredTask);
-    renderContactsInsideCard(i, filteredTask);
-    renderSubtasks(i, filteredTask);
-    getFilteredDueDate(i, filteredTask);
-  }
-}
-
-function renderContactsOnOutsideCard(i, filteredTask) {
+function renderContactsOnOutsideCard(i, oneTask) {
   const taskContactContainer = document.getElementById(
-    `task_contact_${filteredTask.status}_${i}`
+    `task_contact_${oneTask.status}_${i}`
   );
   taskContactContainer.innerHTML = '';
-  calculateNumberOfVisibleContacts(filteredTask, taskContactContainer);
+  calculateNumberOfVisibleContacts(oneTask, taskContactContainer);
 }
 
-function calculateNumberOfVisibleContacts(filteredTask, taskContactContainer) {
+function calculateNumberOfVisibleContacts(oneTask, taskContactContainer) {
   const maxWidth = taskContactContainer.offsetWidth;
-  let visibleContacts = filteredTask.current_contacts.slice();
+  let visibleContacts = oneTask.current_contacts.slice();
   let hiddenContactsCount = 0;
 
   while (
@@ -140,20 +140,20 @@ function generateOverflowIndicatorHTML(hiddenContactsCount) {
     `;
 }
 
-function renderContactsInsideCard(i, filteredTask) {
+function renderContactsInsideCard(i, oneTask) {
   const editTaskContactNameContainer = document.getElementById(
-    `edit_contacts_name_${filteredTask.status}_${i}`
+    `edit_contacts_name_${oneTask.status}_${i}`
   );
   editTaskContactNameContainer.innerHTML = '';
-  for (let j = 0; j < filteredTask.current_contacts.length; j++) {
-    const oneContact = filteredTask.current_contacts[j];
+  for (let j = 0; j < oneTask.current_contacts.length; j++) {
+    const oneContact = oneTask.current_contacts[j];
     editTaskContactNameContainer.innerHTML +=
       generateEditTaskContactNamesHTML(oneContact);
   }
 }
 
 window.addEventListener('resize', function () {
-  getFilteredTask();
+  showTasksOnBoard();
 });
 
 function generateTaskContactHTML(j, oneContact) {
@@ -178,12 +178,12 @@ function generateEditTaskContactNamesHTML(oneContact) {
     `;
 }
 
-function getFilteredDueDate(i, filteredTask) {
+function getFilteredDueDate(i, oneTask) {
   const dueDateContainer = document.getElementById(
-    `current_due_date_${filteredTask.status}_${i}`
+    `current_due_date_${oneTask.status}_${i}`
   );
   dueDateContainer.innerHTML = '';
-  let inputDate = filteredTask.current_due_date;
+  let inputDate = oneTask.current_due_date;
   let currentDueDate = formatDateString(inputDate);
   dueDateContainer.innerHTML = currentDueDate;
 }
@@ -198,26 +198,25 @@ function formatDateString(inputDate) {
   return `${formattedDay}/${formattedMonth}/${year}`;
 }
 
-function renderSubtasks(i, filteredTask) {
+function renderSubtasks(i, oneTask) {
   const subtaskContainer = document.getElementById(
-    `edit_subtasks_wrapper_${filteredTask.status}_${i}`
+    `edit_subtasks_wrapper_${oneTask.status}_${i}`
   );
   subtaskContainer.innerHTML = '';
-  for (let j = 0; j < filteredTask.subtasks.length; j++) {
-    const oneSubtask = filteredTask.subtasks[j];
+  for (let j = 0; j < oneTask.subtasks.length; j++) {
+    const oneSubtask = oneTask.subtasks[j];
     subtaskContainer.innerHTML += generateSubtaskHTML(
       i,
-      filteredTask,
+      oneTask,
       oneSubtask
     );
   }
-  
 }
 
-function generateSubtaskHTML(i, filteredTask, oneSubtask) {
+function generateSubtaskHTML(i, oneTask, oneSubtask) {
   return /* html */ `
       <div class="inner-subtask-wrapper">
-        <div id="individual_subtask_checkbox_${filteredTask.status}_${i}" class="subtask-checkbox"><input type="checkbox"></div>
+        <div id="individual_subtask_checkbox_${oneTask.status}_${i}" class="subtask-checkbox"><input type="checkbox"></div>
         <div class="subtask-name">${oneSubtask}</div>
       </div>
   `;
@@ -256,28 +255,27 @@ function generateSubtaskHTML(i, filteredTask, oneSubtask) {
 
 addSubtasksEventlistener(); */
 
-
 // Kommentar: Anzahl der erledigten Subtasks rendern
 function generateToDoHTML(
   i,
-  element,
+  oneTask,
   status,
   newTruncatedSentence,
   completedSubtasksInPercent
 ) {
   return /* html */ `
-          <div id="taskCard_${status}_${i}" draggable="true" onclick="openOrCloseContainer(${i}, 'edit_task_wrapper_${status}_${i}', 'open')" oncontextmenu="openOrCloseContainer(${i}, 'context_menu_${status}_${i}', 'open')" ondragstart="startDragging(${element['id']})" class="todo">
-            <div class="todo-category" style="background-color: ${element.current_category[0].category_color}; border: 1px solid ${element.current_category[0].category_color};">${element.current_category[0].category_name}</div>
-              <div class="todo-title">${element['title']}</div>
+          <div id="taskCard_${status}_${i}" draggable="true" onclick="openOrCloseContainer(${i}, 'edit_task_wrapper_${status}_${i}', 'open')" oncontextmenu="openOrCloseContainer(${i}, 'context_menu_${status}_${i}', 'open')" ondragstart="startDragging(${i})" class="todo">
+            <div class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
+              <div class="todo-title">${oneTask['title']}</div>
                 <div class="todo-description">${newTruncatedSentence}</div>
                 <div class="progress-wrapper">
                 <progress id="progress_bar" class="progress-bar" value="${completedSubtasksInPercent}" max="100"> 32% </progress>  
-                  <label class="label-for-progress" for="progress_bar">0/${element.subtasks.length} Subtasks</label>
+                  <label class="label-for-progress" for="progress_bar">0/${oneTask.subtasks.length} Subtasks</label>
                 </div>
                 <div class="contacts-and-prio-wrapper">
                   <div id="task_contact_${status}_${i}" class="task-contact-wrapper"></div>
                   <div class="task-prio">
-                      <img class="prio-icon" src="../icons/prio_${element.current_prio}.svg">
+                      <img class="prio-icon" src="../icons/prio_${oneTask.current_prio}.svg">
                   </div>
               </div>
               <div id="context_menu_${status}_${i}" class="context-menu-card d-none">  
@@ -297,20 +295,20 @@ function generateToDoHTML(
           </div>
           <div id="edit_task_wrapper_${status}_${i}" class="edit-task-wrapper d-none">
               <div class="category-and-close-wrapper">
-                <div class="todo-category" style="background-color: ${element.current_category[0].category_color}; border: 1px solid ${element.current_category[0].category_color};">${element.current_category[0].category_name}</div>
+                <div class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
                 <img class="edit-close-button" onclick="openOrCloseContainer(${i}, 'edit_task_wrapper_${status}_${i}', 'close')" src="../icons/close.svg" alt="">
               </div>
-              <h4>${element.title}</h4>
-              <div class="task-description">${element.description}</div>
+              <h4>${oneTask.title}</h4>
+              <div class="task-description">${oneTask.description}</div>
               <div class="task-due-date-wrapper">
               <span class="due-date">Due date: </span>
-              <span id="current_due_date_${status}_${i}">${element.current_due_date}</span>
+              <span id="current_due_date_${status}_${i}">${oneTask.current_due_date}</span>
               </div>
               <div class="task-priority-wrapper">
                 <div class="priority">Priority: </div>
                 <div class="prio-wrapper">
-                  <div>${element.current_prio}</div>
-                  <img class="prio-icon" src="../icons/prio_${element.current_prio}.svg" alt="">
+                  <div>${oneTask.current_prio}</div>
+                  <img class="prio-icon" src="../icons/prio_${oneTask.current_prio}.svg" alt="">
                 </div>
               </div>
               <div class="edit-task-contacts-wrapper">
@@ -351,7 +349,8 @@ function startDragging(id) {
 // status ist entweder 'toDo', 'inProgress', 'awaitFeedback' oder 'done' (siehe board.html)
 // Status der Task wird geändert und das Array 'tasks' wird wieder auf den Server hochgeladen
 async function moveTo(status) {
-  tasks[currentDraggedElement]['status'] = status;
+  tasks[currentDraggedElement].status = '';
+  tasks[currentDraggedElement].status = status;
   let userLogin = localStorage.getItem('userLogin');
   if (userLogin == 'true') {
     let userEmail = localStorage.getItem('userEmail');
@@ -363,7 +362,8 @@ async function moveTo(status) {
   } else {
     await setItem('guestTasks', JSON.stringify(tasks));
   }
-  initBoard();
+  await loadTasksUserOrGuest();
+  showTasksOnBoard();
 }
 
 function removeHighlight(id) {
