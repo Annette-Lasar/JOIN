@@ -136,7 +136,7 @@ nav {
 .nav {
     max-width: 1024px;
     margin: 0 auto;
-    padding: 1em;
+    /* padding: 0 1em; */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -155,11 +155,24 @@ nav {
 }
 
 .menu-items a {
+    height: 76px;
+    width: 76px;
     display: flex;
     flex-direction: column;
     gap: 8px;
     align-items: center;
     justify-content: center;
+    color: #cdcdcd;
+    border-radius: 16px;
+}
+
+.menu-items a:hover {
+    background-color: #091931;
+}
+
+.menu-items img {
+    height: 24px;
+    width: 24px;
 }
 
 .legal-info-wrapper {
@@ -325,7 +338,7 @@ Header in der Desktop Version
 
     .nav {
         height: 100%;
-        padding: 2em;
+        padding: 4em 0;
         display: flex;
         flex-direction: column;
     }
@@ -339,18 +352,50 @@ Header in der Desktop Version
         max-height: 100%;
     }
 
+    .menu-items {
+        width: 100%;
+    }
+
     .menu-items-wrapper {
         height: 50%;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .menu-items a , .legal-info-wrapper a{
+        height: auto;
+        flex-direction: row;
+        width: 100%;
+        padding: 8px 0;
+        justify-content: unset;
+        font-size: 1em;
+        border-radius: 0;
+        padding-left: 24px;
+    }
+
+    .menu-items img {
+        height: 30px;
+        width: 30px;
     }
 
     .legal-info-wrapper {
-        height: 10%;
+        height: 40%;
+        width: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .legal-info-wrapper a{
+        color: #cdcdcd;
+    }
+
+    .legal-info-wrapper a:hover {
+        background-color: #091931;
     }
 
     .add-contact {
@@ -359,3 +404,11 @@ Header in der Desktop Version
 
 }
 
+/* ---------------------------------------------------
+breakpoint: 540px to 50em
+------------------------------------------------------ */
+@media (480px <= width <= 50em) {
+    .menu-items-wrapper {
+        justify-content: space-evenly;
+    }
+}
