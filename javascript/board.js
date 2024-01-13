@@ -360,7 +360,7 @@ async function moveTo(status) {
     if (user) {
       await setItem(`${user.email}`, JSON.stringify(tasks));
     }
-  } else {
+  } else {         
     await setItem('guestTasks', JSON.stringify(tasks));
   }
   initBoard();
