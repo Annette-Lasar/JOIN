@@ -91,12 +91,8 @@ media queries
 breakpoint: 50em
 ------------------------------------------------------ */
 
-/*  Semir:
-Dieses Befehl habe ich auskommentiert
-*/
-
 @media (min-width: 50em) {
-  /* .main-legal {
+  .main-legal {
     margin: 0 auto 0 180px;
-  } */
+  }
 }
