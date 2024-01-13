@@ -44,7 +44,7 @@
           <div class="status-headline">
             <div>To do</div>
             <div class="addTask-btn">
-              <img src="../icons/plus.svg" alt="">
+              <img src="../icons/plus.svg" alt="" />
             </div>
           </div>
           <div
@@ -95,7 +95,32 @@
         </div>
       </div>
     </div>
-    <div id="test_container"></div>
+    <div id="alert_container" class="alert-container d-none">
+      <div class="alert-image-wrapper">
+        <img class="alert-logo" src="../icons/join_logo_white.svg" alt="" />
+        <h3>Alert</h3>
+        <img
+          onclick="openOrCloseAlertContainer('alert_container', 'close')"
+          class="alert-close"
+          src="../icons/close_white.svg"
+        />
+      </div>
+      <div id="alert_content" class="alert-content"></div>
+    </div>
+    <div id="confirm_container" class="confirm-container d-none">
+      <div class="confirm-image-wrapper">
+        <img class="confirm-logo" src="../icons/join_logo_white.svg" alt="" />
+        <h3>Alert</h3>
+        <img
+          onclick="openOrCloseAlertContainer('confirm_container', 'close')"
+          class="confirm-close"
+          src="../icons/close_white.svg"
+        />
+      </div>
+      <div>
+        <div id="confirm_content" class="confirm-content"></div>
+      </div>
+    </div>
     <nav>
       <div w3-include-html="../templates/navigation_bar.html"></div>
     </nav>

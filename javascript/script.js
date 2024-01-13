@@ -122,7 +122,12 @@ function renderAlert(containerId, messageId, alertMessage) {
   openOrCloseAlertContainer(containerId, 'open');
   const alertContent = document.getElementById(messageId);
   alertContent.innerHTML = '';
-  alertContent.innerHTML = generateAlertContentHTML(alertMessage);
+  if (containerId === 'alert_container') {
+    alertContent.innerHTML = generateAlertContentHTML(alertMessage);
+  } else if (containerId === 'confirm_container') {
+    console.log('tasks', tasks);
+    alertContent.innerHTML = generateConfirmContentHTML(alertMessage);
+  }
 }
 
 function openOrCloseAlertContainer(containerId, action) {
@@ -132,6 +137,22 @@ function openOrCloseAlertContainer(containerId, action) {
   } else if (action === 'close') {
     alertContainer.classList.add('d-none');
   }
+}
+
+function generateAlertContentHTML(alertMessage) {
+  return /* html */ `
+    <div class="alert-message">${alertMessage}</div>
+  `;
+}
+
+function generateConfirmContentHTML(alertMessage) {
+  return /* html */ `
+    <div class="alert-message">${alertMessage}</div>
+    <div id="confirm_button_wrapper" class="confirm-button-wrapper">
+      <button onclick="deleteTask()" class="dark-button">Yes, proceed</button>
+      <button onclick="openOrCloseAlertContainer('confirm_container', 'close')" class="dark-button">No, preserve</button>
+    </div>
+  `;
 }
 
 /* function createAlertContainer(containerId, alertMessage, closeFunction) {
