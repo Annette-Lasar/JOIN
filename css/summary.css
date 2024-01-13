@@ -1,3 +1,9 @@
+* {
+  scrollbar-width: auto;
+  scrollbar-color: var(--background-color-darkblue)
+    var(--background-color-lightgray);
+}
+
 *::-webkit-scrollbar {
   width: 16px;
 }
@@ -5,6 +11,7 @@
 *::-webkit-scrollbar-track {
   background: var(--background-color-lightgray);
 }
+
 *::-webkit-scrollbar-thumb {
   background-color: var(--background-color-darkblue);
   border: var(--accent-color-white) 3px solid;
@@ -323,7 +330,7 @@ breakpoint: 800px
     padding: 25px;
   }
   .urgentCounter-and-upcomingDeadline {
-    padding: 20px;
+    padding: 23px;
   }
   .lower-boardSummary {
     padding: 20px;
@@ -347,8 +354,8 @@ breakpoint: 800px
     padding: 35px;
   }
   .urgentCounter-and-upcomingDeadline {
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 43px;
+    padding-right: 43px;
   }
   .lower-boardSummary {
     padding: 26px;
@@ -685,3 +692,4 @@ breakpoint: 800px
     margin: 80px 0px 0px 240px;
   }
 }
+
