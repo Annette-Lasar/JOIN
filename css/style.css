@@ -162,7 +162,7 @@ nav {
 }
 
 .menu-items a:hover {
-    background-color: #091931;
+    background-color: #2a3d59;
 }
 
 .menu-items img {
@@ -190,14 +190,7 @@ breakpoint: 50em
 ------------------------------------------------------ */
 @media (min-width: 50em) {
 
-    /*  Semir:
-Diese zwei Befehle im body habe ich auskommentiert, so löst sich das problem mit dem
-Header in der Desktop Version
-*/
-
     body {
-        /* display: flex;
-        flex-direction: row-reverse; */
         position: relative;
     }
 
@@ -211,7 +204,7 @@ Header in der Desktop Version
 
 
     header {
-        padding: 1.25em 1em 1.25em 180px;
+        padding: 1.25em 1em 1.25em 240px;
     }
 
 
@@ -295,7 +288,7 @@ Header in der Desktop Version
     }
 
     .legal-info-wrapper a:hover {
-        background-color: #091931;
+        color: var(--accent-color-lightblue);
     }
 
     .add-contact {
