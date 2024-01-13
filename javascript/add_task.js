@@ -669,6 +669,7 @@ function createTaskObject() {
     current_contacts: currentContacts,
     current_category: currentCategories,
     subtasks: subTasks,
+    completed_subtasks: 0,
     status: 'toDo',
   };
   return newTask;

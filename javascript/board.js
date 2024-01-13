@@ -13,6 +13,7 @@ async function initBoard() {
   showTasksOnBoard('awaitFeedback');
   showTasksOnBoard('done');
   addTaskCardEventListener();
+  /* addSubtasksEventlistener(); */
 }
 
 // prüfen ob Gäste- oder User-Login: je nachdem wird das jeweilige JSON-Array vom Server geladen, d.h. entweder das jeweilige UserTaskArray oder das Gäste-Array
@@ -79,26 +80,6 @@ function getFilteredTask() {
     renderSubtasks(i, filteredTask);
     getFilteredDueDate(i, filteredTask);
   }
-}
-
-function renderSubtasks(i, filteredTask) {
-  const subtaskContainer = document.getElementById(
-    `edit_subtasks_wrapper_${filteredTask.status}_${i}`
-  );
-  subtaskContainer.innerHTML = '';
-  for (let j = 0; j < filteredTask.subtasks.length; j++) {
-    const oneSubtask = filteredTask.subtasks[j];
-    subtaskContainer.innerHTML += generateSubtaskHTML(oneSubtask);
-  }
-}
-
-function generateSubtaskHTML(oneSubtask) {
-  return /* html */ `
-      <div class="inner-subtask-wrapper">
-        <div class="subtask-checkbox"><input type="checkbox"></div>
-        <div class="subtask-name">${oneSubtask}</div>
-      </div>
-  `;
 }
 
 function renderContactsOnOutsideCard(i, filteredTask) {
@@ -215,6 +196,65 @@ function formatDateString(inputDate) {
   return `${formattedDay}/${formattedMonth}/${year}`;
 }
 
+function renderSubtasks(i, filteredTask) {
+  const subtaskContainer = document.getElementById(
+    `edit_subtasks_wrapper_${filteredTask.status}_${i}`
+  );
+  subtaskContainer.innerHTML = '';
+  for (let j = 0; j < filteredTask.subtasks.length; j++) {
+    const oneSubtask = filteredTask.subtasks[j];
+    subtaskContainer.innerHTML += generateSubtaskHTML(
+      i,
+      filteredTask,
+      oneSubtask
+    );
+  }
+  
+}
+
+function generateSubtaskHTML(i, filteredTask, oneSubtask) {
+  return /* html */ `
+      <div class="inner-subtask-wrapper">
+        <div id="individual_subtask_checkbox_${filteredTask.status}_${i}" class="subtask-checkbox"><input type="checkbox"></div>
+        <div class="subtask-name">${oneSubtask}</div>
+      </div>
+  `;
+}
+
+/* function addSubtasksEventlistener() {
+  for (let i = 0; i < filteredTasks.length; i++) {
+    const filteredTask = filteredTasks[i];
+    const individualSubtaskCheckbox = document.getElementById(
+      `individual_subtask_checkbox_${filteredTask.status}_${i}`
+    );
+    let completedSubtasks = filteredTask.completed_subtasks;
+    console.log('completedSubtasks: ', completedSubtasks);
+    if (completedSubtasks) {
+      individualSubtaskCheckbox.addEventListener('change', function() {
+        checkForCompletedSubtasks(individualSubtaskCheckbox, completedSubtasks)
+      });
+    } else {
+      completedSubtasks = 0;
+    }
+    
+  }
+} */
+
+/* function checkForCompletedSubtasks(individualSubtaskCheckbox, completedSubtasks) {
+  if (individualSubtaskCheckbox.checked) {
+    individualSubtaskCheckbox.checked = true;
+    completedSubtasks++;
+    console.log('abgehakte Aufgaben: ', filteredTasks);
+  } else if (!individualSubtaskCheckbox) {
+    individualSubtaskCheckbox.checked = false;
+    completedSubtasks--;
+    console.log('zu erledigende Aufgaben: ', filteredTasks);
+  }
+}
+
+addSubtasksEventlistener(); */
+
+
 // Kommentar: Anzahl der erledigten Subtasks rendern
 function generateToDoHTML(
   i,
@@ -229,7 +269,7 @@ function generateToDoHTML(
               <div class="todo-title">${element['title']}</div>
                 <div class="todo-description">${newTruncatedSentence}</div>
                 <div class="progress-wrapper">
-                  <progress id="progress_bar" class="progress-bar" value="${completedSubtasksInPercent}" max="100"> 32% </progress>  
+                <progress id="progress_bar" class="progress-bar" value="${completedSubtasksInPercent}" max="100"> 32% </progress>  
                   <label class="label-for-progress" for="progress_bar">0/${element.subtasks.length} Subtasks</label>
                 </div>
                 <div class="contacts-and-prio-wrapper">
@@ -348,7 +388,6 @@ function addTaskCardEventListener() {
 }
 
 addTaskCardEventListener();
-
 
 function openOrCloseContainer(i, containerId, action) {
   const cardMenuContainer = document.getElementById(containerId);

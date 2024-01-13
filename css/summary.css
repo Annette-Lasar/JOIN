@@ -1,3 +1,16 @@
+*::-webkit-scrollbar {
+  width: 16px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--background-color-lightgray);
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--background-color-darkblue);
+  border: var(--accent-color-white) 3px solid;
+  border-radius: 10px;
+}
+
 body {
   background-color: var(--background-color-lightgray);
 }
