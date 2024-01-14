@@ -9,6 +9,7 @@ async function init() {
   showInitials();
 }
 
+
 async function includeHTML() {
   let includeElements = document.querySelectorAll('[w3-include-html]');
   for (let i = 0; i < includeElements.length; i++) {
@@ -22,6 +23,7 @@ async function includeHTML() {
     }
   }
 }
+
 
 function moveLogoOnStartScreen() {
   const URL = window.location.href;
@@ -40,6 +42,7 @@ function moveLogoOnStartScreen() {
   }
 }
 
+
 function hideNavIconsOnExternalSites() {
   let menuWrapper = document.getElementById('menu_items_wrapper');
   let legalNoticeLink = document.getElementById('legal_notice_link');
@@ -52,6 +55,7 @@ function hideNavIconsOnExternalSites() {
   }
 }
 
+
 function hideHelpLinkOnHelpPage() {
   let headerHelpIcon = document.getElementById('header_help_icon');
   const URL = window.location.href;
@@ -60,6 +64,14 @@ function hideHelpLinkOnHelpPage() {
   }
 }
 
+
+/**
+ * This function uses 'toggle' to show or hide elements;
+ * When clicking on 'Go to SignUp', email and password no longer have 'required'
+ * Returning to the Login Screen restores the 'required' for email and password
+ * 
+ * @param {String} buttonID - This is the ID of the clicked button ('goToSignUp'-button or 'backToLogin'-button)
+ */
 function toggleSignUpAndLogin(buttonID) {
   const LOGIN_CONTENT_BOX = document.getElementById('login_content');
   const SIGN_UP_CONTENT_BOX = document.getElementById('sign_up_content');
@@ -77,6 +89,10 @@ function toggleSignUpAndLogin(buttonID) {
   }
 }
 
+
+/**
+ * If the current page is 'summary.html', the function initSummary() is called
+ */
 function checkIfSummaryPage() {
   const URL = window.location.href;
   if (URL.endsWith('summary.html')) {
@@ -84,6 +100,10 @@ function checkIfSummaryPage() {
   }
 }
 
+
+/**
+ * If the current page is 'index.html', the function initSummary() is called
+ */
 function checkIfStartScreen() {
   const URL = window.location.href;
   if (URL.endsWith('index.html')) {
@@ -91,6 +111,10 @@ function checkIfStartScreen() {
   }
 }
 
+
+/**
+ * If the current page is 'board.html', the function initBoard() is called
+ */
 function checkIfBoardPage() {
   const URL = window.location.href;
   if (URL.endsWith('board.html')) {
@@ -98,6 +122,11 @@ function checkIfBoardPage() {
   }
 }
 
+
+/**
+ * On all pages (except index.html), the header displays the user's initials (or 'G' for guests)
+ * We check the localStorage for the user name and then look for the first letters of the first and last names
+ */
 function showInitials() {
   const URL = window.location.href;
   if (URL.endsWith('index.html')) {
@@ -109,19 +138,17 @@ function showInitials() {
       let nameArray = userName.split(' ');
       let firstLetter = nameArray[0].charAt(0);
       let secondLetter = nameArray[1].charAt(0);
-      document.getElementById('user_icon').innerHTML =
-        firstLetter.concat(secondLetter);
+      document.getElementById('user_icon').innerHTML = firstLetter.concat(secondLetter);
     } else {
       document.getElementById('user_icon').innerHTML = 'G';
     }
   }
 }
 
+
 /**
- *  bei Klick auf 'Logout'
- *  die Daten im localStorage müssen unbedingt wieder gelöscht werden ( localStorage.removeItem(key) )
- *  Function logout() muss noch richtig implementiert werden bei Klick auf Logout (vorübergehend oben im header auf den eigenen Initialien platziert)
- *  Function wahrscheinlich noch nicht final;
+ * This function is called when clicking on 'Logout'; 
+ * the localStorage is cleared and the user returns to the login screen
  */
 function logout() {
   localStorage.removeItem('userLogin');
@@ -130,6 +157,7 @@ function logout() {
   localStorage.removeItem('alreadyGreeted');
   window.location.href = 'index.html';
 }
+
 
 function renderAlert(containerId, messageId, alertMessage) {
   openOrCloseAlertContainer(containerId, 'open');
@@ -143,6 +171,7 @@ function renderAlert(containerId, messageId, alertMessage) {
   }
 }
 
+
 function renderConfirmDelete(i, containerId, messageId, alertMessage) {
   openOrCloseAlertContainer(containerId, 'open');
   const confirmContent = document.getElementById(messageId);
@@ -151,6 +180,7 @@ function renderConfirmDelete(i, containerId, messageId, alertMessage) {
     confirmContent.innerHTML = generateConfirmContentHTML(i, alertMessage);
   
 }
+
 
 function openOrCloseAlertContainer(containerId, action) {
   const alertContainer = document.getElementById(containerId);
@@ -161,11 +191,13 @@ function openOrCloseAlertContainer(containerId, action) {
   }
 }
 
+
 function generateAlertContentHTML(alertMessage) {
   return /* html */ `
     <div class="alert-message">${alertMessage}</div>
   `;
 }
+
 
 function generateConfirmContentHTML(i, alertMessage) {
   return /* html */ `
@@ -176,6 +208,7 @@ function generateConfirmContentHTML(i, alertMessage) {
     </div>
   `;
 }
+
 
 /* function createAlertContainer(containerId, alertMessage, closeFunction) {
   // containerId
@@ -223,3 +256,4 @@ function openOrCloseAlertContainer(containerId, action) {
     container.remove();
   }
 } */
+
