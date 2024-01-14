@@ -521,7 +521,11 @@ function addSubtask(inputId, wrapperId, plusIconId) {
   const SUBTASK_PLUS_ICON = document.getElementById(plusIconId);
 
   if (SUBTASK_INPUT_BOX.value !== '') {
-    subTasks.push(SUBTASK_INPUT_BOX.value);
+    const newSubtask = {
+      subtask_name: SUBTASK_INPUT_BOX.value,
+      checked_status: false,
+    }
+    subTasks.push(newSubtask);
   } else {
     renderAlert(
       'alert_container',
@@ -561,9 +565,9 @@ function renderSubtasks() {
  */
 function generateSubtaskHTML(i, subtask, containerType) {
   return /* html */ `
-      <div id="subtask_list_wrapper_${containerType}_${i}" class="subtask-list-${containerType}">${subtask}
+      <div id="subtask_list_wrapper_${containerType}_${i}" class="subtask-list-${containerType}">${subtask.subtask_name}
         <div class="subtask-button-wrapper-${containerType}">
-          <img onclick="editSubtask(${i}, '${containerType}', '${subtask}')" src="../icons/edit_dark.svg">
+          <img onclick="editSubtask(${i}, '${containerType}', '${subtask.subtask_name}')" src="../icons/edit_dark.svg">
           <div class="subtask-separator-line"></div>
           <img onclick="deleteSubtask(${i})" src="../icons/delete.svg">
         </div>
@@ -591,7 +595,7 @@ function changeSubtaskText(i, containerType) {
   let editedInput = document.getElementById(`edit_input_${containerType}_${i}`);
   let editedSubtask = editedInput.value.trim();
   if (editedSubtask !== '') {
-    subTasks[i] = editedSubtask;
+    subTasks[i].subtask_name = editedSubtask;
     renderSubtasks();
   } else {
     renderAlert(
@@ -609,7 +613,6 @@ create new task section in add_task.html
 async function createNewTask() {
   createdTasks = [];
   checkIfBoxesAreEmpty();
-  renderAlert('alert_container', 'alert_content', 'A new task has successfully been created');
   await sendCreatedTask();
 }
 
@@ -662,7 +665,6 @@ function checkIfCategoriesIsEmpty() {
 
 function createTaskObject() {
   let newTask = {
-    id: '',
     title: TITLE_BOX.value,
     description: DESCRIPTION_BOX.value,
     current_prio: currentPrio,
@@ -748,6 +750,7 @@ async function sendCreatedTask() {
   await checkIfUserIsLoggedIn('sendToServer');
 }
 
+
 async function checkIfUserIsLoggedIn(action) {
   let userLogin = localStorage.getItem('userLogin');
   if (userLogin == 'true') {
@@ -760,28 +763,46 @@ async function checkIfUserIsLoggedIn(action) {
     } else if (action === 'sendToServer') {
       await sendNewTaskToServer(user);
     }
+  } else {
+    if (action === 'getFromServer') {
+      await getTasksFromServer('guest');
+    } else if (action === 'sendToServer') {
+      await sendNewTaskToServer('guest');
+    }
   }
 }
 
 async function getTasksFromServer(user) {
-  if (user) {
+  if (user !== 'guest') {
     if (`${user.email}`) {
       tasks = JSON.parse(await getItem(`${user.email}`));
       tasks.forEach((oneTask) => createdTasks.push(oneTask));
     }
-  } else {
+  } else if (user === 'guest') {
     tasks = JSON.parse(await getItem('guestTasks'));
+    tasks.forEach((oneTask) => createdTasks.push(oneTask));
+    console.log('tasks', tasks);
   }
 }
 
 async function sendNewTaskToServer(user) {
-  if (user) {
-    if (createdTasks.length > 0) {
-      await setItem(`${user.email}`, JSON.stringify(createdTasks));
-      clearAllTaskContainers();
-    } else {
+  if (createdTasks.length > 0) {
+    if (user === 'guest') {
       await setItem('guestTasks', JSON.stringify(createdTasks));
       clearAllTaskContainers();
+      renderAlert(
+        'alert_container',
+        'alert_content',
+        'A new task has successfully been created'
+      );
+    } else {
+      await setItem(`${user.email}`, JSON.stringify(createdTasks));
+      clearAllTaskContainers();
+      renderAlert(
+        'alert_container',
+        'alert_content',
+        'A new task has successfully been created'
+      );
     }
   }
 }
