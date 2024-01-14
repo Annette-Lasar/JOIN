@@ -3,6 +3,7 @@ async function init() {
   await includeHTML();
   hideHelpLinkOnHelpPage();
   hideNavIconsOnExternalSites();
+  activeSite();
   checkIfStartScreen();
   checkIfSummaryPage();
   checkIfBoardPage();
@@ -53,6 +54,17 @@ function hideNavIconsOnExternalSites() {
     legalNoticeLink.href = './legal_notice_external.html';
     privacyPolicyLink.href = './privacy_policy_external.html';
   }
+}
+
+function activeSite() {
+  const URL = window.location.href;
+  let focusedId = URL.slice(URL.lastIndexOf('/') + 1, URL.lastIndexOf('.')) + '_link';
+  if(focusedId == 'privacy_policy_external_link' || focusedId == 'legal_notice_external_link' ){
+    focusedId = focusedId.replace('_external', '');
+  }else if(focusedId == 'index_link'){
+    return
+  };
+  document.getElementById(focusedId).classList.add('active');
 }
 
 
@@ -176,9 +188,9 @@ function renderConfirmDelete(i, containerId, messageId, alertMessage) {
   openOrCloseAlertContainer(containerId, 'open');
   const confirmContent = document.getElementById(messageId);
   confirmContent.innerHTML = '';
-    console.log('tasks', tasks);
-    confirmContent.innerHTML = generateConfirmContentHTML(i, alertMessage);
-  
+  console.log('tasks', tasks);
+  confirmContent.innerHTML = generateConfirmContentHTML(i, alertMessage);
+
 }
 
 

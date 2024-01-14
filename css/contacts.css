@@ -859,12 +859,6 @@ input:focus-visible {
 }
 
 @media (min-width: 50em) {
-    header {
-        width: calc(100% - 170px);
-        margin-left: 170px;
-        padding-left: 8px;
-    }
-
     .contact-list {
         margin-left: 170px;
         margin-bottom: 0;

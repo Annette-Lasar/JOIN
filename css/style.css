@@ -171,6 +171,12 @@ nav {
     background-color: #2a3d59;
 }
 
+.active {
+    background-color: #091931;
+    border-radius: 16px;
+    pointer-events: none;
+}
+
 .menu-items img {
     height: 24px;
     width: 24px;
@@ -198,11 +204,11 @@ nav {
     background-color: var(--background-color-lightgray);
     border: var(--background-color-darkblue) 2px solid;
     border-radius: 10px;
-  }
-  
-  
-  .alert-image-wrapper,
-  .confirm-image-wrapper {
+}
+
+
+.alert-image-wrapper,
+.confirm-image-wrapper {
     height: 22%;
     padding: 0.5em;
     display: flex;
@@ -211,19 +217,19 @@ nav {
     background-color: var(--background-color-darkblue);
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-  }
-  
-  .alert-logo,
-  .confirm-logo {
+}
+
+.alert-logo,
+.confirm-logo {
     height: 36px;
-  }
-  
-  .alert-close,
-  .confirm-close {
+}
+
+.alert-close,
+.confirm-close {
     cursor: pointer;
-  }
-  
-  .alert-content {
+}
+
+.alert-content {
     padding: 1em;
     height: 78%;
     display: flex;
@@ -232,9 +238,9 @@ nav {
     font-size: 0.8rem;
     color: var(--background-color-darkblue);
     font-weight: 700;
-  }
+}
 
-  .confirm-content {
+.confirm-content {
     height: 150px;
     padding: 1em;
     display: flex;
@@ -244,21 +250,21 @@ nav {
     font-size: 0.9rem;
     font-weight: 700;
     flex: 1 1 0;
-  }
-  
-  .alert-message,
-  .confirm-message {
+}
+
+.alert-message,
+.confirm-message {
     text-align: center;
     line-height: 1.4;
-  }
+}
 
-  .confirm-button-wrapper {
+.confirm-button-wrapper {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-  }
+}
 
-  .dark-button {
+.dark-button {
     width: 100px;
     padding: 0.5em;
     display: flex;
@@ -271,13 +277,13 @@ nav {
     border: var(--background-color-darkblue) 1px solid;
     border-radius: 4px;
     cursor: pointer;
-  }
+}
 
-  .dark-button:hover {
+.dark-button:hover {
     background-color: var(--accent-color-lightblue);
     border: var(--accent-color-lightblue) 1px solid;
     color: var(--accent-color-white);
-  }
+}
 
 .d-none {
     display: none;
@@ -359,7 +365,8 @@ breakpoint: 50em
         gap: 15px;
     }
 
-    .menu-items a , .legal-info-wrapper a{
+    .menu-items a,
+    .legal-info-wrapper a {
         height: auto;
         flex-direction: row;
         width: 100%;
@@ -369,6 +376,11 @@ breakpoint: 50em
         border-radius: 0;
         padding-left: 24px;
     }
+
+    .active {
+        border-radius: 0;
+    }
+
 
     .menu-items img {
         height: 30px;
@@ -384,7 +396,7 @@ breakpoint: 50em
         align-items: center;
     }
 
-    .legal-info-wrapper a{
+    .legal-info-wrapper a {
         color: #cdcdcd;
     }
 
@@ -401,7 +413,7 @@ breakpoint: 50em
 /* ---------------------------------------------------
 breakpoint: 540px to 50em
 ------------------------------------------------------ */
-@media (480px <= width <= 50em) {
+@media (480px <=width <=50em) {
     .menu-items-wrapper {
         justify-content: space-evenly;
     }
