@@ -29,14 +29,15 @@ async function loadTasksUserOrGuest() {
     users = JSON.parse(await getItem('users'));
     let user = users.find((u) => u.email === userEmail);
     if (user) {
-      if (`${user.email}`) {
-        tasks = JSON.parse(await getItem(`${user.email}`));
-      }
+        if (`${user.email}`) {                                   // hier liegt ein Fehler; wird immer true sein. Müssen Anfrage an SERVER senden !
+          tasks = JSON.parse(await getItem(`${user.email}`));    // Da if-Abfrage immer true, wird ein key angefragt, den es manchmal noch gar nicht gibt !
+        }
     }
   } else {
     tasks = JSON.parse(await getItem('guestTasks'));
   }
 }
+
 
 function showTasksOnBoard() {
   clearContainers('toDo', 'inProgress', 'awaitFeedback', 'done');
