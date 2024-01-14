@@ -119,7 +119,7 @@ header {
     overflow-y: auto;
     overflow-x: hidden;
     width: 100%;
-    height: calc(100vh - 80px - 76px);
+    height: calc(100vh - 160px);
 }
 
 .contact-list h1 {
@@ -202,6 +202,10 @@ header {
     gap: 5px;
 }
 
+.contact-info h3{
+    color: #000;
+}
+
 .dark-button {
     display: none;
 }
@@ -231,6 +235,10 @@ header {
     align-items: center;
     gap: 30px;
     margin-bottom: 32px;
+}
+
+.contacts-header h3{
+    color: var(--background-color-darkblue);
 }
 
 .contact-details {
