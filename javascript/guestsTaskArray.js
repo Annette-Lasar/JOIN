@@ -3,7 +3,6 @@
 let tasksGuest = [
 
     {
-        id: 0,
         title: ' Implement User Authentication',
         description: 'Develop a secure user authentication system using JWT',
         current_category: [
@@ -12,7 +11,20 @@ let tasksGuest = [
                 category_color: '#FFA500'
             } 
         ],         
-        subtasks: ['Research JWT and its best practices', 'Create database schema for user information', 'Implement sign-up and login API endpoints'],   
+        subtasks: [
+            {
+                subtask_name: 'Research JWT and its best practices',
+                checked: false
+            },
+            {
+                subtask_name: 'Create database schema for user information',
+                checked: false
+            },
+            {
+                subtask_name: 'Implement sign-up and login API endpoints',
+                checked: false
+            }  
+        ],   
         completed_subtasks: 0,      
         current_contacts: [
             { 
@@ -39,7 +51,6 @@ let tasksGuest = [
         status: 'toDo'
     },
     {
-        id: 1,
         title: 'Optimize Database Queries',
         description: 'Review and optimize current database queries for efficiency',
         current_category: [
@@ -48,7 +59,20 @@ let tasksGuest = [
                 category_color: '#FF0000'
             } 
         ],     
-        subtasks: ['Analyze current query performance', 'Identify queries that can be optimized', 'Rewrite and test improved queries'], 
+        subtasks: [
+            {
+                subtask_name: 'Analyze current query performance',
+                checked: false 
+            },
+            { 
+                subtask_name: 'Identify queries that can be optimized',
+                checked: false
+            },
+            {   
+                subtask_name: 'Rewrite and test improved queries',
+                checked: false
+            } 
+        ], 
         completed_subtasks: 0,
         current_contacts: [
             {
@@ -63,7 +87,6 @@ let tasksGuest = [
         status: 'toDo'
     },
     {
-        id: 2,
         title: 'Redesign Website Homepage',
         description: 'Create a more engaging and user-friendly homepage for our corporate website. The new design should reflect our brands values and improve user experience, focusing on mobile responsiveness and intuitive navigation.',
         current_category: [
@@ -72,7 +95,16 @@ let tasksGuest = [
                 category_color: '#DA70D6'
             } 
         ],     
-        subtasks: ['Create high-fidelity mockups incorporating brand elements', 'Collaborate with the development team for implementation'],
+        subtasks: [
+            {
+                subtask_name: 'Create high-fidelity mockups incorporating brand elements',
+                checked: false
+            },
+            { 
+                subtask_name: 'Collaborate with the development team for implementation',
+                checked: false
+            }
+        ],
         completed_subtasks: 0,
         current_contacts: [
             {
@@ -171,7 +203,6 @@ let tasksGuest = [
         status: 'inProgress'
     },
     {
-        id: 3,
         title: 'Organize a Virtual Escape Room Event',
         description: 'Plan and execute a virtual escape room experience for the team, aimed at improving collaboration and problem-solving skills in a fun and engaging way. This should be an opportunity for team members to interact outside of work-related projects.',
         current_category: [
@@ -190,7 +221,6 @@ let tasksGuest = [
         status: 'awaitFeedback'
     },
     {
-        id: 4,
         title: 'Execute a Social Media Campaign',
         description: '',
         current_category: [
@@ -199,7 +229,24 @@ let tasksGuest = [
                 category_color: '#008000'
             } 
         ],     
-        subtasks: ['Develop a campaign theme and goals', 'Create a content calendar with daily posts and activities', 'Collaborate with influencers to amplify our reach', 'Analyze campaign performance and adjust strategies as needed'],
+        subtasks: [
+            {
+                subtask_name: 'Develop a campaign theme and goals',
+                checked: false
+            },
+            {
+                subtask_name: 'Create a content calendar with daily posts and activities',
+                checked: false
+            },
+            {
+                subtask_name: 'Collaborate with influencers to amplify our reach',
+                checked: false
+            },
+            {
+                subtask_name: 'Analyze campaign performance and adjust strategies as needed',
+                checked: false
+            }  
+        ],
         completed_subtasks: 0,
         current_contacts: [
             { 
