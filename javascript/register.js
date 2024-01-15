@@ -31,6 +31,7 @@ async function register() {
                     password: password.value
                 });
                 await setItem('users', JSON.stringify(users));
+                await setItem(`${email.value}`, []);
                 resetForm();
                 successfullyRegistered();
             } else {
