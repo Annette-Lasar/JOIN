@@ -757,7 +757,7 @@ async function checkIfUserIsLoggedIn(action) {
     let userEmail = localStorage.getItem('userEmail');
     userEmail = userEmail.replace(/"/g, '');
     users = JSON.parse(await getItem('users'));
-    let user = users.find((u) => u.email == userEmail);
+    /* let user = users.find((u) => u.email == userEmail); */
     if (action === 'getFromServer') {
       await getTasksFromServer(user); // getTasksFromServer('maxmustermann@web.de')
     } else if (action === 'sendToServer') {
@@ -776,7 +776,6 @@ async function getTasksFromServer(user) {
   if (user !== 'guest') {
     tasks = JSON.parse(await getItem(`${user.email}`));
     tasks.forEach((oneTask) => createdTasks.push(oneTask));
-      
   } else if (user === 'guest') {
     tasks = JSON.parse(await getItem('guestTasks'));
     tasks.forEach((oneTask) => createdTasks.push(oneTask));
