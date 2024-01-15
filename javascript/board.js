@@ -27,13 +27,14 @@ async function loadTasksUserOrGuest() {
     users = JSON.parse(await getItem('users'));
     let user = users.find((u) => u.email === userEmail);
     if (user) {                                   
-          tasks = JSON.parse(await getItem(`${user.email}`));    
+          tasks = JSON.parse(await getItem(`${user.email}`));   
         }
       } else {
         tasks = JSON.parse(await getItem('guestTasks'));
       }
     }
 
+    
 document.addEventListener('click', function (event) {
   const CLICKED_ELEMENT = event.target;
 
