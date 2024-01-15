@@ -51,6 +51,7 @@ position wurde auf sticky gesetzt;
 header height habe ich auskommentiert;
 */
 
+/* font-weight anpassen?? */
 h3 {
     color: var(--accent-color-white);
     font-weight: 700;
@@ -306,7 +307,6 @@ breakpoint: 50em
         margin: 0 0 0 180px;
         /* max-width: 456px; */
         position: relative;
-        border: blue 1px solid;
     }
 
 

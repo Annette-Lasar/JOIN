@@ -34,6 +34,18 @@ async function loadTasksUserOrGuest() {
       }
     }
 
+document.addEventListener('click', function (event) {
+  const CLICKED_ELEMENT = event.target;
+
+  if (CLICKED_ELEMENT.classList.contains('context-menu-close')) {
+    // Wenn auf das Schließen-Icon geklickt wurde, stoppe die Event-Propagation
+    event.stopPropagation();
+    
+    // Rufe die Funktion zum Schließen des Kontextmenüs auf
+    const dataIndex = CLICKED_ELEMENT.closest('.context-menu-card').dataset.index;
+    closeContextMenu(dataIndex);
+  }
+});
 
 function showTasksOnBoard() {
   clearContainers('toDo', 'inProgress', 'awaitFeedback', 'done');
@@ -54,7 +66,7 @@ function callFurtherFunctionsToRenderTasks(i, oneTask, status) {
     newTruncatedSentence,
     completedSubtasksInPercent
   );
-  updateProgressBar(i, tasks[i]); // Kommentar:  Funktionen hier richtig platziert?
+  updateProgressBar(i, tasks[i]);
   updateCompletedTasks(i, tasks[i]);
   renderContactsOnOutsideCard(i, oneTask);
   renderContactsInsideCard(i, oneTask);
@@ -285,7 +297,6 @@ function generateSubtaskHTML(i, j, oneSubtask) {
   `;
 }
 
-
 function checkForCompletedSubtasks(j, oneTask, individualSubtaskCheckbox) {
   let finallyCompletedSubtasks;
   if (individualSubtaskCheckbox.checked == true) {
@@ -296,10 +307,7 @@ function checkForCompletedSubtasks(j, oneTask, individualSubtaskCheckbox) {
     oneTask.subtasks[j].checked_status = false;
   }
   oneTask.completed_subtasks = finallyCompletedSubtasks;
-  console.log('completed im JSON: ', oneTask.completed_subtasks);
 }
-
-
 
 function markCheckboxesAccordingToStatus(
   checkedStatus,
@@ -335,11 +343,11 @@ function generateToDoHTML(
                       <img class="prio-icon" src="../icons/prio_${oneTask.current_prio}.svg">
                   </div>
               </div>
-              <div id="context_menu_${i}" class="context-menu-card d-none">  
+              <div id="context_menu_${i}" class="context-menu-card d-none" data-index="${i}">  
                 <div>
                   <div class="context-menu-move-to-wrapper">
                     <h3>Move card to ...</h3>  
-                    <img onclick="openOrCloseContainer(${i}, 'context_menu_${i}', 'close')" id="context_menu_close_${i}" class="context-menu-close" src="../icons/close_white.svg" alt="">
+                    <img id="context_menu_close_${i}" class="context-menu-close" src="../icons/close_white.svg" alt="">
                   </div>
                 </div>  
                 <ul>
@@ -441,21 +449,11 @@ async function checkUserLogin() {
   }
 }
 
+
 async function deleteTask(i) {
-  let currentUser = checkUserLogin();
-  if (currentUser) {
-    tasks.splice(i, 1);
-    console.log('tasks: ', tasks);
-  } else {
-    renderAlert(
-      'alert_container',
-      'alert_content',
-      "You are not authorized to delete tasks from the guest's account. Please open your own account."
-    );
-  }
+  tasks.splice(i, 1);
   openOrCloseAlertContainer('confirm_container', 'close');
   await sendDataToServer();
-  console.log('tasks: ', tasks);
   await loadTasksUserOrGuest();
   showTasksOnBoard();
 }
@@ -487,11 +485,35 @@ function addTaskCardEventListener() {
   }
 }
 
+/* function addContextMenuEventListener() {
+
+} */
+
+/* document.addEventListener('click', function (event) {
+  const CLICKED_ELEMENT = event.target;
+  if (CLICKED_ELEMENT.classList.contains('context-menu-card')) {
+    const dataIndex = CLICKED_ELEMENT.dataset.index;
+    closeContextMenu(dataIndex);
+  }
+});
+
+function closeContextMenu(i) {
+  const contextMenuContainer = document.getElementById(`context_menu_${i}`);
+  contextMenuContainer.classList.add('d-none');
+} */
+
+
+
+function closeContextMenu(i) {
+  const contextMenuContainer = document.getElementById(`context_menu_${i}`);
+  contextMenuContainer.classList.add('d-none');
+}
+
+
 function openOrCloseContainer(i, containerId, action) {
   const cardMenuContainer = document.getElementById(containerId);
   if (containerId === `edit_task_wrapper_${i}`) {
     if (action === 'open') {
-      addTaskCardEventListener();
       checkForCurrentSubtaskStatus(i);
       updateProgressBar(i, tasks[i]);
       updateCompletedTasks(i, tasks[i]);
@@ -503,11 +525,14 @@ function openOrCloseContainer(i, containerId, action) {
       document.body.style.overflow = 'visible';
     }
   } else if (action === 'open') {
+    addTaskCardEventListener();
     cardMenuContainer.classList.remove('d-none');
   } else if (action === 'close') {
     cardMenuContainer.classList.add('d-none');
   }
 }
+
+
 
 function checkForCurrentSubtaskStatus(i) {
   const subtasks = tasks[i].subtasks;
