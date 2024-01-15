@@ -14,15 +14,15 @@ let tasksGuest = [
         subtasks: [
             {
                 subtask_name: 'Research JWT and its best practices',
-                checked: false
+                checked_status: false
             },
             {
                 subtask_name: 'Create database schema for user information',
-                checked: false
+                checked_status: false
             },
             {
                 subtask_name: 'Implement sign-up and login API endpoints',
-                checked: false
+                checked_status: false
             }  
         ],   
         completed_subtasks: 0,      
@@ -62,15 +62,15 @@ let tasksGuest = [
         subtasks: [
             {
                 subtask_name: 'Analyze current query performance',
-                checked: false 
+                checked_status: false 
             },
             { 
                 subtask_name: 'Identify queries that can be optimized',
-                checked: false
+                checked_status: false
             },
             {   
                 subtask_name: 'Rewrite and test improved queries',
-                checked: false
+                checked_status: false
             } 
         ], 
         completed_subtasks: 0,
@@ -98,11 +98,11 @@ let tasksGuest = [
         subtasks: [
             {
                 subtask_name: 'Create high-fidelity mockups incorporating brand elements',
-                checked: false
+                checked_status: false
             },
             { 
                 subtask_name: 'Collaborate with the development team for implementation',
-                checked: false
+                checked_status: false
             }
         ],
         completed_subtasks: 0,
@@ -232,19 +232,19 @@ let tasksGuest = [
         subtasks: [
             {
                 subtask_name: 'Develop a campaign theme and goals',
-                checked: false
+                checked_status: false
             },
             {
                 subtask_name: 'Create a content calendar with daily posts and activities',
-                checked: false
+                checked_status: false
             },
             {
                 subtask_name: 'Collaborate with influencers to amplify our reach',
-                checked: false
+                checked_status: false
             },
             {
                 subtask_name: 'Analyze campaign performance and adjust strategies as needed',
-                checked: false
+                checked_status: false
             }  
         ],
         completed_subtasks: 0,

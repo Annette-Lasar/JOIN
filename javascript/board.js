@@ -28,16 +28,13 @@ async function loadTasksUserOrGuest() {
     userEmail = userEmail.replace(/"/g, '');
     users = JSON.parse(await getItem('users'));
     let user = users.find((u) => u.email === userEmail);
-    if (user) {
-      if (`${user.email}`) {
-        // hier liegt ein Fehler; wird immer true sein. Müssen Anfrage an SERVER senden !
-        tasks = JSON.parse(await getItem(`${user.email}`)); // Da if-Abfrage immer true, wird ein key angefragt, den es manchmal noch gar nicht gibt !
+    if (user) {                                   
+          tasks = JSON.parse(await getItem(`${user.email}`));    
+        }
+      } else {
+        tasks = JSON.parse(await getItem('guestTasks'));
       }
     }
-  } else {
-    tasks = JSON.parse(await getItem('guestTasks'));
-  }
-}
 
 document.addEventListener('click', function (event) {
   const CLICKED_ELEMENT = event.target;
@@ -438,11 +435,13 @@ async function sendDataToServer() {
   }
 }
 
+
 async function checkUserLogin() {
   let userLogin = localStorage.getItem('userLogin');
   if (userLogin == 'true') {
     let userEmail = localStorage.getItem('userEmail');
     userEmail = userEmail.replace(/"/g, '');
+    users = JSON.parse(await getItem('users'));
     let user = users.find((u) => u.email == userEmail);
     if (user) {
       return user;
