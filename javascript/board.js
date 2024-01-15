@@ -427,11 +427,13 @@ async function sendDataToServer() {
   }
 }
 
+
 async function checkUserLogin() {
   let userLogin = localStorage.getItem('userLogin');
   if (userLogin == 'true') {
     let userEmail = localStorage.getItem('userEmail');
     userEmail = userEmail.replace(/"/g, '');
+    users = JSON.parse(await getItem('users'));
     let user = users.find((u) => u.email == userEmail);
     if (user) {
       return user;

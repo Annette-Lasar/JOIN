@@ -774,12 +774,10 @@ async function checkIfUserIsLoggedIn(action) {
 
 async function getTasksFromServer(user) {
   if (user !== 'guest') {
-    if (`${user.email}`) {
-      if(user.tasks.length > 0) {
-        tasks = JSON.parse(await getItem(`${user.email}`));
-        tasks.forEach((oneTask) => createdTasks.push(oneTask));
-      }
-    }
+     
+    tasks = JSON.parse(await getItem(`${user.email}`));
+    tasks.forEach((oneTask) => createdTasks.push(oneTask));
+      
   } else if (user === 'guest') {
     tasks = JSON.parse(await getItem('guestTasks'));
     tasks.forEach((oneTask) => createdTasks.push(oneTask));
