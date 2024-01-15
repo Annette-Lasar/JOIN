@@ -34,20 +34,6 @@ async function loadTasksUserOrGuest() {
       }
     }
 
-    
-document.addEventListener('click', function (event) {
-  const CLICKED_ELEMENT = event.target;
-
-  if (CLICKED_ELEMENT.classList.contains('context-menu-close')) {
-    // Wenn auf das Schließen-Icon geklickt wurde, stoppe die Event-Propagation
-    event.stopPropagation();
-    
-    // Rufe die Funktion zum Schließen des Kontextmenüs auf
-    const dataIndex = CLICKED_ELEMENT.closest('.context-menu-card').dataset.index;
-    closeContextMenu(dataIndex);
-  }
-});
-
 function showTasksOnBoard() {
   clearContainers('toDo', 'inProgress', 'awaitFeedback', 'done');
   for (let i = 0; i < tasks.length; i++) {
@@ -359,13 +345,7 @@ function generateToDoHTML(
                 </ul>
               </div>
           </div>
-          `;
-}
-
-
-function generateDetailViewHTML(i, oneTask, ) {
-  return /* html */ `
-  <div id="edit_task_wrapper_${i}" class="edit-task-wrapper d-none">
+          <div id="edit_task_wrapper_${i}" class="edit-task-wrapper d-none">
               <div class="category-and-close-wrapper">
                 <div class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
                 <img class="edit-close-button" onclick="openOrCloseContainer(${i}, 'edit_task_wrapper_${i}', 'close')" src="../icons/close.svg" alt="">
@@ -408,8 +388,10 @@ function generateDetailViewHTML(i, oneTask, ) {
                   </div>
                 </div>
                 </div>
-          </div>`;
+          </div>
+          `;
 }
+
 
 function startDragging(id) {
   currentDraggedElement = id;
@@ -491,24 +473,13 @@ function addTaskCardEventListener() {
   }
 }
 
-/* function addContextMenuEventListener() {
-
-} */
-
-/* document.addEventListener('click', function (event) {
+document.addEventListener('click', function (event) {
   const CLICKED_ELEMENT = event.target;
   if (CLICKED_ELEMENT.classList.contains('context-menu-card')) {
     const dataIndex = CLICKED_ELEMENT.dataset.index;
     closeContextMenu(dataIndex);
   }
 });
-
-function closeContextMenu(i) {
-  const contextMenuContainer = document.getElementById(`context_menu_${i}`);
-  contextMenuContainer.classList.add('d-none');
-} */
-
-
 
 function closeContextMenu(i) {
   const contextMenuContainer = document.getElementById(`context_menu_${i}`);
@@ -521,7 +492,7 @@ function openOrCloseContainer(i, containerId, action) {
   if (containerId === `edit_task_wrapper_${i}`) {
     if (action === 'open') {
       checkForCurrentSubtaskStatus(i);
-      generateDetailViewHTML(i, tasks[i]);
+      /* generateDetailViewHTML(i, tasks[i]); */
       updateProgressBar(i, tasks[i]);
       updateCompletedTasks(i, tasks[i]);
       cardMenuContainer.classList.remove('d-none');
