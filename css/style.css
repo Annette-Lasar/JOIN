@@ -120,7 +120,37 @@ header p {
     transform: scale(1.2);
 }
 
+/* =======================================================
+header menu
+========================================================== */
 
+.header-menu {
+    position: absolute;
+    top: var(--header-height);
+    right: 1em;
+    background-color: var(--background-color-darkblue);
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 20px;
+    border-top-right-radius: 0;
+}
+
+.header-menu a{
+    padding: 8px 16px;
+    margin: 5.5px 0;
+    font-size: 16px;
+    color: #cdcdcd;
+    cursor: pointer;
+}
+
+.header-menu a:hover {
+    background-color: #2a3d59;
+}
+
+.header-active, .header-active:hover {
+    background-color: var(--background-color-mediumgray);
+}
 
 /* =======================================================
 navigation
