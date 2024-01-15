@@ -1,5 +1,3 @@
-// falls User-Login, dann das JSON-Array des jeweiligen Users vom Server hier rein laden; ansonsten das Array 'guestTasks' vom Server holen
-// egal welche Login-Art: Die Arrays werden immer in das Array tasks[] geladen; danach wird das Array tasks[] gerendert
 let tasks = [];
 let completedSubtasks = 2;
 
@@ -20,7 +18,7 @@ function clearContainers(...containerIDs) {
   });
 }
 
-// prüfen ob Gäste- oder User-Login: je nachdem wird das jeweilige JSON-Array vom Server geladen, d.h. entweder das jeweilige UserTaskArray oder das Gäste-Array
+
 async function loadTasksUserOrGuest() {
   let userLogin = localStorage.getItem('userLogin');
   if (userLogin == 'true') {
@@ -29,13 +27,14 @@ async function loadTasksUserOrGuest() {
     users = JSON.parse(await getItem('users'));
     let user = users.find((u) => u.email === userEmail);
     if (user) {                                   
-          tasks = JSON.parse(await getItem(`${user.email}`));    
+          tasks = JSON.parse(await getItem(`${user.email}`));   
         }
       } else {
         tasks = JSON.parse(await getItem('guestTasks'));
       }
     }
 
+    
 document.addEventListener('click', function (event) {
   const CLICKED_ELEMENT = event.target;
 
