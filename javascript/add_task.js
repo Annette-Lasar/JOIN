@@ -774,7 +774,6 @@ async function checkIfUserIsLoggedIn(action) {
 
 async function getTasksFromServer(user) {
   if (user !== 'guest') {
-     
     tasks = JSON.parse(await getItem(`${user.email}`));
     tasks.forEach((oneTask) => createdTasks.push(oneTask));
       
