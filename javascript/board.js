@@ -360,7 +360,13 @@ function generateToDoHTML(
                 </ul>
               </div>
           </div>
-          <div id="edit_task_wrapper_${i}" class="edit-task-wrapper d-none">
+          `;
+}
+
+
+function generateDetailViewHTML(i, oneTask, ) {
+  return /* html */ `
+  <div id="edit_task_wrapper_${i}" class="edit-task-wrapper d-none">
               <div class="category-and-close-wrapper">
                 <div class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
                 <img class="edit-close-button" onclick="openOrCloseContainer(${i}, 'edit_task_wrapper_${i}', 'close')" src="../icons/close.svg" alt="">
@@ -403,8 +409,7 @@ function generateToDoHTML(
                   </div>
                 </div>
                 </div>
-          </div>
-          `;
+          </div>`;
 }
 
 function startDragging(id) {
@@ -517,6 +522,7 @@ function openOrCloseContainer(i, containerId, action) {
   if (containerId === `edit_task_wrapper_${i}`) {
     if (action === 'open') {
       checkForCurrentSubtaskStatus(i);
+      generateDetailViewHTML(i, tasks[i]);
       updateProgressBar(i, tasks[i]);
       updateCompletedTasks(i, tasks[i]);
       cardMenuContainer.classList.remove('d-none');
