@@ -759,7 +759,7 @@ async function checkIfUserIsLoggedIn(action) {
     users = JSON.parse(await getItem('users'));
     let user = users.find((u) => u.email == userEmail);
     if (action === 'getFromServer') {
-      await getTasksFromServer(user);
+      await getTasksFromServer(user); // getTasksFromServer('maxmustermann@web.de')
     } else if (action === 'sendToServer') {
       await sendNewTaskToServer(user);
     }
@@ -795,7 +795,7 @@ async function sendNewTaskToServer(user) {
       renderAlert(
         'alert_container',
         'alert_content',
-        'A new task has successfully been created'
+        'A new task has successfully been created and added to the board.'
       );
     } else {
       await setItem(`${user.email}`, JSON.stringify(createdTasks));
@@ -803,7 +803,7 @@ async function sendNewTaskToServer(user) {
       renderAlert(
         'alert_container',
         'alert_content',
-        'A new task has successfully been created'
+        'A new task has successfully been created and added to your board.'
       );
     }
   }

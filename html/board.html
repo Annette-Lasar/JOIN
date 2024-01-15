@@ -23,9 +23,11 @@
       <div class="headline-searchbar-addTask-wrapper">
         <div class="headline-and-btn-wrapper">
           <h1 class="board-headline">Board</h1>
-          <button class="addTaskToBoard-btn-small">
-            <img src="../icons/plus_white.svg" alt="" />
-          </button>
+          <a href="add_task.html">
+            <button class="addTaskToBoard-btn-small">
+              <img src="../icons/plus_white.svg" alt="" />
+            </button>
+          </a>
         </div>
         <div class="searchbar-and-addTaskBtn-wrapper">
           <div class="search-input-wrapper">
@@ -35,10 +37,11 @@
               <img class="search-icon" src="../icons/search.svg" alt="" />
             </div>
           </div>
-          <button class="addTaskToBoard-btn-big">Add Task +</button>
+          <a href="add_task.html">
+            <button class="addTaskToBoard-btn-big">Add Task +</button>
+          </a>
         </div>
       </div>
-
       <div class="board">
         <div class="status">
           <div class="status-headline">
@@ -98,7 +101,7 @@
     <div id="alert_container" class="alert-container d-none">
       <div class="alert-image-wrapper">
         <img class="alert-logo" src="../icons/join_logo_white.svg" alt="" />
-        <h3>Alert</h3>
+        <h3>Information</h3>
         <img
           onclick="openOrCloseAlertContainer('alert_container', 'close')"
           class="alert-close"
@@ -110,7 +113,7 @@
     <div id="confirm_container" class="confirm-container d-none">
       <div class="confirm-image-wrapper">
         <img class="confirm-logo" src="../icons/join_logo_white.svg" alt="" />
-        <h3>Alert</h3>
+        <h3>Information</h3>
         <img
           onclick="openOrCloseAlertContainer('confirm_container', 'close')"
           class="confirm-close"
