@@ -1,5 +1,32 @@
 let tasks = [];
-let completedSubtasks = 2;
+let contacts = [];
+let guestContacts = [];
+let testContacts = [
+  {
+    name: 'Bilbo Beutlin',
+    e_mail: 'bilbo@gmail.com',
+    phone: '0151-98765432',
+    color: '#ff7a00',
+  },
+  {
+    name: 'Hermione Granger',
+    e_mail: 'grangerh@hotmail.com',
+    phone: '0172-4567890',
+    color: '#9327ff',
+  },
+  {
+    name: 'Donald Duck',
+    e_mail: 'duckduckduck@gmail.com',
+    phone: '030-987654321',
+    color: '#6e52ff',
+  },
+  {
+    name: 'Fred Feuerstein',
+    e_mail: 'fredyf@gmail.com',
+    phone: '040-456789012',
+    color: '#fc71ff',
+  },
+]
 
 let currentDraggedElement;
 
@@ -27,9 +54,11 @@ async function loadTasksUserOrGuest() {
     let user = users.find((u) => u.email === userEmail);
     if (user) {
       tasks = JSON.parse(await getItem(`${user.email}_tasks`));
+      contacts = JSON.parse(await getItem(`${user.email}_contacts`));
     }
   } else {
     tasks = JSON.parse(await getItem('guestTasks'));
+    guestContacts = JSON.parse(await getItem('guestContacts'));
   }
 }
 
@@ -377,6 +406,7 @@ async function checkUserLogin() {
     users = JSON.parse(await getItem('users'));
     let user = users.find((u) => u.email == userEmail);
     if (user) {
+      console.log(user);
       return user;
     }
   } else {
@@ -506,7 +536,7 @@ function generateDetailViewHTML(i, oneTask) {
               <img class="prio-icon" src="../icons/prio_${oneTask.current_prio}.svg" alt="">
           </div>
         </div>
-        <div class="detail-task-contacts-wrapper">
+        <div id="detail_task_contacts_wrapper${i}" class="detail-task-contacts-wrapper">
           <div class="assigned-to">Assigned To:</div>
           <div>
             <div class="detail-contacts-wrapper">
@@ -541,6 +571,7 @@ function editTask(i) {
   editDescription(i, tasks[i]);
   editDueDate(i, tasks[i]);
   editPriority(i, tasks[i]);
+  editContacts(i);
   editSubtasks(i, tasks[i]);
   createOkButton(i);
 }
@@ -729,6 +760,98 @@ function changePrioStatus(i, prioStatus) {
   } */
 }
 
+async function editContacts(i) {
+  const contactsWrapper = document.getElementById(
+    `detail_task_contacts_wrapper${i}`
+  );
+  contactsWrapper.innerHTML = '';
+  let user = await checkUserLogin();
+  if (user) {
+    console.log('user: ', user.email); // Muss ich das Array hier nochmal holen oder reicht das beim Laden der Seite?
+    contactsWrapper.innerHTML = generateContactsDropdownHTML(i);
+    renderUserContactList(i);
+  } else if (user == false) {
+    console.log('guestContacts: ', guestContacts);
+    contactsWrapper.innerHTML = generateContactsDropdownHTML(i);
+    renderGuestContactList(i);
+  }
+}
+
+function generateContactsDropdownHTML(i) {
+  return /* html */ `
+          <section class="edit-contact-wrapper">
+            <div class="edit-headline">Assigned to</div>
+            <div
+              onclick="toggleDropdownList('edit_contact_list${i}', 'select_arrow_contacts${i}' )"
+              class="edit-contacts-dropdown-list"
+            >
+              Select contacts to assign<img
+                id="select_arrow_contacts${i}"
+                class="edit-select-arrow-contacts"
+                src="../icons/arrow_drop_down.svg"
+              />
+            </div>
+            <ul id="edit_contact_list${i}" class="edit-contact-list">
+            </ul>
+          </section>
+  `;
+}
+
+function addSubtaskToArray(i) {
+  let newSubTask = {
+    subtask_name: 'Wäsche waschen',
+    checked_status: false,
+  }
+
+  tasks[i].subtasks.push(newSubTask);
+  renderSubtasksList(i, tasks[i]);
+}
+
+function renderUserContactList(i) {
+    const editContactsList = document.getElementById(`edit_contact_list${i}`);
+    editContactsList.innerHTML = '';
+    for (let j = 0; j < testContacts.length; j++) {
+      const oneContact = testContacts[j];
+      editContactsList.innerHTML += generateContactListHTML(i, j, oneContact);
+    }
+}
+
+function renderGuestContactList(i) {
+  const editContactsList = document.getElementById(`edit_contact_list${i}`);
+    editContactsList.innerHTML = '';
+    for (let j = 0; j < guestContacts.length; j++) {
+      const oneContact = guestContacts[j];
+      editContactsList.innerHTML += generateContactListHTML(i, j, oneContact);
+    }
+}
+
+function generateContactListHTML(i, j, oneContact) {
+  const [firstName, lastName] = oneContact.name.split(' ');
+    return /* html */ `
+      <li class="edit-contact-list-wrapper">
+        <label for="contact_checkbox_${i}_${j}" class="initials-wrapper">
+          <div class="contact-name-wrapper">
+            <div class="initials-icon" style="background-color: ${
+            oneContact.color
+          }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
+            <div>
+          ${oneContact.name}
+            </div>
+          </div>
+        </label>
+        <div><input id="contact_checkbox_${i}_${j}" type="checkbox"></div>
+      </li>
+    `;
+}
+
+function toggleDropdownList(idContainer, idArrow) {
+  const DROPDOWN_LIST = document.getElementById(idContainer);
+  const SELECT_ARROW = document.getElementById(idArrow);
+  DROPDOWN_LIST.classList.toggle('show');
+  SELECT_ARROW.classList.toggle('turn');
+}
+
+
 function editSubtasks(i, oneTask) {
   const subtasksBox = document.getElementById(
     `detail_task_subtasks_wrapper${i}`
@@ -736,15 +859,20 @@ function editSubtasks(i, oneTask) {
   subtasksBox.innerHTML = '';
   subtasksBox.innerHTML = generateEditSubtasksHTML(i);
   renderSubtasksList(i, oneTask);
-  
 }
 
 function renderSubtasksList(i, oneTask) {
-  const subtasksListContainer = document.getElementById(`subtask_container_${i}`);
+  const subtasksListContainer = document.getElementById(
+    `subtask_container_${i}`
+  );
   subtasksListContainer.innerHTML = '';
   for (let j = 0; j < oneTask.subtasks.length; j++) {
     const oneSubtask = oneTask.subtasks[j];
-    subtasksListContainer.innerHTML += generateSubtasksListHTML(i, j, oneSubtask);    
+    subtasksListContainer.innerHTML += generateSubtasksListHTML(
+      i,
+      j,
+      oneSubtask
+    );
   }
 }
 
@@ -811,13 +939,15 @@ function generateSubtasksListHTML(i, j, oneSubtask) {
   `;
 }
 
-{/* <div id="subtask_list_wrapper_${containerType}_${i}" class="subtask-list-${containerType}">${subtask.subtask_name}
+{
+  /* <div id="subtask_list_wrapper_${containerType}_${i}" class="subtask-list-${containerType}">${subtask.subtask_name}
         <div class="subtask-button-wrapper-${containerType}">
           <img onclick="editSubtask(${i}, '${containerType}', '${subtask.subtask_name}')" src="../icons/edit_dark.svg">
           <div class="subtask-separator-line"></div>
           <img onclick="deleteSubtask(${i})" src="../icons/delete.svg">
         </div>
-      </div> */}
+      </div> */
+}
 
 function createOkButton(i) {
   const okayButtonContainer = document.getElementById(`delete_and_edit_${i}`);

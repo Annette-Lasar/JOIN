@@ -1,5 +1,6 @@
-function initTasks() {
+async function initTasks() {
   init();
+  await checkIfUserIsLoggedIn('getFromServer');
   showAndHideBoxesAccordingToScreenSize();
   setStandardDateToToday('task_due_date_small');
   setStandardDateToToday('task_due_date_big');
