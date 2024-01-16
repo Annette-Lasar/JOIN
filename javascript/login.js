@@ -1,3 +1,8 @@
+/**
+ * Function called when clicking 'Login'
+ * we read the fields of email and password, then search for this user in the array 'users'
+ * if the user is found, the user data is stored in localStorage, and the user is redirected to summary.html
+ */
 async function login() {
     let email = document.getElementById('email_Login').value;
     let password = document.getElementById('password_Login').value;
@@ -11,6 +16,11 @@ async function login() {
 }
 
 
+/**
+ * user data is stored in localStorage
+ * 
+ * @param {JSON} user - The user from the 'users' array who has just logged in
+ */
 function loginSuccessful(user) {
     let successfulLogin = true;
     successfulLogin = JSON.stringify(successfulLogin);
