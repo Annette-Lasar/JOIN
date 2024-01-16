@@ -556,26 +556,6 @@ function renderSubtasks() {
 }
 
 /**
- * With this function the html code for rendering the subtask is generated.
- * @param {integer} i - Index of the current task.
- * @param {string} subtask - Value/ text of the current task
- * @param {string} containerType - Container type ('small' or 'big') according to
- * whether the user is working in a small or wide viewport
- * @returns
- */
-function generateSubtaskHTML(i, subtask, containerType) {
-  return /* html */ `
-      <div id="subtask_list_wrapper_${containerType}_${i}" class="subtask-list-${containerType}">${subtask.subtask_name}
-        <div class="subtask-button-wrapper-${containerType}">
-          <img onclick="editSubtask(${i}, '${containerType}', '${subtask.subtask_name}')" src="../icons/edit_dark.svg">
-          <div class="subtask-separator-line"></div>
-          <img onclick="deleteSubtask(${i})" src="../icons/delete.svg">
-        </div>
-      </div>
-  `;
-}
-
-/**
  * This function enables the user to edit his subtasks. It accesses the html element
  * that contains the subtask in question by its ID and exchanges the element for an
  * input field.

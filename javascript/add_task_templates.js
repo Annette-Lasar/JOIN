@@ -121,6 +121,26 @@ function generateInputForNewCategoryHTML(i, containerType, randomColor) {
 }
 
 /**
+ * With this function the html code for rendering the subtask is generated.
+ * @param {integer} i - Index of the current task.
+ * @param {string} subtask - Value/ text of the current task
+ * @param {string} containerType - Container type ('small' or 'big') according to
+ * whether the user is working in a small or wide viewport
+ * @returns
+ */
+function generateSubtaskHTML(i, subtask, containerType) {
+  return /* html */ `
+      <div id="subtask_list_wrapper_${containerType}_${i}" class="subtask-list-${containerType}">${subtask.subtask_name}
+        <div class="subtask-button-wrapper-${containerType}">
+          <img onclick="editSubtask(${i}, '${containerType}', '${subtask.subtask_name}')" src="../icons/edit_dark.svg">
+          <div class="subtask-separator-line"></div>
+          <img onclick="deleteSubtask(${i})" src="../icons/delete.svg">
+        </div>
+      </div>
+  `;
+}
+
+/**
  * This function generates an input field that contains the text of the former
  * subtask and two buttons (x and accept) which are separated by a vertical line.
  * @param {integer} i - index of the current subtask

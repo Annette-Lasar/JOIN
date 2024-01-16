@@ -437,11 +437,13 @@ function openOrCloseContainer(i, containerId, action) {
   if (containerId === `detail_task_wrapper_${i}`) {
     if (action === 'open') {
       cardMenuContainer.classList.remove('d-none');
-      renderTaskDetailView(i, tasks[i], cardMenuContainer);
+      renderTaskDetailView(i);
       updateProgressBar(i, tasks[i]);
       updateCompletedTasks(i, tasks[i]);
       document.body.style.overflow = 'hidden';
     } else if (action === 'close') {
+      const editTaskWrapper = document.getElementById(`edit_task_wrapper${i}`);
+      editTaskWrapper.classList.remove('edit-task-wrapper');
       cardMenuContainer.classList.add('d-none');
       updateProgressBarAndCompletedTasks(i, tasks[i]);
       document.body.style.overflow = 'visible';
@@ -482,17 +484,20 @@ function renderTaskDetailView(i) {
 
 function generateDetailViewHTML(i, oneTask) {
   return /* html */ `
-        <div class="category-and-close-wrapper">
+        <div id="category_and_close_wrapper${i}" class="category-and-close-wrapper">
           <div class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
           <img class="detail-close-button" onclick="openOrCloseContainer(${i}, 'detail_task_wrapper_${i}', 'close')" src="../icons/close.svg" alt="">
         </div>
-        <h4 id="detail_title${i}">${oneTask.title}</h4>
+        <div id="edit_task_wrapper${i}">
+        <div id="detail_title${i}">
+            <h4>${oneTask.title}</h4>
+        </div>
         <div id="detail_description${i}">
           <div class="task-description">${oneTask.description}</div>
         </div>
-        <div class="task-due-date-wrapper">
+        <div id="current_due_date_${i}" class="task-due-date-wrapper">
           <span class="due-date">Due date: </span>
-          <span id="current_due_date_${i}">${oneTask.current_due_date}</span>
+          <span>${oneTask.current_due_date}</span>
         </div>
         <div id="task_priority_wrapper${i}" class="task-priority-wrapper">
           <div class="priority">Priority:</div>
@@ -509,19 +514,20 @@ function generateDetailViewHTML(i, oneTask) {
             </div>
           </div>
         </div>
-        <div class="detail-task-subtasks-wrapper">
+        <div id="detail_task_subtasks_wrapper${i}" class="detail-task-subtasks-wrapper">
           <div class="subtasks-title">Subtasks:</div>
           <div id="detail_subtasks_wrapper_${i}" class="detail-subtasks-wrapper"></div>
         </div>
-        <div class="delete-and-edit-wrapper">
+        </div>
+        <div id="delete_and_edit_wrapper${i}" class="delete-and-edit-wrapper">
           <div id="delete_and_edit_${i}" class="delete-and-edit">
             <div onclick="renderConfirmDelete(${i}, 'confirm_container', 'confirm_content', 'Are you sure you want to delete this task permanently? This process is irreversible.');" class="delete-wrapper">
               <img src="../icons/delete.svg" alt="">
               <div>Delete</div>
             </div>
-            <div class="edit-wrapper">
+            <div onclick="editTask(${i})" class="edit-wrapper">
               <img src="../icons/edit_dark.svg" alt="">
-              <div onclick="editTask(${i})">Edit</div>
+              <div>Edit</div>
             </div>
           </div>
         </div>
@@ -529,42 +535,96 @@ function generateDetailViewHTML(i, oneTask) {
 }
 
 function editTask(i) {
+  replaceCategory(i);
+  addClassToContainer(i);
   editTitle(i, tasks[i]);
   editDescription(i, tasks[i]);
   editDueDate(i, tasks[i]);
   editPriority(i, tasks[i]);
+  editSubtasks(i, tasks[i]);
   createOkButton(i);
+}
+
+function replaceCategory(i) {
+  const closeBox = document.getElementById(`category_and_close_wrapper${i}`);
+  closeBox.innerHTML = '';
+  closeBox.innerHTML = generateCloseIcon(i);
+}
+
+function generateCloseIcon(i) {
+  return /* html */ `
+    <div id="edit_close_button_wrapper${i}" class="edit-close-button-wrapper">
+      <img class="detail-close-button" onclick="openOrCloseContainer(${i}, 'detail_task_wrapper_${i}', 'close')" src="../icons/close.svg" alt="">
+    </div>
+  `;
+}
+
+function addClassToContainer(i) {
+  const editTaskWrapper = document.getElementById(`edit_task_wrapper${i}`);
+  editTaskWrapper.classList.add('edit-task-wrapper');
 }
 
 function editTitle(i, oneTask) {
   const taskTitleBox = document.getElementById(`detail_title${i}`);
   taskTitleBox.innerHTML = '';
-  taskTitleBox.innerHTML = `<input id="edited_task_title_${i}" type="text" value="${oneTask.title}" class="edited-task-title">`;
+  taskTitleBox.innerHTML = generateEditTitleHTML(i, oneTask);
+}
+
+function generateEditTitleHTML(i, oneTask) {
+  return /* html */ `
+      <div class="edited-task-title-wrapper">
+          <div class="edit-headline">Title</div>
+          <input id="edited_task_title_${i}" type="text" value="${oneTask.title}" class="edited-task-title">
+      </div>
+  `;
 }
 
 function editDescription(i, oneTask) {
   const taskDescriptionBox = document.getElementById(`detail_description${i}`);
   taskDescriptionBox.innerHTML = '';
-  taskDescriptionBox.innerHTML = `<textarea name="description" id="edited_task_description${i}" class="edited-task-description" cols="30" rows="5" placeholder="Enter your description">${oneTask.description}</textarea>`;
+  taskDescriptionBox.innerHTML = generateEditDescriptionHTML(i, oneTask);
+}
+
+function generateEditDescriptionHTML(i, oneTask) {
+  return /* html */ `
+  <div>
+    <div class="edit-headline">Description</div>
+    <textarea name="description" id="edited_task_description${i}" class="edited-task-description" cols="30" rows="5" placeholder="Enter your description">${oneTask.description}</textarea>
+  </div>
+  `;
 }
 
 function editDueDate(i, oneTask) {
   const dueDateBox = document.getElementById(`current_due_date_${i}`);
+  let minimumDueDate = standardDateoFToday();
   dueDateBox.innerHTML = '';
-  dueDateBox.innerHTML = `<input type="date" class="edited-due-date" value="${oneTask.current_due_date}">`;
+  dueDateBox.innerHTML = generateEditDueDateHTML(i, oneTask, minimumDueDate);
+}
+
+function standardDateoFToday() {
+  return new Date().toISOString().split('T')[0];
+}
+
+function generateEditDueDateHTML(i, oneTask, minimumDueDate) {
+  return /* html */ `
+      <div>
+        <div class="edit-headline">Due date</div>
+        <input id="edited_task_due_date${i}" type="date" min="${minimumDueDate}" class="edited-due-date" value="${oneTask.current_due_date}">
+      </div>
+  `;
 }
 
 function editPriority(i, oneTask) {
   const priorityBox = document.getElementById(`task_priority_wrapper${i}`);
   priorityBox.innerHTML = '';
-  priorityBox.innerHTML = generatePriorityButtonsHTML(i, oneTask);
+  priorityBox.innerHTML = generatePriorityButtonsHTML(i);
   changePrioStatus(i, oneTask.current_prio);
 }
 
-function generatePriorityButtonsHTML(i, oneTask) {
+function generatePriorityButtonsHTML(i) {
   return /* html */ `
     <section id="edit_prio_section${i}" class="edit-prio-section">
-              <div class="label">Priority</div>
+              <div class="edit-headline">Priority</div>
               <div id="prio_button_wrapper_${i}" class="prio-button-wrapper">
                 <button
                   id="prio_button_urgent_${i}"
@@ -652,22 +712,134 @@ function updateButtons(i, buttonType, isActive) {
   }
 }
 
-// Muss ich hier in den if-Abfragen den Prio-Status im JSON aktualisieren?
+// Kann ich den auskommentierten Teil erst beim Okay-Button aufrufen?
 function changePrioStatus(i, prioStatus) {
   const buttonTypes = ['urgent', 'medium', 'low'];
   buttonTypes.forEach((type) => updateButtons(i, type, false));
   updateButtons(i, prioStatus, true);
-  if (prioStatus === 'urgent') {
-    currentPrio = 'urgent';
+  /* if (prioStatus === 'urgent') {
+    tasks[i].current_prio = prioStatus;
+    console.log('task-prio: ', tasks[i].current_prio);
   } else if (prioStatus === 'medium') {
-    currentPrio = 'medium';
+    tasks[i].current_prio = prioStatus;
+    console.log('task-prio: ', tasks[i].current_prio);
   } else if (prioStatus === 'low') {
-    currentPrio = 'low';
+    tasks[i].current_prio = prioStatus;
+    console.log('task-prio: ', tasks[i].current_prio);
+  } */
+}
+
+function editSubtasks(i, oneTask) {
+  const subtasksBox = document.getElementById(
+    `detail_task_subtasks_wrapper${i}`
+  );
+  subtasksBox.innerHTML = '';
+  subtasksBox.innerHTML = generateEditSubtasksHTML(i);
+  renderSubtasksList(i, oneTask);
+}
+
+function renderSubtasksList(i, oneTask) {
+  const subtasksListContainer = document.getElementById(
+    `subtask_container_${i}`
+  );
+  subtasksListContainer.innerHTML = '';
+  for (let j = 0; j < oneTask.subtasks.length; j++) {
+    const oneSubtask = oneTask.subtasks[j];
+    subtasksListContainer.innerHTML += generateSubtasksListHTML(
+      i,
+      j,
+      oneSubtask
+    );
   }
+}
+
+function generateEditSubtasksHTML(i) {
+  return /* html */ `
+    <section id="section_subtasks_${i}">
+        <div class="edit-headline">Subtasks</div>
+        <div id="edit_subtask_wrapper" class="edit-subtask-wrapper">
+          <input
+              id="input_subtasks${i}"
+              class="input-subtasks"
+              type="text"
+              placeholder="Add new subtask"
+                />
+          <div
+               id="subtasks_image_wrapper_${i}"
+               class="subtasks-image-wrapper"
+                >
+            <div
+               id="close_and_check_wrapper_${i}"
+               class="close-and-check-wrapper d-none"
+                  >
+              <img
+                  onclick="clearSubtask('sub_tasks_small', 'close_and_check_wrapper_small', 'subtask_plus')"
+                  id="cancel_subtask_${i}"
+                  class="cancel-subtask"
+                  src="../icons/close.svg"
+                    />
+                <div class="subtask-separator-line"></div>
+                <img
+                   onclick="addSubtask('sub_tasks_small', 'close_and_check_wrapper_small', 'subtask_plus')"
+                   id="check_subtask_${i}"
+                   class="check-subtask"
+                   src="../icons/check.svg"
+                    />
+              </div>
+                  <img
+                    id="subtask_plus_${i}"
+                    class="edit-plus-button"
+                    onclick="showCancelAndAcceptSubtask('close_and_check_wrapper_small', 'subtask_plus)"
+                    src="../icons/plus.svg"
+                  />
+                </div>
+              </div>
+            </section>
+            <section
+              id="subtask_container_${i}"
+              class="subtask-container"
+            ></section>
+  `;
+}
+
+function generateSubtasksListHTML(i, j, oneSubtask) {
+  return /* html */ `
+    <div class="subtask-list-item-wrapper">
+        <div id="subtask_list_item${i}_${j}" class="subtask-list-item">${oneSubtask.subtask_name}</div>
+        <div class="subtask-list-item-icon-wrapper">
+          <img src="../icons/edit_dark.svg">
+          <div class="subtask-icon-separator"></div>
+          <img src="../icons/delete.svg">
+        </div>
+    </div>
+        
+  `;
+}
+
+{
+  /* <div id="subtask_list_wrapper_${containerType}_${i}" class="subtask-list-${containerType}">${subtask.subtask_name}
+        <div class="subtask-button-wrapper-${containerType}">
+          <img onclick="editSubtask(${i}, '${containerType}', '${subtask.subtask_name}')" src="../icons/edit_dark.svg">
+          <div class="subtask-separator-line"></div>
+          <img onclick="deleteSubtask(${i})" src="../icons/delete.svg">
+        </div>
+      </div> */
 }
 
 function createOkButton(i) {
   const okayButtonContainer = document.getElementById(`delete_and_edit_${i}`);
   okayButtonContainer.innerHTML = '';
-  okayButtonContainer.innerHTML = `<button onclick="renderTaskDetailView(${i})">OK</button>`;
+  okayButtonContainer.innerHTML = generateOkayButtonHTML(i);
+}
+
+// Funktion auf dem Button muss anders sein. Erst muss alles ins Array und auf den Server
+function generateOkayButtonHTML(i) {
+  return /* html */ `
+  <div class="okay-wrapper">
+    <button onclick="renderTaskDetailView(${i})" class="edit-okay-button">
+      OK
+      <img src="../icons/check.svg" height=10">
+    </button>
+  </div>
+  `;
 }
