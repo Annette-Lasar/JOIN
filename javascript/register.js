@@ -6,11 +6,17 @@ let confirmPassword = document.getElementById('confirmPassword_SignUp');
 let users = [];
 
 
+/**
+ * This function is called when you are on the 'SignUp' page and click on 'SignUp' after entering your new user data
+ */
 async function initRegister(){
     await loadUsers();
 }
 
 
+/**
+ * First, all registered users are loaded from the server; on the server, they are stored under the key 'users'
+ */
 async function loadUsers(){
     try {
         users = JSON.parse(await getItem('users'));
@@ -20,6 +26,13 @@ async function loadUsers(){
 }
 
 
+/**
+ * Both passwords must match, and the password needs to be at least 6 characters long;
+ * Additionally, the user account must not already exist;
+ * If all conditions are met, the user is pushed into the 'users' array, which is then sent back to the server;
+ * Additionally, a key is created on the server for each user (in the form of their email address); 
+ * Under this key, their tasks will be stored in an array in the future
+ */
 async function register() {
     if(bothPasswordsMatch()) {
         if(passwordMinimumLength()) {
@@ -46,6 +59,11 @@ async function register() {
 }
 
 
+/**
+ * Both passwords must match
+ * 
+ * @returns {Boolean}
+ */
 function bothPasswordsMatch() {
     if(password.value === confirmPassword.value) {
         return true;
@@ -55,6 +73,11 @@ function bothPasswordsMatch() {
 }
 
 
+/**
+ * password needs to be at least 6 characters long
+ * 
+ * @returns {Boolean}
+ */
 function passwordMinimumLength() {
     if((password.value).length >= 6) {
         return true;
@@ -64,6 +87,11 @@ function passwordMinimumLength() {
 }
 
 
+/**
+ * the user account must not already exist, so we check whether the entered email address already exists
+ * 
+ * @returns 
+ */
 function notAUser() {                      
     let emailInput = document.getElementById('email_SignUp').value;
     let user = users.find(u => u.email == emailInput);
@@ -75,6 +103,9 @@ function notAUser() {
 }
 
 
+/**
+ * we have to clear the form
+ */
 function resetForm() {
     fullName.value = '';
     email.value = '';
@@ -84,6 +115,10 @@ function resetForm() {
 }
 
 
+/**
+ * This function is called once the user has successfully registered;
+ * A success message is displayed, and after 2 seconds, this message disappears and we return to the login screen
+ */
 function successfullyRegistered() {
     document.getElementById('messageBox').style.display = 'block';
     setTimeout(() => {

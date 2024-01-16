@@ -369,6 +369,7 @@ async function sendDataToServer() {
   }
 }
 
+
 async function checkUserLogin() {
   let userLogin = localStorage.getItem('userLogin');
   if (userLogin == 'true') {
