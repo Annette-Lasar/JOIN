@@ -487,6 +487,8 @@ h4 {
 }
 
 .subtask-name {
+  padding: 2px;
+  font-size: 0.75rem;
   flex: 1 1 0;
   cursor: pointer;
 }
@@ -632,11 +634,11 @@ h4 {
 .subtask-list-item {
   padding: 0.3em;
   flex: 1 1 0;
+  font-size: 0.75em;
 }
 
-.subtask-list-item::before {
+.subtask-list-item-wrapper::before {
   content: '\2022';
-  margin-right: 8px;
 }
 
 .subtask-list-item-icon-wrapper {

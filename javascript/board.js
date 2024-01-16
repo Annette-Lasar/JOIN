@@ -369,7 +369,6 @@ async function sendDataToServer() {
   }
 }
 
-
 async function checkUserLogin() {
   let userLogin = localStorage.getItem('userLogin');
   if (userLogin == 'true') {
@@ -737,20 +736,15 @@ function editSubtasks(i, oneTask) {
   subtasksBox.innerHTML = '';
   subtasksBox.innerHTML = generateEditSubtasksHTML(i);
   renderSubtasksList(i, oneTask);
+  
 }
 
 function renderSubtasksList(i, oneTask) {
-  const subtasksListContainer = document.getElementById(
-    `subtask_container_${i}`
-  );
+  const subtasksListContainer = document.getElementById(`subtask_container_${i}`);
   subtasksListContainer.innerHTML = '';
   for (let j = 0; j < oneTask.subtasks.length; j++) {
     const oneSubtask = oneTask.subtasks[j];
-    subtasksListContainer.innerHTML += generateSubtasksListHTML(
-      i,
-      j,
-      oneSubtask
-    );
+    subtasksListContainer.innerHTML += generateSubtasksListHTML(i, j, oneSubtask);    
   }
 }
 
@@ -817,15 +811,13 @@ function generateSubtasksListHTML(i, j, oneSubtask) {
   `;
 }
 
-{
-  /* <div id="subtask_list_wrapper_${containerType}_${i}" class="subtask-list-${containerType}">${subtask.subtask_name}
+{/* <div id="subtask_list_wrapper_${containerType}_${i}" class="subtask-list-${containerType}">${subtask.subtask_name}
         <div class="subtask-button-wrapper-${containerType}">
           <img onclick="editSubtask(${i}, '${containerType}', '${subtask.subtask_name}')" src="../icons/edit_dark.svg">
           <div class="subtask-separator-line"></div>
           <img onclick="deleteSubtask(${i})" src="../icons/delete.svg">
         </div>
-      </div> */
-}
+      </div> */}
 
 function createOkButton(i) {
   const okayButtonContainer = document.getElementById(`delete_and_edit_${i}`);
