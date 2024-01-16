@@ -18,6 +18,7 @@ function clearContainers(...containerIDs) {
   });
 }
 
+
 async function loadTasksUserOrGuest() {
   let userLogin = localStorage.getItem('userLogin');
   if (userLogin == 'true') {
@@ -25,13 +26,13 @@ async function loadTasksUserOrGuest() {
     userEmail = userEmail.replace(/"/g, '');
     users = JSON.parse(await getItem('users'));
     let user = users.find((u) => u.email === userEmail);
-    if (user) {
-      tasks = JSON.parse(await getItem(`${user.email}`));
+    if (user) {                                   
+          tasks = JSON.parse(await getItem(`${user.email}`));   
+        }
+      } else {
+        tasks = JSON.parse(await getItem('guestTasks'));
+      }
     }
-  } else {
-    tasks = JSON.parse(await getItem('guestTasks'));
-  }
-}
 
 function showTasksOnBoard() {
   clearContainers('toDo', 'inProgress', 'awaitFeedback', 'done');
@@ -156,14 +157,14 @@ function generateOverflowIndicatorHTML(hiddenContactsCount) {
 }
 
 function renderContactsInsideCard(i, oneTask) {
-  const detailTaskContactNameContainer = document.getElementById(
-    `detail_contacts_name_${i}`
+  const editTaskContactNameContainer = document.getElementById(
+    `edit_contacts_name_${i}`
   );
-  detailTaskContactNameContainer.innerHTML = '';
+  editTaskContactNameContainer.innerHTML = '';
   for (let j = 0; j < oneTask.current_contacts.length; j++) {
     const oneContact = oneTask.current_contacts[j];
-    detailTaskContactNameContainer.innerHTML +=
-      generateDetailTaskContactNamesHTML(oneContact);
+    editTaskContactNameContainer.innerHTML +=
+      generateEditTaskContactNamesHTML(oneContact);
   }
 }
 
@@ -180,7 +181,7 @@ function generateTaskContactHTML(oneContact) {
     `;
 }
 
-function generateDetailTaskContactNamesHTML(oneContact) {
+function generateEditTaskContactNamesHTML(oneContact) {
   const [firstName, lastName] = oneContact.name.split(' ');
   return /* html */ `
       <div class="initials-and-name-wrapper">
@@ -213,7 +214,7 @@ function formatDateString(inputDate) {
 
 function renderSubtasks(i, oneTask) {
   const subtaskContainer = document.getElementById(
-    `detail_subtasks_wrapper_${i}`
+    `edit_subtasks_wrapper_${i}`
   );
   subtaskContainer.innerHTML = '';
   for (let j = 0; j < oneTask.subtasks.length; j++) {
@@ -308,7 +309,7 @@ function generateToDoHTML(
   completedSubtasksInPercent
 ) {
   return /* html */ `
-          <div id="taskCard_${i}" draggable="true" onclick="openOrCloseContainer(${i}, 'detail_task_wrapper_${i}', 'open')" oncontextmenu="openOrCloseContainer(${i}, 'context_menu_${i}', 'open')" ondragstart="startDragging(${i})" class="todo">
+          <div id="taskCard_${i}" draggable="true" onclick="openOrCloseContainer(${i}, 'edit_task_wrapper_${i}', 'open')" oncontextmenu="openOrCloseContainer(${i}, 'context_menu_${i}', 'open')" ondragstart="startDragging(${i})" class="todo">
             <div class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
               <div class="todo-title">${oneTask['title']}</div>
                 <div class="todo-description">${newTruncatedSentence}</div>
@@ -337,9 +338,10 @@ function generateToDoHTML(
                 </ul>
               </div>
           </div>
-          <div id="detail_task_wrapper_${i}" class="detail-task-wrapper d-none"></div>
+          <div id="edit_task_wrapper_${i}" class="edit-task-wrapper d-none"></div>
           `;
 }
+
 
 function startDragging(id) {
   currentDraggedElement = id;
@@ -369,6 +371,7 @@ async function sendDataToServer() {
   }
 }
 
+
 async function checkUserLogin() {
   let userLogin = localStorage.getItem('userLogin');
   if (userLogin == 'true') {
@@ -383,6 +386,7 @@ async function checkUserLogin() {
     return false;
   }
 }
+
 
 async function deleteTask(i) {
   tasks.splice(i, 1);
@@ -419,22 +423,23 @@ function addTaskCardEventListener() {
   }
 }
 
-/* document.addEventListener('click', function (event) {
+document.addEventListener('click', function (event) {
   const CLICKED_ELEMENT = event.target;
   if (CLICKED_ELEMENT.classList.contains('context-menu-card')) {
     const dataIndex = CLICKED_ELEMENT.dataset.index;
     closeContextMenu(dataIndex);
   }
-}); */
+});
 
 function closeContextMenu(i) {
   const contextMenuContainer = document.getElementById(`context_menu_${i}`);
   contextMenuContainer.classList.add('d-none');
 }
 
+
 function openOrCloseContainer(i, containerId, action) {
   const cardMenuContainer = document.getElementById(containerId);
-  if (containerId === `detail_task_wrapper_${i}`) {
+  if (containerId === `edit_task_wrapper_${i}`) {
     if (action === 'open') {
       cardMenuContainer.classList.remove('d-none');
       renderTaskDetailView(i, tasks[i], cardMenuContainer);
@@ -454,6 +459,7 @@ function openOrCloseContainer(i, containerId, action) {
   }
 }
 
+
 function checkForCurrentSubtaskStatus(i) {
   const subtasks = tasks[i].subtasks;
   for (let j = 0; j < subtasks.length; j++) {
@@ -469,205 +475,56 @@ function checkForCurrentSubtaskStatus(i) {
   }
 }
 
-function renderTaskDetailView(i) {
-  const cardDetailContainer = document.getElementById(
-    `detail_task_wrapper_${i}`
-  );
-  cardDetailContainer.innerHTML = generateDetailViewHTML(i, tasks[i]);
-  renderContactsInsideCard(i, tasks[i]);
-  renderSubtasks(i, tasks[i]);
+function renderTaskDetailView(i, oneTask, cardDetailContainer) {
+  cardDetailContainer.innerHTML = generateDetailViewHTML(i, oneTask);
+  renderContactsInsideCard(i, oneTask);
+  renderSubtasks(i, oneTask);
   checkForCurrentSubtaskStatus(i);
-  getFilteredDueDate(i, tasks[i]);
+  getFilteredDueDate(i, oneTask);
 }
 
 function generateDetailViewHTML(i, oneTask) {
   return /* html */ `
         <div class="category-and-close-wrapper">
           <div class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
-          <img class="detail-close-button" onclick="openOrCloseContainer(${i}, 'detail_task_wrapper_${i}', 'close')" src="../icons/close.svg" alt="">
+          <img class="edit-close-button" onclick="openOrCloseContainer(${i}, 'edit_task_wrapper_${i}', 'close')" src="../icons/close.svg" alt="">
         </div>
-        <h4 id="detail_title${i}">${oneTask.title}</h4>
-        <div id="detail_description${i}">
-          <div class="task-description">${oneTask.description}</div>
-        </div>
+        <h4>${oneTask.title}</h4>
+        <div class="task-description">${oneTask.description}</div>
         <div class="task-due-date-wrapper">
           <span class="due-date">Due date: </span>
           <span id="current_due_date_${i}">${oneTask.current_due_date}</span>
         </div>
-        <div id="task_priority_wrapper${i}" class="task-priority-wrapper">
+        <div class="task-priority-wrapper">
           <div class="priority">Priority:</div>
           <div class="prio-wrapper">
             <div>${oneTask.current_prio}</div>
               <img class="prio-icon" src="../icons/prio_${oneTask.current_prio}.svg" alt="">
           </div>
         </div>
-        <div class="detail-task-contacts-wrapper">
+        <div class="edit-task-contacts-wrapper">
           <div class="assigned-to">Assigned To:</div>
           <div>
-            <div class="detail-contacts-wrapper">
-              <div id="detail_contacts_name_${i}" class="contact-name"></div>
+            <div class="edit-contacts-wrapper">
+              <div id="edit_contacts_name_${i}" class="contact-name"></div>
             </div>
           </div>
         </div>
-        <div class="detail-task-subtasks-wrapper">
+        <div class="edit-task-subtasks-wrapper">
           <div class="subtasks-title">Subtasks:</div>
-          <div id="detail_subtasks_wrapper_${i}" class="detail-subtasks-wrapper"></div>
+          <div id="edit_subtasks_wrapper_${i}" class="edit-subtasks-wrapper"></div>
         </div>
         <div class="delete-and-edit-wrapper">
-          <div id="delete_and_edit_${i}" class="delete-and-edit">
+          <div class="delete-and-edit">
             <div onclick="renderConfirmDelete(${i}, 'confirm_container', 'confirm_content', 'Are you sure you want to delete this task permanently? This process is irreversible.');" class="delete-wrapper">
               <img src="../icons/delete.svg" alt="">
               <div>Delete</div>
             </div>
             <div class="edit-wrapper">
               <img src="../icons/edit_dark.svg" alt="">
-              <div onclick="editTask(${i})">Edit</div>
+              <div>Edit</div>
             </div>
           </div>
         </div>
-  `;
-}
-
-function editTask(i) {
-  editTitle(i, tasks[i]);
-  editDescription(i, tasks[i]);
-  editDueDate(i, tasks[i]);
-  editPriority(i, tasks[i]);
-  createOkButton(i);
-}
-
-function editTitle(i, oneTask) {
-  const taskTitleBox = document.getElementById(`detail_title${i}`);
-  taskTitleBox.innerHTML = '';
-  taskTitleBox.innerHTML = `<input id="edited_task_title_${i}" type="text" value="${oneTask.title}" class="edited-task-title">`;
-}
-
-function editDescription(i, oneTask) {
-  const taskDescriptionBox = document.getElementById(`detail_description${i}`);
-  taskDescriptionBox.innerHTML = '';
-  taskDescriptionBox.innerHTML = `<textarea name="description" id="edited_task_description${i}" class="edited-task-description" cols="30" rows="5" placeholder="Enter your description">${oneTask.description}</textarea>`;
-}
-
-function editDueDate(i, oneTask) {
-  const dueDateBox = document.getElementById(`current_due_date_${i}`);
-  dueDateBox.innerHTML = '';
-  dueDateBox.innerHTML = `<input type="date" class="edited-due-date" value="${oneTask.current_due_date}">`;
-}
-
-function editPriority(i, oneTask) {
-  const priorityBox = document.getElementById(`task_priority_wrapper${i}`);
-  priorityBox.innerHTML = '';
-  priorityBox.innerHTML = generatePriorityButtonsHTML(i, oneTask);
-  changePrioStatus(i, oneTask.current_prio);
-}
-
-function generatePriorityButtonsHTML(i, oneTask) {
-  return /* html */ `
-    <section id="edit_prio_section${i}" class="edit-prio-section">
-              <div class="label">Priority</div>
-              <div id="prio_button_wrapper_${i}" class="prio-button-wrapper">
-                <button
-                  id="prio_button_urgent_${i}"
-                  onclick="changePrioStatus(${i}, 'urgent')"
-                  class="prio-button"
-                >
-                  Urgent
-                  <svg
-                    class="svg-urgent"
-                    width="18"
-                    height="12"
-                    viewBox="0 0 21 15"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M19.5712 14.7547C19.3366 14.7551 19.1081 14.6803 18.9192 14.5412L10.6671 8.458L2.41508 14.5412C2.29923 14.6267 2.16765 14.6887 2.02785 14.7234C1.88805 14.7582 1.74277 14.7651 1.6003 14.7437C1.45783 14.7223 1.32097 14.6732 1.19752 14.599C1.07408 14.5247 0.966466 14.427 0.880837 14.3112C0.795208 14.1954 0.733236 14.0639 0.698459 13.9243C0.663683 13.7846 0.656782 13.6394 0.678153 13.497C0.721312 13.2095 0.877002 12.9509 1.11097 12.7781L10.0151 6.20761C10.2038 6.06802 10.4324 5.99268 10.6671 5.99268C10.9019 5.99268 11.1305 6.06802 11.3192 6.20761L20.2233 12.7781C20.4092 12.915 20.5471 13.1071 20.6173 13.327C20.6874 13.5469 20.6862 13.7833 20.6139 14.0025C20.5416 14.2216 20.4019 14.4124 20.2146 14.5475C20.0274 14.6826 19.8022 14.7551 19.5712 14.7547Z"
-                      fill="#FF3D00"
-                    />
-                    <path
-                      d="M19.5713 9.00568C19.3366 9.00609 19.1081 8.93124 18.9192 8.79214L10.6671 2.70898L2.41509 8.79214C2.18112 8.96495 1.88803 9.0378 1.6003 8.99468C1.31257 8.95155 1.05378 8.79597 0.880842 8.56218C0.707906 8.32838 0.634998 8.03551 0.678157 7.74799C0.721316 7.46048 0.877007 7.20187 1.11098 7.02906L10.0151 0.458588C10.2038 0.318997 10.4324 0.243652 10.6671 0.243652C10.9019 0.243652 11.1305 0.318997 11.3192 0.458588L20.2233 7.02906C20.4092 7.16598 20.5471 7.35809 20.6173 7.57797C20.6874 7.79785 20.6863 8.03426 20.6139 8.25344C20.5416 8.47262 20.4019 8.66338 20.2146 8.79847C20.0274 8.93356 19.8022 9.00608 19.5713 9.00568Z"
-                      fill="#FF3D00"
-                    />
-                  </svg>
-                </button>
-                <button
-                  id="prio_button_medium_${i}"
-                  onclick="changePrioStatus(${i}, 'medium')"
-                  class="prio-button prio-marked-medium"
-                >
-                  Medium
-                  <svg
-                    class="svg-medium"
-                    width="20"
-                    height="9"
-                    viewBox="0 0 20 9"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M18.9041 8.22528H1.09589C0.805242 8.22528 0.526498 8.10898 0.320979 7.90197C0.11546 7.69495 0 7.41419 0 7.12143C0 6.82867 0.11546 6.5479 0.320979 6.34089C0.526498 6.13388 0.805242 6.01758 1.09589 6.01758H18.9041C19.1948 6.01758 19.4735 6.13388 19.679 6.34089C19.8845 6.5479 20 6.82867 20 7.12143C20 7.41419 19.8845 7.69495 19.679 7.90197C19.4735 8.10898 19.1948 8.22528 18.9041 8.22528Z"
-                      fill="#FFA35e"
-                    />
-                    <path
-                      d="M18.9041 2.98211H1.09589C0.805242 2.98211 0.526498 2.86581 0.320979 2.6588C0.11546 2.45179 0 2.17102 0 1.87826C0 1.5855 0.11546 1.30474 0.320979 1.09772C0.526498 0.890712 0.805242 0.774414 1.09589 0.774414L18.9041 0.774414C19.1948 0.774414 19.4735 0.890712 19.679 1.09772C19.8845 1.30474 20 1.5855 20 1.87826C20 2.17102 19.8845 2.45179 19.679 2.6588C19.4735 2.86581 19.1948 2.98211 18.9041 2.98211Z"
-                      fill="#FFA35e"
-                    />
-                  </svg>
-                </button>
-                <button
-                  id="prio_button_low_${i}"
-                  onclick="changePrioStatus(${i}, 'low')"
-                  class="prio-button"
-                >
-                  Low
-                  <svg
-                    class="svg-low"
-                    width="18"
-                    height="12"
-                    viewBox="0 0 21 15"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M10.334 9.00589C10.0994 9.0063 9.87085 8.93145 9.682 8.79238L0.778897 2.22264C0.663059 2.13708 0.565219 2.02957 0.490964 1.90623C0.416709 1.78289 0.367492 1.64614 0.346125 1.50379C0.30297 1.21631 0.37587 0.923473 0.548786 0.689701C0.721702 0.455928 0.980471 0.300371 1.26817 0.257248C1.55586 0.214126 1.84891 0.286972 2.08286 0.45976L10.334 6.54224L18.5851 0.45976C18.7009 0.374204 18.8325 0.312285 18.9723 0.277538C19.1121 0.242791 19.2574 0.235896 19.3998 0.257248C19.5423 0.2786 19.6791 0.32778 19.8025 0.401981C19.926 0.476181 20.0336 0.573948 20.1192 0.689701C20.2048 0.805453 20.2668 0.936923 20.3015 1.07661C20.3363 1.21629 20.3432 1.36145 20.3218 1.50379C20.3005 1.64614 20.2513 1.78289 20.177 1.90623C20.1027 2.02957 20.0049 2.13708 19.8891 2.22264L10.986 8.79238C10.7971 8.93145 10.5686 9.0063 10.334 9.00589Z"
-                      fill="#7AE229"
-                    />
-                    <path
-                      d="M10.334 14.7544C10.0994 14.7548 9.87085 14.68 9.682 14.5409L0.778897 7.97117C0.544952 7.79839 0.389279 7.53981 0.346125 7.25233C0.30297 6.96485 0.37587 6.67201 0.548786 6.43824C0.721702 6.20446 0.980471 6.04891 1.26817 6.00578C1.55586 5.96266 1.84891 6.03551 2.08286 6.2083L10.334 12.2908L18.5851 6.2083C18.8191 6.03551 19.1121 5.96266 19.3998 6.00578C19.6875 6.04891 19.9463 6.20446 20.1192 6.43824C20.2921 6.67201 20.365 6.96485 20.3218 7.25233C20.2787 7.53981 20.123 7.79839 19.8891 7.97117L10.986 14.5409C10.7971 14.68 10.5686 14.7548 10.334 14.7544Z"
-                      fill="#7AE229"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </section>
-  `;
-}
-
-function updateButtons(i, buttonType, isActive) {
-  const prioButton = document.getElementById(`prio_button_${buttonType}_${i}`);
-  if (isActive) {
-    prioButton.classList.add(`prio-marked-${buttonType}`);
-  } else {
-    prioButton.classList.remove(`prio-marked-${buttonType}`);
-  }
-}
-
-// Muss ich hier in den if-Abfragen den Prio-Status im JSON aktualisieren?
-function changePrioStatus(i, prioStatus) {
-  const buttonTypes = ['urgent', 'medium', 'low'];
-  buttonTypes.forEach((type) => updateButtons(i, type, false));
-  updateButtons(i, prioStatus, true);
-  if (prioStatus === 'urgent') {
-    currentPrio = 'urgent';
-  } else if (prioStatus === 'medium') {
-    currentPrio = 'medium';
-  } else if (prioStatus === 'low') {
-    currentPrio = 'low';
-  }
-}
-
-function createOkButton(i) {
-  const okayButtonContainer = document.getElementById(`delete_and_edit_${i}`);
-  okayButtonContainer.innerHTML = '';
-  okayButtonContainer.innerHTML = `<button onclick="renderTaskDetailView(${i})">OK</button>`;
+  `; 
 }

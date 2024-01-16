@@ -12,8 +12,8 @@
 }
 
 .task-description::-webkit-scrollbar,
-.edit-contacts-wrapper::-webkit-scrollbar,
-.edit-subtasks-wrapper::-webkit-scrollbar {
+.detail-contacts-wrapper::-webkit-scrollbar,
+.detail-subtasks-wrapper::-webkit-scrollbar {
   width: 12px;
 }
 
@@ -298,7 +298,7 @@ h4 {
 }
 
 .context-menu-close,
-.edit-close-button {
+.detail-close-button {
   cursor: pointer;
 }
 
@@ -333,7 +333,7 @@ h4 {
   background-color: var(--accent-color-darkgray);
 }
 
-.edit-task-wrapper {
+.detail-task-wrapper {
   padding: 1em;
   position: fixed;
   inset: 1px;
@@ -355,8 +355,8 @@ h4 {
 .task-description,
 .task-due-date-wrapper,
 .task-priority-wrapper,
-.edit-task-contacts-wrapper,
-.edit-task-subtasks-wrapper,
+.detail-task-contacts-wrapper,
+.detail-task-subtasks-wrapper,
 .delete-and-edit {
   margin: 0 0 0.5em;
   font-size: 0.9rem;
@@ -402,7 +402,7 @@ h4 {
   margin: 0 0 1em;
 }
 
-.edit-contacts-wrapper {
+.detail-contacts-wrapper {
   max-height: 100px;
   padding: 1em;
   display: flex;
@@ -463,7 +463,7 @@ h4 {
   height: 16px;
 }
 
-.edit-subtasks-wrapper {
+.detail-subtasks-wrapper {
   height: 70px;
   overflow-y: auto;
   border: var(--background-color-darkblue) 0.5px solid;
@@ -487,6 +487,85 @@ h4 {
   cursor: pointer;
 }
 
+.edited-task-title {
+  width: 100%;
+  padding: 2px;
+}
+
+.edited-task-description {
+  width: 100%;
+  margin: 0 0 1em;
+  font-family: 'Inter', sans-serif;
+  resize: none;
+}
+
+.edited-due-date {
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+}
+
+.edited-task-description::-webkit-scrollbar {
+  width: 12px;
+}
+
+.edit-prio-section {
+  width: 100%;
+}
+
+.prio-button-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.prio-button {
+  width: 80px;
+  padding: 8px 0.25em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-color: var(--accent-color-white);
+  border: var(--background-color-lightgray) 1px solid;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.prio-button:hover {
+  box-shadow: 0px 4px 4px var(--shadow-color);
+}
+
+.prio-button.prio-marked-urgent {
+  background-color: var(--accent-color-red);
+  border: var(--accent-color-red) 1px solid;
+  color: var(--accent-color-white);
+}
+
+.prio-marked-urgent .svg-urgent path {
+  fill: var(--accent-color-white);
+}
+
+.prio-button.prio-marked-medium {
+  background-color: var(--color-variant2);
+  border: var(--color-variant2) 1px solid;
+  color: var(--accent-color-white);
+}
+
+.prio-marked-medium .svg-medium path {
+  fill: var(--accent-color-white);
+}
+
+.prio-button.prio-marked-low {
+  background-color: var(--accent-color-green);
+  border: var(--accent-color-green) 1px solid;
+  color: var(--accent-color-white);
+}
+
+.prio-marked-low .svg-low path {
+  fill: var(--accent-color-white);
+}
+
 .d-none {
   display: none;
 }
@@ -500,7 +579,6 @@ breakpoint: 50em
   }
 
   .main {
-    /* max-width: 1208px; */
     margin: 0 0 0 60px;
     display: flex;
     flex-direction: column;
@@ -521,7 +599,6 @@ breakpoint: 50em
   .headline-searchbar-addTask-wrapper {
     width: 85%;
     margin: 0 0 0 170px;
-    /* padding: 80px 30px 30px 30px; */
     display: flex;
     align-items: center;
     justify-content: space-between;
