@@ -2,6 +2,9 @@ let groups = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', '
 
 let userColors = ['#FF7A00', '#FF5EB3', '#6E52FF', '#9327FF', '#00BEE8', '#1FD7C1', '#FF745E', '#FFA35E','#FC71FF','#FFC701', '#0038FF', '#C3FF2B', '#FFE62B', '#FF4646', '#FFBB2B'];
 
+/**
+ * Is stored on the server under the key 'guestContacts'
+ */
 let allContacts = [
     {
       name: 'Bilbo Beutlin',
@@ -149,4 +152,5 @@ let allContacts = [
       phone: '0781-321098765',
       color: '#9327ff',
     },
-  ]
+  ];
+  

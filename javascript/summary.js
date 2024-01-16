@@ -9,12 +9,12 @@ let greetedMobile = false;
  * Additionally, it is checked whether it is the mobile view or the desktop view. In the mobile view, there is an additional greeting animation.
  * The login type is saved, and the summary overview is displayed.
  */
-function initSummary() {
+async function initSummary() {
     checkLocalStorage();
     greetUser();
     greetingMobile();
     saveLoginType();
-    showSummaryValues();
+    showSummaryValues();   
 }
 
 
