@@ -754,7 +754,7 @@ async function checkIfUserIsLoggedIn(action) {
 
 async function getTasksFromServer(user) {
   if (user !== 'guest') {
-    tasks = JSON.parse(await getItem(`${user.email}`));
+    tasks = JSON.parse(await getItem(`${user.email}_tasks`));
     tasks.forEach((oneTask) => createdTasks.push(oneTask));
   } else if (user === 'guest') {
     tasks = JSON.parse(await getItem('guestTasks'));
@@ -774,7 +774,7 @@ async function sendNewTaskToServer(user) {
         'A new task has successfully been created and added to the board.'
       );
     } else {
-      await setItem(`${user.email}`, JSON.stringify(createdTasks));
+      await setItem(`${user.email}_tasks`, JSON.stringify(createdTasks));
       clearAllTaskContainers();
       renderAlert(
         'alert_container',

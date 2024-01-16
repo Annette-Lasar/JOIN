@@ -26,7 +26,7 @@ async function loadTasksUserOrGuest() {
     users = JSON.parse(await getItem('users'));
     let user = users.find((u) => u.email === userEmail);
     if (user) {
-      tasks = JSON.parse(await getItem(`${user.email}`));
+      tasks = JSON.parse(await getItem(`${user.email}_tasks`));
     }
   } else {
     tasks = JSON.parse(await getItem('guestTasks'));
@@ -362,7 +362,7 @@ async function sendDataToServer() {
     userEmail = userEmail.replace(/"/g, '');
     let user = users.find((u) => u.email == userEmail);
     if (user) {
-      await setItem(`${user.email}`, JSON.stringify(tasks));
+      await setItem(`${user.email}_tasks`, JSON.stringify(tasks));
     }
   } else {
     await setItem('guestTasks', JSON.stringify(tasks));

@@ -30,8 +30,8 @@ async function loadUsers(){
  * Both passwords must match, and the password needs to be at least 6 characters long;
  * Additionally, the user account must not already exist;
  * If all conditions are met, the user is pushed into the 'users' array, which is then sent back to the server;
- * Additionally, a key is created on the server for each user (in the form of their email address); 
- * Under this key, their tasks will be stored in an array in the future
+ * Additionally, 2 keys are created on the server for each user (in the form of their email address); 
+ * Under these keys, their tasks and contacts will be stored in an array in the future
  */
 async function register() {
     if(bothPasswordsMatch()) {
@@ -44,7 +44,8 @@ async function register() {
                     password: password.value
                 });
                 await setItem('users', JSON.stringify(users));
-                await setItem(`${email.value}`, []);
+                await setItem(`${email.value}_tasks`, []);
+                await setItem(`${email.value}_contacts`, []);
                 resetForm();
                 successfullyRegistered();
             } else {
