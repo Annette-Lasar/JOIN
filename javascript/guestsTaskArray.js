@@ -1,5 +1,9 @@
-// liegt auf dem Server unter dem key 'guestTasks'   
-// Diese Datei dient als Backup
+/**
+ * The 'tasksGuest' array is the array that stores tasks from the guest login, as a guest (unlike a user) does not receive 
+ * their own individual user array !
+ * Is stored on the server under the key 'guestTasks' ;
+ * This file serves as a backup; in case of changes, this array must be separately uploaded to the server again
+ */    
 let tasksGuest = [
 
     {
