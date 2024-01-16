@@ -67,6 +67,11 @@ function activeSite() {
   document.getElementById(focusedId).classList.add('active');
 }
 
+function toggleHeaderMenu() {
+  document.getElementById('header_menu').classList.toggle('d-none');
+  document.getElementById('user_icon').classList.toggle('header-active');
+}
+
 
 function hideHelpLinkOnHelpPage() {
   let headerHelpIcon = document.getElementById('header_help_icon');
