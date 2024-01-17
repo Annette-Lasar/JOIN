@@ -69,6 +69,7 @@ function activeSite() {
 
 function toggleHeaderMenu() {
   document.getElementById('header_menu').classList.toggle('d-none');
+  document.getElementById('background_wrapper').classList.toggle('d-none');
   document.getElementById('user_icon').classList.toggle('header-active');
 }
 
