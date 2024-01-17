@@ -289,6 +289,7 @@ h1 {
 .other-boardSummary {
   display: flex;
   justify-content: center;
+  margin-bottom: 35px;
 }
 
 .lower-boardSummary {
@@ -690,6 +691,12 @@ breakpoint: 800px
 @media(min-width: 1600px) {
   .summary-headline {
     margin: 80px 0px 0px 240px;
+  }
+}
+
+@media(max-width: 800px) {
+  .other-boardSummary {
+    margin-bottom: 110px;
   }
 }
 
