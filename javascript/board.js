@@ -26,23 +26,14 @@ let testContacts = [
     phone: '040-456789012',
     color: '#fc71ff',
   },
-]
+];
 
 let currentDraggedElement;
 
 async function initBoard() {
   await loadTasksUserOrGuest();
   showTasksOnBoard();
-  addTaskCardEventListener();
-}
-
-function clearContainers(...containerIDs) {
-  containerIDs.forEach(function (id) {
-    const container = document.getElementById(id);
-    if (container) {
-      container.innerHTML = '';
-    }
-  });
+  /* addTaskCardEventListener(); */
 }
 
 async function loadTasksUserOrGuest() {
@@ -62,6 +53,15 @@ async function loadTasksUserOrGuest() {
   }
 }
 
+function clearContainers(...containerIDs) {
+  containerIDs.forEach(function (id) {
+    const container = document.getElementById(id);
+    if (container) {
+      container.innerHTML = '';
+    }
+  });
+}
+
 function showTasksOnBoard() {
   clearContainers('toDo', 'inProgress', 'awaitFeedback', 'done');
   for (let i = 0; i < tasks.length; i++) {
@@ -71,15 +71,44 @@ function showTasksOnBoard() {
   }
 }
 
-function callFurtherFunctionsToRenderTasks(i, oneTask, status) {
+function renderTasksOnBoard(i, oneTask, status) {
   let newTruncatedSentence = truncateSentence(oneTask.description, 6);
   let completedSubtasksInPercent = calculateSubtaskPercentage(i, oneTask);
-  document.getElementById(status).innerHTML += generateToDoHTML(
-    i,
-    oneTask,
-    newTruncatedSentence,
-    completedSubtasksInPercent
-  );
+  const listStatus = ['toDo', 'inProgress', 'awaitFeedback', 'done'];
+  listStatus.forEach((targetStatus) => {
+    const tasksWithTargetStatus = tasks.filter(
+      (task) => task.status === targetStatus
+    );
+    if (tasksWithTargetStatus.length === 0) {
+      document.getElementById(
+        targetStatus
+      ).innerHTML = `<div class="empty-list-message">No tasks ${replaceStatusText(targetStatus)}</div>`;
+    } else if (status === targetStatus) {
+      document.getElementById(status).innerHTML += generateToDoHTML(
+        i,
+        oneTask,
+        newTruncatedSentence,
+        completedSubtasksInPercent
+      );
+    }
+  });
+}
+
+function replaceStatusText(status) {
+  switch (status) {
+    case 'toDo':
+      return 'To Do';
+    case 'inProgress':
+      return 'In Progress';
+    case 'awaitFeedback':
+      return 'Await Feedback';
+    default:
+      return status;
+  }
+}
+
+function callFurtherFunctionsToRenderTasks(i, oneTask, status) {
+  renderTasksOnBoard(i, oneTask, status);
   updateProgressBar(i, tasks[i]);
   updateCompletedTasks(i, tasks[i]);
   renderContactsOnOutsideCard(i, oneTask);
@@ -440,14 +469,14 @@ function highlight(id) {
   document.getElementById(id).classList.add('drag-area-highlight');
 }
 
-function addTaskCardEventListener() {
+/* function addTaskCardEventListener() {
   for (let i = 0; i < tasks.length; i++) {
     const taskCard = document.getElementById(`taskCard_${i}`);
     taskCard.addEventListener('contextmenu', (e) => {
       e.preventDefault();
     });
   }
-}
+} */
 
 /* document.addEventListener('click', function (event) {
   const CLICKED_ELEMENT = event.target;
@@ -801,39 +830,39 @@ function addSubtaskToArray(i) {
   let newSubTask = {
     subtask_name: 'Wäsche waschen',
     checked_status: false,
-  }
+  };
 
   tasks[i].subtasks.push(newSubTask);
   renderSubtasksList(i, tasks[i]);
 }
 
 function renderUserContactList(i) {
-    const editContactsList = document.getElementById(`edit_contact_list${i}`);
-    editContactsList.innerHTML = '';
-    for (let j = 0; j < testContacts.length; j++) {
-      const oneContact = testContacts[j];
-      editContactsList.innerHTML += generateContactListHTML(i, j, oneContact);
-    }
+  const editContactsList = document.getElementById(`edit_contact_list${i}`);
+  editContactsList.innerHTML = '';
+  for (let j = 0; j < testContacts.length; j++) {
+    const oneContact = testContacts[j];
+    editContactsList.innerHTML += generateContactListHTML(i, j, oneContact);
+  }
 }
 
 function renderGuestContactList(i) {
   const editContactsList = document.getElementById(`edit_contact_list${i}`);
-    editContactsList.innerHTML = '';
-    for (let j = 0; j < guestContacts.length; j++) {
-      const oneContact = guestContacts[j];
-      editContactsList.innerHTML += generateContactListHTML(i, j, oneContact);
-    }
+  editContactsList.innerHTML = '';
+  for (let j = 0; j < guestContacts.length; j++) {
+    const oneContact = guestContacts[j];
+    editContactsList.innerHTML += generateContactListHTML(i, j, oneContact);
+  }
 }
 
 function generateContactListHTML(i, j, oneContact) {
   const [firstName, lastName] = oneContact.name.split(' ');
-    return /* html */ `
+  return /* html */ `
       <li class="edit-contact-list-wrapper">
         <label for="contact_checkbox_${i}_${j}" class="initials-wrapper">
           <div class="contact-name-wrapper">
             <div class="initials-icon" style="background-color: ${
-            oneContact.color
-          }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
+              oneContact.color
+            }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
             <div>
           ${oneContact.name}
             </div>
@@ -850,7 +879,6 @@ function toggleDropdownList(idContainer, idArrow) {
   DROPDOWN_LIST.classList.toggle('show');
   SELECT_ARROW.classList.toggle('turn');
 }
-
 
 function editSubtasks(i, oneTask) {
   const subtasksBox = document.getElementById(

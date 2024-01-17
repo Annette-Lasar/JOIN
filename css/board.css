@@ -149,6 +149,7 @@ h4 {
 }
 
 .drag-area {
+  min-height: 220px;
   margin-bottom: 50px;
   padding: 8px 0;
   display: flex;
@@ -156,11 +157,21 @@ h4 {
 }
 
 .drag-area:last-of-type {
-  margin-bottom: 72px;
+  margin-bottom: 80px;
 }
 
 .drag-area-highlight {
   background-color: rgba(0, 0, 0, 0.2);
+}
+
+.empty-list-message {
+  width: 100%;
+  height: fit-content;
+  padding: 1rem;
+  text-align: center;
+  border: var(--accent-color-darkgray) 1px dashed;
+  border-radius: 4px;
+  background-color: var(--background-color-mediumgray);
 }
 
 .todo {
