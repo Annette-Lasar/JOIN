@@ -289,7 +289,7 @@ h1 {
 .other-boardSummary {
   display: flex;
   justify-content: center;
-  margin-bottom: 35px;
+  margin-bottom: 40px;
 }
 
 .lower-boardSummary {
@@ -331,7 +331,7 @@ breakpoint: 800px
     padding: 25px;
   }
   .urgentCounter-and-upcomingDeadline {
-    padding: 23px;
+    padding: 24px;
   }
   .lower-boardSummary {
     padding: 20px;
@@ -355,8 +355,8 @@ breakpoint: 800px
     padding: 35px;
   }
   .urgentCounter-and-upcomingDeadline {
-    padding-left: 43px;
-    padding-right: 43px;
+    padding-left: 45px;
+    padding-right: 45px;
   }
   .lower-boardSummary {
     padding: 26px;
@@ -392,8 +392,8 @@ breakpoint: 800px
     padding: 40px;
   }
   .urgentCounter-and-upcomingDeadline {
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 55px;
+    padding-right: 55px;
   }
   .lower-boardSummary {
     padding: 30px;
@@ -479,7 +479,7 @@ breakpoint: 800px
     padding-right: 70px;
   }
   .lower-boardSummary {
-    padding: 38px;
+    padding: 37px;
   }
 }
 
@@ -516,10 +516,10 @@ breakpoint: 800px
     padding: 48px;
   }
   .urgentCounter-and-upcomingDeadline {
-    padding: 30px 60px 30px 60px;
+    padding: 30px 62px 30px 62px;
   }
   .lower-boardSummary {
-    padding: 35px;
+    padding: 34px;
   }
 }
 
@@ -611,7 +611,7 @@ breakpoint: 800px
     padding: 45px 55px 45px 55px;
   }
   .urgentCounter-and-upcomingDeadline {
-    padding: 30px 75px 30px 75px;
+    padding: 30px 79px 30px 79px;
   }
   .lower-boardSummary {
     padding: 40px;
@@ -651,7 +651,7 @@ breakpoint: 800px
     margin-right: 30px;
   }
   .lower-boardSummary {
-    padding: 40px 56px 40px 56px;
+    padding: 40px 55px 40px 55px;
   }
   .greeting {
     font-size: 40px;
