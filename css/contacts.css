@@ -862,7 +862,7 @@ input:focus-visible {
     .contact-list {
         margin-left: 170px;
         margin-bottom: 0;
-        height: calc(100vh - 79px);
+        height: calc(100vh - 80px);
 
     }
 
