@@ -49,7 +49,7 @@ async function loadTasksUserOrGuest() {
     }
   } else {
     tasks = JSON.parse(await getItem('guestTasks'));
-    guestContacts = JSON.parse(await getItem('guestContacts'));
+    contacts = JSON.parse(await getItem('guestContacts'));
   }
 }
 
@@ -601,7 +601,7 @@ function editTask(i) {
   editDueDate(i, tasks[i]);
   editPriority(i, tasks[i]);
   editContacts(i);
-  editSubtasks(i, tasks[i]);
+  makeSubtasksEditable(i, tasks[i]);
   createOkButton(i);
 }
 
@@ -772,21 +772,18 @@ function updateButtons(i, buttonType, isActive) {
   }
 }
 
-// Kann ich den auskommentierten Teil erst beim Okay-Button aufrufen?
+
 function changePrioStatus(i, prioStatus) {
   const buttonTypes = ['urgent', 'medium', 'low'];
   buttonTypes.forEach((type) => updateButtons(i, type, false));
   updateButtons(i, prioStatus, true);
-  /* if (prioStatus === 'urgent') {
+  if (prioStatus === 'urgent') {
     tasks[i].current_prio = prioStatus;
-    console.log('task-prio: ', tasks[i].current_prio);
   } else if (prioStatus === 'medium') {
     tasks[i].current_prio = prioStatus;
-    console.log('task-prio: ', tasks[i].current_prio);
   } else if (prioStatus === 'low') {
     tasks[i].current_prio = prioStatus;
-    console.log('task-prio: ', tasks[i].current_prio);
-  } */
+  }
 }
 
 async function editContacts(i) {
@@ -800,7 +797,7 @@ async function editContacts(i) {
     contactsWrapper.innerHTML = generateContactsDropdownHTML(i);
     renderUserContactList(i);
   } else if (user == false) {
-    console.log('guestContacts: ', guestContacts);
+    console.log('contacts: ', contacts);
     contactsWrapper.innerHTML = generateContactsDropdownHTML(i);
     renderGuestContactList(i);
   }
@@ -826,16 +823,6 @@ function generateContactsDropdownHTML(i) {
   `;
 }
 
-function addSubtaskToArray(i) {
-  let newSubTask = {
-    subtask_name: 'Wäsche waschen',
-    checked_status: false,
-  };
-
-  tasks[i].subtasks.push(newSubTask);
-  renderSubtasksList(i, tasks[i]);
-}
-
 function renderUserContactList(i) {
   const editContactsList = document.getElementById(`edit_contact_list${i}`);
   editContactsList.innerHTML = '';
@@ -848,8 +835,8 @@ function renderUserContactList(i) {
 function renderGuestContactList(i) {
   const editContactsList = document.getElementById(`edit_contact_list${i}`);
   editContactsList.innerHTML = '';
-  for (let j = 0; j < guestContacts.length; j++) {
-    const oneContact = guestContacts[j];
+  for (let j = 0; j < contacts.length; j++) {
+    const oneContact = contacts[j];
     editContactsList.innerHTML += generateContactListHTML(i, j, oneContact);
   }
 }
@@ -880,12 +867,12 @@ function toggleDropdownList(idContainer, idArrow) {
   SELECT_ARROW.classList.toggle('turn');
 }
 
-function editSubtasks(i, oneTask) {
+function makeSubtasksEditable(i, oneTask) {
   const subtasksBox = document.getElementById(
     `detail_task_subtasks_wrapper${i}`
   );
   subtasksBox.innerHTML = '';
-  subtasksBox.innerHTML = generateEditSubtasksHTML(i);
+  subtasksBox.innerHTML = generateMakeSubtasksEditableHTML(i);
   renderSubtasksList(i, oneTask);
 }
 
@@ -904,61 +891,95 @@ function renderSubtasksList(i, oneTask) {
   }
 }
 
-function generateEditSubtasksHTML(i) {
+function generateMakeSubtasksEditableHTML(i) {
   return /* html */ `
     <section id="section_subtasks_${i}">
-        <div class="edit-headline">Subtasks</div>
-        <div id="edit_subtask_wrapper" class="edit-subtask-wrapper">
-          <input
-              id="input_subtasks${i}"
-              class="input-subtasks"
-              type="text"
-              placeholder="Add new subtask"
-                />
+      <div class="edit-headline">Subtasks</div>
+      <div id="edit_subtask_wrapper${i}" class="edit-subtask-wrapper">
+        <input
+          id="input_subtasks${i}"
+          class="input-subtasks"
+          type="text"
+          placeholder="Add new subtask"
+       />
+        <div
+          id="subtasks_image_wrapper_${i}"
+          class="subtasks-image-wrapper"
+          >
           <div
-               id="subtasks_image_wrapper_${i}"
-               class="subtasks-image-wrapper"
-                >
-            <div
-               id="close_and_check_wrapper_${i}"
-               class="close-and-check-wrapper d-none"
-                  >
+            id="close_and_check_wrapper_${i}"
+            class="close-and-check-wrapper d-none"
+            >
               <img
-                  onclick="clearSubtask('sub_tasks_small', 'close_and_check_wrapper_small', 'subtask_plus')"
-                  id="cancel_subtask_${i}"
-                  class="cancel-subtask"
-                  src="../icons/close.svg"
-                    />
-                <div class="subtask-separator-line"></div>
-                <img
-                   onclick="addSubtask('sub_tasks_small', 'close_and_check_wrapper_small', 'subtask_plus')"
-                   id="check_subtask_${i}"
-                   class="check-subtask"
-                   src="../icons/check.svg"
-                    />
-              </div>
-                  <img
-                    id="subtask_plus_${i}"
-                    class="edit-plus-button"
-                    onclick="showCancelAndAcceptSubtask('close_and_check_wrapper_small', 'subtask_plus)"
-                    src="../icons/plus.svg"
-                  />
-                </div>
-              </div>
-            </section>
-            <section
-              id="subtask_container_${i}"
-              class="subtask-container"
-            ></section>
+                onclick="clearSubtask(${i})"
+                id="cancel_subtask_${i}"
+                class="cancel-subtask"
+                src="../icons/close.svg"
+                />
+              <div class="subtask-icon-separator"></div>
+              <img
+                onclick="addNewSubtask(${i})"
+                id="check_subtask_${i}"
+                class="check-subtask"
+                src="../icons/check.svg"
+              />
+          </div>
+          <img
+            id="subtask_plus_${i}"
+            class="edit-plus-button"
+            onclick="showAndHideCancelAndAcceptSubtask(${i}, 'show')"
+            src="../icons/plus.svg"
+            />
+        </div>
+      </div>
+    </section>
+    <section
+      id="subtask_container_${i}"
+      class="subtask-container"
+    ></section>
   `;
+}
+
+function showAndHideCancelAndAcceptSubtask(i, action) {
+  const closeAndCheckWrapper = document.getElementById(`close_and_check_wrapper_${i}`);
+  const subtasksPlusButton = document.getElementById(`subtask_plus_${i}`);
+  if (action === 'show') {
+    closeAndCheckWrapper.classList.remove('d-none');
+    subtasksPlusButton.classList.add('d-none');
+  } else if (action === 'hide') {
+    closeAndCheckWrapper.classList.add('d-none');
+    subtasksPlusButton.classList.remove('d-none');
+  }
+  
+}
+
+function clearSubtask(i) {
+  const addSubtaskInputfield = document.getElementById(`input_subtasks${i}`);
+  addSubtaskInputfield.value = '';
+}
+
+function addNewSubtask(i) {
+  const addSubtaskInputfield = document.getElementById(`input_subtasks${i}`);
+  let newSubtask = {
+    subtask_name: addSubtaskInputfield.value,
+    checked_status: false,
+  }
+
+  console.log('neue Subtask: ', newSubtask);
+  console.log('Subtasks-Array: ', tasks[i].subtasks);
+  tasks[i].subtasks.push(newSubtask);
+  addSubtaskInputfield.value = '';
+  renderSubtasksList(i, tasks[i]);
+  showAndHideCancelAndAcceptSubtask(i, 'hide');
+  
 }
 
 function generateSubtasksListHTML(i, j, oneSubtask) {
   return /* html */ `
-    <div class="subtask-list-item-wrapper">
+    <div id="subtask_list_item_wrapper${i}_${j}" class="subtask-list-item-wrapper">
         <div id="subtask_list_item${i}_${j}" class="subtask-list-item">${oneSubtask.subtask_name}</div>
         <div class="subtask-list-item-icon-wrapper">
-          <img src="../icons/edit_dark.svg">
+          <img onclick="editSubtask(${i}, ${j})" src="../icons/edit_dark.svg">
           <div class="subtask-icon-separator"></div>
           <img src="../icons/delete.svg">
         </div>
@@ -967,15 +988,50 @@ function generateSubtasksListHTML(i, j, oneSubtask) {
   `;
 }
 
-{
-  /* <div id="subtask_list_wrapper_${containerType}_${i}" class="subtask-list-${containerType}">${subtask.subtask_name}
-        <div class="subtask-button-wrapper-${containerType}">
-          <img onclick="editSubtask(${i}, '${containerType}', '${subtask.subtask_name}')" src="../icons/edit_dark.svg">
-          <div class="subtask-separator-line"></div>
-          <img onclick="deleteSubtask(${i})" src="../icons/delete.svg">
-        </div>
-      </div> */
+function editSubtask(i, j) {
+  let oneSubtask = tasks[i].subtasks[j];
+  console.log(oneSubtask);
+  const subtaskListItem = document.getElementById(`subtask_list_item_wrapper${i}_${j}`); 
+  subtaskListItem.innerHTML = '';
+  subtaskListItem.innerHTML = generateEditSubtaskInputHTML(i, j, oneSubtask);
 }
+
+function generateEditSubtaskInputHTML(i, j, oneSubtask) {
+  return /* html */ `
+    <div class="edit-subtask-inputfield-wrapper">
+      <input id="edit_subtask_input_${i}_${j}" type="text" value="${oneSubtask.subtask_name}">
+      <div class="edit-subtask-icons-wrapper">
+        <img onclick="clearInputField(${i}, ${j})" src="../icons/close.svg">
+        <div class="subtask-icon-separator"></div>
+        <img onclick="updateEditedSubtask(${i}, ${j})" src="../icons/check.svg">
+      </div>
+    </div>
+  `;
+}
+
+function clearInputField(i, j) {
+  const editSubtaskInputfield = document.getElementById(`edit_subtask_input_${i}_${j}`);
+  editSubtaskInputfield.value = '';
+}
+
+
+function updateEditedSubtask(i, j) {
+  const editSubtaskInputfield = document.getElementById(`edit_subtask_input_${i}_${j}`);
+  
+  if (editSubtaskInputfield.value !== '') {
+    let editedSubtask = {
+      subtask_name: editSubtaskInputfield.value,
+      checked_status: false,
+    }
+     tasks[i].subtasks[j] = editedSubtask;
+     renderSubtasksList(i, tasks[i]);
+  } else {
+    renderAlert('alert_container', 'alert_content', 'Please enter a subtask text!')
+  }
+  
+  
+}
+
 
 function createOkButton(i) {
   const okayButtonContainer = document.getElementById(`delete_and_edit_${i}`);
