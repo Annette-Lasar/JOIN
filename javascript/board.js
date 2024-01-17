@@ -508,7 +508,7 @@ function openOrCloseContainer(i, containerId, action) {
       document.body.style.overflow = 'visible';
     }
   } else if (action === 'open') {
-    addTaskCardEventListener();
+    /* addTaskCardEventListener(); */
     cardMenuContainer.classList.remove('d-none');
   } else if (action === 'close') {
     cardMenuContainer.classList.add('d-none');
@@ -912,8 +912,8 @@ function generateMakeSubtasksEditableHTML(i) {
             >
               <img
                 onclick="clearSubtask(${i})"
-                id="cancel_subtask_${i}"
-                class="cancel-subtask"
+                id="clear_subtask_${i}"
+                class="clear-subtask"
                 src="../icons/close.svg"
                 />
               <div class="subtask-icon-separator"></div>
@@ -981,7 +981,7 @@ function generateSubtasksListHTML(i, j, oneSubtask) {
         <div class="subtask-list-item-icon-wrapper">
           <img onclick="editSubtask(${i}, ${j})" src="../icons/edit_dark.svg">
           <div class="subtask-icon-separator"></div>
-          <img src="../icons/delete.svg">
+          <img onclick="deleteSubtask(${i}, ${j})" src="../icons/delete.svg">
         </div>
     </div>
         
@@ -1028,10 +1028,15 @@ function updateEditedSubtask(i, j) {
   } else {
     renderAlert('alert_container', 'alert_content', 'Please enter a subtask text!')
   }
-  
-  
 }
 
+function deleteSubtask(i, j) {
+  const currentSubtask = tasks[i].subtasks[j];
+  console.log('aktuelle Subtask: ', currentSubtask);
+  tasks[i].subtasks.splice(j, 1); 
+  console.log('übrige Subtasks: ', tasks[i].subtasks);
+  renderSubtasksList(i, tasks[i]);
+}
 
 function createOkButton(i) {
   const okayButtonContainer = document.getElementById(`delete_and_edit_${i}`);

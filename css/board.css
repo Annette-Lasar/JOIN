@@ -547,9 +547,12 @@ h4 {
 }
 
 .edited-due-date {
+  padding: 5px 4px;
   width: 100%;
   font-family: 'Inter', sans-serif;
   font-size: 0.75rem;
+  border: var(--accent-color-anthracite) 1px solid;
+  border-radius: 4px;
 }
 
 .edited-task-description::-webkit-scrollbar {
@@ -616,13 +619,15 @@ h4 {
 
 .edit-contacts-dropdown-list {
   width: 100%;
-  padding: 6px 4px;
+  padding: 8px 6px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: 0.75rem;
+  background-color: var(--accent-color-white);
+  border: var(--accent-color-anthracite) 1px solid;
+  border-radius: 4px;
   cursor: pointer;
-  border: blueviolet 1px solid;
 }
 
 .edit-contact-list-wrapper {
@@ -684,7 +689,7 @@ h4 {
 }
 
 .edit-subtask-wrapper {
-  margin: 0 0 0.3em;
+  margin: 0 2px 0.3em;
   padding: 0.3em;
   display: flex;
   align-items: center;
@@ -696,13 +701,12 @@ h4 {
 }
 
 .edit-subtask-wrapper:focus-within {
-  border: var(--background-color-darkblue) 2px solid;
+ outline: var(--background-color-darkblue) 1.5px solid;
 }
 
 .input-subtasks {
   flex: 1 1 0;
   border: none;
-  border: blue 1px solid;;
   outline: none;
 }
 
