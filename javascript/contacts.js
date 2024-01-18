@@ -1,12 +1,23 @@
-function addGroups() {
+function initContacts() {
+    renderGroupLetters();
+    addContactToGroup();
+    loadColors();
+    checkContactsInGroup();
+    emptyContactList();
+}
+
+function renderGroupLetters(){
     document.getElementById('contact_list').innerHTML = '';
     for (let i = 0; i < groups.length; i++) {
         const letter = groups[i];
         document.getElementById('contact_list').innerHTML += groupsTemplate(letter);
     }
-    addContactToGroup();
-    loadColors();
-    checkContactsInGroup();
+}
+
+function emptyContactList() {
+    if (allContacts == '') {
+        document.getElementById('contact_list').innerHTML = '<h1 style="text-align: center; margin-top: 120px ;">No contacts added yet. Add some!</h1>'
+    }
 }
 
 function checkContactsInGroup() {
@@ -101,7 +112,7 @@ function randomUserColor() {
 function addNewContact() {
     pushNewContact();
     hideAddForm();
-    addGroups();
+    initContacts();
     resetAddNewContactValues();
     document.getElementById(allContacts.length - 1).focus();
     showContactInfo(allContacts.length - 1);
@@ -141,7 +152,7 @@ function pushNewContact() {
 function saveContactChanges(i) {
     updateContact(i);
     hideAddForm();
-    addGroups();
+    initContacts();
     document.getElementById(i).focus();
     showContactInfo(i);
 }
@@ -186,7 +197,7 @@ function hideOptions() {
 function deleteAnUser() {
     let index = currentContactIndex();
     allContacts.splice(index, 1);
-    addGroups();
+    initContacts();
     hideContactInfo();
 }
 
