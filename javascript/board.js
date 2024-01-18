@@ -434,6 +434,7 @@ async function sendDataToServer() {
   } else {
     await setItem('guestTasks', JSON.stringify(tasks));
   }
+  initBoard();
 }
 
 async function checkUserLogin() {
