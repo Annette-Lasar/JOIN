@@ -604,6 +604,8 @@ function generateDetailViewHTML(i, oneTask) {
 }
 
 function editTask(i) {
+  checkForCurrentSubtaskStatus(i);
+  countCheckedSubtasks(i, tasks[i].subtasks);
   replaceCategory(i);
   addClassToContainer(i);
   editTitle(i, tasks[i]);
@@ -614,6 +616,16 @@ function editTask(i) {
   makeSubtasksEditable(i, tasks[i]);
   createOkButton(i);
 }
+
+function countCheckedSubtasks(i, subtasksArray) {
+  const checkedSubtasksCount = subtasksArray.reduce((count, subtask) => {
+  return count + (subtask.checked_status === true ? 1 : 0);
+  }, 0);
+
+  console.log('neue erledigte Aufgaben: ', checkedSubtasksCount);
+  console.log('alte erledigte Aufgaben: ', tasks[i].completed_subtasks);
+}
+
 
 function replaceCategory(i) {
   const closeBox = document.getElementById(`category_and_close_wrapper${i}`);
@@ -1142,9 +1154,17 @@ function updateEditedSubtask(i, j) {
 
 function deleteSubtask(i, j) {
   const currentSubtask = tasks[i].subtasks[j];
-  console.log('aktuelle Subtask: ', currentSubtask);
-  tasks[i].subtasks.splice(j, 1);
-  console.log('übrige Subtasks: ', tasks[i].subtasks);
+  let currentSubtaskStatus = currentSubtask.checked_status;
+  let numberOfCompletedSubtasks = tasks[i].completed_subtasks;
+  console.log('aktueller SubtaskStatus: ', currentSubtaskStatus);
+  console.log('alte erledigte Subtasks: ', numberOfCompletedSubtasks);
+  if (currentSubtaskStatus === true) {
+    tasks[i].completed_subtasks--;
+    console.log('neue erledigte Subtasks: ', tasks[i].completed_subtasks);
+    tasks[i].subtasks.splice(j, 1);
+  } else {
+    tasks[i].subtasks.splice(j, 1);
+  }
   renderSubtasksList(i, tasks[i]);
 }
 
