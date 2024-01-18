@@ -256,7 +256,14 @@ function getFilteredDueDate(i, oneTask) {
   dueDateContainer.innerHTML = '';
   let inputDate = oneTask.current_due_date;
   let currentDueDate = formatDateString(inputDate);
-  dueDateContainer.innerHTML = currentDueDate;
+  dueDateContainer.innerHTML = generateDueDateForDetailViewHTML(currentDueDate);
+}
+
+function generateDueDateForDetailViewHTML(currentDueDate) {
+  return /* html */ `
+      <span class="due-date">Due date: </span>
+      <span>${currentDueDate}</span>
+  `;
 }
 
 function formatDateString(inputDate) {
@@ -634,9 +641,17 @@ function generateEditTitleHTML(i, oneTask) {
   return /* html */ `
       <div class="edited-task-title-wrapper">
           <div class="edit-headline">Title</div>
-          <input id="edited_task_title_${i}" type="text" value="${oneTask.title}" class="edited-task-title">
+          <input onblur="updateEditedTitle(${i})" id="edited_task_title_${i}" type="text" value="${oneTask.title}" class="edited-task-title">
       </div>
   `;
+}
+
+function updateEditedTitle(i) {
+  const editTitleInput = document.getElementById(`edited_task_title_${i}`);
+  let newTitle = editTitleInput.value;
+  console.log('neuer Titel: ', newTitle);
+  tasks[i].title = newTitle
+  console.log('Aufgaben: ', tasks[i]);
 }
 
 function editDescription(i, oneTask) {
@@ -649,9 +664,17 @@ function generateEditDescriptionHTML(i, oneTask) {
   return /* html */ `
   <div>
     <div class="edit-headline">Description</div>
-    <textarea name="description" id="edited_task_description${i}" class="edited-task-description" cols="30" rows="5" placeholder="Enter your description">${oneTask.description}</textarea>
+    <textarea onblur="updateEditedDescription(${i})" name="description" id="edited_task_description${i}" class="edited-task-description" cols="30" rows="5" placeholder="Enter your description">${oneTask.description}</textarea>
   </div>
   `;
+}
+
+function updateEditedDescription(i) {
+  const editDescriptionInput = document.getElementById(`edited_task_description${i}`);
+  let newDescription = editDescriptionInput.value;
+  console.log('neue Beschreibung: ', newDescription);
+  tasks[i].description = newDescription
+  console.log('Aufgaben: ', tasks[i]);
 }
 
 function editDueDate(i, oneTask) {
@@ -667,11 +690,20 @@ function standardDateoFToday() {
 
 function generateEditDueDateHTML(i, oneTask, minimumDueDate) {
   return /* html */ `
-      <div>
+      <div class="edited-due-date-wrapper">
         <div class="edit-headline">Due date</div>
-        <input id="edited_task_due_date${i}" type="date" min="${minimumDueDate}" class="edited-due-date" value="${oneTask.current_due_date}">
+        <input onblur="updateEditedDueDate(${i})" id="edited_task_due_date${i}" type="date" min="${minimumDueDate}" class="edited-due-date" value="${oneTask.current_due_date}">
       </div>
   `;
+}
+
+function updateEditedDueDate(i) {
+  const editDueDateInput = document.getElementById(`edited_task_due_date${i}`);
+  let newDueDate = editDueDateInput.value;
+  console.log('alte Frist: ', tasks[i].current_due_date);
+  console.log('neue Frist: ', newDueDate);
+  tasks[i].current_due_date = newDueDate;
+  console.log('Aufgaben: ', tasks[i]);
 }
 
 function editPriority(i, oneTask) {
@@ -958,6 +990,7 @@ function clearSubtask(i) {
   addSubtaskInputfield.value = '';
 }
 
+/* Hier muss ich irgendwo die Anzahl der Subtasks erhöhen */
 function addNewSubtask(i) {
   const addSubtaskInputfield = document.getElementById(`input_subtasks${i}`);
   let newSubtask = {

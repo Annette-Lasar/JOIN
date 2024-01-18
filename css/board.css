@@ -378,6 +378,12 @@ h4 {
   font-size: 0.9rem;
 }
 
+.task-due-date-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .detail-task-contacts-wrapper {
   position: relative;
 }
@@ -424,7 +430,7 @@ h4 {
 
 .detail-contacts-wrapper {
   max-height: 100px;
-  padding: 1em;
+  padding: 0.5em;
   display: flex;
   overflow-y: auto;
   border: var(--background-color-darkblue) 0.5px solid;
@@ -544,6 +550,10 @@ h4 {
   margin: 0 0 1em;
   font-family: 'Inter', sans-serif;
   resize: none;
+}
+
+.edited-due-date-wrapper {
+  width: 100%;
 }
 
 .edited-due-date {
