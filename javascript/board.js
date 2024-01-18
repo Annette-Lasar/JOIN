@@ -504,7 +504,6 @@ function openOrCloseContainer(i, containerId, action) {
   const cardMenuContainer = document.getElementById(containerId);
   if (containerId === `detail_task_wrapper_${i}`) {
     if (action === 'open') {
-      
       cardMenuContainer.classList.remove('d-none');
       renderTaskDetailView(i);
       checkForCurrentSubtaskStatus(i);
@@ -909,7 +908,6 @@ function updateCheckboxes(i) {
   });
 }
 
-
 function isContactSelected(contact, taskIndex) {
   const currentContacts = tasks[taskIndex].current_contacts;
   return currentContacts.some((selectedContact) => {
@@ -922,13 +920,10 @@ function isContactSelected(contact, taskIndex) {
   });
 }
 
-
-// Diese Funktion wird aufgerufen, wenn eine Checkbox geklickt wird
 function onCheckboxChange(i, j) {
   const checkbox = document.getElementById(`contact_checkbox_${i}_${j}`);
   const contact = contacts[j];
-  
-  // Überprüfe, ob die Checkbox markiert ist
+
   if (checkbox.checked) {
     addContactToCurrentContacts(i, contact);
   } else {
@@ -936,10 +931,9 @@ function onCheckboxChange(i, j) {
   }
 }
 
-// Diese Funktion fügt einen Kontakt dem Unterarray tasks[i].current_contacts hinzu
 function addContactToCurrentContacts(i, contact) {
   const currentContactsArray = tasks[i].current_contacts;
-  
+
   if (!isContactInCurrentContacts(i, contact)) {
     currentContactsArray.push(contact);
     console.log('Array mit neuem Kontakt: ', currentContactsArray);
@@ -948,7 +942,9 @@ function addContactToCurrentContacts(i, contact) {
 
 function removeContactFromCurrentContacts(i, contact) {
   const currentContactsArray = tasks[i].current_contacts;
-  const indexToRemove = currentContactsArray.findIndex(existingContact => existingContact.e_mail === contact.e_mail);
+  const indexToRemove = currentContactsArray.findIndex(
+    (existingContact) => existingContact.e_mail === contact.e_mail
+  );
 
   if (indexToRemove !== -1) {
     currentContactsArray.splice(indexToRemove, 1);
@@ -956,12 +952,12 @@ function removeContactFromCurrentContacts(i, contact) {
   }
 }
 
-// Diese Funktion überprüft, ob ein Kontakt bereits im Unterarray tasks[i].current_contacts vorhanden ist
 function isContactInCurrentContacts(i, contact) {
   const currentContactsArray = tasks[i].current_contacts;
-  return currentContactsArray.some(existingContact => existingContact === contact);
+  return currentContactsArray.some(
+    (existingContact) => existingContact === contact
+  );
 }
-
 
 function toggleDropdownList(idContainer, idArrow) {
   const DROPDOWN_LIST = document.getElementById(idContainer);
@@ -1062,7 +1058,6 @@ function clearSubtask(i) {
   addSubtaskInputfield.value = '';
 }
 
-/* Hier muss ich irgendwo die Anzahl der Subtasks erhöhen */
 function addNewSubtask(i) {
   const addSubtaskInputfield = document.getElementById(`input_subtasks${i}`);
   let newSubtask = {
@@ -1128,9 +1123,11 @@ function updateEditedSubtask(i, j) {
   );
 
   if (editSubtaskInputfield.value !== '') {
+    let newCheckedSubtaskStatus = tasks[i].subtasks[j].checked_status;
+    console.log('neuer Check-Status: ', newCheckedSubtaskStatus);
     let editedSubtask = {
       subtask_name: editSubtaskInputfield.value,
-      checked_status: false,
+      checked_status: newCheckedSubtaskStatus,
     };
     tasks[i].subtasks[j] = editedSubtask;
     renderSubtasksList(i, tasks[i]);
@@ -1157,24 +1154,13 @@ function createOkButton(i) {
   okayButtonContainer.innerHTML = generateOkayButtonHTML(i);
 }
 
-// Funktion auf dem Button muss anders sein. Erst muss alles ins Array und auf den Server
 function generateOkayButtonHTML(i) {
   return /* html */ `
   <div class="okay-wrapper">
-    <button onclick="confirmChangesToTask(${i})" class="edit-okay-button">
+    <button onclick="renderTaskDetailView(${i})" class="edit-okay-button">
       OK
       <img src="../icons/check.svg" height=10">
     </button>
   </div>
   `;
-}
-
-function confirmChangesToTask(i) {
-  renderTaskDetailView(i);
-  for (let j = 0; j < tasks[i].subtasks.length; j++) {
-    const individualSubtaskCheckbox = document.getElementById(
-      'individual_subtask_checkbox_${i}_${j}'
-    );
-    checkForCompletedSubtasks(j, tasks[i], individualSubtaskCheckbox);
-  }
 }
