@@ -82,7 +82,9 @@ function renderTasksOnBoard(i, oneTask, status) {
     if (tasksWithTargetStatus.length === 0) {
       document.getElementById(
         targetStatus
-      ).innerHTML = `<div class="empty-list-message">No tasks ${replaceStatusText(targetStatus)}</div>`;
+      ).innerHTML = `<div class="empty-list-message">No tasks ${replaceStatusText(
+        targetStatus
+      )}</div>`;
     } else if (status === targetStatus) {
       document.getElementById(status).innerHTML += generateToDoHTML(
         i,
@@ -502,8 +504,10 @@ function openOrCloseContainer(i, containerId, action) {
   const cardMenuContainer = document.getElementById(containerId);
   if (containerId === `detail_task_wrapper_${i}`) {
     if (action === 'open') {
+      
       cardMenuContainer.classList.remove('d-none');
       renderTaskDetailView(i);
+      checkForCurrentSubtaskStatus(i);
       updateProgressBar(i, tasks[i]);
       updateCompletedTasks(i, tasks[i]);
       document.body.style.overflow = 'hidden';
@@ -515,7 +519,7 @@ function openOrCloseContainer(i, containerId, action) {
       document.body.style.overflow = 'visible';
     }
   } else if (action === 'open') {
-    /* addTaskCardEventListener(); */
+    /* addTaskCardEventListener(); */ // umbenennen in addEventListenerToTaskCard
     cardMenuContainer.classList.remove('d-none');
   } else if (action === 'close') {
     cardMenuContainer.classList.add('d-none');
@@ -650,7 +654,7 @@ function updateEditedTitle(i) {
   const editTitleInput = document.getElementById(`edited_task_title_${i}`);
   let newTitle = editTitleInput.value;
   console.log('neuer Titel: ', newTitle);
-  tasks[i].title = newTitle
+  tasks[i].title = newTitle;
   console.log('Aufgaben: ', tasks[i]);
 }
 
@@ -670,10 +674,12 @@ function generateEditDescriptionHTML(i, oneTask) {
 }
 
 function updateEditedDescription(i) {
-  const editDescriptionInput = document.getElementById(`edited_task_description${i}`);
+  const editDescriptionInput = document.getElementById(
+    `edited_task_description${i}`
+  );
   let newDescription = editDescriptionInput.value;
   console.log('neue Beschreibung: ', newDescription);
-  tasks[i].description = newDescription
+  tasks[i].description = newDescription;
   console.log('Aufgaben: ', tasks[i]);
 }
 
@@ -700,10 +706,7 @@ function generateEditDueDateHTML(i, oneTask, minimumDueDate) {
 function updateEditedDueDate(i) {
   const editDueDateInput = document.getElementById(`edited_task_due_date${i}`);
   let newDueDate = editDueDateInput.value;
-  console.log('alte Frist: ', tasks[i].current_due_date);
-  console.log('neue Frist: ', newDueDate);
   tasks[i].current_due_date = newDueDate;
-  console.log('Aufgaben: ', tasks[i]);
 }
 
 function editPriority(i, oneTask) {
@@ -804,7 +807,6 @@ function updateButtons(i, buttonType, isActive) {
   }
 }
 
-
 function changePrioStatus(i, prioStatus) {
   const buttonTypes = ['urgent', 'medium', 'low'];
   buttonTypes.forEach((type) => updateButtons(i, type, false));
@@ -831,7 +833,7 @@ async function editContacts(i) {
   } else if (user == false) {
     console.log('contacts: ', contacts);
     contactsWrapper.innerHTML = generateContactsDropdownHTML(i);
-    renderGuestContactList(i);
+    renderEditContactList(i);
   }
 }
 
@@ -864,13 +866,14 @@ function renderUserContactList(i) {
   }
 }
 
-function renderGuestContactList(i) {
+function renderEditContactList(i) {
   const editContactsList = document.getElementById(`edit_contact_list${i}`);
   editContactsList.innerHTML = '';
   for (let j = 0; j < contacts.length; j++) {
     const oneContact = contacts[j];
     editContactsList.innerHTML += generateContactListHTML(i, j, oneContact);
   }
+  updateCheckboxes(i);
 }
 
 function generateContactListHTML(i, j, oneContact) {
@@ -887,10 +890,78 @@ function generateContactListHTML(i, j, oneContact) {
             </div>
           </div>
         </label>
-        <div><input id="contact_checkbox_${i}_${j}" type="checkbox"></div>
+        <div><input onchange="onCheckboxChange(${i}, ${j})" id="contact_checkbox_${i}_${j}" type="checkbox"></div>
       </li>
     `;
 }
+
+function updateCheckboxes(i) {
+  const editContactsList = document.getElementById(`edit_contact_list${i}`);
+  const checkboxes = editContactsList.querySelectorAll(
+    'input[type="checkbox"]'
+  );
+
+  checkboxes.forEach((checkbox, j) => {
+    const oneContact = contacts[j];
+    const isChecked = isContactSelected(oneContact, i);
+
+    checkbox.checked = isChecked;
+  });
+}
+
+
+function isContactSelected(contact, taskIndex) {
+  const currentContacts = tasks[taskIndex].current_contacts;
+  return currentContacts.some((selectedContact) => {
+    return (
+      selectedContact.name === contact.name &&
+      selectedContact.e_mail === contact.e_mail &&
+      selectedContact.phone === contact.phone &&
+      selectedContact.color === contact.color
+    );
+  });
+}
+
+
+// Diese Funktion wird aufgerufen, wenn eine Checkbox geklickt wird
+function onCheckboxChange(i, j) {
+  const checkbox = document.getElementById(`contact_checkbox_${i}_${j}`);
+  const contact = contacts[j];
+  
+  // Überprüfe, ob die Checkbox markiert ist
+  if (checkbox.checked) {
+    addContactToCurrentContacts(i, contact);
+  } else {
+    removeContactFromCurrentContacts(i, contact);
+  }
+}
+
+// Diese Funktion fügt einen Kontakt dem Unterarray tasks[i].current_contacts hinzu
+function addContactToCurrentContacts(i, contact) {
+  const currentContactsArray = tasks[i].current_contacts;
+  
+  if (!isContactInCurrentContacts(i, contact)) {
+    currentContactsArray.push(contact);
+    console.log('Array mit neuem Kontakt: ', currentContactsArray);
+  }
+}
+
+function removeContactFromCurrentContacts(i, contact) {
+  const currentContactsArray = tasks[i].current_contacts;
+  const indexToRemove = currentContactsArray.findIndex(existingContact => existingContact.e_mail === contact.e_mail);
+
+  if (indexToRemove !== -1) {
+    currentContactsArray.splice(indexToRemove, 1);
+    console.log('Array mit einem Kontakt weniger: ', currentContactsArray);
+  }
+}
+
+// Diese Funktion überprüft, ob ein Kontakt bereits im Unterarray tasks[i].current_contacts vorhanden ist
+function isContactInCurrentContacts(i, contact) {
+  const currentContactsArray = tasks[i].current_contacts;
+  return currentContactsArray.some(existingContact => existingContact === contact);
+}
+
 
 function toggleDropdownList(idContainer, idArrow) {
   const DROPDOWN_LIST = document.getElementById(idContainer);
@@ -973,7 +1044,9 @@ function generateMakeSubtasksEditableHTML(i) {
 }
 
 function showAndHideCancelAndAcceptSubtask(i, action) {
-  const closeAndCheckWrapper = document.getElementById(`close_and_check_wrapper_${i}`);
+  const closeAndCheckWrapper = document.getElementById(
+    `close_and_check_wrapper_${i}`
+  );
   const subtasksPlusButton = document.getElementById(`subtask_plus_${i}`);
   if (action === 'show') {
     closeAndCheckWrapper.classList.remove('d-none');
@@ -982,7 +1055,6 @@ function showAndHideCancelAndAcceptSubtask(i, action) {
     closeAndCheckWrapper.classList.add('d-none');
     subtasksPlusButton.classList.remove('d-none');
   }
-  
 }
 
 function clearSubtask(i) {
@@ -996,7 +1068,7 @@ function addNewSubtask(i) {
   let newSubtask = {
     subtask_name: addSubtaskInputfield.value,
     checked_status: false,
-  }
+  };
 
   console.log('neue Subtask: ', newSubtask);
   console.log('Subtasks-Array: ', tasks[i].subtasks);
@@ -1004,7 +1076,6 @@ function addNewSubtask(i) {
   addSubtaskInputfield.value = '';
   renderSubtasksList(i, tasks[i]);
   showAndHideCancelAndAcceptSubtask(i, 'hide');
-  
 }
 
 function generateSubtasksListHTML(i, j, oneSubtask) {
@@ -1024,7 +1095,9 @@ function generateSubtasksListHTML(i, j, oneSubtask) {
 function editSubtask(i, j) {
   let oneSubtask = tasks[i].subtasks[j];
   console.log(oneSubtask);
-  const subtaskListItem = document.getElementById(`subtask_list_item_wrapper${i}_${j}`); 
+  const subtaskListItem = document.getElementById(
+    `subtask_list_item_wrapper${i}_${j}`
+  );
   subtaskListItem.innerHTML = '';
   subtaskListItem.innerHTML = generateEditSubtaskInputHTML(i, j, oneSubtask);
 }
@@ -1043,30 +1116,37 @@ function generateEditSubtaskInputHTML(i, j, oneSubtask) {
 }
 
 function clearInputField(i, j) {
-  const editSubtaskInputfield = document.getElementById(`edit_subtask_input_${i}_${j}`);
+  const editSubtaskInputfield = document.getElementById(
+    `edit_subtask_input_${i}_${j}`
+  );
   editSubtaskInputfield.value = '';
 }
 
-
 function updateEditedSubtask(i, j) {
-  const editSubtaskInputfield = document.getElementById(`edit_subtask_input_${i}_${j}`);
-  
+  const editSubtaskInputfield = document.getElementById(
+    `edit_subtask_input_${i}_${j}`
+  );
+
   if (editSubtaskInputfield.value !== '') {
     let editedSubtask = {
       subtask_name: editSubtaskInputfield.value,
       checked_status: false,
-    }
-     tasks[i].subtasks[j] = editedSubtask;
-     renderSubtasksList(i, tasks[i]);
+    };
+    tasks[i].subtasks[j] = editedSubtask;
+    renderSubtasksList(i, tasks[i]);
   } else {
-    renderAlert('alert_container', 'alert_content', 'Please enter a subtask text!')
+    renderAlert(
+      'alert_container',
+      'alert_content',
+      'Please enter a subtask text!'
+    );
   }
 }
 
 function deleteSubtask(i, j) {
   const currentSubtask = tasks[i].subtasks[j];
   console.log('aktuelle Subtask: ', currentSubtask);
-  tasks[i].subtasks.splice(j, 1); 
+  tasks[i].subtasks.splice(j, 1);
   console.log('übrige Subtasks: ', tasks[i].subtasks);
   renderSubtasksList(i, tasks[i]);
 }
@@ -1081,10 +1161,20 @@ function createOkButton(i) {
 function generateOkayButtonHTML(i) {
   return /* html */ `
   <div class="okay-wrapper">
-    <button onclick="renderTaskDetailView(${i})" class="edit-okay-button">
+    <button onclick="confirmChangesToTask(${i})" class="edit-okay-button">
       OK
       <img src="../icons/check.svg" height=10">
     </button>
   </div>
   `;
+}
+
+function confirmChangesToTask(i) {
+  renderTaskDetailView(i);
+  for (let j = 0; j < tasks[i].subtasks.length; j++) {
+    const individualSubtaskCheckbox = document.getElementById(
+      'individual_subtask_checkbox_${i}_${j}'
+    );
+    checkForCompletedSubtasks(j, tasks[i], individualSubtaskCheckbox);
+  }
 }
