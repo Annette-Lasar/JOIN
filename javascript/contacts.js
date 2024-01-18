@@ -31,7 +31,7 @@ function loadInitials(i) {
     let name = allContacts[i]['name'].split(' ');
     let initials = '';
     for (let j = 0; j < name.length; j++) {
-        initials += name[j][0]
+        initials += name[j][0];
     }
     return initials;
 }
