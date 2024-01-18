@@ -48,9 +48,11 @@ function hideNavIconsOnExternalSites() {
   let menuWrapper = document.getElementById('menu_items_wrapper');
   let legalNoticeLink = document.getElementById('legal_notice_link');
   let privacyPolicyLink = document.getElementById('privacy_policy_link');
+  let headerIcons = document.getElementById('header_icons');
   const URL = window.location.href;
   if (URL.endsWith('external.html')) {
     menuWrapper.style.display = 'none';
+    headerIcons.style.display = 'none';
     legalNoticeLink.href = './legal_notice_external.html';
     privacyPolicyLink.href = './privacy_policy_external.html';
   }

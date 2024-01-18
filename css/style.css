@@ -381,6 +381,10 @@ breakpoint: 50em
         height: 100%;
     }
 
+    div[w3-include-html] p {
+       margin-top: 10px;
+    }
+
     .nav {
         height: 100%;
         padding: 4em 0;
