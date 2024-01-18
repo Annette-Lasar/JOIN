@@ -636,7 +636,7 @@ function replaceCategory(i) {
 function generateCloseIcon(i) {
   return /* html */ `
     <div id="edit_close_button_wrapper${i}" class="edit-close-button-wrapper">
-      <img class="detail-close-button" onclick="openOrCloseContainer(${i}, 'detail_task_wrapper_${i}', 'close')" src="../icons/close.svg" alt="">
+      <img class="detail-close-button" onclick="renderTaskDetailView(${i})" src="../icons/close.svg" alt="">
     </div>
   `;
 }
