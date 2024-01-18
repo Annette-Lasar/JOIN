@@ -1,4 +1,15 @@
-function initContacts() {
+let groups = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+let userColors = ['#FF7A00', '#FF5EB3', '#6E52FF', '#9327FF', '#00BEE8', '#1FD7C1', '#FF745E', '#FFA35E', '#FC71FF', '#FFC701', '#0038FF', '#C3FF2B', '#FFE62B', '#FF4646', '#FFBB2B'];
+
+/**
+ * Is stored on the server under the key 'guestContacts'
+ */
+let allContacts = [];
+
+
+async function initContacts() {
+    await loadContactsUserOrGuest();
     renderGroupLetters();
     addContactToGroup();
     loadColors();
@@ -6,7 +17,37 @@ function initContacts() {
     emptyContactList();
 }
 
-function renderGroupLetters(){
+async function loadContactsUserOrGuest() {
+    let userLogin = localStorage.getItem('userLogin');
+    if (userLogin == 'true') {
+        let userEmail = localStorage.getItem('userEmail');
+        userEmail = userEmail.replace(/"/g, '');
+        users = JSON.parse(await getItem('users'));
+        let user = users.find((u) => u.email === userEmail);
+        if (user) {
+            allContacts = JSON.parse(await getItem(`${user.email}_contacts`));        //  Hier wird das Kontakte-Array eines angemeldeten Users in der Variable 'allContacts' gespeichert
+        }
+    } else {
+        allContacts = JSON.parse(await getItem('guestContacts'));                          //   Hier wird das Kontakte-Array eines Gasts in der Variable 'allContacts' gespeichert
+    }
+}
+
+async function sendContactsToServer() {
+    let userLogin = localStorage.getItem('userLogin');
+    if (userLogin == 'true') {
+        let userEmail = localStorage.getItem('userEmail');
+        userEmail = userEmail.replace(/"/g, '');
+        let user = users.find((u) => u.email == userEmail);
+        if (user) {
+            await setItem(`${user.email}_categories`, JSON.stringify(allContacts));
+        }
+    } else {
+        await setItem('guestContacts', JSON.stringify(allContacts));
+    }
+    initContacts();
+}
+
+function renderGroupLetters() {
     document.getElementById('contact_list').innerHTML = '';
     for (let i = 0; i < groups.length; i++) {
         const letter = groups[i];
@@ -109,10 +150,10 @@ function randomUserColor() {
     return randomColor
 }
 
-function addNewContact() {
+async function addNewContact() {
     pushNewContact();
     hideAddForm();
-    initContacts();
+    await sendContactsToServer();
     resetAddNewContactValues();
     document.getElementById(allContacts.length - 1).focus();
     showContactInfo(allContacts.length - 1);
@@ -149,10 +190,10 @@ function pushNewContact() {
     );
 }
 
-function saveContactChanges(i) {
+async function saveContactChanges(i) {
     updateContact(i);
     hideAddForm();
-    initContacts();
+    await sendContactsToServer();
     document.getElementById(i).focus();
     showContactInfo(i);
 }
@@ -194,10 +235,10 @@ function hideOptions() {
     }, 300);
 }
 
-function deleteAnUser() {
+async function deleteAnUser() {
     let index = currentContactIndex();
     allContacts.splice(index, 1);
-    initContacts();
+    await sendContactsToServer();
     hideContactInfo();
 }
 
