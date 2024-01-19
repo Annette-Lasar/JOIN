@@ -24,7 +24,7 @@
       <div class="task-wrapper">
         <div class="small-screen">
           <section>
-            <label for="task_title">Title<span class="red">*</span></label>
+            <label for="task_title" class="label">Title<span class="red">*</span></label>
             <input
               id="task_title"
               type="text"
@@ -38,7 +38,7 @@
             </div>
           </section>
           <section>
-            <label for="task_description">Description</label>
+            <label for="task_description" class="label">Description</label>
             <textarea
               name="task-description"
               id="task_description"
@@ -125,7 +125,7 @@
             </div>
           </section>
           <section id="due_date_small_screen">
-            <label for="task_due_date_small"
+            <label for="task_due_date_small" class="label"
               >Due date<span class="red">*</span></label
             >
             <input
@@ -231,7 +231,7 @@
         <div class="separator-line"></div>
         <div id="big_screen" class="big-screen">
           <section id="due_date_big_screen">
-            <label for="task_title">Due date<span class="red">*</span></label>
+            <label class="label" for="task_title">Due date<span class="red">*</span></label>
             <input
               onblur="selectDueDate('task_due_date_big')"
               id="task_due_date_big"

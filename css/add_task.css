@@ -60,7 +60,6 @@ h3 {
   opacity: 1;
 }
 
-label,
 .label {
   margin: 0 0 0.4em;
   font-size: 0.8rem;
@@ -162,9 +161,19 @@ input[type='date'] {
 }
 
 .initials-wrapper {
+  width: 100%;
+  padding: 0.3em;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.contact-initials-and-text-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
   gap: 8px;
 }
 
@@ -295,11 +304,12 @@ li:hover,
 .icon-and-category-wrapper,
 .category-icon-wrapper,
 .contact-list li {
-  padding: 0.5em 0.25em;
+  /* padding: 0.5em 0.25em; */
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  border: green 1px solid;
 }
 
 .icon-and-category-wrapper:first-of-type {

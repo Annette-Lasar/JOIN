@@ -33,7 +33,6 @@ let currentDraggedElement;
 async function initBoard() {
   await loadTasksUserOrGuest();
   showTasksOnBoard();
-  /* addTaskCardEventListener(); */
 }
 
 async function loadTasksUserOrGuest() {
@@ -61,6 +60,34 @@ function clearContainers(...containerIDs) {
     }
   });
 }
+
+document.addEventListener('click', function (event) {
+  const CLICKED_ELEMENT = event.target.closest('.context-menu-close');
+  if (CLICKED_ELEMENT) {
+    event.stopPropagation(); // Verhindere, dass das Klick-Ereignis weitergeleitet wird
+    event.preventDefault();
+    const elementId = CLICKED_ELEMENT.id;
+    console.log('ElementId: ', elementId);
+    let elementIdNumber = elementId.split('_')[3];
+    const contextMenuContainer = document.getElementById(`context_menu_${elementIdNumber}`);
+    console.log('angeklicktes Element: ', CLICKED_ELEMENT);
+    console.log('ElementIdNumber: ', elementIdNumber);
+  }
+});
+
+
+document.addEventListener('contextmenu', function (event) {
+  const CLICKED_ELEMENT = event.target.closest('.todo');
+  const statusAttribute = CLICKED_ELEMENT.attributes['data-status'].value;
+  console.log('StatusAttribut: ', statusAttribute);
+  console.log(typeof statusAttribute);
+  const elementId = CLICKED_ELEMENT.id;
+  let elementIdNumber = elementId.split('_')[1];
+  if (!isNaN(elementIdNumber)) {
+    openCardContextMenu(elementIdNumber, statusAttribute);
+    event.preventDefault();
+  }
+});
 
 function showTasksOnBoard() {
   clearContainers('toDo', 'inProgress', 'awaitFeedback', 'done');
@@ -114,6 +141,7 @@ function callFurtherFunctionsToRenderTasks(i, oneTask, status) {
   updateProgressBar(i, tasks[i]);
   updateCompletedTasks(i, tasks[i]);
   renderContactsOnOutsideCard(i, oneTask);
+ /*  addEventListenerToTaskCard(i); */
 }
 
 function truncateSentence(sentence, wordsCount) {
@@ -289,41 +317,6 @@ function renderSubtasks(i, oneTask) {
   }
 }
 
-/* function addSubtasksEventlistener(i, j) {
-  const oneTask = tasks[i];
-  console.log('oneTask: ', oneTask);
-  const indiviualSubtaskCheckbox = document.getElementById(
-    `individual_subtask_checkbox_${i}_${j}`
-  );
-  indiviualSubtaskCheckbox.addEventListener('change', function () {
-    console.log('nochmal oneSubtask: ', oneTask.subtasks[j]);
-    checkForCompletedSubtasks(j, oneTask, indiviualSubtaskCheckbox);
-  });
-} */
-
-// evtl. Alternative zum eventListener in generateSubtaskHTML
-/* function addSubtasksEventlistener(i) {
-  const oneTask = tasks[i];
-  console.log('oneTask: ', oneTask);
-  for (let j = 0; j < oneTask.subtasks.length; j++) {
-    console.log('oneSubtask: ', oneTask.subtasks[j]);
-    const indiviualSubtaskCheckbox = document.getElementById(
-      `individual_subtask_checkbox_${i}_${j}`
-    );
-
-    // Überprüfen, ob der Event-Listener bereits vorhanden ist, um Mehrfachregistrierungen zu verhindern
-    if (!indiviualSubtaskCheckbox.hasEventListener) {
-      indiviualSubtaskCheckbox.addEventListener('change', function () {
-        console.log('nochmal oneSubtask: ', oneTask.subtasks[j]);
-        checkForCompletedSubtasks(j, oneTask, indiviualSubtaskCheckbox);
-      });
-
-      // Markiere das Element, um anzuzeigen, dass der Event-Listener registriert ist
-      indiviualSubtaskCheckbox.hasEventListener = true;
-    }
-  }
-} */
-
 function generateSubtaskHTML(i, j, oneSubtask) {
   return /* html */ `
       <div onclick="(function() {
@@ -375,7 +368,7 @@ function generateToDoHTML(
   completedSubtasksInPercent
 ) {
   return /* html */ `
-          <div id="taskCard_${i}" draggable="true" onclick="openOrCloseContainer(${i}, 'detail_task_wrapper_${i}', 'open')" oncontextmenu="openOrCloseContainer(${i}, 'context_menu_${i}', 'open')" ondragstart="startDragging(${i})" class="todo">
+          <div id="taskCard_${i}" data-status="${oneTask.status}" draggable="true" onclick="openOrCloseContainer(${i}, 'detail_task_wrapper_${i}', 'open')" ondragstart="startDragging(${i})" class="todo">
             <div class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
               <div class="todo-title">${oneTask['title']}</div>
                 <div class="todo-description">${newTruncatedSentence}</div>
@@ -390,19 +383,19 @@ function generateToDoHTML(
                   </div>
               </div>
               <div id="context_menu_${i}" class="context-menu-card d-none" data-index="${i}">  
-                <div>
-                  <div class="context-menu-move-to-wrapper">
-                    <h3>Move card to ...</h3>  
-                    <img id="context_menu_close_${i}" class="context-menu-close" src="../icons/close_white.svg" alt="">
-                  </div>
-                </div>  
-                <ul>
-                  <li>To do</li>
-                  <li>In progress</li>
-                  <li>Await feedback</li>
-                  <li>Done</li>
-                </ul>
-              </div>
+                  <div class="context-menu-title-wrapper">
+                    <div class="context-menu-move-to-wrapper">
+                      <h3>Move card to ...</h3>  
+                      <img id="context_menu_close_${i}"  class="context-menu-close" src="../icons/close_white.svg" alt="">
+                    </div>
+                  </div>  
+                  <ul>
+                    <li onclick="moveToNewList(${i}, 'toDo')" id="toDo_${i}">To do</li>
+                    <li onclick="moveToNewList(${i}, 'inProgress')" id="inProgress_${i}">In progress</li>
+                    <li onclick="moveToNewList(${i}, 'awaitFeedback')" id="awaitFeedback_${i}">Await feedback</li>
+                    <li onclick="moveToNewList(${i}, 'done')" id="done_${i}">Done</li>
+                  </ul>
+              </div>  
           </div>
           <div id="detail_task_wrapper_${i}" class="detail-task-wrapper d-none"></div>
           `;
@@ -420,6 +413,15 @@ async function moveTo(status) {
   sendDataToServer();
   await loadTasksUserOrGuest();
   showTasksOnBoard();
+}
+
+function moveToNewList(i, status) {
+  currentTaskCard = document.getElementById(`taskCard_${i}`);
+  let cardStatus = tasks[i].status;
+  if (status !== cardStatus) {
+    tasks[i].status = status;
+    showTasksOnBoard();
+  }
 }
 
 async function sendDataToServer() {
@@ -445,7 +447,6 @@ async function checkUserLogin() {
     users = JSON.parse(await getItem('users'));
     let user = users.find((u) => u.email == userEmail);
     if (user) {
-      console.log(user);
       return user;
     }
   } else {
@@ -479,26 +480,40 @@ function highlight(id) {
   document.getElementById(id).classList.add('drag-area-highlight');
 }
 
-/* function addTaskCardEventListener() {
-  for (let i = 0; i < tasks.length; i++) {
-    const taskCard = document.getElementById(`taskCard_${i}`);
-    taskCard.addEventListener('contextmenu', (e) => {
-      e.preventDefault();
-    });
-  }
+/* function addEventListenerToTaskCard(i) {
+  const taskCard = document.getElementById(`taskCard_${i}`);
+  taskCard.addEventListener('click', (event) => {
+    event.stopPropagation();
+  });
 } */
 
-/* document.addEventListener('click', function (event) {
-  const CLICKED_ELEMENT = event.target;
-  if (CLICKED_ELEMENT.classList.contains('context-menu-card')) {
-    const dataIndex = CLICKED_ELEMENT.dataset.index;
-    closeContextMenu(dataIndex);
+
+function openCardContextMenu(i, status) {
+  const cardMenuContainer = document.getElementById(`context_menu_${i}`);
+  const listItemBox1 = document.getElementById(`toDo_${i}`);
+  const listItemBox2 = document.getElementById(`inProgress_${i}`);
+  const listItemBox3 = document.getElementById(`awaitFeedback_${i}`);
+  const listItemBox4 = document.getElementById(`done_${i}`);
+  cardMenuContainer.classList.remove('d-none');
+  if (status === 'toDo') {
+    listItemBox1.style.pointerEvents = 'none';
+    listItemBox1.style.color = '#d6d6d6';
+  } else if (status === 'inProgress') {
+    listItemBox2.style.pointerEvents = 'none';
+    listItemBox2.style.color = '#d6d6d6';
+  } else if (status === 'awaitFeedback') {
+    listItemBox3.style.pointerEvents = 'none';
+    listItemBox3.style.color = '#d6d6d6';
+  } else {
+    listItemBox4.style.pointerEvents = 'none';
+    listItemBox4.style.color = '#d6d6d6';
   }
-}); */
+}
+
 
 function closeContextMenu(i) {
   const contextMenuContainer = document.getElementById(`context_menu_${i}`);
-  contextMenuContainer.classList.add('d-none');
+    contextMenuContainer.classList.add('d-none'); 
 }
 
 function openOrCloseContainer(i, containerId, action) {
@@ -519,7 +534,7 @@ function openOrCloseContainer(i, containerId, action) {
       document.body.style.overflow = 'visible';
     }
   } else if (action === 'open') {
-    /* addTaskCardEventListener(); */ // umbenennen in addEventListenerToTaskCard
+    /* addEventListenerToTaskCard(i); */
     cardMenuContainer.classList.remove('d-none');
   } else if (action === 'close') {
     cardMenuContainer.classList.add('d-none');
@@ -606,7 +621,7 @@ function generateDetailViewHTML(i, oneTask) {
 
 function editTask(i) {
   checkForCurrentSubtaskStatus(i);
-  countCheckedSubtasks(i, tasks[i].subtasks);
+  countCheckedSubtasks(tasks[i].subtasks);
   replaceCategory(i);
   addClassToContainer(i);
   editTitle(i, tasks[i]);
@@ -618,15 +633,11 @@ function editTask(i) {
   createOkButton(i);
 }
 
-function countCheckedSubtasks(i, subtasksArray) {
-  const checkedSubtasksCount = subtasksArray.reduce((count, subtask) => {
-  return count + (subtask.checked_status === true ? 1 : 0);
+function countCheckedSubtasks(subtasksArray) {
+  subtasksArray.reduce((count, subtask) => {
+    return count + (subtask.checked_status === true ? 1 : 0);
   }, 0);
-
-  console.log('neue erledigte Aufgaben: ', checkedSubtasksCount);
-  console.log('alte erledigte Aufgaben: ', tasks[i].completed_subtasks);
 }
-
 
 function replaceCategory(i) {
   const closeBox = document.getElementById(`category_and_close_wrapper${i}`);
@@ -658,16 +669,29 @@ function generateEditTitleHTML(i, oneTask) {
       <div class="edited-task-title-wrapper">
           <div class="edit-headline">Title</div>
           <input onblur="updateEditedTitle(${i})" id="edited_task_title_${i}" type="text" value="${oneTask.title}" class="edited-task-title">
+          <div id="title_instruction_text_${i}" class="instruction-text">Please enter a title.</div>
       </div>
   `;
 }
 
 function updateEditedTitle(i) {
   const editTitleInput = document.getElementById(`edited_task_title_${i}`);
-  let newTitle = editTitleInput.value;
-  console.log('neuer Titel: ', newTitle);
-  tasks[i].title = newTitle;
-  console.log('Aufgaben: ', tasks[i]);
+  const instructionBox = document.getElementById(`title_instruction_text_${i}`);
+  let newTitle = editTitleInput.value.trim();
+  if (newTitle !== '') {
+    tasks[i].title = newTitle;
+    editTitleInput.classList.remove('warning');
+    instructionBox.classList.remove('red');
+  } else {
+    showTitleWarning(i);
+  }
+}
+
+function showTitleWarning(i) {
+  const editTitleInput = document.getElementById(`edited_task_title_${i}`);
+  const instructionBox = document.getElementById(`title_instruction_text_${i}`);
+  editTitleInput.classList.add('warning');
+  instructionBox.classList.add('red');
 }
 
 function editDescription(i, oneTask) {
@@ -690,19 +714,17 @@ function updateEditedDescription(i) {
     `edited_task_description${i}`
   );
   let newDescription = editDescriptionInput.value;
-  console.log('neue Beschreibung: ', newDescription);
   tasks[i].description = newDescription;
-  console.log('Aufgaben: ', tasks[i]);
 }
 
 function editDueDate(i, oneTask) {
   const dueDateBox = document.getElementById(`current_due_date_${i}`);
-  let minimumDueDate = standardDateoFToday();
+  let minimumDueDate = standardDateOfToday();
   dueDateBox.innerHTML = '';
   dueDateBox.innerHTML = generateEditDueDateHTML(i, oneTask, minimumDueDate);
 }
 
-function standardDateoFToday() {
+function standardDateOfToday() {
   return new Date().toISOString().split('T')[0];
 }
 
@@ -711,14 +733,33 @@ function generateEditDueDateHTML(i, oneTask, minimumDueDate) {
       <div class="edited-due-date-wrapper">
         <div class="edit-headline">Due date</div>
         <input onblur="updateEditedDueDate(${i})" id="edited_task_due_date${i}" type="date" min="${minimumDueDate}" class="edited-due-date" value="${oneTask.current_due_date}">
+        <div id="due_date_instruction_text${i}" class="instruction-text">Please enter a due date.</div>
       </div>
   `;
 }
 
 function updateEditedDueDate(i) {
   const editDueDateInput = document.getElementById(`edited_task_due_date${i}`);
+  const instructionBox = document.getElementById(
+    `due_date_instruction_text${i}`
+  );
   let newDueDate = editDueDateInput.value;
-  tasks[i].current_due_date = newDueDate;
+  if (newDueDate !== '') {
+    tasks[i].current_due_date = newDueDate;
+    editDueDateInput.classList.remove('warning');
+    instructionBox.classList.remove('red');
+  } else {
+    showDueDateWarning(i);
+  }
+}
+
+function showDueDateWarning(i) {
+  const editDueDateInput = document.getElementById(`edited_task_due_date${i}`);
+  const instructionBox = document.getElementById(
+    `due_date_instruction_text${i}`
+  );
+  editDueDateInput.classList.add('warning');
+  instructionBox.classList.add('red');
 }
 
 function editPriority(i, oneTask) {
@@ -839,11 +880,9 @@ async function editContacts(i) {
   contactsWrapper.innerHTML = '';
   let user = await checkUserLogin();
   if (user) {
-    console.log('user: ', user.email); // Muss ich das Array hier nochmal holen oder reicht das beim Laden der Seite?
     contactsWrapper.innerHTML = generateContactsDropdownHTML(i);
     renderUserContactList(i);
   } else if (user == false) {
-    console.log('contacts: ', contacts);
     contactsWrapper.innerHTML = generateContactsDropdownHTML(i);
     renderEditContactList(i);
   }
@@ -946,10 +985,8 @@ function onCheckboxChange(i, j) {
 
 function addContactToCurrentContacts(i, contact) {
   const currentContactsArray = tasks[i].current_contacts;
-
   if (!isContactInCurrentContacts(i, contact)) {
     currentContactsArray.push(contact);
-    console.log('Array mit neuem Kontakt: ', currentContactsArray);
   }
 }
 
@@ -961,7 +998,6 @@ function removeContactFromCurrentContacts(i, contact) {
 
   if (indexToRemove !== -1) {
     currentContactsArray.splice(indexToRemove, 1);
-    console.log('Array mit einem Kontakt weniger: ', currentContactsArray);
   }
 }
 
@@ -1077,9 +1113,6 @@ function addNewSubtask(i) {
     subtask_name: addSubtaskInputfield.value,
     checked_status: false,
   };
-
-  console.log('neue Subtask: ', newSubtask);
-  console.log('Subtasks-Array: ', tasks[i].subtasks);
   tasks[i].subtasks.push(newSubtask);
   addSubtaskInputfield.value = '';
   renderSubtasksList(i, tasks[i]);
@@ -1102,7 +1135,6 @@ function generateSubtasksListHTML(i, j, oneSubtask) {
 
 function editSubtask(i, j) {
   let oneSubtask = tasks[i].subtasks[j];
-  console.log(oneSubtask);
   const subtaskListItem = document.getElementById(
     `subtask_list_item_wrapper${i}_${j}`
   );
@@ -1137,7 +1169,6 @@ function updateEditedSubtask(i, j) {
 
   if (editSubtaskInputfield.value !== '') {
     let newCheckedSubtaskStatus = tasks[i].subtasks[j].checked_status;
-    console.log('neuer Check-Status: ', newCheckedSubtaskStatus);
     let editedSubtask = {
       subtask_name: editSubtaskInputfield.value,
       checked_status: newCheckedSubtaskStatus,
@@ -1156,12 +1187,8 @@ function updateEditedSubtask(i, j) {
 function deleteSubtask(i, j) {
   const currentSubtask = tasks[i].subtasks[j];
   let currentSubtaskStatus = currentSubtask.checked_status;
-  let numberOfCompletedSubtasks = tasks[i].completed_subtasks;
-  console.log('aktueller SubtaskStatus: ', currentSubtaskStatus);
-  console.log('alte erledigte Subtasks: ', numberOfCompletedSubtasks);
   if (currentSubtaskStatus === true) {
     tasks[i].completed_subtasks--;
-    console.log('neue erledigte Subtasks: ', tasks[i].completed_subtasks);
     tasks[i].subtasks.splice(j, 1);
   } else {
     tasks[i].subtasks.splice(j, 1);

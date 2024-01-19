@@ -137,16 +137,20 @@ h4 {
 }
 
 .addTask-btn {
+  height: 24px;
+  padding: 0.5em 0.3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 2px solid var(--accent-color-anthracite);
   border-radius: 6px;
-  padding: 0 3px 1px 3px;
   filter: invert(94%) sepia(4%) saturate(20%) hue-rotate(314deg) brightness(91%)
     contrast(94%);
 }
 
-.addTask-btn:hover {
+/* .addTask-btn:hover {
   cursor: pointer;
-}
+} */
 
 .drag-area {
   min-height: 220px;
@@ -539,15 +543,38 @@ h4 {
   font-weight: 700;
 }
 
+.red {
+  color: var(--accent-color-red);
+}
+
+.edited-task-title-wrapper {
+  margin: 0 0 0.5em;
+}
+
 .edited-task-title {
   width: 100%;
-  margin: 0 0 1em;
-  padding: 2px;
+  padding: 4px 2px;
+  border: var(--accent-color-anthracite) 1px solid;
+  border-radius: 4px;
+}
+
+.edited-task-title.warning {
+  border: red 1px solid;
+}
+
+.instruction-text.red {
+  opacity: 1;
+}
+
+.instruction-text {
+  margin: 0.3em 0;
+  font-size: 0.6rem;
+  opacity: 0;
 }
 
 .edited-task-description {
   width: 100%;
-  margin: 0 0 1em;
+  margin: 0 0 0.5em;
   font-family: 'Inter', sans-serif;
   resize: none;
 }
@@ -575,6 +602,7 @@ h4 {
 
 .prio-button-wrapper {
   width: 100%;
+  margin: 0 0 0.5em;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -625,6 +653,10 @@ h4 {
 
 .prio-marked-low .svg-low path {
   fill: var(--accent-color-white);
+}
+
+.edit-contact-wrapper {
+  margin: 0 0 0.75em;
 }
 
 .edit-contacts-dropdown-list {
@@ -724,16 +756,12 @@ h4 {
   cursor: pointer;
 }
 
-/* .subtasks-image-wrapper {
-  width: 15%;
-} */
 
 .close-and-check-wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 4px;
-  /* border: red 1px solid; */
 }
 
 .close-and-check-wrapper img {

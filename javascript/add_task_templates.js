@@ -4,15 +4,15 @@ function generateContactListHTML(i, oneContact) {
   const [firstName, lastName] = oneContact.name.split(' ');
   return /* html */ `
       <li>
-        <div class="initials-wrapper">
-          <div class="initials-icon" style="background-color: ${
-            oneContact.color
-          }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
-          <div>
-          ${oneContact.name}
+        <label for="contact_checkbox_${i}" class="initials-wrapper">
+          <div class="contact-initials-and-text-wrapper">
+              <div class="initials-icon" style="background-color: ${
+                oneContact.color
+                }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
+              <div>${oneContact.name}</div>
           </div>
-        </div>
-        <div><input id="contact_checkbox_${i}" type="checkbox"></div>
+          <div><input id="contact_checkbox_${i}" type="checkbox"></div>
+        </label>
       </li>
     `;
 }
@@ -20,8 +20,10 @@ function generateContactListHTML(i, oneContact) {
 function generateSelectAllHTML() {
   return /* html */ `
       <li>
-        <div>Select or unselect all contacts</div>
-        <input id="select_all_checkbox" type="checkbox">
+        <label for="select_all_checkbox" class="initials-wrapper">
+            <div>Select or unselect all contacts</div>
+            <input id="select_all_checkbox" type="checkbox">
+        </label>
       </li>
     `;
 }
@@ -96,7 +98,7 @@ function generateCategoryInputHTML(
 ) {
   return /* html */ `
       <div class="icon-and-category-wrapper">
-        <input id="color_input_${containerType}_${i}" type="color" value="${currentCategoryColor}">
+        <input id="color_input_${containerType}_${i}" class="color-input-category" type="color" value="${currentCategoryColor}">
         <input id="category_input_${containerType}_${i}" type="text" class="input-edit-category-text" value="${currentCategoryName}" required>
         <div class="close-and-check-wrapper-edit-subtask">
           <img onclick="renderCategories()" class="cancel-edit-subtask" src="../icons/close.svg" alt="">
