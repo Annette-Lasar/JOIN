@@ -29,9 +29,7 @@ async function loadUsers(){
 /**
  * Both passwords must match, and the password needs to be at least 6 characters long;
  * Additionally, the user account must not already exist;
- * If all conditions are met, the user is pushed into the 'users' array, which is then sent back to the server;
- * Additionally, 3 keys are created on the server for each user (in the form of their email address); 
- * Under these keys, their tasks, contacts and categories will be stored in an array in the future
+ * If all conditions are met, the user is pushed into the 'users' array
  */
 async function register() {
     if(bothPasswordsMatch()) {
@@ -43,10 +41,7 @@ async function register() {
                     email: email.value,
                     password: password.value
                 });
-                await setItem('users', JSON.stringify(users));
-                await setItem(`${email.value}_tasks`, []);
-                await setItem(`${email.value}_contacts`, []);
-                await setItem(`${email.value}_categories`, []);
+                await sendNewDataToServer();
                 resetForm();
                 successfullyRegistered();
             } else {
@@ -102,6 +97,18 @@ function notAUser() {
     } else if(user) {              
         return false;
     }
+}
+
+/**
+ * the 'users' array is then sent back to the server;
+ * Additionally, 3 keys are created on the server for each user (in the form of their email address); 
+ * Under these keys, their tasks, contacts and categories will be stored in an array in the future
+ */
+async function sendNewDataToServer() {
+    await setItem('users', JSON.stringify(users));
+    await setItem(`${email.value}_tasks`, []);
+    await setItem(`${email.value}_contacts`, []);
+    await setItem(`${email.value}_categories`, []);
 }
 
 
