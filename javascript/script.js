@@ -198,7 +198,6 @@ function renderConfirmDelete(i, containerId, messageId, alertMessage) {
   confirmContent.innerHTML = '';
   console.log('tasks', tasks);
   confirmContent.innerHTML = generateConfirmContentHTML(i, alertMessage);
-
 }
 
 

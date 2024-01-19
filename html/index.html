@@ -115,6 +115,18 @@
         </form>
         <div id="messageBox" class="messageBox">Successfully Registered !</div>
       </div>
+      <div id="alert_container" class="alert-container d-none">
+        <div class="alert-image-wrapper">
+          <img class="alert-logo" src="../icons/join_logo_white.svg" alt="" />
+          <h3>Information</h3>
+          <img
+            onclick="openOrCloseAlertContainer('alert_container', 'close')"
+            class="alert-close"
+            src="../icons/close_white.svg"
+          />
+        </div>
+        <div id="alert_content" class="alert-content"></div>
+      </div>
       <!-- <div id="sign_up_wrapper" class="sign-up-wrapper">
           <p>Not a Join user?</p>
           <button onclick="toggleSignUpAndLogin()" class="button-sign-up dark-button">Sign up</button>

@@ -45,14 +45,14 @@ async function register() {
                 resetForm();
                 successfullyRegistered();
             } else {
-                alert('Email address already registered !');
+                renderAlert('alert_container', 'alert_content', 'Email address already registered !');
             }
          } else {
-               alert('Minimum password length is 6 characters !');
-            }
-        } else {
-            alert('Both passwords must match !');
+            renderAlert('alert_container', 'alert_content', 'Minimum password length is 6 characters !');
         }
+    } else {
+        renderAlert('alert_container', 'alert_content', 'Both passwords must match !');
+    }
 }
 
 

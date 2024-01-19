@@ -11,7 +11,7 @@ async function login() {
         loginSuccessful(user);
         window.location.href = 'summary.html';   
     } else {
-        alert('User not found or login credentials incorrect !');
+        renderAlert('alert_container', 'alert_content', 'User not found or login credentials incorrect !');
     }
 }
 
