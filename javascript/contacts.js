@@ -5,7 +5,7 @@ let userColors = ['#FF7A00', '#FF5EB3', '#6E52FF', '#9327FF', '#00BEE8', '#1FD7C
 /**
  * Is stored on the server under the key 'guestContacts'
  */
-let allContacts = [];
+let allContacts
 
 
 async function initContacts() {
@@ -39,12 +39,12 @@ async function sendContactsToServer() {
         userEmail = userEmail.replace(/"/g, '');
         let user = users.find((u) => u.email == userEmail);
         if (user) {
-            await setItem(`${user.email}_categories`, JSON.stringify(allContacts));
+            await setItem(`${user.email}_contacts`, JSON.stringify(allContacts));
         }
     } else {
         await setItem('guestContacts', JSON.stringify(allContacts));
     }
-    initContacts();
+    await initContacts();
 }
 
 function renderGroupLetters() {
@@ -155,9 +155,14 @@ async function addNewContact() {
     hideAddForm();
     await sendContactsToServer();
     resetAddNewContactValues();
-    document.getElementById(allContacts.length - 1).focus();
-    showContactInfo(allContacts.length - 1);
+    showNewContact();
     createdContactAnimation();
+}
+
+function showNewContact() {
+    let id = allContacts.length - 1;
+    showContactInfo(`${id}`);
+    document.getElementById(`${id}`).focus();
 }
 
 function createdContactAnimation() {
@@ -194,8 +199,8 @@ async function saveContactChanges(i) {
     updateContact(i);
     hideAddForm();
     await sendContactsToServer();
-    document.getElementById(i).focus();
     showContactInfo(i);
+    document.getElementById(i).focus();
 }
 
 function updateContact(i) {
