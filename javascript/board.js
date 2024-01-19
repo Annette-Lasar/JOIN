@@ -69,12 +69,13 @@ document.addEventListener('click', function (event) {
     const elementId = CLICKED_ELEMENT.id;
     console.log('ElementId: ', elementId);
     let elementIdNumber = elementId.split('_')[3];
-    const contextMenuContainer = document.getElementById(`context_menu_${elementIdNumber}`);
+    const contextMenuContainer = document.getElementById(
+      `context_menu_${elementIdNumber}`
+    );
     console.log('angeklicktes Element: ', CLICKED_ELEMENT);
     console.log('ElementIdNumber: ', elementIdNumber);
   }
 });
-
 
 document.addEventListener('contextmenu', function (event) {
   const CLICKED_ELEMENT = event.target.closest('.todo');
@@ -141,7 +142,7 @@ function callFurtherFunctionsToRenderTasks(i, oneTask, status) {
   updateProgressBar(i, tasks[i]);
   updateCompletedTasks(i, tasks[i]);
   renderContactsOnOutsideCard(i, oneTask);
- /*  addEventListenerToTaskCard(i); */
+  /*  addEventListenerToTaskCard(i); */
 }
 
 function truncateSentence(sentence, wordsCount) {
@@ -172,9 +173,14 @@ async function updateProgressBarAndCompletedTasks(i, oneTask) {
 }
 
 function updateProgressBar(i, oneTask) {
+  const progressBarWrapper = document.getElementById(`progress_wrapper_${i}`);
   const progressBar = document.getElementById(`progress_bar_${i}`);
   let completedSubtasksInPercent = calculateSubtaskPercentage(i, oneTask);
-  progressBar.value = completedSubtasksInPercent;
+  if (oneTask.subtasks.length > 0) {
+    progressBar.value = completedSubtasksInPercent;
+  } else {
+    progressBarWrapper.classList.add('d-none');
+  }
 }
 
 function updateCompletedTasks(i, oneTask) {
@@ -257,6 +263,13 @@ function renderContactsInsideCard(i, oneTask) {
 
 window.addEventListener('resize', function () {
   showTasksOnBoard();
+});
+
+window.addEventListener('resize', function () {
+  const url = window.location.href;
+  if (url.endsWith('board.html')) {
+    showTasksOnBoard();
+  }
 });
 
 function generateTaskContactHTML(oneContact) {
@@ -372,7 +385,7 @@ function generateToDoHTML(
             <div class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
               <div class="todo-title">${oneTask['title']}</div>
                 <div class="todo-description">${newTruncatedSentence}</div>
-                <div class="progress-wrapper">
+                <div id="progress_wrapper_${i}" class="progress-wrapper">
                 <progress id="progress_bar_${i}" class="progress-bar" value="${completedSubtasksInPercent}" max="100"> 32 %</progress>  
                   <label id="label_for_progress_bar_${i}" class="label-for-progress" for="progress_bar">${oneTask.completed_subtasks}/${oneTask.subtasks.length} Subtasks</label>
                 </div>
@@ -487,7 +500,6 @@ function highlight(id) {
   });
 } */
 
-
 function openCardContextMenu(i, status) {
   const cardMenuContainer = document.getElementById(`context_menu_${i}`);
   const listItemBox1 = document.getElementById(`toDo_${i}`);
@@ -510,10 +522,9 @@ function openCardContextMenu(i, status) {
   }
 }
 
-
 function closeContextMenu(i) {
   const contextMenuContainer = document.getElementById(`context_menu_${i}`);
-    contextMenuContainer.classList.add('d-none'); 
+  contextMenuContainer.classList.add('d-none');
 }
 
 function openOrCloseContainer(i, containerId, action) {
