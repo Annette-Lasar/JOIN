@@ -483,6 +483,7 @@ input:focus-visible {
 #add_name {
     background: url(../icons/person.png) no-repeat scroll;
     background-position: top 12px right 21px;
+    text-transform: capitalize;
 }
 
 #add_email {
