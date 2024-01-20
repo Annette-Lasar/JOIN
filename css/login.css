@@ -226,6 +226,10 @@ input[type='password'] {
   background-size: 22px;
 }
 
+input:hover {
+  cursor: pointer;
+}
+
 .remember-user {
   width: 90%;
   margin: 0 auto;

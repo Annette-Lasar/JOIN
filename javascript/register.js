@@ -136,3 +136,31 @@ function successfullyRegistered() {
     }, 2000); 
 }
 
+
+
+/**
+ * This function reveals the user's entered password by changing the 'type' attribute to 'text' ; 
+ * If the password is visible, it is obscured by changing the 'type' back to 'password'
+ * the last step is necessary to focus the end of the entered password again
+ * 
+ * @param {String} id - The ID of the clicked input element
+ */
+function changePasswordVisibility(id) {
+    let inputField = document.getElementById(id);
+    if(inputField.value == '') {
+        inputField.style.backgroundImage = 'url(../icons/visibility_off.svg)';
+    }
+    if(inputField.value != '') {
+        if(inputField.type === 'password') {
+            inputField.type = 'text';
+            inputField.style.backgroundImage = 'url(../icons/visibility_on.svg)';
+        } else { 
+            inputField.type = 'password';
+            inputField.style.backgroundImage = 'url(../icons/visibility_off.svg)';      
+        }
+    }
+    let enteredPassword = inputField.value;
+    inputField.value = '';
+    inputField.value = enteredPassword;    
+}
+
