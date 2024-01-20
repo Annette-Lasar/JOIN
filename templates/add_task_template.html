@@ -1,4 +1,4 @@
-<div class="page">
+<div class="add-task-overlay-page">
   <div class="add-task-header-wrapper">
     <h1>Add Task</h1>
     <img onclick="closeAddTaskToList()" src="../icons/close.svg" alt="Close add task">
@@ -7,7 +7,7 @@
     <div class="task-wrapper">
       <div class="small-screen">
         <section>
-          <label for="task_title">Title<span class="red">*</span></label>
+          <label for="task_title" class="label">Title<span class="red">*</span></label>
           <input
             id="task_title"
             type="text"
@@ -21,7 +21,7 @@
           </div>
         </section>
         <section>
-          <label for="task_description">Description</label>
+          <label for="task_description" class="label">Description</label>
           <textarea
             name="task-description"
             id="task_description"
@@ -108,7 +108,7 @@
           </div>
         </section>
         <section id="due_date_small_screen">
-          <label for="task_due_date_small"
+          <label for="task_due_date_small" class="label"
             >Due date<span class="red">*</span></label
           >
           <input
@@ -163,9 +163,7 @@
               src="../icons/arrow_drop_down.svg"
             />
           </div>
-          <ul id="contact_list" class="contact-list list-of-contacts">
-            <div class="new-category">Add new contact</div>
-          </ul>
+          <ul id="contact_list" class="contact-list list-of-contacts"></ul>
         </section>
         <section id="contacts_container" class="contacts-container"></section>
         <section id="sub_tasks_small_screen">
@@ -214,7 +212,7 @@
       <div class="separator-line"></div>
       <div id="big_screen" class="big-screen">
         <section id="due_date_big_screen">
-          <label for="task_title">Due date<span class="red">*</span></label>
+          <label for="task_title" class="label">Due date<span class="red">*</span></label>
           <input
             onblur="selectDueDate('task_due_date_big')"
             id="task_due_date_big"

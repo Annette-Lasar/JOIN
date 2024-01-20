@@ -9,10 +9,13 @@
     <link rel="stylesheet" href="../css/fonts.css" />
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/board.css" />
+    <link rel="stylesheet" href="../css/add_task.css" />
     <script src="../javascript/script.js" defer></script>
     <script src="../javascript/storage.js" defer></script>
     <script src="../javascript/register.js" defer></script>
+    <script src="../javascript/board_data.js" defer></script>
     <script src="../javascript/board.js" defer></script>
+    <script src="../javascript/board_add_task.js" defer></script>
     <script src="../javascript/summary.js" defer></script>
   </head>
   <body onload="init()">
@@ -61,7 +64,7 @@
         <div class="status">
           <div class="status-headline">
             <div>In progress</div>
-            <div class="addTask-btn">
+            <div onclick="openAddTaskToList()" class="addTask-btn">
               <img src="../icons/plus.svg" alt="" />
             </div>
           </div>
@@ -76,7 +79,7 @@
         <div class="status">
           <div class="status-headline">
             <div>Await feedback</div>
-            <div class="addTask-btn">
+            <div onclick="openAddTaskToList()" class="addTask-btn">
               <img src="../icons/plus.svg" alt="" />
             </div>
           </div>

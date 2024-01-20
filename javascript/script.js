@@ -276,3 +276,21 @@ function openOrCloseAlertContainer(containerId, action) {
   }
 } */
 
+function adaptInitialsToBackground(containerID) {
+  const iconContainer = document.getElementById(containerID);
+  const iconColor = getComputedStyle(iconContainer).backgroundColor;
+  const isLight = isColorLight(iconColor);
+ 
+  if (isLight) {
+    iconContainer.style.color = 'black';
+  } else {
+    iconContainer.style.color = 'white';
+  }
+}
+
+function isColorLight(color) {
+  const rgb = color.match(/\d+/g).map(Number);
+  const brightness = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;
+  return brightness > 128; 
+}
+

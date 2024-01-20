@@ -87,6 +87,7 @@ function renderContacts() {
   for (i = 0; i < allContacts.length; i++) {
     const oneContact = allContacts[i];
     CONTACT_LIST_BOX.innerHTML += generateContactListHTML(i, oneContact);
+    adaptInitialsToBackground(`initials_icon_in_list_${i}`);
   }
 }
 
@@ -189,7 +190,8 @@ function renderCurrentContacts() {
   }
   for (let i = 0; i < visibleContacts.length; i++) {
     const oneContact = visibleContacts[i];
-    contactsContainer.innerHTML += generateContactsIconsHTML(oneContact);
+    contactsContainer.innerHTML += generateContactsIconsHTML(i, oneContact);
+    adaptInitialsToBackground(`initials_icon_assigned_${i}`);
   }
   if (hiddenContactsCount > 0) {
     const overflowIndicatorHTML =
