@@ -136,6 +136,12 @@ function showEditForm() {
     formAnimation();
 }
 
+function showEditFormWhenWrong(i) {
+    document.getElementById('contact_form').innerHTML = editContactFormTemplate(i);
+    loadContactValues(i);
+    formAnimation();
+}
+
 function formAnimation() {
     document.getElementById('contact_form').style.display = 'flex';
     document.getElementById('add_form').classList.remove('slide-out');
@@ -158,7 +164,6 @@ async function addNewContact() {
         showNewContact();
         createdContactAnimation();
     }else {
-        showEditForm();
         renderAlert('alert_container', 'alert_content', 'Contact with this e-mail already exists!');
     }
 
@@ -191,6 +196,10 @@ function pushNewContact() {
     let inputPhone = document.getElementById('add_phone').value;
     let color = randomUserColor();
     if (allContacts.some(item => item.e_mail === inputEMail)) {
+        let i = allContacts.findIndex(function(item, i){
+            return item.e_mail === inputEMail;
+          });
+        showEditFormWhenWrong(i);
         return false;
     } else {
         allContacts.push(
