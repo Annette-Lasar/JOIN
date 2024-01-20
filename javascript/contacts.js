@@ -151,12 +151,17 @@ function randomUserColor() {
 }
 
 async function addNewContact() {
-    pushNewContact();
-    hideAddForm();
-    await sendContactsToServer();
-    resetAddNewContactValues();
-    showNewContact();
-    createdContactAnimation();
+    if (pushNewContact()) {
+        hideAddForm();
+        await sendContactsToServer();
+        resetAddNewContactValues();
+        showNewContact();
+        createdContactAnimation();
+    }else {
+        showEditForm();
+        renderAlert('alert_container', 'alert_content', 'Contact with this e-mail already exists!');
+    }
+
 }
 
 function showNewContact() {
@@ -185,14 +190,19 @@ function pushNewContact() {
     let inputEMail = document.getElementById('add_email').value;
     let inputPhone = document.getElementById('add_phone').value;
     let color = randomUserColor();
-    allContacts.push(
-        {
-            name: inputName,
-            e_mail: inputEMail,
-            phone: inputPhone,
-            color: color
-        }
-    );
+    if (allContacts.some(item => item.e_mail === inputEMail)) {
+        return false;
+    } else {
+        allContacts.push(
+            {
+                name: inputName,
+                e_mail: inputEMail,
+                phone: inputPhone,
+                color: color
+            }
+        );
+        return true;
+    }
 }
 
 async function saveContactChanges(i) {

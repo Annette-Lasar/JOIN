@@ -1,5 +1,5 @@
 function groupsTemplate(letter) {
-    return `
+  return `
     <div id="group${letter}">
         <div class="group">
             <h1>${letter}</h1>
@@ -15,9 +15,9 @@ function groupsTemplate(letter) {
 }
 
 function addContactToGroupTemplate(name, i) {
-    let eMail = allContacts[i]['e_mail'];
-    let initials = loadInitials(i);
-    return `
+  let eMail = allContacts[i]['e_mail'];
+  let initials = loadInitials(i);
+  return `
         <button id="${i}" onclick="showContactInfo(${i})"class="contact">
             <div id="initials${i}" class="initials">
               <h3>${initials}</h3>
@@ -31,11 +31,11 @@ function addContactToGroupTemplate(name, i) {
 }
 
 function contactInfoTemplate(i) {
-    let name = allContacts[i]['name'];
-    let phone = allContacts[i]['phone'];
-    let eMail = allContacts[i]['e_mail'];
-    let initials = loadInitials(i);
-    return `
+  let name = allContacts[i]['name'];
+  let phone = allContacts[i]['phone'];
+  let eMail = allContacts[i]['e_mail'];
+  let initials = loadInitials(i);
+  return `
         <div class="name">
           <div id="color_large_${i}" class="initials large">
             <h3>${initials}</h3>
@@ -89,7 +89,7 @@ function contactInfoTemplate(i) {
 }
 
 function addNewContactFormTemplate() {
-    return `
+  return `
     <div id="background" class="background" onclick="hideAddForm()"></div>
     <div id="add_form" class="add-form">
       <svg onclick="hideAddForm()" class="close-btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -164,9 +164,9 @@ function addNewContactFormTemplate() {
 }
 
 function editContactFormTemplate(i) {
-    let initials = loadInitials(i);
-    let color = allContacts[i]['color'];
-    return `
+  let initials = loadInitials(i);
+  let color = allContacts[i]['color'];
+  return `
     <div id="background" class="background" onclick="hideAddForm()"></div>
     <div id="add_form" class="add-form">
       <svg onclick="hideAddForm()" class="close-btn" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -205,6 +205,18 @@ function editContactFormTemplate(i) {
       </div>
       <div class="initials position text" style="background-color: ${color}">
         <h3>${initials}</h3>
+      </div>
+      <div id="alert_container" class="alert-container d-none">
+        <div class="alert-image-wrapper">
+          <img class="alert-logo" src="../icons/join_logo_white.svg" alt="" />
+          <h3>Information</h3>
+          <img
+            onclick="openOrCloseAlertContainer('alert_container', 'close')"
+            class="alert-close"
+            src="../icons/close_white.svg"
+          />
+        </div>
+        <div id="alert_content" class="alert-content"></div>
       </div>
       <form class="form" onsubmit="saveContactChanges(${i}); return false">
         <input id="add_name" type="text" placeholder="Name" required>

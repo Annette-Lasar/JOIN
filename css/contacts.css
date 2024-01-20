@@ -579,6 +579,10 @@ input:focus-visible {
     font-size: 20px;
 }
 
+.alert-container {
+    top: 53%;
+}
+
 @media (max-width: 350px) {
     .contact-list {
         margin: 0;
@@ -855,6 +859,12 @@ input:focus-visible {
 
     .contact-created {
         left: 1em;
+    }
+}
+
+@media (50em <=width <= 1048px ) {
+    .contact-created {
+        left: 12em;
     }
 }
 
