@@ -46,7 +46,7 @@
         <div class="status">
           <div class="status-headline">
             <div>To do</div>
-             <div class="addTask-btn">
+             <div onclick="openAddTaskToList()" class="addTask-btn">
                 <img src="../icons/plus.svg" alt="" />
           </div>
           </div>
@@ -127,6 +127,9 @@
       <div>
         <div id="confirm_content" class="confirm-content"></div>
       </div>
+    </div>
+    <div id="add_task_overlay" class="add-task-overlay d-none">
+      <div w3-include-html="../templates/add_task_template.html"></div>
     </div>
     <nav>
       <div w3-include-html="../templates/navigation_bar.html"></div>

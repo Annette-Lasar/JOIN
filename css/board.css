@@ -137,8 +137,7 @@ h4 {
 }
 
 .addTask-btn {
-  height: 24px;
-  padding: 0.5em 0.3em;
+  padding: 0.3em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -146,6 +145,7 @@ h4 {
   border-radius: 6px;
   filter: invert(94%) sepia(4%) saturate(20%) hue-rotate(314deg) brightness(91%)
     contrast(94%);
+    cursor: pointer;
 }
 
 /* .addTask-btn:hover {
@@ -177,6 +177,12 @@ h4 {
   border: var(--accent-color-darkgray) 1px dashed;
   border-radius: 8px;
   background-color: var(--background-color-mediumgray);
+}
+
+.todo-header-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .todo {
@@ -335,6 +341,7 @@ h4 {
 
 .context-menu-card li {
   margin: 0 0 0.25em;
+  padding: 0 0 0 0.25em;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -558,7 +565,8 @@ h4 {
   border-radius: 4px;
 }
 
-.edited-task-title.warning {
+.edited-task-title.warning,
+.edited-due-date.warning {
   border: red 1px solid;
 }
 
@@ -868,6 +876,23 @@ h4 {
   background-color: var(--background-color-darkblue);
   border: var(--background-color-darkblue) 1px solid;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-task-overlay {
+  position: fixed;
+  inset: 1px;
+  background-color: var(--background-color-lightgray);
+  z-index: 30;
+}
+
+.add-task-header-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.add-task-header-wrapper img {
   cursor: pointer;
 }
 

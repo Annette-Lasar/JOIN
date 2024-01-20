@@ -61,7 +61,7 @@ function clearContainers(...containerIDs) {
   });
 }
 
-document.addEventListener('click', function (event) {
+/* document.addEventListener('click', function (event) {
   const CLICKED_ELEMENT = event.target.closest('.context-menu-close');
   if (CLICKED_ELEMENT) {
     event.stopPropagation(); // Verhindere, dass das Klick-Ereignis weitergeleitet wird
@@ -75,9 +75,9 @@ document.addEventListener('click', function (event) {
     console.log('angeklicktes Element: ', CLICKED_ELEMENT);
     console.log('ElementIdNumber: ', elementIdNumber);
   }
-});
+}); */
 
-document.addEventListener('contextmenu', function (event) {
+/* document.addEventListener('contextmenu', function (event) {
   const CLICKED_ELEMENT = event.target.closest('.todo');
   const statusAttribute = CLICKED_ELEMENT.attributes['data-status'].value;
   console.log('StatusAttribut: ', statusAttribute);
@@ -88,7 +88,7 @@ document.addEventListener('contextmenu', function (event) {
     openCardContextMenu(elementIdNumber, statusAttribute);
     event.preventDefault();
   }
-});
+}); */
 
 function showTasksOnBoard() {
   clearContainers('toDo', 'inProgress', 'awaitFeedback', 'done');
@@ -382,8 +382,11 @@ function generateToDoHTML(
 ) {
   return /* html */ `
           <div id="taskCard_${i}" data-status="${oneTask.status}" draggable="true" onclick="openOrCloseContainer(${i}, 'detail_task_wrapper_${i}', 'open')" ondragstart="startDragging(${i})" class="todo">
-            <div class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
-              <div class="todo-title">${oneTask['title']}</div>
+            <div class="todo-header-wrapper">
+                <div class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
+                <div onclick="openCardContextMenu(${i}, '${oneTask.status}', event)"><img src="../icons/three_dots.svg"></div>
+            </div>
+            <div class="todo-title">${oneTask['title']}</div>
                 <div class="todo-description">${newTruncatedSentence}</div>
                 <div id="progress_wrapper_${i}" class="progress-wrapper">
                 <progress id="progress_bar_${i}" class="progress-bar" value="${completedSubtasksInPercent}" max="100"> 32 %</progress>  
@@ -394,19 +397,19 @@ function generateToDoHTML(
                   <div class="task-prio">
                       <img class="prio-icon" src="../icons/prio_${oneTask.current_prio}.svg">
                   </div>
-              </div>
+            </div>
               <div id="context_menu_${i}" class="context-menu-card d-none" data-index="${i}">  
-                  <div class="context-menu-title-wrapper">
+                  <div onclick="closeCardContextMenu(${i}, event)" class="context-menu-title-wrapper">
                     <div class="context-menu-move-to-wrapper">
                       <h3>Move card to ...</h3>  
-                      <img id="context_menu_close_${i}"  class="context-menu-close" src="../icons/close_white.svg" alt="">
+                      <img id="context_menu_close_${i}"  class="context-menu-close" src="../icons/close_white.svg">
                     </div>
                   </div>  
                   <ul>
-                    <li onclick="moveToNewList(${i}, 'toDo')" id="toDo_${i}">To do</li>
-                    <li onclick="moveToNewList(${i}, 'inProgress')" id="inProgress_${i}">In progress</li>
-                    <li onclick="moveToNewList(${i}, 'awaitFeedback')" id="awaitFeedback_${i}">Await feedback</li>
-                    <li onclick="moveToNewList(${i}, 'done')" id="done_${i}">Done</li>
+                    <li onclick="moveToNewList(${i}, 'toDo', event)" id="toDo_${i}">To do</li>
+                    <li onclick="moveToNewList(${i}, 'inProgress', event)" id="inProgress_${i}">In progress</li>
+                    <li onclick="moveToNewList(${i}, 'awaitFeedback', event)" id="awaitFeedback_${i}">Await feedback</li>
+                    <li onclick="moveToNewList(${i}, 'done', event)" id="done_${i}">Done</li>
                   </ul>
               </div>  
           </div>
@@ -428,7 +431,8 @@ async function moveTo(status) {
   showTasksOnBoard();
 }
 
-function moveToNewList(i, status) {
+function moveToNewList(i, status, event) {
+  event.stopPropagation();
   currentTaskCard = document.getElementById(`taskCard_${i}`);
   let cardStatus = tasks[i].status;
   if (status !== cardStatus) {
@@ -500,7 +504,7 @@ function highlight(id) {
   });
 } */
 
-function openCardContextMenu(i, status) {
+/* function openCardContextMenu(i, status) {
   const cardMenuContainer = document.getElementById(`context_menu_${i}`);
   const listItemBox1 = document.getElementById(`toDo_${i}`);
   const listItemBox2 = document.getElementById(`inProgress_${i}`);
@@ -520,9 +524,34 @@ function openCardContextMenu(i, status) {
     listItemBox4.style.pointerEvents = 'none';
     listItemBox4.style.color = '#d6d6d6';
   }
+} */
+
+function openCardContextMenu(i, status, event) {
+  event.stopPropagation();
+  const cardMenuContainer = document.getElementById(`context_menu_${i}`);
+  const listItemInfo = getListItemInfo();
+  for (const listStatus of Object.keys(listItemInfo)) {
+    const listItemElement = document.getElementById(`${listStatus}_${i}`);
+    if (status === listStatus) {
+      listItemElement.style.pointerEvents = 'none';
+      listItemElement.style.color = '#d6d6d6';
+    }
+  }
+  cardMenuContainer.classList.remove('d-none');
 }
 
-function closeContextMenu(i) {
+function getListItemInfo() {
+  let listIds = {
+    toDo: 1,
+    inProgress: 2,
+    awaitFeedback: 3,
+    done: 4,
+  };
+  return listIds;
+}
+
+function closeCardContextMenu(i, event) {
+  event.stopPropagation();
   const contextMenuContainer = document.getElementById(`context_menu_${i}`);
   contextMenuContainer.classList.add('d-none');
 }
@@ -1222,4 +1251,14 @@ function generateOkayButtonHTML(i) {
     </button>
   </div>
   `;
+}
+
+function openAddTaskToList() {
+  const addTaskOverlayContainer = document.getElementById('add_task_overlay');
+  addTaskOverlayContainer.classList.remove('d-none');
+}
+
+function closeAddTaskToList() {
+  const addTaskOverlayContainer = document.getElementById('add_task_overlay');
+  addTaskOverlayContainer.classList.add('d-none');
 }
