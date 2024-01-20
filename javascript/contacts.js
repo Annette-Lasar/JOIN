@@ -163,7 +163,7 @@ async function addNewContact() {
         resetAddNewContactValues();
         showNewContact();
         createdContactAnimation();
-    }else {
+    } else {
         renderAlert('alert_container', 'alert_content', 'Contact with this e-mail already exists!');
     }
 
@@ -196,9 +196,9 @@ function pushNewContact() {
     let inputPhone = document.getElementById('add_phone').value;
     let color = randomUserColor();
     if (allContacts.some(item => item.e_mail === inputEMail)) {
-        let i = allContacts.findIndex(function(item, i){
+        let i = allContacts.findIndex(function (item, i) {
             return item.e_mail === inputEMail;
-          });
+        });
         showEditFormWhenWrong(i);
         return false;
     } else {
@@ -272,4 +272,13 @@ function currentContactIndex() {
     let sliceFrom = elementId.lastIndexOf('_') + 1;
     let index = elementId.slice(sliceFrom);
     return index;
+}
+
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
 }
