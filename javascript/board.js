@@ -1,35 +1,3 @@
-let tasks = [];
-let contacts = [];
-let guestContacts = [];
-let testContacts = [
-  {
-    name: 'Bilbo Beutlin',
-    e_mail: 'bilbo@gmail.com',
-    phone: '0151-98765432',
-    color: '#ff7a00',
-  },
-  {
-    name: 'Hermione Granger',
-    e_mail: 'grangerh@hotmail.com',
-    phone: '0172-4567890',
-    color: '#9327ff',
-  },
-  {
-    name: 'Donald Duck',
-    e_mail: 'duckduckduck@gmail.com',
-    phone: '030-987654321',
-    color: '#6e52ff',
-  },
-  {
-    name: 'Fred Feuerstein',
-    e_mail: 'fredyf@gmail.com',
-    phone: '040-456789012',
-    color: '#fc71ff',
-  },
-];
-
-let currentDraggedElement;
-
 async function initBoard() {
   await loadTasksUserOrGuest();
   showTasksOnBoard();
@@ -60,35 +28,6 @@ function clearContainers(...containerIDs) {
     }
   });
 }
-
-/* document.addEventListener('click', function (event) {
-  const CLICKED_ELEMENT = event.target.closest('.context-menu-close');
-  if (CLICKED_ELEMENT) {
-    event.stopPropagation(); // Verhindere, dass das Klick-Ereignis weitergeleitet wird
-    event.preventDefault();
-    const elementId = CLICKED_ELEMENT.id;
-    console.log('ElementId: ', elementId);
-    let elementIdNumber = elementId.split('_')[3];
-    const contextMenuContainer = document.getElementById(
-      `context_menu_${elementIdNumber}`
-    );
-    console.log('angeklicktes Element: ', CLICKED_ELEMENT);
-    console.log('ElementIdNumber: ', elementIdNumber);
-  }
-}); */
-
-/* document.addEventListener('contextmenu', function (event) {
-  const CLICKED_ELEMENT = event.target.closest('.todo');
-  const statusAttribute = CLICKED_ELEMENT.attributes['data-status'].value;
-  console.log('StatusAttribut: ', statusAttribute);
-  console.log(typeof statusAttribute);
-  const elementId = CLICKED_ELEMENT.id;
-  let elementIdNumber = elementId.split('_')[1];
-  if (!isNaN(elementIdNumber)) {
-    openCardContextMenu(elementIdNumber, statusAttribute);
-    event.preventDefault();
-  }
-}); */
 
 function showTasksOnBoard() {
   clearContainers('toDo', 'inProgress', 'awaitFeedback', 'done');
@@ -142,7 +81,6 @@ function callFurtherFunctionsToRenderTasks(i, oneTask, status) {
   updateProgressBar(i, tasks[i]);
   updateCompletedTasks(i, tasks[i]);
   renderContactsOnOutsideCard(i, oneTask);
-  /*  addEventListenerToTaskCard(i); */
 }
 
 function truncateSentence(sentence, wordsCount) {
@@ -197,11 +135,11 @@ function renderContactsOnOutsideCard(i, oneTask) {
     taskContactContainer.innerHTML =
       '<div class="not-assigned">No contacts assigned</>';
   } else {
-    calculateNumberOfVisibleContacts(oneTask, taskContactContainer);
+    calculateNumberOfVisibleContacts(i, oneTask, taskContactContainer);
   }
 }
 
-function calculateNumberOfVisibleContacts(oneTask, taskContactContainer) {
+function calculateNumberOfVisibleContacts(i, oneTask, taskContactContainer) {
   const maxWidth = taskContactContainer.offsetWidth;
   let visibleContacts = oneTask.current_contacts.slice();
   let hiddenContactsCount = 0;
@@ -214,6 +152,7 @@ function calculateNumberOfVisibleContacts(oneTask, taskContactContainer) {
     visibleContacts.pop();
   }
   showVisibleContactsAndOverflowIndicator(
+    i,
     visibleContacts,
     hiddenContactsCount,
     taskContactContainer
@@ -221,13 +160,15 @@ function calculateNumberOfVisibleContacts(oneTask, taskContactContainer) {
 }
 
 function showVisibleContactsAndOverflowIndicator(
+  i,
   visibleContacts,
   hiddenContactsCount,
   taskContactContainer
 ) {
   for (let j = 0; j < visibleContacts.length; j++) {
     const oneContact = visibleContacts[j];
-    taskContactContainer.innerHTML += generateTaskContactHTML(oneContact);
+    taskContactContainer.innerHTML += generateTaskContactHTML(i, j, oneContact);
+    adaptInitialsToBackground(`initials_icons_outside_card_${i}_${j}`);
   }
   if (hiddenContactsCount > 0) {
     const overflowIndicatorHTML =
@@ -257,13 +198,14 @@ function renderContactsInsideCard(i, oneTask) {
   for (let j = 0; j < oneTask.current_contacts.length; j++) {
     const oneContact = oneTask.current_contacts[j];
     detailTaskContactNameContainer.innerHTML +=
-      generateDetailTaskContactNamesHTML(oneContact);
+      generateDetailTaskContactNamesHTML(i, j, oneContact);
+      adaptInitialsToBackground(`detail_view_initials_icon_${i}_${j}`);
   }
 }
 
-window.addEventListener('resize', function () {
+/* window.addEventListener('resize', function () {
   showTasksOnBoard();
-});
+}); */
 
 window.addEventListener('resize', function () {
   const url = window.location.href;
@@ -272,20 +214,20 @@ window.addEventListener('resize', function () {
   }
 });
 
-function generateTaskContactHTML(oneContact) {
+function generateTaskContactHTML(i, j, oneContact) {
   const [firstName, lastName] = oneContact.name.split(' ');
   return /* html */ `
-        <div class="initials-icon" style="background-color: ${
+        <div id="initials_icons_outside_card_${i}_${j}" class="initials-icon" style="background-color: ${
           oneContact.color
         }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
     `;
 }
 
-function generateDetailTaskContactNamesHTML(oneContact) {
+function generateDetailTaskContactNamesHTML(i, j, oneContact) {
   const [firstName, lastName] = oneContact.name.split(' ');
   return /* html */ `
       <div class="initials-and-name-wrapper">
-        <div class="initials-icon" style="background-color: ${
+        <div id="detail_view_initials_icon_${i}_${j}" class="initials-icon" style="background-color: ${
           oneContact.color
         }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
         <div>${oneContact.name}</div>
@@ -373,7 +315,6 @@ function markCheckboxesAccordingToStatus(
   }
 }
 
-// Kommentar: Anzahl der erledigten Subtasks rendern
 function generateToDoHTML(
   i,
   oneTask,
@@ -497,35 +438,6 @@ function highlight(id) {
   document.getElementById(id).classList.add('drag-area-highlight');
 }
 
-/* function addEventListenerToTaskCard(i) {
-  const taskCard = document.getElementById(`taskCard_${i}`);
-  taskCard.addEventListener('click', (event) => {
-    event.stopPropagation();
-  });
-} */
-
-/* function openCardContextMenu(i, status) {
-  const cardMenuContainer = document.getElementById(`context_menu_${i}`);
-  const listItemBox1 = document.getElementById(`toDo_${i}`);
-  const listItemBox2 = document.getElementById(`inProgress_${i}`);
-  const listItemBox3 = document.getElementById(`awaitFeedback_${i}`);
-  const listItemBox4 = document.getElementById(`done_${i}`);
-  cardMenuContainer.classList.remove('d-none');
-  if (status === 'toDo') {
-    listItemBox1.style.pointerEvents = 'none';
-    listItemBox1.style.color = '#d6d6d6';
-  } else if (status === 'inProgress') {
-    listItemBox2.style.pointerEvents = 'none';
-    listItemBox2.style.color = '#d6d6d6';
-  } else if (status === 'awaitFeedback') {
-    listItemBox3.style.pointerEvents = 'none';
-    listItemBox3.style.color = '#d6d6d6';
-  } else {
-    listItemBox4.style.pointerEvents = 'none';
-    listItemBox4.style.color = '#d6d6d6';
-  }
-} */
-
 function openCardContextMenu(i, status, event) {
   event.stopPropagation();
   const cardMenuContainer = document.getElementById(`context_menu_${i}`);
@@ -574,7 +486,6 @@ function openOrCloseContainer(i, containerId, action) {
       document.body.style.overflow = 'visible';
     }
   } else if (action === 'open') {
-    /* addEventListenerToTaskCard(i); */
     cardMenuContainer.classList.remove('d-none');
   } else if (action === 'close') {
     cardMenuContainer.classList.add('d-none');
@@ -662,6 +573,7 @@ function generateDetailViewHTML(i, oneTask) {
 function editTask(i) {
   checkForCurrentSubtaskStatus(i);
   countCheckedSubtasks(tasks[i].subtasks);
+  preserveOriginalTask(tasks[i]);
   replaceCategory(i);
   addClassToContainer(i);
   editTitle(i, tasks[i]);
@@ -679,6 +591,11 @@ function countCheckedSubtasks(subtasksArray) {
   }, 0);
 }
 
+function preserveOriginalTask(oneTask) {
+  const clonedTask = { ...oneTask };
+  currentlyEditedTask[0] = clonedTask;
+}
+
 function replaceCategory(i) {
   const closeBox = document.getElementById(`category_and_close_wrapper${i}`);
   closeBox.innerHTML = '';
@@ -688,7 +605,7 @@ function replaceCategory(i) {
 function generateCloseIcon(i) {
   return /* html */ `
     <div id="edit_close_button_wrapper${i}" class="edit-close-button-wrapper">
-      <img class="detail-close-button" onclick="renderTaskDetailView(${i})" src="../icons/close.svg" alt="">
+      <img class="detail-close-button" onclick="closeTaskWithoutSaving(${i})" src="../icons/close.svg" alt="">
     </div>
   `;
 }
@@ -963,6 +880,7 @@ function renderEditContactList(i) {
   for (let j = 0; j < contacts.length; j++) {
     const oneContact = contacts[j];
     editContactsList.innerHTML += generateContactListHTML(i, j, oneContact);
+    adaptInitialsToBackground(`initials_icon_${i}_${j}`);
   }
   updateCheckboxes(i);
 }
@@ -973,7 +891,7 @@ function generateContactListHTML(i, j, oneContact) {
       <li class="edit-contact-list-wrapper">
         <label for="contact_checkbox_${i}_${j}" class="initials-wrapper">
           <div class="contact-name-wrapper">
-            <div class="initials-icon" style="background-color: ${
+            <div id="initials_icon_${i}_${j}" class="initials-icon" style="background-color: ${
               oneContact.color
             }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
             <div>
@@ -985,6 +903,7 @@ function generateContactListHTML(i, j, oneContact) {
       </li>
     `;
 }
+
 
 function updateCheckboxes(i) {
   const editContactsList = document.getElementById(`edit_contact_list${i}`);
@@ -1032,10 +951,14 @@ function addContactToCurrentContacts(i, contact) {
 
 function removeContactFromCurrentContacts(i, contact) {
   const currentContactsArray = tasks[i].current_contacts;
-  const indexToRemove = currentContactsArray.findIndex(
-    (existingContact) => existingContact.e_mail === contact.e_mail
-  );
-
+  const indexToRemove = currentContactsArray.findIndex((existingContact) => {
+    return (
+      existingContact.name === contact.name &&
+      existingContact.e_mail === contact.e_mail &&
+      existingContact.phone === contact.phone &&
+      existingContact.color === contact.color
+    );
+  });
   if (indexToRemove !== -1) {
     currentContactsArray.splice(indexToRemove, 1);
   }
@@ -1251,6 +1174,12 @@ function generateOkayButtonHTML(i) {
     </button>
   </div>
   `;
+}
+
+function closeTaskWithoutSaving(i) {
+  tasks[i] = currentlyEditedTask[0];
+  currentlyEditedTask = [];
+  renderTaskDetailView(i);
 }
 
 function openAddTaskToList() {

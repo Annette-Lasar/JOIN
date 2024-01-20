@@ -6,7 +6,7 @@ function generateContactListHTML(i, oneContact) {
       <li>
         <label for="contact_checkbox_${i}" class="initials-wrapper">
           <div class="contact-initials-and-text-wrapper">
-              <div class="initials-icon" style="background-color: ${
+              <div id="initials_icon_in_list_${i}" class="initials-icon" style="background-color: ${
                 oneContact.color
                 }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
               <div>${oneContact.name}</div>
@@ -28,10 +28,10 @@ function generateSelectAllHTML() {
     `;
 }
 
-function generateContactsIconsHTML(oneContact) {
+function generateContactsIconsHTML(i, oneContact) {
   const [firstName, lastName] = oneContact.name.split(' ');
   return /* html */ `
-      <span class="initials-icon" style="background-color: ${
+      <span id="initials_icon_assigned_${i}" class="initials-icon" style="background-color: ${
         oneContact.color
       }">${firstName[0]}${lastName ? lastName[0] : ''}</span>
     `;
