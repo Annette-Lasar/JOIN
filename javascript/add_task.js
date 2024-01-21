@@ -4,6 +4,7 @@ async function initTasks() {
   showAndHideBoxesAccordingToScreenSize();
   setStandardDateToToday('task_due_date_small');
   setStandardDateToToday('task_due_date_big');
+  await loadContactsAndCategoriesUserOrGuest();     // Hier wird die funktion von Semir aufgerufen!!!!
   renderContacts();
   renderCurrentContacts();
   addCheckboxEventListeners();
@@ -81,6 +82,28 @@ document.addEventListener('DOMContentLoaded', function () {
 /* --------------------------------------------------------------------
 contact section in add_task.html
 ---------------------------------------------------------------------- */
+
+//#################### Funktion von Semir START ################################
+
+async function loadContactsAndCategoriesUserOrGuest() {
+  let userLogin = localStorage.getItem('userLogin');
+  if (userLogin == 'true') {
+      let userEmail = localStorage.getItem('userEmail');
+      userEmail = userEmail.replace(/"/g, '');
+      users = JSON.parse(await getItem('users'));
+      let user = users.find((u) => u.email === userEmail);
+      if (user) {
+          allContacts = JSON.parse(await getItem(`${user.email}_contacts`));            //  Hier wird das Kontakte-Array eines angemeldeten Users in der Variable 'allContacts' gespeichert
+          // allCategories = JSON.parse(await getItem(`${user.email}_categories`));        //  Hier wird das Categories-Array eines angemeldeten Users in der Variable 'allCategories' gespeichert
+      }
+  } else {
+      allContacts = JSON.parse(await getItem('guestContacts'));                          //   Hier wird das Kontakte-Array eines Gasts in der Variable 'allContacts' gespeichert
+      // allCategories = JSON.parse(await getItem(`guestCategories`));                       //   Hier wird das Categories-Array eines Gasts in der Variable 'allCategories' gespeichert
+  }
+}
+
+//#################### Funktion von Semir ENDE ################################
+
 function renderContacts() {
   CONTACT_LIST_BOX.innerHTML = '';
   CONTACT_LIST_BOX.innerHTML += generateSelectAllHTML();
