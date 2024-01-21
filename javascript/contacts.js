@@ -5,8 +5,8 @@ let userColors = ['#FF7A00', '#FF5EB3', '#6E52FF', '#9327FF', '#00BEE8', '#1FD7C
 /**
  * Is stored on the server under the key 'guestContacts'
  */
-let allContacts
-
+let allContacts;
+let tasks;
 
 async function initContacts() {
     await loadContactsUserOrGuest();
@@ -17,7 +17,7 @@ async function initContacts() {
     emptyContactList();
 }
 
-async function loadContactsUserOrGuest() {
+async function loadContactsAndTasksUserOrGuest() {
     let userLogin = localStorage.getItem('userLogin');
     if (userLogin == 'true') {
         let userEmail = localStorage.getItem('userEmail');
@@ -26,9 +26,11 @@ async function loadContactsUserOrGuest() {
         let user = users.find((u) => u.email === userEmail);
         if (user) {
             allContacts = JSON.parse(await getItem(`${user.email}_contacts`));        //  Hier wird das Kontakte-Array eines angemeldeten Users in der Variable 'allContacts' gespeichert
+            tasks = JSON.parse(await getItem(`${user.email}_tasks`));
         }
     } else {
         allContacts = JSON.parse(await getItem('guestContacts'));                          //   Hier wird das Kontakte-Array eines Gasts in der Variable 'allContacts' gespeichert
+        tasks = JSON.parse(await getItem(`guestTasks`));
     }
 }
 
@@ -40,9 +42,11 @@ async function sendContactsToServer() {
         let user = users.find((u) => u.email == userEmail);
         if (user) {
             await setItem(`${user.email}_contacts`, JSON.stringify(allContacts));
+            await setItem(`${user.email}_tasks`, JSON.stringify(tasks));
         }
     } else {
         await setItem('guestContacts', JSON.stringify(allContacts));
+        await setItem('guestTasks', JSON.stringify(tasks));
     }
     await initContacts();
 }
@@ -226,11 +230,10 @@ function updateContact(i) {
     let inputName = document.getElementById('add_name').value;
     let inputEMail = document.getElementById('add_email').value;
     let inputPhone = document.getElementById('add_phone').value;
-    let color = randomUserColor();
     allContacts[i]['name'] = inputName;
     allContacts[i]['e_mail'] = inputEMail;
     allContacts[i]['phone'] = inputPhone;
-    allContacts[i]['color'] = color;
+    updateCurrentContactsInTasks();
 }
 
 function loadContactValues(i) {
@@ -262,6 +265,7 @@ function hideOptions() {
 async function deleteAnUser() {
     let index = currentContactIndex();
     allContacts.splice(index, 1);
+    updateCurrentContactsInTasks();
     await sendContactsToServer();
     hideContactInfo();
 }
@@ -281,4 +285,21 @@ function isNumber(evt) {
         return false;
     }
     return true;
+}
+
+function updateCurrentContactsInTasks() {
+    for (let i = 0; i < tasks.length; i++) {
+        const updatedArray = tasks[i]['current_contacts'].filter(obj1 =>
+            allContacts.some(obj2 =>
+                obj2.name === obj1.name &&
+                obj2.e_mail === obj1.e_mail &&
+                obj2.phone === obj1.phone &&
+                obj2.color === obj1.color
+            )
+        );
+    
+        // Aktualisiere array1 mit den gefilterten Objekten
+        tasks[i]['current_contacts'].length = 0;
+        Array.prototype.push.apply(tasks[i]['current_contacts'], updatedArray);
+    }
 }
