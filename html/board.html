@@ -32,13 +32,16 @@
           </a>
         </div>
         <div class="searchbar-and-addTaskBtn-wrapper">
-          <div class="search-input-wrapper">
-            <input onkeyup="filterTasks()" id="searchbar" class="searchbar" placeholder="Find Task" />
-            <div class="search-icon-wrapper">
-              <div class="search-separator"></div>
-              <img class="search-icon" src="../icons/search.svg" alt="" />
+          <div>
+            <div class="search-input-wrapper">
+              <input onkeyup="filterTasks()" onblur="clearSearchInfos()" id="searchbar" class="searchbar" placeholder="Find Task" />
+              <div class="search-icon-wrapper">
+                <div class="search-separator"></div>
+                <img onclick="clearSearchField()" class="search-icon" src="../icons/close.svg" alt="" />
+              </div>
             </div>
           </div>
+          <div id="search_matches" class="search-matches"><span id="number_of_matches"></span> found</div>
           <a href="add_task.html">
             <button class="addTaskToBoard-btn-big">Add Task +</button>
           </a>

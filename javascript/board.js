@@ -199,7 +199,7 @@ function renderContactsInsideCard(i, oneTask) {
     const oneContact = oneTask.current_contacts[j];
     detailTaskContactNameContainer.innerHTML +=
       generateDetailTaskContactNamesHTML(i, j, oneContact);
-      adaptInitialsToBackground(`detail_view_initials_icon_${i}_${j}`);
+    adaptInitialsToBackground(`detail_view_initials_icon_${i}_${j}`);
   }
 }
 
@@ -218,8 +218,8 @@ function generateTaskContactHTML(i, j, oneContact) {
   const [firstName, lastName] = oneContact.name.split(' ');
   return /* html */ `
         <div id="initials_icons_outside_card_${i}_${j}" class="initials-icon" style="background-color: ${
-          oneContact.color
-        }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
+    oneContact.color
+  }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
     `;
 }
 
@@ -228,8 +228,8 @@ function generateDetailTaskContactNamesHTML(i, j, oneContact) {
   return /* html */ `
       <div class="initials-and-name-wrapper">
         <div id="detail_view_initials_icon_${i}_${j}" class="initials-icon" style="background-color: ${
-          oneContact.color
-        }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
+    oneContact.color
+  }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
         <div>${oneContact.name}</div>
         
       </div>
@@ -892,8 +892,8 @@ function generateContactListHTML(i, j, oneContact) {
         <label for="contact_checkbox_${i}_${j}" class="initials-wrapper">
           <div class="contact-name-wrapper">
             <div id="initials_icon_${i}_${j}" class="initials-icon" style="background-color: ${
-              oneContact.color
-            }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
+    oneContact.color
+  }">${firstName[0]}${lastName ? lastName[0] : ''}</div>
             <div>
           ${oneContact.name}
             </div>
@@ -903,7 +903,6 @@ function generateContactListHTML(i, j, oneContact) {
       </li>
     `;
 }
-
 
 function updateCheckboxes(i) {
   const editContactsList = document.getElementById(`edit_contact_list${i}`);
@@ -1193,5 +1192,75 @@ function closeAddTaskToList() {
 }
 
 function filterTasks() {
-  // code
+  const listStatus = ['toDo', 'inProgress', 'awaitFeedback', 'done'];
+  let search = document.getElementById('searchbar');
+  let adjustedSearch = search.value.toLowerCase().trim();
+
+  // Zähler für die gefundenen Aufgaben
+  let totalFoundTasks = 0;
+
+  // Loop über alle Listenelemente
+  for (let status of listStatus) {
+    let listElement = document.getElementById(status);
+    clearContainers(status);
+
+    // Loop über alle Tasks
+    for (let i = 0; i < tasks.length; i++) {
+      let oneTask = tasks[i];
+      let taskStatus = oneTask.status;
+      let newTruncatedSentence = truncateSentence(oneTask.description, 6);
+      let completedSubtasksInPercent = calculateSubtaskPercentage(i, oneTask);
+
+      // Überprüfe, ob der Task dem gesuchten Text entspricht und dem richtigen Status hat
+      if (
+        oneTask.title.toLowerCase().includes(adjustedSearch) ||
+        oneTask.description.toLowerCase().includes(search)
+      ) {
+        if (taskStatus === status) {
+          // Aktualisiere nur die Liste, die dem Status des Tasks entspricht
+          listElement.innerHTML += generateToDoHTML(
+            i,
+            oneTask,
+            newTruncatedSentence,
+            completedSubtasksInPercent
+          );
+          totalFoundTasks++; // Inkrementiere den Zähler
+        }
+      }
+    }
+  }
+  showSearchResult(search, totalFoundTasks);
+}
+
+function showSearchResult(search, totalFoundTasks) {
+  let searchInfo = document.getElementById('search_matches');
+  let numberOfMatches = document.getElementById('number_of_matches');
+  if (search.value !== '') {
+    searchInfo.classList.add('visible');
+    if (totalFoundTasks === 1) {
+      numberOfMatches.innerHTML = `${totalFoundTasks} match`;
+    } else {
+      numberOfMatches.innerHTML = `${totalFoundTasks} matches`;
+    }
+  } else {
+    searchInfo.classList.remove('visible');
+  }
+}
+
+function clearSearchInfos() {
+  let search = document.getElementById('searchbar');
+  let searchInfo = document.getElementById('search_matches');
+  let numberOfMatches = document.getElementById('number_of_matches');
+
+  if (search.value === '') {
+    searchInfo.classList.remove('visible');
+    numberOfMatches.innerHTML = '';
+  }
+}
+
+function clearSearchField() {
+  let search = document.getElementById('searchbar');
+  search.value = '';
+  clearSearchInfos();
+  showTasksOnBoard();
 }
