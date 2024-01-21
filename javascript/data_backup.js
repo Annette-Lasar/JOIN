@@ -7,7 +7,7 @@
 let tasksGuest = [
 
     {
-        title: ' Implement User Authentication',
+        title: 'Implement User Authentication',
         description: 'Develop a secure user authentication system using JWT',
         current_category: [
             {

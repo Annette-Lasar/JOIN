@@ -26,7 +26,7 @@
   background-color: var(--background-color-lightgray);
 }
 
-h1 {
+.board-headline {
   margin: 0.5em 0 0.5em;
   font-size: 24px;
   font-weight: 700;
@@ -84,11 +84,11 @@ h4 {
     contrast(94%);
 }
 
-.searchbar {
+#searchbar {
   flex: 1 1 0;
   height: 90%;
-  outline: none;
   border: none;
+  outline: none;
 }
 
 .headline-and-btn-wrapper {
@@ -145,7 +145,7 @@ h4 {
   border-radius: 6px;
   filter: invert(94%) sepia(4%) saturate(20%) hue-rotate(314deg) brightness(91%)
     contrast(94%);
-    cursor: pointer;
+  cursor: pointer;
 }
 
 /* .addTask-btn:hover {
@@ -183,6 +183,36 @@ h4 {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+/* .three-dots-wrapper {
+  padding: 0.25em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--accent-color-gray) 0.5px solid;
+  border-radius: 50%;
+  box-shadow: 1px 1px var(--shadow-color);
+} */
+
+.three-dots-wrapper {
+  padding: 0.25em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--accent-color-gray) 0.5px solid;
+  border-radius: 50%;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Hinzugefügte Schatten für den erhabenen Effekt */
+  transition: box-shadow 0.3s ease; /* Übergang für eine sanfte Animation */
+}
+
+.three-dots-wrapper:hover {
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.three-dots-wrapper img {
+  filter: invert(81%) sepia(19%) saturate(1%) hue-rotate(341deg)
+    brightness(100%) contrast(98%);
 }
 
 .todo {
@@ -569,7 +599,7 @@ h4 {
 
 .edited-task-title.warning,
 .edited-due-date.warning {
-  border: red 1px solid;
+  border: var(--accent-color-red) 1px solid;
 }
 
 .instruction-text.red {
@@ -706,8 +736,6 @@ h4 {
   cursor: pointer;
 }
 
-/* ACHTUNG: KLASSEN ANPASSEN */
-
 .edit-contact-list {
   width: 100%;
   max-height: 0;
@@ -753,7 +781,7 @@ h4 {
 }
 
 .edit-subtask-wrapper:focus-within {
- outline: var(--background-color-darkblue) 1.5px solid;
+  outline: var(--background-color-darkblue) 1.5px solid;
 }
 
 .input-subtasks {
@@ -765,7 +793,6 @@ h4 {
 .edit-plus-button {
   cursor: pointer;
 }
-
 
 .close-and-check-wrapper {
   display: flex;
@@ -856,7 +883,6 @@ h4 {
 .edit-subtask-icons-wrapper img:last-of-type {
   height: 10px;
   filter: brightness(0);
-
 }
 
 .okay-wrapper {

@@ -184,7 +184,6 @@ let allContacts = [
 ];
 
 let currentContacts = [];
-/* let currentDueDates = []; */
 let currentDueDate = '';
 let currentCategories = [];
 
@@ -196,9 +195,8 @@ const TASK_TITLE_INFO_BOX = document.getElementById('task_title_info');
 /* ----------------- description --------------------- */
 const DESCRIPTION_BOX = document.getElementById('task_description');
 /* ----------------- contacts ------------------------ */
-const CONTACT_LIST_BOX = document.getElementById('contact_list'); // contact_list
+const CONTACT_LIST_BOX = document.getElementById('contact_list'); 
 /* ------------------- prio --------------------------- */
-/* const PRIO_SMALL_SCREEN = document.getElementById('prio_small_screen'); */
 const PRIO_BUTTON_URGENT_SMALL = document.getElementById(
   'prio_button_urgent_small'
 );
@@ -244,4 +242,3 @@ const SUBTASK_CONTAINER_SMALL = document.getElementById(
 );
 const SUBTASK_CONTAINER_BIG = document.getElementById('subtask_container_big');
 
-/* const BIG_SCREEN = document.getElementById('big_screen'); */

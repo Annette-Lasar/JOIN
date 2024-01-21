@@ -325,7 +325,7 @@ function generateToDoHTML(
           <div id="taskCard_${i}" data-status="${oneTask.status}" draggable="true" onclick="openOrCloseContainer(${i}, 'detail_task_wrapper_${i}', 'open')" ondragstart="startDragging(${i})" class="todo">
             <div class="todo-header-wrapper">
                 <div class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
-                <div onclick="openCardContextMenu(${i}, '${oneTask.status}', event)"><img src="../icons/three_dots.svg"></div>
+                <div onclick="openCardContextMenu(${i}, '${oneTask.status}', event)" class=""><img src="../icons/three_dots.svg"></div>
             </div>
             <div class="todo-title">${oneTask['title']}</div>
                 <div class="todo-description">${newTruncatedSentence}</div>
@@ -1190,4 +1190,8 @@ function openAddTaskToList() {
 function closeAddTaskToList() {
   const addTaskOverlayContainer = document.getElementById('add_task_overlay');
   addTaskOverlayContainer.classList.add('d-none');
+}
+
+function filterTasks() {
+  // code
 }

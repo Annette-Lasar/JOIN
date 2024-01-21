@@ -282,9 +282,9 @@ function adaptInitialsToBackground(containerID) {
   const isLight = isColorLight(iconColor);
  
   if (isLight) {
-    iconContainer.style.color = 'black';
+    iconContainer.style.color = '#000000';
   } else {
-    iconContainer.style.color = 'white';
+    iconContainer.style.color = '#ffffff';
   }
 }
 
