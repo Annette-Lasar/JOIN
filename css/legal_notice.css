@@ -14,6 +14,8 @@ body {
   max-width: 1024px;
   padding: 1em;
   margin: 0 auto;
+  height: calc(100vh - 160px);
+  overflow: auto;
 }
 
 h1,
@@ -95,11 +97,19 @@ breakpoint: 50em
 @media (min-width: 50em) {
   .main-legal {
     margin: 0 auto 0 180px;
+    height: calc(100vh - 80px);
+  }
+}
+
+@media (min-width: 1200px) {
+  .main-legal {
+    height: fit-content;
   }
 }
 
 @media (min-width: 1400px) {
   .main-legal {
     margin: 0 auto;
+    height: fit-content;
   }
 }
