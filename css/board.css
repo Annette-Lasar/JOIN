@@ -959,7 +959,6 @@ breakpoint: 50em
   .board {
     width: 85%;
     margin: 1em 0 0 170px;
-    /* padding: 30px; */
     display: flex;
     justify-content: space-between;
     border: purple 1px solid;
@@ -968,17 +967,23 @@ breakpoint: 50em
   .headline-searchbar-addTask-wrapper {
     width: 85%;
     margin: 0 0 0 170px;
-    /* padding: 80px 30px 30px 30px; */
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: red 1px solid;
   }
 
   .searchbar-and-addTaskBtn-wrapper {
-    width: 36%;
+    width: 50%;
     display: flex;
     justify-content: space-between;
+  }
+
+  .inner-searchbar-wrapper {
+    width: 75%;
+  }
+
+  .search-and-find-wrapper {
+    width: 100%;
   }
 
   .addTaskToBoard-btn-small {

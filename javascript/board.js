@@ -1195,36 +1195,30 @@ function filterTasks() {
   const listStatus = ['toDo', 'inProgress', 'awaitFeedback', 'done'];
   let search = document.getElementById('searchbar');
   let adjustedSearch = search.value.toLowerCase().trim();
-
-  // Zähler für die gefundenen Aufgaben
   let totalFoundTasks = 0;
-
-  // Loop über alle Listenelemente
   for (let status of listStatus) {
     let listElement = document.getElementById(status);
     clearContainers(status);
-
-    // Loop über alle Tasks
     for (let i = 0; i < tasks.length; i++) {
       let oneTask = tasks[i];
       let taskStatus = oneTask.status;
       let newTruncatedSentence = truncateSentence(oneTask.description, 6);
       let completedSubtasksInPercent = calculateSubtaskPercentage(i, oneTask);
-
-      // Überprüfe, ob der Task dem gesuchten Text entspricht und dem richtigen Status hat
       if (
         oneTask.title.toLowerCase().includes(adjustedSearch) ||
-        oneTask.description.toLowerCase().includes(search)
+        oneTask.description.toLowerCase().includes(adjustedSearch)
       ) {
         if (taskStatus === status) {
-          // Aktualisiere nur die Liste, die dem Status des Tasks entspricht
           listElement.innerHTML += generateToDoHTML(
             i,
             oneTask,
             newTruncatedSentence,
             completedSubtasksInPercent
           );
-          totalFoundTasks++; // Inkrementiere den Zähler
+          totalFoundTasks++; 
+          updateProgressBar(i, oneTask);
+          updateCompletedTasks(i, tasks[i]);
+          renderContactsOnOutsideCard(i, oneTask);
         }
       }
     }

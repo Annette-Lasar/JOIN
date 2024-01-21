@@ -32,16 +32,31 @@
           </a>
         </div>
         <div class="searchbar-and-addTaskBtn-wrapper">
-          <div>
-            <div class="search-input-wrapper">
-              <input onkeyup="filterTasks()" onblur="clearSearchInfos()" id="searchbar" class="searchbar" placeholder="Find Task" />
-              <div class="search-icon-wrapper">
-                <div class="search-separator"></div>
-                <img onclick="clearSearchField()" class="search-icon" src="../icons/close.svg" alt="" />
+          <div class="inner-searchbar-wrapper">
+            <div class="search-and-find-wrapper">
+              <div class="search-input-wrapper">
+                <input
+                  onkeyup="filterTasks()"
+                  onblur="clearSearchInfos()"
+                  id="searchbar"
+                  class="searchbar"
+                  placeholder="Find Task"
+                />
+                <div class="search-icon-wrapper">
+                  <div class="search-separator"></div>
+                  <img
+                    onclick="clearSearchField()"
+                    class="search-icon"
+                    src="../icons/close.svg"
+                    alt=""
+                  />
+                </div>
               </div>
             </div>
+            <div id="search_matches" class="search-matches">
+              <span id="number_of_matches"></span> found
+            </div>
           </div>
-          <div id="search_matches" class="search-matches"><span id="number_of_matches"></span> found</div>
           <a href="add_task.html">
             <button class="addTaskToBoard-btn-big">Add Task +</button>
           </a>
@@ -51,9 +66,9 @@
         <div class="status">
           <div class="status-headline">
             <div>To do</div>
-             <div onclick="openAddTaskToList()" class="addTask-btn">
-                <img src="../icons/plus.svg" alt="" />
-          </div>
+            <div onclick="openAddTaskToList()" class="addTask-btn">
+              <img src="../icons/plus.svg" alt="" />
+            </div>
           </div>
           <div
             class="drag-area"
