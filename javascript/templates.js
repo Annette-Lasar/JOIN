@@ -143,7 +143,7 @@ function addNewContactFormTemplate() {
       <form class="form" onsubmit="addNewContact(); return false">
         <input id="add_name" type="text" placeholder="Name" required>
         <input id="add_email" type="email" name="" placeholder="E-Mail" required>
-        <input id="add_phone" type="tel" name="" placeholder="Telefon" onkeypress="return isNumber(event)" required>
+        <input id="add_phone" type="tel" name="" placeholder="Telefon" onkeypress="return isNumber(event)" onpaste="return false;" ondrop="return false;" required>
         <div class="form-buttons">
           <button id="cancel_btn" class="cancel-btn white-btn" onclick="hideAddForm()">
             Cancel
@@ -221,7 +221,7 @@ function editContactFormTemplate(i) {
       <form class="form" onsubmit="saveContactChanges(${i}); return false">
         <input id="add_name" type="text" placeholder="Name" required>
         <input id="add_email" type="email" name="" placeholder="E-Mail" required>
-        <input id="add_phone" type="tel" name="" placeholder="Telefon" onkeypress="return isNumber(event)" required>
+        <input id="add_phone" type="tel" name="" placeholder="Telefon" onkeypress="return isNumber(event)" onpaste="return false;" ondrop="return false;" required>
         <div class="form-buttons">
           <button type="button" id="delete_btn" class="delete-btn white-btn" onclick="deleteAnUser(), hideAddForm()">
             Delete
