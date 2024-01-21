@@ -1,0 +1,169 @@
+.detail-task-wrapper {
+    max-width: 320px;
+    margin: auto;
+    max-height: 600px;
+    padding: 1em;
+    position: fixed;
+    inset: 2px;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border-radius: 12px;
+    background-color: var(--background-color-lightgray);
+    border: var(--accent-color-gray) 1.5px solid;
+  }
+  
+  .category-and-close-wrapper {
+    margin: 0 0 1em 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .task-description,
+  .task-due-date-wrapper,
+  .task-priority-wrapper,
+  .detail-task-contacts-wrapper,
+  .detail-task-subtasks-wrapper,
+  .delete-and-edit {
+    margin: 0 0 0.5em;
+    font-size: 0.9rem;
+  }
+  
+  .task-due-date-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .detail-task-contacts-wrapper {
+    position: relative;
+  }
+  
+  .task-description {
+    height: 60px;
+    padding: 2px 4px;
+    overflow-y: auto;
+    font-weight: 600;
+    line-height: 1.3;
+    border: var(--background-color-darkblue) 0.5px solid;
+    border-radius: 4px;
+  }
+  
+  .task-priority-wrapper,
+  .prio-wrapper {
+    display: flex;
+    align-items: center;
+  }
+  
+  .task-priority-wrapper {
+    gap: 12px;
+  }
+  
+  .prio-wrapper {
+    gap: 8px;
+  }
+  
+  .prio-wrapper > div {
+    text-transform: capitalize;
+  }
+  
+  .priority,
+  .assigned-to,
+  .subtasks-title,
+  .due-date {
+    font-weight: 600;
+  }
+  
+  .assigned-to,
+  .subtasks-title {
+    margin: 0 0 1em;
+  }
+  
+  .detail-contacts-wrapper {
+    max-height: 100px;
+    padding: 0.5em;
+    display: flex;
+    overflow-y: auto;
+    border: var(--background-color-darkblue) 0.5px solid;
+    border-radius: 4px;
+  }
+  
+  .contact-name {
+    width: 100%;
+  }
+  
+  .initials-and-name-wrapper {
+    padding: 0.25em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+  
+  .delete-and-edit-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .delete-and-edit,
+  .delete-wrapper,
+  .edit-wrapper {
+    width: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+  }
+  
+  .delete-and-edit {
+    padding: 4px 2px;
+    margin: 0;
+  }
+  
+  .delete-wrapper,
+  .edit-wrapper {
+    width: fit-content;
+    height: 24px;
+    padding: 4px;
+    gap: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  
+  .delete-wrapper img {
+    height: 14px;
+  }
+  
+  .edit-wrapper img {
+    height: 16px;
+  }
+  
+  .detail-subtasks-wrapper {
+    height: 70px;
+    overflow-y: auto;
+    border: var(--background-color-darkblue) 0.5px solid;
+    border-radius: 4px;
+  }
+  
+  .inner-subtask-wrapper {
+    margin: 0 0 0.25em;
+    padding: 0.25em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .inner-subtask-wrapper:hover {
+    background-color: var(--background-color-mediumgray);
+  }
+  
+  .subtask-name {
+    padding: 2px;
+    font-size: 0.75rem;
+    flex: 1 1 0;
+    cursor: pointer;
+  }

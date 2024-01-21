@@ -494,6 +494,12 @@ subtasks section
   justify-content: space-between;
 }
 
+.create-task-wrapper.overlay {
+  margin: 0 0 2em 0;
+  padding: 12px 1em;
+  border: orange 1px solid;
+}
+
 .explanation-container {
   font-size: 0.7rem;
 }

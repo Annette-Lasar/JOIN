@@ -1,0 +1,120 @@
+/* ---------------------------------------------------
+breakpoint: 50em
+------------------------------------------------------ */
+@media (min-width: 50em) {
+    body {
+      background-color: var(--background-color-lightgray);
+    }
+  
+    .main {
+      /* max-width: 1208px; */
+      margin: 0 0 0 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: orange 1px solid;
+    }
+  
+    .board {
+      width: 85%;
+      margin: 1em 0 0 170px;
+      display: flex;
+      justify-content: space-between;
+      border: purple 1px solid;
+    }
+  
+    .headline-searchbar-addTask-wrapper {
+      width: 85%;
+      margin: 0 0 0 170px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  
+    .searchbar-and-addTaskBtn-wrapper {
+      width: 50%;
+      display: flex;
+      justify-content: space-between;
+    }
+  
+    .inner-searchbar-wrapper {
+      width: 75%;
+    }
+  
+    .search-and-find-wrapper {
+      width: 100%;
+    }
+  
+    .addTaskToBoard-btn-small {
+      display: none;
+    }
+  
+    .addTaskToBoard-btn-big {
+      height: 32px;
+      padding: 8px;
+      display: inline;
+      border: none;
+      border-radius: 8px;
+      color: var(--background-color-lightgray);
+      background-color: var(--background-color-darkblue);
+    }
+  
+    .status {
+      width: 24%;
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .status-headline {
+      height: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--background-color-darkblue);
+      font-size: 20px;
+      font-weight: 600;
+      border: orchid 1px solid;
+    }
+  
+    .drag-area {
+      height: 100%;
+      margin-bottom: 50px;
+      display: flex;
+      flex-direction: column;
+      margin-right: 50px;
+      overflow-x: unset;
+    }
+  
+    .drag-area-highlight {
+      width: 100%;
+    }
+  
+    .todo {
+      min-width: auto;
+      max-width: 150px;
+      width: 150px;
+      border: red 1px solid;
+    }
+  
+    .task-contact-wrapper {
+      max-width: 80%;
+    }
+  
+    .detail-task-wrapper {
+      inset: 10px;
+      transform: translateX(25%);
+    }
+  
+    .subtask-list-item-icon-wrapper {
+      opacity: 0;
+    }
+  
+    .subtask-list-item-wrapper:hover {
+      background-color: var(--background-color-mediumgray);
+    }
+  
+    .subtask-list-item-wrapper:hover .subtask-list-item-icon-wrapper {
+      opacity: 1;
+    }
+  }

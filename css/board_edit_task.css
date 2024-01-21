@@ -1,0 +1,346 @@
+.edit-task-wrapper {
+    height: 85%;
+    overflow-y: scroll;
+  }
+  
+  .edit-task-wrapper::-webkit-scrollbar {
+    width: 14px;
+  }
+  
+  .edit-close-button-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .edit-headline {
+    margin: 0 0 0.5em;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  
+  .red {
+    color: var(--accent-color-red);
+  }
+  
+  .edited-task-title-wrapper {
+    margin: 0 0 0.5em;
+  }
+  
+  .edited-task-title {
+    width: 100%;
+    padding: 4px 2px;
+    border: var(--accent-color-anthracite) 1px solid;
+    border-radius: 4px;
+  }
+  
+  .edited-task-title.warning,
+  .edited-due-date.warning {
+    border: var(--accent-color-red) 1px solid;
+  }
+  
+  .instruction-text.red {
+    opacity: 1;
+  }
+  
+  .instruction-text {
+    margin: 0.3em 0;
+    font-size: 0.6rem;
+    opacity: 0;
+  }
+  
+  .edited-task-description {
+    width: 100%;
+    margin: 0 0 0.5em;
+    font-family: 'Inter', sans-serif;
+    resize: none;
+  }
+  
+  .edited-due-date-wrapper {
+    width: 100%;
+  }
+  
+  .edited-due-date {
+    padding: 5px 4px;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    border: var(--accent-color-anthracite) 1px solid;
+    border-radius: 4px;
+  }
+  
+  .edited-task-description::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  .edit-prio-section {
+    width: 100%;
+  }
+  
+  .prio-button-wrapper {
+    width: 100%;
+    margin: 0 0 0.5em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .prio-button {
+    width: 80px;
+    padding: 8px 0.25em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background-color: var(--accent-color-white);
+    border: var(--background-color-lightgray) 1px solid;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .prio-button:hover {
+    box-shadow: 0px 4px 4px var(--shadow-color);
+  }
+  
+  .prio-button.prio-marked-urgent {
+    background-color: var(--accent-color-red);
+    border: var(--accent-color-red) 1px solid;
+    color: var(--accent-color-white);
+  }
+  
+  .prio-marked-urgent .svg-urgent path {
+    fill: var(--accent-color-white);
+  }
+  
+  .prio-button.prio-marked-medium {
+    background-color: var(--color-variant2);
+    border: var(--color-variant2) 1px solid;
+    color: var(--accent-color-white);
+  }
+  
+  .prio-marked-medium .svg-medium path {
+    fill: var(--accent-color-white);
+  }
+  
+  .prio-button.prio-marked-low {
+    background-color: var(--accent-color-green);
+    border: var(--accent-color-green) 1px solid;
+    color: var(--accent-color-white);
+  }
+  
+  .prio-marked-low .svg-low path {
+    fill: var(--accent-color-white);
+  }
+  
+  .edit-contact-wrapper {
+    margin: 0 0 0.75em;
+  }
+  
+  .edit-contacts-dropdown-list {
+    width: 100%;
+    padding: 8px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    background-color: var(--accent-color-white);
+    border: var(--accent-color-anthracite) 1px solid;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .edit-contact-list-wrapper {
+    padding: 4px 2px;
+    margin: 0 0 0.25em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .initials-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1 1 0;
+    font-size: 0.75rem;
+  }
+  
+  .contact-name-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    cursor: pointer;
+  }
+  
+  .edit-contact-list {
+    width: 100%;
+    max-height: 0;
+    margin: 0.5em 0 0;
+    padding: 0 0.25em;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    z-index: 1;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+    background-color: var(--accent-color-white);
+  }
+  
+  .edit-contact-list.show {
+    max-height: 200px;
+    overflow-y: auto;
+    border: var(--accent-color-gray) 1px solid;
+    border-radius: 4px;
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  
+  .edit-contact-list.show::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  .turn {
+    transform: rotate(180deg);
+  }
+  
+  .edit-subtask-wrapper {
+    margin: 0 2px 0.3em;
+    padding: 0.3em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    border: var(--background-color-darkblue) 1px solid;
+    border-radius: 4px;
+    background-color: var(--accent-color-white);
+  }
+  
+  .edit-subtask-wrapper:focus-within {
+    outline: var(--background-color-darkblue) 1.5px solid;
+  }
+  
+  .input-subtasks {
+    flex: 1 1 0;
+    border: none;
+    outline: none;
+  }
+  
+  .edit-plus-button {
+    cursor: pointer;
+  }
+  
+  .close-and-check-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+  }
+  
+  .close-and-check-wrapper img {
+    height: 18px;
+    cursor: pointer;
+  }
+  
+  .close-and-check-wrapper img:last-of-type {
+    height: 10px;
+    filter: brightness(0);
+  }
+  
+  .subtask-list-item-wrapper {
+    margin: 0 0 0.3em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    border: var(--accent-color-white) 1px solid;
+  }
+  
+  .subtask-list-item {
+    padding: 0.3em;
+    flex: 1 1 0;
+    font-size: 0.75em;
+  }
+  
+  .subtask-list-item-wrapper::before {
+    content: '\2022';
+  }
+  
+  .subtask-list-item-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+  }
+  
+  .subtask-list-item-icon-wrapper img {
+    height: 18px;
+    cursor: pointer;
+  }
+  
+  .subtask-list-item-icon-wrapper img:last-of-type {
+    height: 14px;
+    cursor: pointer;
+  }
+  
+  .subtask-icon-separator {
+    height: 16px;
+    width: 1px;
+    background-color: var(--accent-color-gray);
+  }
+  
+  .edit-subtask-inputfield-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  
+  .edit-subtask-inputfield-wrapper input {
+    flex: 1 1 0;
+  }
+  
+  .edit-subtask-icons-wrapper {
+    width: 18%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .edit-subtask-icons-wrapper img {
+    cursor: pointer;
+  }
+  
+  .edit-subtask-icons-wrapper img:first-of-type {
+    height: 14px;
+  }
+  
+  .edit-subtask-icons-wrapper img:last-of-type {
+    height: 10px;
+    filter: brightness(0);
+  }
+  
+  .okay-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .edit-okay-button {
+    padding: 0.75em 0.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    align-self: flex-end;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent-color-white);
+    background-color: var(--background-color-darkblue);
+    border: var(--background-color-darkblue) 1px solid;
+    border-radius: 5px;
+    cursor: pointer;
+  }
