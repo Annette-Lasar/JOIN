@@ -9,7 +9,7 @@ let allContacts;
 let tasks;
 
 async function initContacts() {
-    await loadContactsUserOrGuest();
+    await loadContactsAndTasksUserOrGuest();
     renderGroupLetters();
     addContactToGroup();
     loadColors();
