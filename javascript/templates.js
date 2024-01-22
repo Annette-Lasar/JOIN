@@ -56,7 +56,7 @@ function contactInfoTemplate(i) {
                 </svg>
                 Edit
               </div>
-              <div class="icon" onclick="deleteAnUser()">
+              <div class="icon" onclick="renderAlertDeleteContact('confirm_container', 'confirm_content', 'Are you sure you want to delete this contact permanently? This process is irreversible.');">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <mask id="mask0_114296_4124" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24"
                     height="24">
@@ -207,24 +207,26 @@ function editContactFormTemplate(i) {
       <div class="initials position text" style="background-color: ${bgColor}; color: ${color}">
         <span>${initials}</span>
       </div>
-      <div id="alert_container" class="alert-container d-none">
-        <div class="alert-image-wrapper">
-          <img class="alert-logo" src="../icons/join_logo_white.svg" alt="" />
-          <h3>Information</h3>
-          <img
-            onclick="openOrCloseAlertContainer('alert_container', 'close')"
-            class="alert-close"
-            src="../icons/close_white.svg"
-          />
+      <div id="alert_container" class="background-wrapper d-none" onclick="openOrCloseAlertContainer('alert_container', 'close')">
+        <div class="alert-container">
+          <div class="alert-image-wrapper">
+            <img class="alert-logo" src="../icons/join_logo_white.svg" alt="" />
+            <h3>Information</h3>
+            <img
+              onclick="openOrCloseAlertContainer('alert_container', 'close')"
+              class="alert-close"
+              src="../icons/close_white.svg"
+            />
+          </div>
+          <div id="alert_content" class="alert-content"></div>
         </div>
-        <div id="alert_content" class="alert-content"></div>
       </div>
       <form class="form" onsubmit="saveContactChanges(${i}); return false">
         <input id="add_name" type="text" placeholder="Name" required>
         <input id="add_email" type="email" name="" placeholder="E-Mail" required>
         <input id="add_phone" type="tel" name="" placeholder="Telefon" onkeypress="return isNumber(event)" onpaste="return false;" ondrop="return false;" required>
         <div class="form-buttons">
-          <button type="button" id="delete_btn" class="delete-btn white-btn" onclick="deleteAnUser(), hideAddForm()">
+          <button type="button" id="delete_btn" class="delete-btn white-btn" onclick="renderAlertDeleteContact('confirm_container', 'confirm_content', 'Are you sure you want to delete this contact permanently? This process is irreversible.'), hideAddForm()">
             Delete
           </button>
           <button type="submit" class="create-contact-btn dark-btn">

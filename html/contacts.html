@@ -68,10 +68,24 @@
         <img src="../icons/edit_dark.svg" alt="">
         Edit
       </div>
-      <div onclick="deleteAnUser()">
+      <div onclick="renderAlertDeleteContact('confirm_container', 'confirm_content', 'Are you sure you want to delete this contact permanently? This process is irreversible.');">
         <img class="delete-img" src="../icons/delete.svg" alt="">
         Delete
       </div>
+    </div>
+  </div>
+  <div id="confirm_container" class="background-wrapper d-none" onclick="openOrCloseAlertContainer('confirm_container', 'close')" style="background-color: rgba(0, 0, 0, 0.2); z-index: 999;">
+    <div class="alert-container confirm-container">
+      <div class="alert-image-wrapper">
+        <img class="alert-logo" src="../icons/join_logo_white.svg" alt="" />
+        <h3>Information</h3>
+        <img
+          onclick="openOrCloseAlertContainer('confirm_container', 'close')"
+          class="alert-close"
+          src="../icons/close_white.svg"
+        />
+      </div>
+      <div id="confirm_content" class="alert-content" style="flex-direction: column; gap: 12px;"></div>
     </div>
   </div>
   <div id="contact_created" class="contact-created dark-btn" style="display: none;">

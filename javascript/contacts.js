@@ -272,13 +272,35 @@ function hideOptions() {
     }, 300);
 }
 
-async function deleteAnUser() {
+async function deleteAContact() {
     let index = currentContactIndex();
     allContacts.splice(index, 1);
     updateCurrentContactsInTasks();
     await sendContactsToServer();
     hideContactInfo();
 }
+
+function renderAlertDeleteContact(containerId, messageId, alertMessage) {
+    openOrCloseAlertContainer(containerId, 'open');
+    const alertContent = document.getElementById(messageId);
+    alertContent.innerHTML = '';
+    if (containerId === 'alert_container') {
+      alertContent.innerHTML = generateAlertContentHTML(alertMessage);
+    } else if (containerId === 'confirm_container') {
+      console.log('tasks', tasks);
+      alertContent.innerHTML = generateConfirmDeleteContactHTML(alertMessage);
+    }
+  }
+
+function generateConfirmDeleteContactHTML(alertMessage) {
+    return /* html */ `
+      <div class="alert-message">${alertMessage}</div>
+      <div id="confirm_button_wrapper" class="confirm-button-wrapper">
+        <button onclick="deleteAContact()" class="dark-button confirm-delete" style="display: flex;">Yes, proceed</button>
+        <button onclick="openOrCloseAlertContainer('confirm_container', 'close')" class="dark-button confirm-delete" style="display: flex; margin-left: 12px;">No, preserve</button>
+      </div>
+    `;
+  }
 
 function currentContactIndex() {
     let contactHTML = document.getElementById('contact_details').getElementsByTagName('div');

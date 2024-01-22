@@ -586,7 +586,11 @@ input:focus-visible {
 }
 
 .alert-container {
-    top: 53%;
+    top: 50%;
+}
+
+.confirm-container {
+    top: 35%;
 }
 
 @media (max-width: 350px) {
@@ -830,6 +834,18 @@ input:focus-visible {
 
     .cancel-btn {
         display: flex;
+    }
+
+    .confirm-delete {
+        width: unset;
+        font-size: unset;
+        font-size: 16px;
+        padding: 0.5em;
+        border-radius: 4px;
+    }
+
+    .alert-message {
+        font-size: 16px;
     }
 }
 
