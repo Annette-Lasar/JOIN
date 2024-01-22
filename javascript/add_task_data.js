@@ -2,7 +2,7 @@ let createdTasks = [];
 let subTasks = [];
 let taskCategories = ['Technical Task', 'User Story'];
 let updatedSubtask;
-let allCategories = [
+/* let allCategories = [
   {
     category_name: 'Technical Task',
     category_color: '#FF0000',
@@ -32,7 +32,9 @@ let allCategories = [
     category_name: 'Leisure',
     category_color: '#90EE90',
   },
-];
+]; */
+
+let allCategories = [];
 
 let allContacts = [];
 

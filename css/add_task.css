@@ -304,12 +304,11 @@ li:hover,
 .icon-and-category-wrapper,
 .category-icon-wrapper,
 .contact-list li {
-  /* padding: 0.5em 0.25em; */
+  padding: 0.5em 0.25em;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  border: green 1px solid;
 }
 
 .icon-and-category-wrapper:first-of-type {
@@ -631,6 +630,10 @@ breakpoint: 28em
 breakpoint: 50em
 ------------------------------------------------------ */
 @media (min-width: 50em) {
+  .task-wrapper {
+    overflow-y: unset;
+  }
+
   .clear-button {
     display: flex;
     align-items: center;

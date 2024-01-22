@@ -19,7 +19,7 @@
     <header>
       <div w3-include-html="../templates/header.html"></div>
     </header>
-    <div class="page">
+    <div onclick="combinedClickFunction()" class="page">
       <h1>Add Task</h1>
       <div class="task-wrapper">
         <div class="small-screen">
@@ -146,7 +146,7 @@
           <section id="category_small_screen" class="category-wrapper">
             <div class="label">Category<span class="red">*</span></div>
             <div
-              onclick="toggleDropdownLists('category_list_small', 'select_arrow_categories_small')"
+              onclick="toggleDropdownLists('category_list_small', 'select_arrow_categories_small', event)"
               id="task_category_small"
               class="task-category"
             >
@@ -171,7 +171,7 @@
           <section class="contact-wrapper">
             <div class="label">Assigned to</div>
             <div
-              onclick="toggleDropdownLists('contact_list', 'select_arrow_contacts')"
+              onclick="toggleDropdownLists('contact_list', 'select_arrow_contacts', event)"
               class="task-category"
             >
               Select contacts to assign<img
@@ -327,7 +327,7 @@
           <section id="category_big_screen" class="category-wrapper">
             <div class="label">Category<span class="red">*</span></div>
             <div
-              onclick="toggleDropdownLists('category_list_big', 'select_arrow_categories_big')"
+              onclick="toggleDropdownLists('category_list_big', 'select_arrow_categories_big', event)"
               id="task_category_big"
               class="task-category"
             >
@@ -393,7 +393,7 @@
           ></section>
         </div>
       </div>
-      <div class="create-task-wrapper">
+      <div onclick="combinedClickFunction()" class="create-task-wrapper">
         <div class="explanation-container">
           <span class="red">*</span>This field is required
         </div>
