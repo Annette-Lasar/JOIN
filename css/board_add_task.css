@@ -1,0 +1,28 @@
+.add-task-overlay {
+    position: fixed;
+    inset: 5px;
+    background-color: var(--background-color-lightgray);
+    z-index: 30;
+    border: var(--accent-color-gray) 1px solid;
+    border-radius: 4px;
+  }
+  
+  .add-task-overlay-page {
+    height: 80vh;
+    overflow-y: auto;
+    border: red 1px solid;
+  }
+  
+  .add-task-overlay-page::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  .add-task-header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .add-task-header-wrapper img {
+    cursor: pointer;
+  }
