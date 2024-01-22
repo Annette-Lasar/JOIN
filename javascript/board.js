@@ -1017,8 +1017,8 @@ function generateContactsDropdownHTML(i) {
 function renderUserContactList(i) {
   const editContactsList = document.getElementById(`edit_contact_list${i}`);
   editContactsList.innerHTML = '';
-  for (let j = 0; j < testContacts.length; j++) {
-    const oneContact = testContacts[j];
+  for (let j = 0; j < contacts.length; j++) {
+    const oneContact = contacts[j];
     editContactsList.innerHTML += generateContactListHTML(i, j, oneContact);
   }
 }
