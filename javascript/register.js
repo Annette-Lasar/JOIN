@@ -106,9 +106,9 @@ function notAUser() {
  */
 async function sendNewDataToServer() {
     await setItem('users', JSON.stringify(users));
-    await setItem(`${email.value}_tasks`, []);
-    await setItem(`${email.value}_contacts`, []);
-    await setItem(`${email.value}_categories`, []);
+    await setItem(`${email.value}_tasks`, exemplaryUserTasks);
+    await setItem(`${email.value}_contacts`, exemplaryUserContacts);
+    await setItem(`${email.value}_categories`, exemplaryUserCategories);
 }
 
 
