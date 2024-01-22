@@ -1333,6 +1333,7 @@ function closeTaskWithoutSaving(i) {
 function openAddTaskToList() {
   const addTaskOverlayContainer = document.getElementById('add_task_overlay');
   addTaskOverlayContainer.classList.remove('d-none');
+  adaptOverlayToScreenSize();
 }
 
 function closeAddTaskToList() {
