@@ -20,7 +20,7 @@ function addContactToGroupTemplate(name, i) {
   return `
         <button id="${i}" onclick="showContactInfo(${i})"class="contact">
             <div id="initials${i}" class="initials">
-              <h3>${initials}</h3>
+              <span>${initials}</span>
             </div>
             <div class="contact-info">
               <h1>${name}</h1>
@@ -38,7 +38,7 @@ function contactInfoTemplate(i) {
   return `
         <div class="name">
           <div id="color_large_${i}" class="initials large">
-            <h3>${initials}</h3>
+            <span>${initials}</span>
           </div>
           <div class="contact-info">
             <h3>${name}</h3>
@@ -165,7 +165,8 @@ function addNewContactFormTemplate() {
 
 function editContactFormTemplate(i) {
   let initials = loadInitials(i);
-  let color = allContacts[i]['color'];
+  let bgColor = allContacts[i]['color'];
+  let color = document.getElementById("initials" + i).style.color;
   return `
     <div id="background" class="background" onclick="hideAddForm()"></div>
     <div id="add_form" class="add-form">
@@ -203,8 +204,8 @@ function editContactFormTemplate(i) {
           <path d="M92 2L2 2" stroke="#29ABE2" stroke-width="3" stroke-linecap="round" />
         </svg>
       </div>
-      <div class="initials position text" style="background-color: ${color}">
-        <h3>${initials}</h3>
+      <div class="initials position text" style="background-color: ${bgColor}; color: ${color}">
+        <span>${initials}</span>
       </div>
       <div id="alert_container" class="alert-container d-none">
         <div class="alert-image-wrapper">

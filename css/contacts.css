@@ -126,7 +126,7 @@ header {
     font-size: 20px;
 }
 
-.contact-list h3 {
+.contact-list span {
     font-size: 12px;
 }
 
@@ -189,7 +189,7 @@ header {
     border-radius: 50%;
 }
 
-.text h3 {
+.text span {
     font-size: 47px;
     font-style: normal;
     font-weight: 500;
@@ -261,6 +261,11 @@ header {
 }
 
 .name h3 {
+    font-size: 47px;
+    font-weight: 500;
+}
+
+.large span {
     font-size: 47px;
     font-weight: 500;
 }
@@ -647,7 +652,7 @@ input:focus-visible {
         min-width: 80px;
     }
 
-    .large h3 {
+    .large span {
         font-size: 27px;
         font-weight: 400;
     }
@@ -911,7 +916,7 @@ input:focus-visible {
         font-size: 18px;
     }
 
-    .text h3 {
+    .text span {
         font-size: 32px;
     }
 }

@@ -13,6 +13,7 @@ async function initContacts() {
     renderGroupLetters();
     addContactToGroup();
     loadColors();
+    adaptInitialsColor();
     checkContactsInGroup();
     emptyContactList();
 }
@@ -99,6 +100,13 @@ function loadColors() {
     }
 }
 
+function adaptInitialsColor() {
+    for (let i = 0; i < allContacts.length; i++) {
+        const containerID = "initials" + i;
+        adaptInitialsToBackground(containerID);
+    }
+}
+
 function hideContactInfo() {
     document.getElementById('contacts').style.display = 'none';
     document.getElementById('edit_contact_button').style.display = 'none';
@@ -114,8 +122,10 @@ function showContactInfo(i) {
     document.getElementById('contact_details').style.display = 'flex';
     document.getElementById('contact_details').classList.add('slide-in');
     document.getElementById('contact_details').innerHTML = contactInfoTemplate(i);
-    let color = document.getElementById("initials" + i).style.backgroundColor;
-    document.getElementById("color_large_" + i).style.backgroundColor = color;
+    let bgColor = document.getElementById("initials" + i).style.backgroundColor;
+    let color = document.getElementById("initials" + i).style.color;
+    document.getElementById("color_large_" + i).style.backgroundColor = bgColor;
+    document.getElementById("color_large_" + i).style.color = color;
 }
 
 function hideAddForm() {
