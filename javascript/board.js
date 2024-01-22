@@ -145,7 +145,7 @@ function calculateNumberOfVisibleContacts(i, oneTask, taskContactContainer) {
   let hiddenContactsCount = 0;
 
   while (
-    calculateTotalWidth(visibleContacts) > maxWidth &&
+    calculateTotalWidthOfContacts(visibleContacts) > maxWidth &&
     visibleContacts.length > 1
   ) {
     hiddenContactsCount++;
@@ -172,17 +172,17 @@ function showVisibleContactsAndOverflowIndicator(
   }
   if (hiddenContactsCount > 0) {
     const overflowIndicatorHTML =
-      generateOverflowIndicatorHTML(hiddenContactsCount);
+      generateOverflowIndicatorOutsideCardHTML(hiddenContactsCount);
     taskContactContainer.innerHTML += overflowIndicatorHTML;
   }
 }
 
-function calculateTotalWidth(contacts) {
+function calculateTotalWidthOfContacts(contacts) {
   const contactWidth = 25;
   return contacts.length * contactWidth + contactWidth;
 }
 
-function generateOverflowIndicatorHTML(hiddenContactsCount) {
+function generateOverflowIndicatorOutsideCardHTML(hiddenContactsCount) {
   return /* html */ `
       <div id="overflow_indicator" class="overflow-indicator">
         +${hiddenContactsCount}
@@ -261,18 +261,18 @@ function formatDateString(inputDate) {
   return `${formattedDay}/${formattedMonth}/${year}`;
 }
 
-function renderSubtasks(i, oneTask) {
+function renderSubtasksDetailView(i, oneTask) {
   const subtaskContainer = document.getElementById(
     `detail_subtasks_wrapper_${i}`
   );
   subtaskContainer.innerHTML = '';
   for (let j = 0; j < oneTask.subtasks.length; j++) {
     const oneSubtask = oneTask.subtasks[j];
-    subtaskContainer.innerHTML += generateSubtaskHTML(i, j, oneSubtask);
+    subtaskContainer.innerHTML += generateSubtasksDetailViewHTML(i, j, oneSubtask);
   }
 }
 
-function generateSubtaskHTML(i, j, oneSubtask) {
+function generateSubtasksDetailViewHTML(i, j, oneSubtask) {
   return /* html */ `
       <div onclick="(function() {
         const oneTask = tasks[${i}];
@@ -325,7 +325,7 @@ function generateToDoHTML(
           <div id="taskCard_${i}" data-status="${oneTask.status}" draggable="true" onclick="openOrCloseContainer(${i}, 'detail_task_wrapper_${i}', 'open')" ondragstart="startDragging(${i})" class="todo">
             <div class="todo-header-wrapper">
                 <div class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
-                <div onclick="openCardContextMenu(${i}, '${oneTask.status}', event)" class=""><img src="../icons/three_dots.svg"></div>
+                <div onclick="openCardContextMenu(${i}, '${oneTask.status}', event)" class="three-dots-wrapper"><img src="../icons/three_dots.svg"></div>
             </div>
             <div class="todo-title">${oneTask['title']}</div>
                 <div class="todo-description">${newTruncatedSentence}</div>
@@ -513,7 +513,7 @@ function renderTaskDetailView(i) {
   );
   cardDetailContainer.innerHTML = generateDetailViewHTML(i, tasks[i]);
   renderContactsInsideCard(i, tasks[i]);
-  renderSubtasks(i, tasks[i]);
+  renderSubtasksDetailView(i, tasks[i]);
   checkForCurrentSubtaskStatus(i);
   getFilteredDueDate(i, tasks[i]);
 }
@@ -1181,12 +1181,62 @@ function closeTaskWithoutSaving(i) {
   renderTaskDetailView(i);
 }
 
-function openAddTaskToList() {
+function openAddTaskToList(status) {
   const addTaskOverlayContainer = document.getElementById('add_task_overlay');
   addTaskOverlayContainer.classList.remove('d-none');
   showAndHideBoxesAccordingToScreenSize();
   renderCategories();
   renderContacts();
+  addCheckboxEventListeners();
+  setStandardDateToToday('task_due_date_small');
+  setStandardDateToToday('task_due_date_big');
+  renderCreateTaskButtons(status);
+}
+
+function renderCreateTaskButtons(status) {
+  const createTaskWrapper = document.getElementById('create_task_wrapper');
+  createTaskWrapper.innerHTML = generateCreateTaskButtonsHTML(status); 
+}
+
+function generateCreateTaskButtonsHTML(status) {
+  return /* html */ `
+<div class="explanation-container">
+          <span class="red">*</span>This field is required
+        </div>
+        <div class="task-and-clear-button-wrapper">
+          <button onclick="clearAllTaskContainers()" class="clear-button">
+            Clear
+            <svg
+              viewBox="0 0 24 25"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <mask
+                id="mask0_71720_5473"
+                style="mask-type: alpha"
+                maskUnits="userSpaceOnUse"
+                x="0"
+                y="0"
+                width="24"
+                height="25"
+              >
+                <rect y="0.96582" width="24" height="24" fill="#D9D9D9" />
+              </mask>
+              <g mask="url(#mask0_71720_5473)">
+                <path
+                  class="x-icon"
+                  d="M11.9998 14.3659L7.0998 19.2659C6.91647 19.4492 6.68314 19.5409 6.3998 19.5409C6.11647 19.5409 5.88314 19.4492 5.6998 19.2659C5.51647 19.0825 5.4248 18.8492 5.4248 18.5659C5.4248 18.2825 5.51647 18.0492 5.6998 17.8659L10.5998 12.9659L5.6998 8.06587C5.51647 7.88254 5.4248 7.6492 5.4248 7.36587C5.4248 7.08254 5.51647 6.8492 5.6998 6.66587C5.88314 6.48254 6.11647 6.39087 6.3998 6.39087C6.68314 6.39087 6.91647 6.48254 7.0998 6.66587L11.9998 11.5659L16.8998 6.66587C17.0831 6.48254 17.3165 6.39087 17.5998 6.39087C17.8831 6.39087 18.1165 6.48254 18.2998 6.66587C18.4831 6.8492 18.5748 7.08254 18.5748 7.36587C18.5748 7.6492 18.4831 7.88254 18.2998 8.06587L13.3998 12.9659L18.2998 17.8659C18.4831 18.0492 18.5748 18.2825 18.5748 18.5659C18.5748 18.8492 18.4831 19.0825 18.2998 19.2659C18.1165 19.4492 17.8831 19.5409 17.5998 19.5409C17.3165 19.5409 17.0831 19.4492 16.8998 19.2659L11.9998 14.3659Z"
+                  fill="#2A3647"
+                />
+              </g>
+            </svg>
+          </button>
+          <button onclick="createNewTaskInList(${status})" class="dark-button">
+            Create task
+            <img src="../icons/check.svg" alt="" />
+          </button>
+        </div>
+  `;
 }
 
 function closeAddTaskToList() {
