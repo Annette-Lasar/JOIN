@@ -218,13 +218,14 @@ function toggleDropdownLists(idContainer, idArrow, event) {
   }
 }
 
-function combinedClickFunction() {
-  closeDropdownList('category_list_small', 'select_arrow_categories_small');
-  closeDropdownList('category_list_big', 'select_arrow_categories_big');
-  closeDropdownList('contact_list', 'select_arrow_contacts');
+function combinedClickFunction(event) {
+  closeDropdownList('category_list_small', 'select_arrow_categories_small', event);
+  closeDropdownList('category_list_big', 'select_arrow_categories_big', event);
+  closeDropdownList('contact_list', 'select_arrow_contacts', event);
 }
 
-function closeDropdownList(idContainer, idArrow) {
+function closeDropdownList(idContainer, idArrow, event) {
+  event.stopPropagation();
   const CATEGORY_LIST = document.getElementById(idContainer);
   const SELECT_ARROW = document.getElementById(idArrow);
   CATEGORY_LIST.classList.remove('show');

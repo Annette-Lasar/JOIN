@@ -50,8 +50,10 @@ function selectAndUnselectAllContacts(
   i,
   contactCheckbox,
   oneContact,
-  checkAllCheckbox
+  checkAllCheckbox,
+  event
 ) {
+  event.stopPropagation();
   let individualCheckboxes = document.getElementById(`contact_checkbox_${i}`);
   currentContacts = [];
 
@@ -70,7 +72,7 @@ function selectAndUnselectAllContacts(
   } else if (!checkAllCheckbox.checked && individualCheckboxes.checked) {
     individualCheckboxes.checked = false;
   }
-  selectContacts(contactCheckbox, oneContact);
+  selectContacts(contactCheckbox, oneContact, event);
   renderCurrentContacts();
 }
 
@@ -83,21 +85,23 @@ function addCheckboxEventListeners() {
     const contactCheckbox = document.getElementById(`contact_checkbox_${i}`);
     const checkAllCheckbox = document.getElementById('select_all_checkbox');
     let oneContact = allContacts[i];
-    contactCheckbox.addEventListener('change', function () {
-      selectContacts(contactCheckbox, oneContact);
+    contactCheckbox.addEventListener('change', function (event) {
+      selectContacts(contactCheckbox, oneContact, event);
     });
-    checkAllCheckbox.addEventListener('change', function () {
+    checkAllCheckbox.addEventListener('change', function (event) {
       selectAndUnselectAllContacts(
         i,
         contactCheckbox,
         oneContact,
-        checkAllCheckbox
+        checkAllCheckbox,
+        event
       );
     });
   }
 }
 
-function selectContacts(contactCheckbox, oneContact) {
+function selectContacts(contactCheckbox, oneContact, event) {
+  event.stopPropagation();
   let selectedContact = {
     name: oneContact.name,
     e_mail: oneContact.e_mail,
@@ -135,7 +139,10 @@ function renderCurrentContacts() {
   const maxWidth = contactsContainer.offsetWidth;
   let visibleContacts = [...currentContacts]; // Kopie von currentContacts
   let hiddenContactsCount = 0;
-  while (calculateTotalWidth(visibleContacts) > maxWidth && visibleContacts.length > 1) {
+  while (
+    calculateTotalWidth(visibleContacts) > maxWidth &&
+    visibleContacts.length > 1
+  ) {
     hiddenContactsCount++;
     visibleContacts.pop();
   }
@@ -144,11 +151,11 @@ function renderCurrentContacts() {
     adaptInitialsToBackground(`initials_icon_assigned_${i}`);
   });
   if (hiddenContactsCount > 0) {
-    const overflowIndicatorHTML = generateOverflowIndicatorHTML(hiddenContactsCount);
+    const overflowIndicatorHTML =
+      generateOverflowIndicatorHTML(hiddenContactsCount);
     contactsContainer.innerHTML += overflowIndicatorHTML;
   }
 }
-
 
 function calculateTotalWidth(contacts) {
   const contactWidth = 25;
@@ -409,22 +416,25 @@ function renderCurrentDueDate(newCurrentDueDate) {
 /* ---------------------------------------------------------------
 create new task section in add_task.html
 ------------------------------------------------------------------- */
-async function createNewTask() {
+async function createNewTask(status) {
   createdTasks = [];
-  checkIfBoxesAreEmpty();
-  await sendCreatedTask();
+  let formStatus = checkIfBoxesAreEmpty(status);
+  if (formStatus) {
+    await sendCreatedTask();
+  }
 }
 
-function checkIfBoxesAreEmpty() {
+function checkIfBoxesAreEmpty(status) {
   if (checkAllRequiredBoxes()) {
     checkIfTitleIsEmpty();
     checkIfDueDateIsEmpty();
     checkIfCategoriesIsEmpty();
+    return false;
   } else {
-    let task = createTaskObject();
+    let task = createTaskObject(status);
     createdTasks.push(task);
-    taskId = task.id + 1;
     removeClassLists();
+    return true;
   }
 }
 
@@ -462,7 +472,7 @@ function checkIfCategoriesIsEmpty() {
   }
 }
 
-function createTaskObject() {
+function createTaskObject(taskStatus) {
   let newTask = {
     title: TITLE_BOX.value,
     description: DESCRIPTION_BOX.value,
@@ -472,7 +482,7 @@ function createTaskObject() {
     current_category: currentCategories,
     subtasks: subTasks,
     completed_subtasks: 0,
-    status: 'toDo',
+    status: taskStatus,
   };
   return newTask;
 }
@@ -714,8 +724,11 @@ async function getTasksFromServer(user) {
   } else if (user === 'guest') {
     tasks = JSON.parse(await getItem('guestTasks'));
     tasks.forEach((oneTask) => createdTasks.push(oneTask));
-    console.log('tasks', tasks);
   }
+}
+
+function redirectToBoardPage() {
+  window.location.href = 'board.html';
 }
 
 async function sendNewTaskToServer(user) {
@@ -737,5 +750,6 @@ async function sendNewTaskToServer(user) {
         'A new task has successfully been created and added to your board.'
       );
     }
+    redirectToBoardPage();
   }
 }

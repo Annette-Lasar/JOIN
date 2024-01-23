@@ -20,7 +20,7 @@
     <header>
       <div w3-include-html="../templates/header.html"></div>
     </header>
-    <div onclick="combinedClickFunction()" class="page">
+    <div onclick="combinedClickFunction(event)" class="page">
       <h1>Add Task</h1>
       <div class="task-wrapper">
         <div class="small-screen">
@@ -426,7 +426,7 @@
               </g>
             </svg>
           </button>
-          <button onclick="createNewTask()" class="dark-button">
+          <button onclick="createNewTask('toDo')" class="dark-button">
             Create task
             <img src="../icons/check.svg" alt="" />
           </button>

@@ -723,7 +723,7 @@ function editPriority(i, oneTask) {
   const priorityBox = document.getElementById(`task_priority_wrapper${i}`);
   priorityBox.innerHTML = '';
   priorityBox.innerHTML = generatePriorityButtonsHTML(i);
-  changePrioStatus(i, oneTask.current_prio);
+  changePrioStatusEdit(i, oneTask.current_prio);
 }
 
 function generatePriorityButtonsHTML(i) {
@@ -733,7 +733,7 @@ function generatePriorityButtonsHTML(i) {
               <div id="prio_button_wrapper_${i}" class="prio-button-wrapper">
                 <button
                   id="prio_button_urgent_${i}"
-                  onclick="changePrioStatus(${i}, 'urgent')"
+                  onclick="changePrioStatusEdit(${i}, 'urgent')"
                   class="prio-button"
                 >
                   Urgent
@@ -757,7 +757,7 @@ function generatePriorityButtonsHTML(i) {
                 </button>
                 <button
                   id="prio_button_medium_${i}"
-                  onclick="changePrioStatus(${i}, 'medium')"
+                  onclick="changePrioStatusEdit(${i}, 'medium')"
                   class="prio-button prio-marked-medium"
                 >
                   Medium
@@ -781,7 +781,7 @@ function generatePriorityButtonsHTML(i) {
                 </button>
                 <button
                   id="prio_button_low_${i}"
-                  onclick="changePrioStatus(${i}, 'low')"
+                  onclick="changePrioStatusEdit(${i}, 'low')"
                   class="prio-button"
                 >
                   Low
@@ -808,7 +808,7 @@ function generatePriorityButtonsHTML(i) {
   `;
 }
 
-function updateButtons(i, buttonType, isActive) {
+function updateButtonsEdit(i, buttonType, isActive) {
   const prioButton = document.getElementById(`prio_button_${buttonType}_${i}`);
   if (isActive) {
     prioButton.classList.add(`prio-marked-${buttonType}`);
@@ -817,10 +817,10 @@ function updateButtons(i, buttonType, isActive) {
   }
 }
 
-function changePrioStatus(i, prioStatus) {
+function changePrioStatusEdit(i, prioStatus) {
   const buttonTypes = ['urgent', 'medium', 'low'];
-  buttonTypes.forEach((type) => updateButtons(i, type, false));
-  updateButtons(i, prioStatus, true);
+  buttonTypes.forEach((type) => updateButtonsEdit(i, type, false));
+  updateButtonsEdit(i, prioStatus, true);
   if (prioStatus === 'urgent') {
     tasks[i].current_prio = prioStatus;
   } else if (prioStatus === 'medium') {
@@ -870,22 +870,51 @@ function renderUserContactList(i) {
   editContactsList.innerHTML = '';
   for (let j = 0; j < contacts.length; j++) {
     const oneContact = contacts[j];
-    editContactsList.innerHTML += generateContactListHTML(i, j, oneContact);
+    editContactsList.innerHTML += generateContactListEditHTML(i, j, oneContact);
   }
 }
 
-function renderEditContactList(i) {
+/* function renderEditContactList(i) {
   const editContactsList = document.getElementById(`edit_contact_list${i}`);
   editContactsList.innerHTML = '';
   for (let j = 0; j < contacts.length; j++) {
     const oneContact = contacts[j];
-    editContactsList.innerHTML += generateContactListHTML(i, j, oneContact);
+    editContactsList.innerHTML += generateContactListEditHTML(i, j, oneContact);
     adaptInitialsToBackground(`initials_icon_${i}_${j}`);
   }
   updateCheckboxes(i);
+} */
+
+function renderEditContactList(i) {
+  const editContactsList = document.getElementById(`edit_contact_list${i}`);
+  editContactsList.innerHTML = '';
+  editContactsList.innerHTML += generateSelectAllHTML(i);
+  let j;
+  for (let j = 0; j < contacts.length; j++) {
+    const oneContact = contacts[j];
+    editContactsList.innerHTML += generateContactListEditHTML(i, j, oneContact);
+    adaptInitialsToBackground(`initials_icon_${i}_${j}`);
+  }
+  updateCheckboxes(i, j);
 }
 
-function generateContactListHTML(i, j, oneContact) {
+function generateSelectAllHTML(i) {
+  return /* html */ `
+    <li class="edit-contact-list-wrapper">
+      <label for="select_all_checkbox_${i}" class="initials-wrapper">
+        <div class="contact-name-wrapper">
+          <div class="initials-icon"></div>
+          <div>
+            Select or unselect all contacts
+          </div>
+        </div>
+      </label>
+      <div><input id="select_all_checkbox_${i}" type="checkbox"></div>
+    </li>
+  `;
+}
+
+function generateContactListEditHTML(i, j, oneContact) {
   const [firstName, lastName] = oneContact.name.split(' ');
   return /* html */ `
       <li class="edit-contact-list-wrapper">
@@ -904,13 +933,14 @@ function generateContactListHTML(i, j, oneContact) {
     `;
 }
 
-function updateCheckboxes(i) {
+function updateCheckboxes(i, j) {
   const editContactsList = document.getElementById(`edit_contact_list${i}`);
-  const checkboxes = editContactsList.querySelectorAll(
+  /* const checkboxes = editContactsList.querySelectorAll(
     'input[type="checkbox"]'
-  );
+  ); */
+  const individualCheckboxes = document.getElementById(`contact_checkbox_${i}_${j}`);
 
-  checkboxes.forEach((checkbox, j) => {
+  individualCheckboxes.forEach((checkbox, j) => {
     const oneContact = contacts[j];
     const isChecked = isContactSelected(oneContact, i);
 
@@ -1231,7 +1261,7 @@ function generateCreateTaskButtonsHTML(status) {
               </g>
             </svg>
           </button>
-          <button onclick="createNewTaskInList(${status})" class="dark-button">
+          <button onclick="createNewTask('${status}')" class="dark-button">
             Create task
             <img src="../icons/check.svg" alt="" />
           </button>

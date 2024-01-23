@@ -35,14 +35,10 @@ let updatedSubtask;
 ]; */
 
 let allCategories = [];
-
 let allContacts = [];
-
 let currentContacts = [];
 let currentDueDate = '';
 let currentCategories = [];
-
-let taskId = 0;
 let currentPrio = 'medium';
 /* ---------------- title -------------------------- */
 const TITLE_BOX = document.getElementById('task_title');
