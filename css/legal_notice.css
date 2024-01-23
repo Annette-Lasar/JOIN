@@ -10,12 +10,20 @@ body {
     color: var(--accent-color-lightblue);
 }
 
+.blue:hover {
+  color: blue;
+}
+
 .main-legal {
   max-width: 1024px;
   padding: 1em;
   margin: 0 auto;
   height: calc(100vh - 160px);
   overflow: auto;
+}
+
+.external {
+  height: fit-content;
 }
 
 h1,
