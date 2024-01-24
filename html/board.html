@@ -19,7 +19,6 @@
     <script src="../javascript/register.js" defer></script>
     <script src="../javascript/board_data.js" defer></script>
     <script src="../javascript/board.js" defer></script>
-    <script src="../javascript/board_add_task.js" defer></script>
     <script src="../javascript/new_task.js" defer></script>
     <script src="../javascript/add_task.js" defer></script>
     <script src="../javascript/add_task_templates.js" defer></script>
@@ -158,7 +157,7 @@
     </div>
     <!-- später d-none wieder einfügen!! -->
     <div
-      onclick="combinedClickFunction()"
+      onclick="combinedClickFunction(event)"
       id="add_task_overlay"
       class="add-task-overlay d-none"
     >

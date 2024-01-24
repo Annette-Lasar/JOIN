@@ -203,10 +203,6 @@ function renderContactsInsideCard(i, oneTask) {
   }
 }
 
-/* window.addEventListener('resize', function () {
-  showTasksOnBoard();
-}); */
-
 window.addEventListener('resize', function () {
   const url = window.location.href;
   if (url.endsWith('board.html')) {
@@ -268,7 +264,11 @@ function renderSubtasksDetailView(i, oneTask) {
   subtaskContainer.innerHTML = '';
   for (let j = 0; j < oneTask.subtasks.length; j++) {
     const oneSubtask = oneTask.subtasks[j];
-    subtaskContainer.innerHTML += generateSubtasksDetailViewHTML(i, j, oneSubtask);
+    subtaskContainer.innerHTML += generateSubtasksDetailViewHTML(
+      i,
+      j,
+      oneSubtask
+    );
   }
 }
 
@@ -354,12 +354,23 @@ function generateToDoHTML(
                   </ul>
               </div>  
           </div>
-          <div id="detail_task_wrapper_${i}" class="detail-task-wrapper d-none"></div>
+          <div onclick="clickOutsideDropdown(${i}, event)" id="detail_task_wrapper_${i}" class="detail-task-wrapper d-none"></div>
           `;
 }
 
 function startDragging(id) {
   currentDraggedElement = id;
+}
+
+function clickOutsideDropdown(i, event) {
+  const clickedElement = event.target.closest('.contact-list-element');
+  if (clickedElement == null) {
+    closeDropdownList(
+      `edit_contact_list${i}`,
+      `select_arrow_contacts${i}`,
+      event
+    );
+  }
 }
 
 // status ist entweder 'toDo', 'inProgress', 'awaitFeedback' oder 'done' (siehe board.html)
@@ -382,15 +393,20 @@ function moveToNewList(i, status, event) {
   }
 }
 
-async function sendDataToServer() {
+async function checkUser() {
   let userLogin = localStorage.getItem('userLogin');
   if (userLogin == 'true') {
     let userEmail = localStorage.getItem('userEmail');
     userEmail = userEmail.replace(/"/g, '');
     let user = users.find((u) => u.email == userEmail);
-    if (user) {
-      await setItem(`${user.email}_tasks`, JSON.stringify(tasks));
-    }
+    return user;
+  }
+}
+
+async function sendDataToServer() {
+  let user = await checkUser();
+  if (user) {
+    await setItem(`${user.email}_tasks`, JSON.stringify(tasks));
   } else {
     await setItem('guestTasks', JSON.stringify(tasks));
   }
@@ -550,10 +566,11 @@ function generateDetailViewHTML(i, oneTask) {
             </div>
           </div>
         </div>
-        <div id="detail_task_subtasks_wrapper${i}" class="detail-task-subtasks-wrapper">
-          <div class="subtasks-title">Subtasks:</div>
-          <div id="detail_subtasks_wrapper_${i}" class="detail-subtasks-wrapper"></div>
-        </div>
+          <div id="detail_task_subtasks_wrapper${i}" class="detail-task-subtasks-wrapper">
+            <div class="subtasks-title">Subtasks:</div>
+            <div id="detail_subtasks_wrapper_${i}" class="detail-subtasks-wrapper"></div>
+          </div>
+          <div id="bottom_${i}"></div>
         </div>
         <div id="delete_and_edit_wrapper${i}" class="delete-and-edit-wrapper">
           <div id="delete_and_edit_${i}" class="delete-and-edit">
@@ -850,7 +867,7 @@ function generateContactsDropdownHTML(i) {
           <section class="edit-contact-wrapper">
             <div class="edit-headline">Assigned to</div>
             <div
-              onclick="toggleDropdownList('edit_contact_list${i}', 'select_arrow_contacts${i}' )"
+              onclick="toggleDropdownList(${i}, 'edit_contact_list${i}', 'select_arrow_contacts${i}', event)"
               class="edit-contacts-dropdown-list"
             >
               Select contacts to assign<img
@@ -865,6 +882,7 @@ function generateContactsDropdownHTML(i) {
   `;
 }
 
+// gegen die nächste Funktion austauschen!
 function renderUserContactList(i) {
   const editContactsList = document.getElementById(`edit_contact_list${i}`);
   editContactsList.innerHTML = '';
@@ -874,36 +892,25 @@ function renderUserContactList(i) {
   }
 }
 
-/* function renderEditContactList(i) {
-  const editContactsList = document.getElementById(`edit_contact_list${i}`);
-  editContactsList.innerHTML = '';
-  for (let j = 0; j < contacts.length; j++) {
-    const oneContact = contacts[j];
-    editContactsList.innerHTML += generateContactListEditHTML(i, j, oneContact);
-    adaptInitialsToBackground(`initials_icon_${i}_${j}`);
-  }
-  updateCheckboxes(i);
-} */
-
 function renderEditContactList(i) {
   const editContactsList = document.getElementById(`edit_contact_list${i}`);
   editContactsList.innerHTML = '';
-  editContactsList.innerHTML += generateSelectAllHTML(i);
+  editContactsList.innerHTML += generateEditSelectAllHTML(i);
   let j;
   for (let j = 0; j < contacts.length; j++) {
     const oneContact = contacts[j];
     editContactsList.innerHTML += generateContactListEditHTML(i, j, oneContact);
     adaptInitialsToBackground(`initials_icon_${i}_${j}`);
   }
+  addEditCheckboxEventListeners(i);
   updateCheckboxes(i, j);
 }
 
-function generateSelectAllHTML(i) {
+function generateEditSelectAllHTML(i) {
   return /* html */ `
-    <li class="edit-contact-list-wrapper">
+    <li class="contact-list-element">
       <label for="select_all_checkbox_${i}" class="initials-wrapper">
         <div class="contact-name-wrapper">
-          <div class="initials-icon"></div>
           <div>
             Select or unselect all contacts
           </div>
@@ -917,7 +924,7 @@ function generateSelectAllHTML(i) {
 function generateContactListEditHTML(i, j, oneContact) {
   const [firstName, lastName] = oneContact.name.split(' ');
   return /* html */ `
-      <li class="edit-contact-list-wrapper">
+      <li class="contact-list-element">
         <label for="contact_checkbox_${i}_${j}" class="initials-wrapper">
           <div class="contact-name-wrapper">
             <div id="initials_icon_${i}_${j}" class="initials-icon" style="background-color: ${
@@ -928,34 +935,61 @@ function generateContactListEditHTML(i, j, oneContact) {
             </div>
           </div>
         </label>
-        <div><input onchange="onCheckboxChange(${i}, ${j})" id="contact_checkbox_${i}_${j}" type="checkbox"></div>
+        <div><input onchange="onCheckboxChange(${i}, ${j})" id="contact_checkbox_${i}_${j}" class="individual-checkbox" type="checkbox"></div>
       </li>
     `;
 }
 
-function updateCheckboxes(i, j) {
-  const editContactsList = document.getElementById(`edit_contact_list${i}`);
-  /* const checkboxes = editContactsList.querySelectorAll(
-    'input[type="checkbox"]'
-  ); */
-  const individualCheckboxes = document.getElementById(`contact_checkbox_${i}_${j}`);
-
-  individualCheckboxes.forEach((checkbox, j) => {
-    const oneContact = contacts[j];
-    const isChecked = isContactSelected(oneContact, i);
-
-    checkbox.checked = isChecked;
+function addEditCheckboxEventListeners(i) {
+  const checkAllEditCheckbox = document.getElementById(
+    `select_all_checkbox_${i}`
+  );
+  checkAllEditCheckbox.addEventListener('change', function () {
+    selectAndUnselectAllEditContacts(i, checkAllEditCheckbox);
   });
 }
 
+function selectAndUnselectAllEditContacts(i, checkAllEditCheckbox) {
+  for (let j = 0; j < contacts.length; j++) {
+    const oneContact = contacts[j];
+    const individualEditCheckbox = document.getElementById(
+      `contact_checkbox_${i}_${j}`
+    );
+    if (checkAllEditCheckbox.checked && !individualEditCheckbox.checked) {
+      individualEditCheckbox.checked = true;
+      onCheckboxChange(i, j);
+    } else if (
+      !checkAllEditCheckbox.checked &&
+      individualEditCheckbox.checked
+    ) {
+      individualEditCheckbox.checked = false;
+      onCheckboxChange(i, j);
+    }
+  }
+}
+
+function updateCheckboxes(i) {
+  const editContactsList = document.getElementById(`edit_contact_list${i}`);
+  const selectAllCheckbox = document.getElementById(`select_all_checkbox_${i}`);
+  const checkboxes = editContactsList.querySelectorAll(
+    'input[type="checkbox"].individual-checkbox'
+  );
+  checkboxes.forEach((checkbox, j) => {
+    const oneContact = contacts[j];
+    const isChecked = isContactSelected(oneContact, i);
+    checkbox.checked = isChecked;
+  });
+  selectAllCheckbox.checked = areAllContactsAdded(i);
+}
+
 function isContactSelected(contact, taskIndex) {
-  const currentContacts = tasks[taskIndex].current_contacts;
-  return currentContacts.some((selectedContact) => {
+  const currentlyEditedContacts = tasks[taskIndex].current_contacts;
+  return currentlyEditedContacts.some((selectedContactEdit) => {
     return (
-      selectedContact.name === contact.name &&
-      selectedContact.e_mail === contact.e_mail &&
-      selectedContact.phone === contact.phone &&
-      selectedContact.color === contact.color
+      selectedContactEdit.name === contact.name &&
+      selectedContactEdit.e_mail === contact.e_mail &&
+      selectedContactEdit.phone === contact.phone &&
+      selectedContactEdit.color === contact.color
     );
   });
 }
@@ -1000,7 +1034,37 @@ function isContactInCurrentContacts(i, contact) {
   );
 }
 
-function toggleDropdownList(idContainer, idArrow) {
+function areAllContactsAdded(taskIndex) {
+  const currentContacts = tasks[taskIndex].current_contacts;
+  
+  // Überprüfe, ob die Längen gleich sind
+  if (currentContacts.length !== contacts.length) {
+    return false;
+  }
+
+  // Überprüfe, ob jeder Kontakt in currentContacts vorhanden ist
+  for (const contact of contacts) {
+    if (!currentContacts.some(selectedContactEdit => isEqualContacts(selectedContactEdit, contact))) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function isEqualContacts(contact1, contact2) {
+  return (
+    contact1.name === contact2.name &&
+    contact1.e_mail === contact2.e_mail &&
+    contact1.phone === contact2.phone &&
+    contact1.color === contact2.color
+  );
+}
+
+
+function toggleDropdownList(i, idContainer, idArrow, event) {
+  event.stopPropagation();
+  scrollToBottom(i);
   const DROPDOWN_LIST = document.getElementById(idContainer);
   const SELECT_ARROW = document.getElementById(idArrow);
   DROPDOWN_LIST.classList.toggle('show');
@@ -1188,6 +1252,14 @@ function deleteSubtask(i, j) {
   renderSubtasksList(i, tasks[i]);
 }
 
+function scrollToBottom(i) {
+  const container = document.getElementById(`bottom_${i}`);
+
+  if (container) {
+    container.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  }
+}
+
 function createOkButton(i) {
   const okayButtonContainer = document.getElementById(`delete_and_edit_${i}`);
   okayButtonContainer.innerHTML = '';
@@ -1225,7 +1297,7 @@ function openAddTaskToList(status) {
 
 function renderCreateTaskButtons(status) {
   const createTaskWrapper = document.getElementById('create_task_wrapper');
-  createTaskWrapper.innerHTML = generateCreateTaskButtonsHTML(status); 
+  createTaskWrapper.innerHTML = generateCreateTaskButtonsHTML(status);
 }
 
 function generateCreateTaskButtonsHTML(status) {
@@ -1261,7 +1333,7 @@ function generateCreateTaskButtonsHTML(status) {
               </g>
             </svg>
           </button>
-          <button onclick="createNewTask('${status}')" class="dark-button">
+          <button onclick="createNewTask('${status}', event)" class="dark-button">
             Create task
             <img src="../icons/check.svg" alt="" />
           </button>
@@ -1279,6 +1351,10 @@ function filterTasks() {
   let search = document.getElementById('searchbar');
   let adjustedSearch = search.value.toLowerCase().trim();
   let totalFoundTasks = 0;
+  setListStatus(listStatus, adjustedSearch, totalFoundTasks, search);
+}
+
+function setListStatus(listStatus, adjustedSearch, totalFoundTasks, search) {
   for (let status of listStatus) {
     let listElement = document.getElementById(status);
     clearContainers(status);
@@ -1298,7 +1374,7 @@ function filterTasks() {
             newTruncatedSentence,
             completedSubtasksInPercent
           );
-          totalFoundTasks++; 
+          totalFoundTasks++;
           updateProgressBar(i, oneTask);
           updateCompletedTasks(i, tasks[i]);
           renderContactsOnOutsideCard(i, oneTask);
@@ -1312,7 +1388,7 @@ function filterTasks() {
 function showSearchResult(search, totalFoundTasks) {
   let searchInfo = document.getElementById('search_matches');
   let numberOfMatches = document.getElementById('number_of_matches');
-  if (search.value !== '') {
+  if (!checkIfSearchValueIsEmpty(search)) {
     searchInfo.classList.add('visible');
     if (totalFoundTasks === 1) {
       numberOfMatches.innerHTML = `${totalFoundTasks} match`;
@@ -1328,11 +1404,14 @@ function clearSearchInfos() {
   let search = document.getElementById('searchbar');
   let searchInfo = document.getElementById('search_matches');
   let numberOfMatches = document.getElementById('number_of_matches');
-
-  if (search.value === '') {
+  if (checkIfSearchValueIsEmpty(search)) {
     searchInfo.classList.remove('visible');
     numberOfMatches.innerHTML = '';
   }
+}
+
+function checkIfSearchValueIsEmpty(search) {
+  return search.value === '';
 }
 
 function clearSearchField() {

@@ -394,7 +394,7 @@
           ></section>
         </div>
       </div>
-      <div onclick="combinedClickFunction()" class="create-task-wrapper">
+      <div onclick="combinedClickFunction(event)" class="create-task-wrapper">
         <div class="explanation-container">
           <span class="red">*</span>This field is required
         </div>
@@ -426,7 +426,7 @@
               </g>
             </svg>
           </button>
-          <button onclick="createNewTask('toDo')" class="dark-button">
+          <button onclick="createNewTask('toDo', event)" class="dark-button">
             Create task
             <img src="../icons/check.svg" alt="" />
           </button>

@@ -3,7 +3,7 @@
 function generateContactListHTML(i, oneContact) {
   const [firstName, lastName] = oneContact.name.split(' ');
   return /* html */ `
-      <li>
+      <li class="contact-list-element">
         <label for="contact_checkbox_${i}" class="initials-wrapper">
           <div class="contact-initials-and-text-wrapper">
               <div id="initials_icon_in_list_${i}" class="initials-icon" style="background-color: ${
@@ -19,7 +19,7 @@ function generateContactListHTML(i, oneContact) {
 
 function generateSelectAllHTML() {
   return /* html */ `
-      <li>
+      <li class="contact-list-element">
         <label for="select_all_checkbox" class="initials-wrapper">
             <div>Select or unselect all contacts</div>
             <input id="select_all_checkbox" type="checkbox">

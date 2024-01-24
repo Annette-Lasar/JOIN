@@ -416,7 +416,8 @@ function renderCurrentDueDate(newCurrentDueDate) {
 /* ---------------------------------------------------------------
 create new task section in add_task.html
 ------------------------------------------------------------------- */
-async function createNewTask(status) {
+async function createNewTask(status, event) {
+  event.stopPropagation();
   createdTasks = [];
   let formStatus = checkIfBoxesAreEmpty(status);
   if (formStatus) {
@@ -638,6 +639,27 @@ function addSubtask(inputId, wrapperId, plusIconId) {
   SUBTASK_INPUT_BOX.value = '';
   hideCancelAndAcceptSubtask(CLOSE_AND_CHECK_WRAPPER, SUBTASK_PLUS_ICON);
 }
+
+document.getElementById('check_subtask_small').addEventListener('click', function() {
+  addSubtask('sub_tasks_small', 'close_and_check_wrapper_small', 'subtask_plus_small');
+});
+
+document.getElementById('check_subtask_big').addEventListener('click', function() {
+  addSubtask('sub_tasks_big', 'close_and_check_wrapper_big', 'subtask_plus_big');
+});
+
+document.getElementById('sub_tasks_small').addEventListener('keydown', function(event) {
+  if (event.key === 'Enter') {
+    addSubtask('sub_tasks_small', 'close_and_check_wrapper_small', 'subtask_plus_small');
+  }
+});
+
+document.getElementById('sub_tasks_big').addEventListener('keydown', function(event) {
+  if (event.key === 'Enter') {
+    addSubtask('sub_tasks_big', 'close_and_check_wrapper_big', 'subtask_plus_big');
+  }
+});
+
 
 /**
  * With this function the subtasks of the array subTasks are rendered in the browser.
