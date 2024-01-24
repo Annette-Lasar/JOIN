@@ -1,3 +1,82 @@
+/**
+ * Extracts initials from contact name.
+ * 
+ * @param {number} i - index of current contact.
+ * @returns 
+ */
+function loadInitials(i) {
+  let name = allContacts[i]['name'].split(' ');
+  let initials = '';
+  for (let j = 0; j < name.length; j++) {
+      initials += name[j][0];
+  }
+  return initials;
+}
+
+/**
+ * Shows Add new contact form.
+ */
+function showAddForm() {
+  document.getElementById('contact_form').innerHTML = addNewContactFormTemplate();
+  formAnimation();
+}
+
+/**
+ * Shows Edit contact form.
+ */
+function showEditForm() {
+  let i = currentContactIndex();
+  document.getElementById('contact_form').innerHTML = editContactFormTemplate(i);
+  loadContactValues(i);
+  formAnimation();
+}
+
+/**
+ * Loads the actual values for a contact that we will change into the edit contact input fields.
+ * 
+ * @param {number} i - edited contact index.
+ */
+function loadContactValues(i) {
+  document.getElementById('add_name').value = allContacts[i]['name'];
+  document.getElementById('add_email').value = allContacts[i]['e_mail'];
+  document.getElementById('add_phone').value = allContacts[i]['phone'];
+}
+
+/**
+* Removes all values from add new contact input fields.
+*/
+function resetAddNewContactValues() {
+  document.getElementById('add_name').value = '';
+  document.getElementById('add_email').value = '';
+  document.getElementById('add_phone').value = '';
+}
+
+/**
+* Shows small menu with contact edit or delete options.
+*/
+function showOptions() {
+  document.getElementById('empty').style.display = 'block';
+  document.getElementById('edit_delete').classList.remove('slide-out-edit');
+  document.getElementById('edit_delete').classList.add('slide-in-edit');
+}
+
+/**
+* Hides the menu with contact edit or delete options.
+*/
+function hideOptions() {
+  document.getElementById('edit_delete').classList.remove('slide-in-edit');
+  document.getElementById('edit_delete').classList.add('slide-out-edit');
+  setTimeout(() => {
+      document.getElementById('empty').style.display = 'none';
+  }, 300);
+}
+
+/**
+ * Template for groups.
+ * 
+ * @param {string} letter - all letters in alphabet
+ * @returns the html code
+ */
 function groupsTemplate(letter) {
   return `
     <div id="group${letter}">
@@ -14,6 +93,12 @@ function groupsTemplate(letter) {
 `
 }
 
+/**
+ * 
+ * @param {string} name - name of the contact
+ * @param {number} i - index of a contact object in allContacts array
+ * @returns Html template for each contact
+ */
 function addContactToGroupTemplate(name, i) {
   let eMail = allContacts[i]['e_mail'];
   let initials = loadInitials(i);
@@ -30,6 +115,11 @@ function addContactToGroupTemplate(name, i) {
     `
 }
 
+/**
+ * 
+ * @param {number} i - index of each contact in allContacts array
+ * @returns Html template with contact informations for each contact
+ */
 function contactInfoTemplate(i) {
   let name = allContacts[i]['name'];
   let phone = allContacts[i]['phone'];
@@ -88,6 +178,10 @@ function contactInfoTemplate(i) {
     `
 }
 
+/**
+ * 
+ * @returns add new contact form html template
+ */
 function addNewContactFormTemplate() {
   return `
     <div id="background" class="background" onclick="hideAddForm()"></div>
@@ -163,6 +257,11 @@ function addNewContactFormTemplate() {
     `
 }
 
+/**
+ * 
+ * @param {number} i index of the contact that we want to edit
+ * @returns edit contact form html template
+ */
 function editContactFormTemplate(i) {
   let initials = loadInitials(i);
   let bgColor = allContacts[i]['color'];
@@ -237,4 +336,19 @@ function editContactFormTemplate(i) {
       </form>
     </div>
     `
+}
+
+/**
+ * 
+ * @param {string} alertMessage 
+ * @returns html template for the confirmation allert when trying to delete a contact
+ */
+function generateConfirmDeleteContactHTML(alertMessage) {
+  return /* html */ `
+    <div class="alert-message">${alertMessage}</div>
+    <div id="confirm_button_wrapper" class="confirm-button-wrapper">
+      <button onclick="deleteAContact()" class="dark-button confirm-delete" style="display: flex;">Yes, proceed</button>
+      <button onclick="openOrCloseAlertContainer('confirm_container', 'close')" class="dark-button confirm-delete" style="display: flex; margin-left: 12px;">No, preserve</button>
+    </div>
+  `;
 }
