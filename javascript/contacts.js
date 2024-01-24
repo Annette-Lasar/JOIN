@@ -24,11 +24,11 @@ async function loadContactsAndTasksUserOrGuest() {
     if (userLogin == 'true') {
         let user = await loadUserData();
         if (user) {
-            allContacts = JSON.parse(await getItem(`${user.email}_contacts`));        //  Hier wird das Kontakte-Array eines angemeldeten Users in der Variable 'allContacts' gespeichert
+            allContacts = JSON.parse(await getItem(`${user.email}_contacts`));
             tasks = JSON.parse(await getItem(`${user.email}_tasks`));
         }
     } else {
-        allContacts = JSON.parse(await getItem('guestContacts'));                          //   Hier wird das Kontakte-Array eines Gasts in der Variable 'allContacts' gespeichert
+        allContacts = JSON.parse(await getItem('guestContacts'));
         tasks = JSON.parse(await getItem(`guestTasks`));
     }
 }
@@ -340,7 +340,6 @@ function renderAlertDeleteContact(containerId, messageId, alertMessage) {
     if (containerId === 'alert_container') {
         alertContent.innerHTML = generateAlertContentHTML(alertMessage);
     } else if (containerId === 'confirm_container') {
-        console.log('tasks', tasks);
         alertContent.innerHTML = generateConfirmDeleteContactHTML(alertMessage);
     }
 }
