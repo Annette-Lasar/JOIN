@@ -209,7 +209,7 @@ nav {
 }
 
 .menu-items-wrapper p {
-    font-size: 16px !important;
+    font-size: 14px !important;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
 }
@@ -423,6 +423,10 @@ breakpoint: 50em
         justify-content: center;
         align-items: flex-start;
         gap: 15px;
+    }
+
+    .menu-items-wrapper p {
+        font-size: 16px !important;
     }
 
     .menu-items a,
