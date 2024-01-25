@@ -181,7 +181,7 @@ function showInitials() {
  */
 async function logout() {
   let userLogin = localStorage.getItem('userLogin');
-  if (userLogin == 'false') {
+  if (userLogin == "false") {
     await setItem('guestTasks', JSON.stringify(tasksGuest));  
     await setItem('guestContacts', JSON.stringify(allContacts));
     await setItem('guestCategories', JSON.stringify(allCategories));
