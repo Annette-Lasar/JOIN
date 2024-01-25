@@ -1,16 +1,15 @@
 let tasks = [];
 let contacts = [];
 let categories = [];
-/* let guestContacts = []; */
 let currentlyEditedTask = [];
 let currentDraggedElement;
+let createdTask = {};
 
+let subTasks = [];
 
-/* let subTasks = []; */
-
-/* let currentContacts = []; */
-/* let currentDueDate = ''; */
-/* let currentCategories = []; */
+let currentContacts = [];
+let currentDueDate = '';
+let currentCategories = [];
 
 /* let currentPrio = 'medium'; */
 /* ---------------- title -------------------------- */

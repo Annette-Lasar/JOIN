@@ -1,27 +1,19 @@
+/**
+ * This function executes all other functions that need to be
+ * executed on loading the page.
+ */
 async function initBoard() {
   await loadTasksUserOrGuest();
+  await loadContactsUserOrGuest();
+  await loadCategoriesUserOrGuest();
   showTasksOnBoard();
 }
 
-async function loadTasksUserOrGuest() {
-  let userLogin = localStorage.getItem('userLogin');
-  if (userLogin == 'true') {
-    let userEmail = localStorage.getItem('userEmail');
-    userEmail = userEmail.replace(/"/g, '');
-    users = JSON.parse(await getItem('users'));
-    let user = users.find((u) => u.email === userEmail);
-    if (user) {
-      tasks = JSON.parse(await getItem(`${user.email}_tasks`));
-      contacts = JSON.parse(await getItem(`${user.email}_contacts`));
-      categories = JSON.parse(await getItem(`${user.email}_categories`));
-    }
-  } else {
-    tasks = JSON.parse(await getItem('guestTasks'));
-    contacts = JSON.parse(await getItem('guestContacts'));
-    categories = JSON.parse(await getItem('guestCategories'));
-  }
-}
 
+/**
+ * This function can clear several containers in one go.
+ * @param  {...string} containerIDs - These are the ids of the containers to be cleared.
+ */
 function clearContainers(...containerIDs) {
   containerIDs.forEach(function (id) {
     const container = document.getElementById(id);
@@ -31,6 +23,10 @@ function clearContainers(...containerIDs) {
   });
 }
 
+
+/**
+ * This function iterates through the array tasks in order to display them on the board.
+ */
 function showTasksOnBoard() {
   clearContainers('toDo', 'inProgress', 'awaitFeedback', 'done');
   for (let i = 0; i < tasks.length; i++) {
@@ -40,21 +36,23 @@ function showTasksOnBoard() {
   }
 }
 
+/**
+ * This function sorts the tasks to the lists that match their status.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {Object} oneTask - This is a JSON representing one task in the array tasks.
+ * @param {string} status - This is a task's status like 'toDo', 'inProgress',
+ * 'awaitFeedback' or 'done'.
+ */
 function renderTasksOnBoard(i, oneTask, status) {
-  let newTruncatedSentence = truncateSentence(oneTask.description, 6);
-  let completedSubtasksInPercent = calculateSubtaskPercentage(i, oneTask);
+  const newTruncatedSentence = truncateSentence(oneTask.description, 6);
+  const completedSubtasksInPercent = calculateSubtaskPercentage(i, oneTask);
   const listStatus = ['toDo', 'inProgress', 'awaitFeedback', 'done'];
   listStatus.forEach((targetStatus) => {
     const tasksWithTargetStatus = tasks.filter(
       (task) => task.status === targetStatus
     );
-    if (tasksWithTargetStatus.length === 0) {
-      document.getElementById(
-        targetStatus
-      ).innerHTML = `<div class="empty-list-message">No tasks ${replaceStatusText(
-        targetStatus
-      )}</div>`;
-    } else if (status === targetStatus) {
+    renderTaskList(targetStatus, tasksWithTargetStatus);
+    if (status === targetStatus) {
       document.getElementById(status).innerHTML += generateToDoHTML(
         i,
         oneTask,
@@ -65,6 +63,28 @@ function renderTasksOnBoard(i, oneTask, status) {
   });
 }
 
+/**
+ * This function renders the task to their lists.
+ * @param {string} targetStatus - This is a task's status like 'toDo', 'inProgress',
+ * 'awaitFeedback' or 'done'.
+ * @param {Array} tasksWithTargetStatus - This is an array that contains all tasks with
+ * the same status.
+ */
+function renderTaskList(targetStatus, tasksWithTargetStatus) {
+  const listElement = document.getElementById(targetStatus);
+  if (tasksWithTargetStatus.length === 0) {
+    listElement.innerHTML = `<div class="empty-list-message">No tasks ${replaceStatusText(
+      targetStatus
+    )}</div>`;
+  }
+}
+
+/**
+ * This function replaces the status names by readable names.
+ * @param {string} status - This is a task's status like 'toDo', 'inProgress',
+ * 'awaitFeedback' or 'done'.
+ * @returns It returns a readable version of a task's current status.
+ */
 function replaceStatusText(status) {
   switch (status) {
     case 'toDo':
@@ -78,6 +98,13 @@ function replaceStatusText(status) {
   }
 }
 
+/**
+ * This functions calls other functions that determine a task's design.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {Object} oneTask - This is a JSON representing a task in the array tasks.
+ * @param {string} status This is a task's status like 'toDo', 'inProgress',
+ * 'awaitFeedback' or 'done'.
+ */
 function callFurtherFunctionsToRenderTasks(i, oneTask, status) {
   renderTasksOnBoard(i, oneTask, status);
   updateProgressBar(i, tasks[i]);
@@ -85,6 +112,15 @@ function callFurtherFunctionsToRenderTasks(i, oneTask, status) {
   renderContactsOnOutsideCard(i, oneTask);
 }
 
+/**
+ * This function truncates a task description's text after the first six words
+ * and replaces the rest by three dots (...) to be shown on the outside of a task card.
+ * @param {string} sentence - This is a task's description text.
+ * @param {number} wordsCount - This is the number of words of the description text 
+ * that shall be shown on the outside of a task card.
+ * @returns This function returns a truncated sentences if the description is equal to
+ * or longer than 6 words. 
+ */
 function truncateSentence(sentence, wordsCount) {
   const words = sentence.split(' ');
   if (words.length <= wordsCount) {
@@ -95,6 +131,13 @@ function truncateSentence(sentence, wordsCount) {
   }
 }
 
+/**
+ * This function calculates the percentage of the completed subtasks in relation to
+ * the total number of the subtasks.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {Object} oneTask - This is a JSON that represents a task in the array tasks.
+ * @returns 
+ */
 function calculateSubtaskPercentage(i, oneTask) {
   if (oneTask.subtasks.length > 0) {
     return (tasks[i].completed_subtasks / oneTask.subtasks.length) * 100;
@@ -103,15 +146,28 @@ function calculateSubtaskPercentage(i, oneTask) {
   }
 }
 
+/**
+ * This function updates the progress bar on a task card when changes to the number
+ * of completed subtasks or the total number of subtasks have been made.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {Object} oneTask - This is a JSON representing one task in the array tasks.
+ */
 async function updateProgressBarAndCompletedTasks(i, oneTask) {
   updateProgressBar(i, oneTask);
   updateCompletedTasks(i, oneTask);
   checkForCurrentSubtaskStatus(i);
-  await sendDataToServer();
+  await sendTasksToServer();
   await loadTasksUserOrGuest();
+  await loadContactsUserOrGuest();
   showTasksOnBoard();
 }
 
+/**
+ * This function updates the length of the colored part of the progress bar according
+ * to how many subtasks have been completed in relation to the total number of subtasks.
+ * @param {number} i - This is the index of a task in the array tasks. 
+ * @param {Object} oneTask - This is a JSON representing a task in the array tasks.
+ */
 function updateProgressBar(i, oneTask) {
   const progressBarWrapper = document.getElementById(`progress_wrapper_${i}`);
   const progressBar = document.getElementById(`progress_bar_${i}`);
@@ -123,6 +179,12 @@ function updateProgressBar(i, oneTask) {
   }
 }
 
+/**
+ * This function updates the number of completed subtasks in relation to the total number
+ * of subtasks.
+ * @param {number} i - This is the index of a task in the array tasks. 
+ * @param {Object} oneTask - This is a JSON representing a task in the array task.
+ */
 function updateCompletedTasks(i, oneTask) {
   const completedSubtasksBox = document.getElementById(
     `label_for_progress_bar_${i}`
@@ -130,6 +192,12 @@ function updateCompletedTasks(i, oneTask) {
   completedSubtasksBox.innerHTML = `${oneTask.completed_subtasks}/${oneTask.subtasks.length} Subtasks`;
 }
 
+/**
+ * This function renders the contacts assigned to a task in form of little icons containing
+ * a contact's initials.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {Object} oneTask - This is a JSON representing a task in the array tasks.
+ */
 function renderContactsOnOutsideCard(i, oneTask) {
   const taskContactContainer = document.getElementById(`task_contact_${i}`);
   taskContactContainer.innerHTML = '';
@@ -141,11 +209,18 @@ function renderContactsOnOutsideCard(i, oneTask) {
   }
 }
 
+/**
+ * This function calculates the number of contact icons that fit into the container
+ * on the outside of a task card.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {Object} oneTask - This is a JSON representing a task in the array tasks.
+ * @param {HTMLElement} taskContactContainer - This is the container in which the 
+ * contact icons are displayed.
+ */
 function calculateNumberOfVisibleContacts(i, oneTask, taskContactContainer) {
   const maxWidth = taskContactContainer.offsetWidth;
   let visibleContacts = oneTask.current_contacts.slice();
   let hiddenContactsCount = 0;
-
   while (
     calculateTotalWidthOfContacts(visibleContacts) > maxWidth &&
     visibleContacts.length > 1
@@ -153,14 +228,20 @@ function calculateNumberOfVisibleContacts(i, oneTask, taskContactContainer) {
     hiddenContactsCount++;
     visibleContacts.pop();
   }
-  showVisibleContactsAndOverflowIndicator(
-    i,
-    visibleContacts,
-    hiddenContactsCount,
-    taskContactContainer
-  );
+  showVisibleContactsAndOverflowIndicator(i, visibleContacts, hiddenContactsCount, taskContactContainer);
 }
 
+/**
+ * This function shows the visible contacts and an overflow indicator on the outside
+ * of a task card.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {number} visibleContacts - This is the number of contact icons that fit into
+ * the container in which they are to be displayed.
+ * @param {number} hiddenContactsCount - This is the number of contact icons that don't
+ * fit into the container. 
+ * @param {HTMLElement} taskContactContainer - This is the container in which the contact
+ * icons are to be displayed.
+ */
 function showVisibleContactsAndOverflowIndicator(
   i,
   visibleContacts,
@@ -179,11 +260,24 @@ function showVisibleContactsAndOverflowIndicator(
   }
 }
 
+/**
+ * This function calculates the total width of all contact Icons and of the 
+ * overflow indicator.
+ * @param {Array} contacts - This is a temporary array of all visible contacts.
+ * @returns - The function returns a number that indicates how much space 
+ * all contact icons and the overflow indicator will take.
+ */
 function calculateTotalWidthOfContacts(contacts) {
   const contactWidth = 25;
   return contacts.length * contactWidth + contactWidth;
 }
 
+/**
+ * This function renders all contacts assigned to a task in the detailed view
+ * of a card. 
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {Object} oneTask - This is a JSON representing one task in the array tasks.
+ */
 function renderContactsInsideCard(i, oneTask) {
   const detailTaskContactNameContainer = document.getElementById(
     `detail_contacts_name_${i}`
@@ -197,6 +291,10 @@ function renderContactsInsideCard(i, oneTask) {
   }
 }
 
+/**
+ * This event listener checks if the window size changes and rerenders 
+ * the tasks on the board.
+ */
 window.addEventListener('resize', function () {
   const url = window.location.href;
   if (url.endsWith('board.html')) {
@@ -204,7 +302,11 @@ window.addEventListener('resize', function () {
   }
 });
 
-
+/**
+ * This function gets a task's current due date in order to reformat it.
+ * @param {number} i - This is the index of a task in the array tasks. 
+ * @param {Object} oneTask - This is a JSON representing one task in the array tasks.
+ */
 function getFilteredDueDate(i, oneTask) {
   const dueDateContainer = document.getElementById(`current_due_date_${i}`);
   dueDateContainer.innerHTML = '';
@@ -213,8 +315,12 @@ function getFilteredDueDate(i, oneTask) {
   dueDateContainer.innerHTML = generateDueDateForDetailViewHTML(currentDueDate);
 }
 
-
-
+/**
+ * This function reformats the current due date of a task according to the pattern
+ * of dd/mm/yyyy.
+ * @param {Date} inputDate - This is the current due date.
+ * @returns - The function returns the current due date in the new format.
+ */
 function formatDateString(inputDate) {
   const inputDateObject = new Date(inputDate);
   const day = inputDateObject.getDate();
@@ -225,6 +331,11 @@ function formatDateString(inputDate) {
   return `${formattedDay}/${formattedMonth}/${year}`;
 }
 
+/**
+ * This function renders the subtasks in the detailed view.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {Object} oneTask - This is a JSON representing one task in the array tasks.
+ */
 function renderSubtasksDetailView(i, oneTask) {
   const subtaskContainer = document.getElementById(
     `detail_subtasks_wrapper_${i}`
@@ -240,7 +351,13 @@ function renderSubtasksDetailView(i, oneTask) {
   }
 }
 
-
+/**
+ * This function checks how many subtasks have been completed.
+ * @param {number} j - This is the index of a subtask in the subarray subtasks.
+ * @param {Object} oneTask - This is a JSON representing one task in the array tasks.
+ * @param {HTMLElement} individualSubtaskCheckbox - This is the checkbox that is rendered
+ * next to each task's subtask.
+ */
 function checkForCompletedSubtasks(j, oneTask, individualSubtaskCheckbox) {
   let finallyCompletedSubtasks;
   if (individualSubtaskCheckbox.checked == true) {
@@ -253,6 +370,13 @@ function checkForCompletedSubtasks(j, oneTask, individualSubtaskCheckbox) {
   oneTask.completed_subtasks = finallyCompletedSubtasks;
 }
 
+/**
+ * This function marks the checked subtasks accordingly in the detailed view of a task.
+ * @param {string} checkedStatus - This is a task's status like 'toDo', 'inProgress',
+ * 'awaitFeedback' or 'done'.
+ * @param {HTMLElement} individualSubtaskCheckbox - This is the checkbox that is rendered 
+ * next to each task's subtask.
+ */
 function markCheckboxesAccordingToStatus(
   checkedStatus,
   individualSubtaskCheckbox
@@ -264,10 +388,11 @@ function markCheckboxesAccordingToStatus(
   }
 }
 
-function startDragging(id) {
-  currentDraggedElement = id;
-}
-
+/**
+ * This function closes a dropdown list if the user clicks outside the list.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {MouseEvent} event - This is a click event.
+ */
 function clickOutsideDropdown(i, event) {
   const clickedElement = event.target.closest('.contact-list-element');
   if (clickedElement == null) {
@@ -279,16 +404,35 @@ function clickOutsideDropdown(i, event) {
   }
 }
 
-// status ist entweder 'toDo', 'inProgress', 'awaitFeedback' oder 'done' (siehe board.html)
-// Status der Task wird geändert und das Array 'tasks' wird wieder auf den Server hochgeladen
+/**
+ * This function caches a dragged element's id in an array to be used later.
+ * @param {string} id - A dragged element's id. 
+ */
+function startDragging(id) {
+  currentDraggedElement = id;
+}
+
+/**
+ * This function moves a tasks card into another list on the kanban board.
+ * @param {string} status - This is a task's status like 'toDo', 'inProgress',
+ * 'awaitFeedback' or 'done'.
+ */
 async function moveTo(status) {
   tasks[currentDraggedElement].status = '';
   tasks[currentDraggedElement].status = status;
-  sendDataToServer();
+  sendTasksToServer();
   await loadTasksUserOrGuest();
+  await loadContactsUserOrGuest();
   showTasksOnBoard();
 }
 
+/**
+ * This function moves a task card to a new list by clicking on a card's context menu.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {string} status - This is a task's status like 'toDo', 'inProgress',
+ * 'awaitFeedback' or 'done'.
+ * @param {MouseEvent} event - This is a click event. It's needed to stop event bubbling.
+ */
 function moveToNewList(i, status, event) {
   event.stopPropagation();
   currentTaskCard = document.getElementById(`taskCard_${i}`);
@@ -299,68 +443,54 @@ function moveToNewList(i, status, event) {
   }
 }
 
-async function checkUser() {
-  let userLogin = localStorage.getItem('userLogin');
-  if (userLogin == 'true') {
-    let userEmail = localStorage.getItem('userEmail');
-    userEmail = userEmail.replace(/"/g, '');
-    let user = users.find((u) => u.email == userEmail);
-    return user;
-  }
-}
-
-async function sendDataToServer() {
-  let user = await checkUser();
-  if (user) {
-    await setItem(`${user.email}_tasks`, JSON.stringify(tasks));
-  } else {
-    await setItem('guestTasks', JSON.stringify(tasks));   
-  }
-  initBoard();
-}
-
-
-async function checkUserLogin() {
-  let userLogin = localStorage.getItem('userLogin');
-  if (userLogin == 'true') {
-    let userEmail = localStorage.getItem('userEmail');
-    userEmail = userEmail.replace(/"/g, '');
-    users = JSON.parse(await getItem('users'));
-    let user = users.find((u) => u.email == userEmail);
-    if (user) {
-      return user;
-    }
-  } else {
-    return false;
-  }
-}
-
+/**
+ * This function deletes a task completely. The user gets a warning for this process
+ * is irreversible.
+ * @param {number} i - This is the index of a task in the array tasks.
+ */
 async function deleteTask(i) {
   tasks.splice(i, 1);
   openOrCloseAlertContainer('confirm_container', 'close');
-  await sendDataToServer();
+  await sendTasksToServer();
   await loadTasksUserOrGuest();
+  await loadContactsUserOrGuest();
   showTasksOnBoard();
 }
 
-function getTaskIndex() {
-  for (let i = 0; i < tasks.length; i++) {
-    return i;
-  }
-}
-
+/**
+ * This function removes the highlight from a dragging area on the board
+ * after the dragging process is over.
+ * @param {string} id - This is the dragging area's id.
+ */
 function removeHighlight(id) {
   document.getElementById(id).classList.remove('drag-area-highlight');
 }
 
+/**
+ * This function drops a card into the new list on the board.
+ * @param {event} ev - This is used to prevent default reaction.
+ */
 function allowDrop(ev) {
   ev.preventDefault();
 }
 
+/**
+ * This function is used to highlight a dragging area.
+ * @param {string} id - This is the dragging area's id.
+ */
 function highlight(id) {
   document.getElementById(id).classList.add('drag-area-highlight');
 }
 
+/**
+ * This function opens a card's context menu by clicking on three dots
+ * in the top right corner of a card. The context menu enables the user
+ * to move the clicked card into another list.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {string} status - This is a task's status like 'toDo', 'inProgress',
+ * 'awaitFeedback' or 'done'.
+ * @param {MouseEvent} event - This is a click event. 
+ */
 function openCardContextMenu(i, status, event) {
   event.stopPropagation();
   const cardMenuContainer = document.getElementById(`context_menu_${i}`);
@@ -375,6 +505,10 @@ function openCardContextMenu(i, status, event) {
   cardMenuContainer.classList.remove('d-none');
 }
 
+/**
+ * This function gets the lists' ids for moving a card to another list.
+ * @returns It returns a JSON with the list ids.
+ */
 function getListItemInfo() {
   let listIds = {
     toDo: 1,
@@ -385,36 +519,47 @@ function getListItemInfo() {
   return listIds;
 }
 
+/**
+ * This function closes the card context menu.
+ * @param {number} i - This is the index of a task in the array tasks. 
+ * @param {MouseEvent} event - This is a click event.
+ */
 function closeCardContextMenu(i, event) {
   event.stopPropagation();
   const contextMenuContainer = document.getElementById(`context_menu_${i}`);
   contextMenuContainer.classList.add('d-none');
 }
 
+
+/**
+ * This function opens or closes a container with the task index, the container id
+ * and the action given as parameters.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {string} containerId - This is the id of the container to be opened or closed.
+ * @param {string} action - This is the action to be executed, either 'open' or 'close'.
+ */
 function openOrCloseContainer(i, containerId, action) {
   const cardMenuContainer = document.getElementById(containerId);
-  if (containerId === `detail_task_wrapper_${i}`) {
-    if (action === 'open') {
-      cardMenuContainer.classList.remove('d-none');
-      renderTaskDetailView(i);
-      checkForCurrentSubtaskStatus(i);
-      updateProgressBar(i, tasks[i]);
-      updateCompletedTasks(i, tasks[i]);
-      document.body.style.overflow = 'hidden';
-    } else if (action === 'close') {
-      const editTaskWrapper = document.getElementById(`edit_task_wrapper${i}`);
-      editTaskWrapper.classList.remove('edit-task-wrapper');
-      cardMenuContainer.classList.add('d-none');
-      updateProgressBarAndCompletedTasks(i, tasks[i]);
-      document.body.style.overflow = 'visible';
-    }
-  } else if (action === 'open') {
+  if (action === 'open') {
     cardMenuContainer.classList.remove('d-none');
+    renderTaskDetailView(i);
+    checkForCurrentSubtaskStatus(i);
+    updateProgressBar(i, tasks[i]);
+    updateCompletedTasks(i, tasks[i]);
+    document.body.style.overflow = 'hidden';
   } else if (action === 'close') {
+    const editTaskWrapper = document.getElementById(`edit_task_wrapper${i}`);
+    editTaskWrapper.classList.remove('edit-task-wrapper');
     cardMenuContainer.classList.add('d-none');
+    updateProgressBarAndCompletedTasks(i, tasks[i]);
+    document.body.style.overflow = 'visible';
   }
 }
 
+/**
+ * This function checks if a subtask has already been completed or not.
+ * @param {number} i - This is the index of a task in the array tasks.
+ */
 function checkForCurrentSubtaskStatus(i) {
   const subtasks = tasks[i].subtasks;
   for (let j = 0; j < subtasks.length; j++) {
@@ -430,6 +575,10 @@ function checkForCurrentSubtaskStatus(i) {
   }
 }
 
+/**
+ * This function renders a detail view of a task.
+ * @param {number} i - This is the index of a task in the array tasks.
+ */
 function renderTaskDetailView(i) {
   const cardDetailContainer = document.getElementById(
     `detail_task_wrapper_${i}`
@@ -441,435 +590,12 @@ function renderTaskDetailView(i) {
   getFilteredDueDate(i, tasks[i]);
 }
 
-
-
-function editTask(i) {
-  checkForCurrentSubtaskStatus(i);
-  countCheckedSubtasks(tasks[i].subtasks);
-  preserveOriginalTask(tasks[i]);
-  replaceCategory(i);
-  addClassToContainer(i);
-  editTitle(i, tasks[i]);
-  editDescription(i, tasks[i]);
-  editDueDate(i, tasks[i]);
-  editPriority(i, tasks[i]);
-  editContacts(i);
-  makeSubtasksEditable(i, tasks[i]);
-  createOkButton(i);
-}
-
-function countCheckedSubtasks(subtasksArray) {
-  subtasksArray.reduce((count, subtask) => {
-    return count + (subtask.checked_status === true ? 1 : 0);
-  }, 0);
-}
-
-function preserveOriginalTask(oneTask) {
-  const clonedTask = { ...oneTask };
-  currentlyEditedTask[0] = clonedTask;
-}
-
-function replaceCategory(i) {
-  const closeBox = document.getElementById(`category_and_close_wrapper${i}`);
-  closeBox.innerHTML = '';
-  closeBox.innerHTML = generateCloseIcon(i);
-}
-
-
-function addClassToContainer(i) {
-  const editTaskWrapper = document.getElementById(`edit_task_wrapper${i}`);
-  editTaskWrapper.classList.add('edit-task-wrapper');
-}
-
-function editTitle(i, oneTask) {
-  const taskTitleBox = document.getElementById(`detail_title${i}`);
-  taskTitleBox.innerHTML = '';
-  taskTitleBox.innerHTML = generateEditTitleHTML(i, oneTask);
-}
-
-function updateEditedTitle(i) {
-  const editTitleInput = document.getElementById(`edited_task_title_${i}`);
-  const instructionBox = document.getElementById(`title_instruction_text_${i}`);
-  let newTitle = editTitleInput.value.trim();
-  if (newTitle !== '') {
-    tasks[i].title = newTitle;
-    editTitleInput.classList.remove('warning');
-    instructionBox.classList.remove('red');
-  } else {
-    showTitleWarning(i);
-  }
-}
-
-function showTitleWarning(i) {
-  const editTitleInput = document.getElementById(`edited_task_title_${i}`);
-  const instructionBox = document.getElementById(`title_instruction_text_${i}`);
-  editTitleInput.classList.add('warning');
-  instructionBox.classList.add('red');
-}
-
-function editDescription(i, oneTask) {
-  const taskDescriptionBox = document.getElementById(`detail_description${i}`);
-  taskDescriptionBox.innerHTML = '';
-  taskDescriptionBox.innerHTML = generateEditDescriptionHTML(i, oneTask);
-}
-
-function updateEditedDescription(i) {
-  const editDescriptionInput = document.getElementById(
-    `edited_task_description${i}`
-  );
-  let newDescription = editDescriptionInput.value;
-  tasks[i].description = newDescription;
-}
-
-function editDueDate(i, oneTask) {
-  const dueDateBox = document.getElementById(`current_due_date_${i}`);
-  let minimumDueDate = standardDateOfToday();
-  dueDateBox.innerHTML = '';
-  dueDateBox.innerHTML = generateEditDueDateHTML(i, oneTask, minimumDueDate);
-}
-
-function standardDateOfToday() {
-  return new Date().toISOString().split('T')[0];
-}
-
-function updateEditedDueDate(i) {
-  const editDueDateInput = document.getElementById(`edited_task_due_date${i}`);
-  const instructionBox = document.getElementById(
-    `due_date_instruction_text${i}`
-  );
-  let newDueDate = editDueDateInput.value;
-  if (newDueDate !== '') {
-    tasks[i].current_due_date = newDueDate;
-    editDueDateInput.classList.remove('warning');
-    instructionBox.classList.remove('red');
-  } else {
-    showDueDateWarning(i);
-  }
-}
-
-function showDueDateWarning(i) {
-  const editDueDateInput = document.getElementById(`edited_task_due_date${i}`);
-  const instructionBox = document.getElementById(
-    `due_date_instruction_text${i}`
-  );
-  editDueDateInput.classList.add('warning');
-  instructionBox.classList.add('red');
-}
-
-function editPriority(i, oneTask) {
-  const priorityBox = document.getElementById(`task_priority_wrapper${i}`);
-  priorityBox.innerHTML = '';
-  priorityBox.innerHTML = generatePriorityButtonsHTML(i);
-  changePrioStatusEdit(i, oneTask.current_prio);
-}
-
-function updateButtonsEdit(i, buttonType, isActive) {
-  const prioButton = document.getElementById(`prio_button_${buttonType}_${i}`);
-  if (isActive) {
-    prioButton.classList.add(`prio-marked-${buttonType}`);
-  } else {
-    prioButton.classList.remove(`prio-marked-${buttonType}`);
-  }
-}
-
-function changePrioStatusEdit(i, prioStatus) {
-  const buttonTypes = ['urgent', 'medium', 'low'];
-  buttonTypes.forEach((type) => updateButtonsEdit(i, type, false));
-  updateButtonsEdit(i, prioStatus, true);
-  if (prioStatus === 'urgent') {
-    tasks[i].current_prio = prioStatus;
-  } else if (prioStatus === 'medium') {
-    tasks[i].current_prio = prioStatus;
-  } else if (prioStatus === 'low') {
-    tasks[i].current_prio = prioStatus;
-  }
-}
-
-async function editContacts(i) {
-  const contactsWrapper = document.getElementById(
-    `detail_task_contacts_wrapper${i}`
-  );
-  contactsWrapper.innerHTML = '';
-  let user = await checkUserLogin();
-  if (user) {
-    contactsWrapper.innerHTML = generateContactsDropdownHTML(i);
-    renderEditContactList(i);
-  } else {
-    contactsWrapper.innerHTML = generateContactsDropdownHTML(i);
-    renderEditContactList(i);
-  }
-}
-
-function renderEditContactList(i) {
-  const editContactsList = document.getElementById(`edit_contact_list${i}`);
-  editContactsList.innerHTML = '';
-  editContactsList.innerHTML += generateEditSelectAllHTML(i);
-  let j;
-  for (let j = 0; j < contacts.length; j++) {
-    const oneContact = contacts[j];
-    editContactsList.innerHTML += generateContactListEditHTML(i, j, oneContact);
-    adaptInitialsToBackground(`initials_icon_${i}_${j}`);
-  }
-  addEditCheckboxEventListeners(i);
-  updateCheckboxes(i, j);
-}
-
-
-function addEditCheckboxEventListeners(i) {
-  const checkAllEditCheckbox = document.getElementById(
-    `select_all_checkbox_${i}`
-  );
-  checkAllEditCheckbox.addEventListener('change', function () {
-    selectAndUnselectAllEditContacts(i, checkAllEditCheckbox);
-  });
-}
-
-function selectAndUnselectAllEditContacts(i, checkAllEditCheckbox) {
-  for (let j = 0; j < contacts.length; j++) {
-    const individualEditCheckbox = document.getElementById(
-      `contact_checkbox_${i}_${j}`
-    );
-    if (checkAllEditCheckbox.checked && !individualEditCheckbox.checked) {
-      individualEditCheckbox.checked = true;
-      onCheckboxChange(i, j);
-    } else if (
-      !checkAllEditCheckbox.checked &&
-      individualEditCheckbox.checked
-    ) {
-      individualEditCheckbox.checked = false;
-      onCheckboxChange(i, j);
-    }
-  }
-}
-
-function updateCheckboxes(i) {
-  const editContactsList = document.getElementById(`edit_contact_list${i}`);
-  const selectAllCheckbox = document.getElementById(`select_all_checkbox_${i}`);
-  const checkboxes = editContactsList.querySelectorAll(
-    'input[type="checkbox"].individual-checkbox'
-  );
-  checkboxes.forEach((checkbox, j) => {
-    const oneContact = contacts[j];
-    const isChecked = isContactSelected(oneContact, i);
-    checkbox.checked = isChecked;
-  });
-  selectAllCheckbox.checked = areAllContactsAdded(i);
-}
-
-function isContactSelected(contact, taskIndex) {
-  const currentlyEditedContacts = tasks[taskIndex].current_contacts;
-  return currentlyEditedContacts.some((selectedContactEdit) => {
-    return (
-      selectedContactEdit.name === contact.name &&
-      selectedContactEdit.e_mail === contact.e_mail &&
-      selectedContactEdit.phone === contact.phone &&
-      selectedContactEdit.color === contact.color
-    );
-  });
-}
-
-function onCheckboxChange(i, j) {
-  const checkbox = document.getElementById(`contact_checkbox_${i}_${j}`);
-  const contact = contacts[j];
-
-  if (checkbox.checked) {
-    addContactToCurrentContacts(i, contact);
-  } else {
-    removeContactFromCurrentContacts(i, contact);
-  }
-}
-
-function addContactToCurrentContacts(i, contact) {
-  const currentContactsArray = tasks[i].current_contacts;
-  if (!isContactInCurrentContacts(i, contact)) {
-    currentContactsArray.push(contact);
-  }
-}
-
-function removeContactFromCurrentContacts(i, contact) {
-  const currentContactsArray = tasks[i].current_contacts;
-  const indexToRemove = currentContactsArray.findIndex((existingContact) => {
-    return (
-      existingContact.name === contact.name &&
-      existingContact.e_mail === contact.e_mail &&
-      existingContact.phone === contact.phone &&
-      existingContact.color === contact.color
-    );
-  });
-  if (indexToRemove !== -1) {
-    currentContactsArray.splice(indexToRemove, 1);
-  }
-}
-
-function isContactInCurrentContacts(i, contact) {
-  const currentContactsArray = tasks[i].current_contacts;
-  return currentContactsArray.some(
-    (existingContact) => existingContact === contact
-  );
-}
-
-function areAllContactsAdded(taskIndex) {
-  const currentContacts = tasks[taskIndex].current_contacts;
-  if (currentContacts.length !== contacts.length) {
-    return false;
-  }
-  for (const contact of contacts) {
-    if (!currentContacts.some(selectedContactEdit => isEqualContacts(selectedContactEdit, contact))) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-function isEqualContacts(contact1, contact2) {
-  return (
-    contact1.name === contact2.name &&
-    contact1.e_mail === contact2.e_mail &&
-    contact1.phone === contact2.phone &&
-    contact1.color === contact2.color
-  );
-}
-
-
-function toggleDropdownList(i, idContainer, idArrow, event) {
-  event.stopPropagation();
-  scrollToBottom(i);
-  const DROPDOWN_LIST = document.getElementById(idContainer);
-  const SELECT_ARROW = document.getElementById(idArrow);
-  DROPDOWN_LIST.classList.toggle('show');
-  SELECT_ARROW.classList.toggle('turn');
-}
-
-function makeSubtasksEditable(i, oneTask) {
-  const subtasksBox = document.getElementById(
-    `detail_task_subtasks_wrapper${i}`
-  );
-  subtasksBox.innerHTML = '';
-  subtasksBox.innerHTML = generateMakeSubtasksEditableHTML(i);
-  renderSubtasksList(i, oneTask);
-}
-
-function renderSubtasksList(i, oneTask) {
-  const subtasksListContainer = document.getElementById(
-    `subtask_container_${i}`
-  );
-  subtasksListContainer.innerHTML = '';
-  for (let j = 0; j < oneTask.subtasks.length; j++) {
-    const oneSubtask = oneTask.subtasks[j];
-    subtasksListContainer.innerHTML += generateSubtasksListHTML(
-      i,
-      j,
-      oneSubtask
-    );
-  }
-}
-
-
-
-function showAndHideCancelAndAcceptSubtask(i, action) {
-  const closeAndCheckWrapper = document.getElementById(
-    `close_and_check_wrapper_${i}`
-  );
-  const subtasksPlusButton = document.getElementById(`subtask_plus_${i}`);
-  if (action === 'show') {
-    closeAndCheckWrapper.classList.remove('d-none');
-    subtasksPlusButton.classList.add('d-none');
-  } else if (action === 'hide') {
-    closeAndCheckWrapper.classList.add('d-none');
-    subtasksPlusButton.classList.remove('d-none');
-  }
-}
-
-function clearSubtask(i) {
-  const addSubtaskInputfield = document.getElementById(`input_subtasks${i}`);
-  addSubtaskInputfield.value = '';
-}
-
-function addNewSubtask(i) {
-  const addSubtaskInputfield = document.getElementById(`input_subtasks${i}`);
-  let newSubtask = {
-    subtask_name: addSubtaskInputfield.value,
-    checked_status: false,
-  };
-  tasks[i].subtasks.push(newSubtask);
-  addSubtaskInputfield.value = '';
-  renderSubtasksList(i, tasks[i]);
-  showAndHideCancelAndAcceptSubtask(i, 'hide');
-}
-
-function editSubtask(i, j) {
-  let oneSubtask = tasks[i].subtasks[j];
-  const subtaskListItem = document.getElementById(
-    `subtask_list_item_wrapper${i}_${j}`
-  );
-  subtaskListItem.innerHTML = '';
-  subtaskListItem.innerHTML = generateEditSubtaskInputHTML(i, j, oneSubtask);
-}
-
-
-
-function clearInputField(i, j) {
-  const editSubtaskInputfield = document.getElementById(
-    `edit_subtask_input_${i}_${j}`
-  );
-  editSubtaskInputfield.value = '';
-}
-
-function updateEditedSubtask(i, j) {
-  const editSubtaskInputfield = document.getElementById(
-    `edit_subtask_input_${i}_${j}`
-  );
-
-  if (editSubtaskInputfield.value !== '') {
-    let newCheckedSubtaskStatus = tasks[i].subtasks[j].checked_status;
-    let editedSubtask = {
-      subtask_name: editSubtaskInputfield.value,
-      checked_status: newCheckedSubtaskStatus,
-    };
-    tasks[i].subtasks[j] = editedSubtask;
-    renderSubtasksList(i, tasks[i]);
-  } else {
-    renderAlert(
-      'alert_container',
-      'alert_content',
-      'Please enter a subtask text!'
-    );
-  }
-}
-
-function deleteSubtask(i, j) {
-  const currentSubtask = tasks[i].subtasks[j];
-  let currentSubtaskStatus = currentSubtask.checked_status;
-  if (currentSubtaskStatus === true) {
-    tasks[i].completed_subtasks--;
-    tasks[i].subtasks.splice(j, 1);
-  } else {
-    tasks[i].subtasks.splice(j, 1);
-  }
-  renderSubtasksList(i, tasks[i]);
-}
-
-function scrollToBottom(i) {
-  const container = document.getElementById(`bottom_${i}`);
-
-  if (container) {
-    container.scrollIntoView({ behavior: 'smooth', block: 'end' });
-  }
-}
-
-function createOkButton(i) {
-  const okayButtonContainer = document.getElementById(`delete_and_edit_${i}`);
-  okayButtonContainer.innerHTML = '';
-  okayButtonContainer.innerHTML = generateOkayButtonHTML(i);
-}
-
-function closeTaskWithoutSaving(i) {
-  tasks[i] = currentlyEditedTask[0];
-  currentlyEditedTask = [];
-  renderTaskDetailView(i);
-}
-
+/**
+ * This function opens an overlay container which enables the user to 
+ * create a new task directly in the list that was clicked.
+ * @param {string} status - This is a task's status like 'toDo', 'inProgress',
+ * 'awaitFeedback' or 'done'.
+ */
 function openAddTaskToList(status) {
   const addTaskOverlayContainer = document.getElementById('add_task_overlay');
   addTaskOverlayContainer.classList.remove('d-none');
@@ -882,6 +608,12 @@ function openAddTaskToList(status) {
   renderCreateTaskButtons(status);
 }
 
+/**
+ * This function renders two create task-buttons in order to clear all input
+ * fields or to create a new task.
+ * @param {string} status - This is a task's status like 'toDo', 'inProgress',
+ * 'awaitFeedback' or 'done'.
+ */
 function renderCreateTaskButtons(status) {
   const createTaskWrapper = document.getElementById('create_task_wrapper');
   createTaskWrapper.innerHTML = generateCreateTaskButtonsHTML(status);
@@ -894,4 +626,3 @@ function closeAddTaskToList() {
   const addTaskOverlayContainer = document.getElementById('add_task_overlay');
   addTaskOverlayContainer.classList.add('d-none');
 }
-
