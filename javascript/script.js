@@ -10,6 +10,7 @@ async function init() {
   showInitials();
 }
 
+
 async function includeHTML() {
   let includeElements = document.querySelectorAll('[w3-include-html]');
   for (let i = 0; i < includeElements.length; i++) {
@@ -23,6 +24,7 @@ async function includeHTML() {
     }
   }
 }
+
 
 /* -------------------------- start screen ---------------------------------- */
 function moveLogoOnStartScreen() {
@@ -42,6 +44,7 @@ function moveLogoOnStartScreen() {
   }
 }
 
+
 function hideNavIconsOnExternalSites() {
   let menuWrapper = document.getElementById('menu_items_wrapper');
   let legalNoticeLink = document.getElementById('legal_notice_link');
@@ -55,6 +58,7 @@ function hideNavIconsOnExternalSites() {
     privacyPolicyLink.href = './privacy_policy_external.html';
   }
 }
+
 
 function activeSite() {
   const URL = window.location.href;
@@ -71,11 +75,13 @@ function activeSite() {
   document.getElementById(focusedId).classList.add('active');
 }
 
+
 function toggleHeaderMenu() {
   document.getElementById('header_menu').classList.toggle('d-none');
   document.getElementById('background_wrapper').classList.toggle('d-none');
   document.getElementById('user_icon').classList.toggle('header-active');
 }
+
 
 function hideHelpLinkOnHelpPage() {
   let headerHelpIcon = document.getElementById('header_help_icon');
@@ -84,6 +90,7 @@ function hideHelpLinkOnHelpPage() {
     headerHelpIcon.classList.add('opaque');
   }
 }
+
 
 /**
  * This function uses 'toggle' to show or hide elements;
@@ -109,6 +116,7 @@ function toggleSignUpAndLogin(buttonID) {
   }
 }
 
+
 /**
  * If the current page is 'summary.html', the function initSummary() is called
  */
@@ -118,6 +126,7 @@ function checkIfSummaryPage() {
     initSummary();
   }
 }
+
 
 /**
  * If the current page is 'index.html', the function initSummary() is called
@@ -129,6 +138,7 @@ function checkIfStartScreen() {
   }
 }
 
+
 /**
  * If the current page is 'board.html', the function initBoard() is called
  */
@@ -138,6 +148,7 @@ function checkIfBoardPage() {
     initBoard();
   }
 }
+
 
 /**
  * On all pages (except index.html), the header displays the user's initials (or 'G' for guests)
@@ -162,17 +173,26 @@ function showInitials() {
   }
 }
 
+
 /**
  * This function is called when clicking on 'Logout';
+ * if guest-Login, the original guest-Arrays are sent back to the server;
  * the localStorage is cleared and the user returns to the login screen
  */
-function logout() {
+async function logout() {
+  let userLogin = localStorage.getItem('userLogin');
+  if (userLogin == 'false') {
+    await setItem('guestTasks', JSON.stringify(tasksGuest));  
+    await setItem('guestContacts', JSON.stringify(allContacts));
+    await setItem('guestCategories', JSON.stringify(allCategories));
+  }
   localStorage.removeItem('userLogin');
   localStorage.removeItem('userName');
   localStorage.removeItem('userEmail');
   localStorage.removeItem('alreadyGreeted');
   window.location.href = 'index.html';
 }
+
 
 function showAndHideBoxesAccordingToScreenSize() {
   const SMALL_SCREEN_ELEMENTS = [
@@ -182,7 +202,6 @@ function showAndHideBoxesAccordingToScreenSize() {
     'sub_tasks_small_screen',
     'subtask_container_small',
   ];
-
   const BIG_SCREEN_ELEMENTS = ['big_screen'];
   const windowSize = window.innerWidth;
   const showClass = (element) =>
@@ -196,6 +215,7 @@ function showAndHideBoxesAccordingToScreenSize() {
     windowSize >= 800 ? showClass(element) : hideClass(element)
   );
 }
+
 
 /**
  * Toggles dropdown lists on add tasks page by displaying all available options
@@ -217,6 +237,7 @@ function toggleDropdownLists(idContainer, idArrow, event) {
     addCategoriesEventListeners();
   }
 }
+
 
 function combinedClickFunction(event) {
   if (
@@ -252,6 +273,7 @@ function closeDropdownList(idContainer, idArrow, event) {
   }
 }
 
+
 function addCategoriesEventListeners() {
   for (let i = 0; i < allCategories.length; i++) {
     const categoryWrapperSmall = document.getElementById(
@@ -274,6 +296,7 @@ document.addEventListener('DOMContentLoaded', function () {
   window.addEventListener('resize', showAndHideBoxesAccordingToScreenSize);
 });
 
+
 function renderAlert(containerId, messageId, alertMessage) {
   openOrCloseAlertContainer(containerId, 'open');
   const alertContent = document.getElementById(messageId);
@@ -285,12 +308,14 @@ function renderAlert(containerId, messageId, alertMessage) {
   }
 }
 
+
 function renderConfirmDelete(i, containerId, messageId, alertMessage) {
   openOrCloseAlertContainer(containerId, 'open');
   const confirmContent = document.getElementById(messageId);
   confirmContent.innerHTML = '';
   confirmContent.innerHTML = generateConfirmContentHTML(i, alertMessage);
 }
+
 
 function openOrCloseAlertContainer(containerId, action) {
   const alertContainer = document.getElementById(containerId);
@@ -301,11 +326,13 @@ function openOrCloseAlertContainer(containerId, action) {
   }
 }
 
+
 function generateAlertContentHTML(alertMessage) {
   return /* html */ `
     <div class="alert-message">${alertMessage}</div>
   `;
 }
+
 
 function generateConfirmContentHTML(i, alertMessage) {
   return /* html */ `
@@ -316,6 +343,7 @@ function generateConfirmContentHTML(i, alertMessage) {
     </div>
   `;
 }
+
 
 function adaptInitialsToBackground(containerID) {
   const iconContainer = document.getElementById(containerID);
@@ -328,6 +356,7 @@ function adaptInitialsToBackground(containerID) {
     iconContainer.style.color = '#ffffff';
   }
 }
+
 
 function isColorLight(color) {
   const rgb = color.match(/\d+/g).map(Number);
