@@ -202,10 +202,6 @@ function changePrioStatus(prioStatus) {
   }
 }
 
-/* --------------------------------------------------------------------
-category section in add_task.html
----------------------------------------------------------------------- */
-
 function renderCategories() {
   CATEGORY_LIST_SMALL.innerHTML = '';
   CATEGORY_LIST_BIG.innerHTML = '';
@@ -393,9 +389,6 @@ async function addNewCategory(i, containerType) {
   }
 }
 
-/* --------------------------------------------------------------------
-due date section in add_task.html
----------------------------------------------------------------------- */
 function setStandardDateToToday(containerID) {
   const today = new Date().toISOString().split('T')[0];
   document.getElementById(containerID).setAttribute('min', today);
@@ -417,9 +410,6 @@ function renderCurrentDueDate(newCurrentDueDate) {
   duedateBoxBig.value = newCurrentDueDate;
 }
 
-/* ---------------------------------------------------------------
-create new task section in add_task.html
-------------------------------------------------------------------- */
 async function createNewTask(status, event) {
   event.stopPropagation();
   let formStatus = checkIfBoxesAreEmpty(status);
@@ -736,6 +726,3 @@ function changeSubtaskText(i, containerType) {
   }
 }
 
-/* ---------------------------------------------------------------
-send task to server section in add_task.html
-------------------------------------------------------------------- */
