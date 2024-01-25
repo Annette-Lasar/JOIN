@@ -136,5 +136,9 @@ breakpoint: 50em
       margin-right: 15px;
     }
   
+    .status-headline {
+      font-size: 17px;
+    }
+  
     
 }
