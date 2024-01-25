@@ -275,7 +275,7 @@ function closeDropdownList(idContainer, idArrow, event) {
 
 
 function addCategoriesEventListeners() {
-  for (let i = 0; i < allCategories.length; i++) {
+  for (let i = 0; i < categories.length; i++) {
     const categoryWrapperSmall = document.getElementById(
       `icon_and_category_wrapper_small_${i}`
     );

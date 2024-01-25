@@ -1,3 +1,7 @@
+/**
+ * This function calls all functions that need 
+ * to be executed on loading the page.
+ */
 async function initTasks() {
   init();
   await getTasksFromServer();
@@ -13,142 +17,58 @@ async function initTasks() {
   renderSubtasks();
 }
 
-async function getTasksFromServer() {
-  let user = await checkUser();
-  if (user) {
-    console.log('User: ', user);
-    allTasks = JSON.parse(await getItem(`${user.email}_tasks`));
-  } else {
-    console.log('User: ', user);
-    allTasks = JSON.parse(await getItem('guestTasks'));
-  }
-}
-
-async function getContactsFromServer() {
-  let user = await checkUser();
-  if (user) {
-    console.log('User: ', user);
-    allContacts = JSON.parse(await getItem(`${user.email}_contacts`));
-  } else {
-    console.log('User für Contacts: ', user);
-    allContacts = JSON.parse(await getItem('guestContacts'));
-  }
-}
-
-async function getCategoriesFromServer() {
-  let user = await checkUser();
-  if (user) {
-    allCategories = JSON.parse(await getItem(`${user.email}_categories`));
-  } else {
-    allCategories = JSON.parse(await getItem('guestCategories'));
-  }
-}
-
-async function sendCategoriesToServer() {
-  let user = await checkUser();
-  if (user) {
-    await setItem(`${user.email}_categories`, JSON.stringify(allCategories));
-  } else {
-    await setItem('guestCategories', JSON.stringify(allCategories));
-  }
-}
-
-async function sendCreatedTask() {
-  await getTasksFromServer();
-  allTasks.push(createdTask);
-  await sendNewTaskToServer();
-}
-
-async function sendNewTaskToServer() {
-  let user = await checkUser();
-  if (allTasks.length > 0) {
-    if (user) {
-      await setItem(`${user.email}_tasks`, JSON.stringify(allTasks));
-      clearAllTaskContainers();
-      renderAlert(
-        'alert_container',
-        'alert_content',
-        'A new task has successfully been created and added to your board.'
-      );
-    } else {
-      await setItem('guestTasks', JSON.stringify(allTasks));
-      clearAllTaskContainers();
-      renderAlert(
-        'alert_container',
-        'alert_content',
-        'A new task has successfully been created and added to the board.'
-      );
-    }
-    redirectToBoardPage();
-  }
-}
-
-function redirectToBoardPage() {
-  window.location.href = 'board.html';
-}
-
-async function checkUser() {
-  let userLogin = localStorage.getItem('userLogin');
-  if (userLogin == 'true') {
-    let userEmail = localStorage.getItem('userEmail');
-    userEmail = userEmail.replace(/"/g, '');
-    let user = users.find((u) => u.email == userEmail);
-    return user;
-  }
-}
-
-/* --------------------------------------------------------------------
-contact section in add_task.html
----------------------------------------------------------------------- */
+/**
+ * This function renders a list of all available contacts.
+ */
 function renderContacts() {
   CONTACT_LIST_BOX.innerHTML = '';
   CONTACT_LIST_BOX.innerHTML += generateSelectAllHTML();
-  for (i = 0; i < allContacts.length; i++) {
-    const oneContact = allContacts[i];
+  for (i = 0; i < contacts.length; i++) {
+    const oneContact = contacts[i];
     CONTACT_LIST_BOX.innerHTML += generateContactListHTML(i, oneContact);
     adaptInitialsToBackground(`initials_icon_in_list_${i}`);
   }
 }
 
-function selectAndUnselectAllContacts(
-  i,
-  contactCheckbox,
-  oneContact,
-  checkAllCheckbox,
-  event
-) {
+/**
+ * This function selects or unselects all available contacts.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {HTMLElement} contactCheckbox - This is an individual checkbox for each contact.
+ * @param {Object} oneContact - This is a JSON representing 
+ * one contact in the subarray current_contacts.
+ * @param {HTMLElement} checkAllCheckbox - This is a checkbox that selects or unselects
+ * all other contacts.
+ * @param {MouseEvent} event - This is a click event.
+ */
+function selectAndUnselectAllContacts(i, contactCheckbox, oneContact, checkAllCheckbox, event) {
   event.stopPropagation();
-  let individualCheckboxes = document.getElementById(`contact_checkbox_${i}`);
+  const individualCheckboxes = document.getElementById(`contact_checkbox_${i}`);
   currentContacts = [];
-
-  if (checkAllCheckbox.checked && !individualCheckboxes.checked) {
+  if (checkAllCheckbox.checked) {
     individualCheckboxes.checked = true;
-    for (let j = 0; j < allContacts.length; j++) {
-      const newContact = allContacts[j];
-      if (
-        !currentContacts.some((existingContact) =>
-          areContactsEqual(existingContact, newContact)
-        )
-      ) {
-        currentContacts.push(newContact);
-      }
+    if (!currentContacts.length) {
+      currentContacts = [...contacts];
     }
-  } else if (!checkAllCheckbox.checked && individualCheckboxes.checked) {
+  } else {
     individualCheckboxes.checked = false;
   }
   selectContacts(contactCheckbox, oneContact, event);
   renderCurrentContacts();
 }
 
-function areContactsEqual(contact1, contact2) {
+/* function areContactsEqual(contact1, contact2) {
   return isEqual(contact1, contact2);
-}
+} */
 
+/**
+ * This function adds an event listener to the contact checkboxes in order to
+ * register if any changes have been made. 
+ */
 function addCheckboxEventListeners() {
-  for (let i = 0; i < allContacts.length; i++) {
+  for (let i = 0; i < contacts.length; i++) {
     const contactCheckbox = document.getElementById(`contact_checkbox_${i}`);
     const checkAllCheckbox = document.getElementById('select_all_checkbox');
-    let oneContact = allContacts[i];
+    let oneContact = contacts[i];
     contactCheckbox.addEventListener('change', function (event) {
       selectContacts(contactCheckbox, oneContact, event);
     });
@@ -164,6 +84,13 @@ function addCheckboxEventListeners() {
   }
 }
 
+/**
+ * This function adds a selected contact to the assigned contacts.
+ * @param {HTMLElement} contactCheckbox - This is an individual checkbox for
+ * each contact.
+ * @param {Object} oneContact - This is one contact from the array contacts.
+ * @param {MouseEvent} event - This is a click event.
+ */
 function selectContacts(contactCheckbox, oneContact, event) {
   event.stopPropagation();
   let selectedContact = {
@@ -181,6 +108,12 @@ function selectContacts(contactCheckbox, oneContact, event) {
   renderCurrentContacts();
 }
 
+/**
+ * This function checks whether two contacts are equal. 
+ * @param {Object} obj1 - This is a contact from the array current contacts.
+ * @param {Object} obj2 - This is the selected contact from the list.
+ * @returns - The function returns true if all parameters of a contact match.
+ */
 function isEqual(obj1, obj2) {
   const entries1 = Object.entries(obj1);
   const entries2 = Object.entries(obj2);
@@ -197,42 +130,50 @@ function isEqual(obj1, obj2) {
   return true;
 }
 
+
+/**
+ * This function renders all selected contacts into a container underneath
+ * the dropdown list.
+ */
 function renderCurrentContacts() {
   const contactsContainer = document.getElementById('contacts_container');
   contactsContainer.innerHTML = '';
   const maxWidth = contactsContainer.offsetWidth;
-  let visibleContacts = [...currentContacts]; // Kopie von currentContacts
-  let hiddenContactsCount = 0;
-  while (
-    calculateTotalWidth(visibleContacts) > maxWidth &&
-    visibleContacts.length > 1
-  ) {
-    hiddenContactsCount++;
+  let visibleContacts = [...currentContacts];
+  while (calculateTotalWidth(visibleContacts) > maxWidth && visibleContacts.length > 1) {
     visibleContacts.pop();
   }
   visibleContacts.forEach((contact, i) => {
     contactsContainer.innerHTML += generateContactsIconsHTML(i, contact);
     adaptInitialsToBackground(`initials_icon_assigned_${i}`);
   });
+  const hiddenContactsCount = Math.max(0, currentContacts.length - visibleContacts.length);
   if (hiddenContactsCount > 0) {
-    const overflowIndicatorHTML =
-      generateOverflowIndicatorHTML(hiddenContactsCount);
-    contactsContainer.innerHTML += overflowIndicatorHTML;
+    contactsContainer.innerHTML += generateOverflowIndicatorHTML(hiddenContactsCount);
   }
 }
 
+
+/**
+ * This function calculates the total width of all contact icons. 
+ * @param {Array} contacts - This is an array that holds all visible contacts.
+ * @returns - The function returns a number that corresponds to the total
+ * width of all contact icons in pixels. 
+ */
 function calculateTotalWidth(contacts) {
   const contactWidth = 25;
   return contacts.length * contactWidth;
 }
 
+/**
+ * This event listener checks if the window is resized and rerenders
+ * the contact icons accordingly.
+ */
 window.addEventListener('resize', function () {
   renderCurrentContacts();
 });
 
-/* --------------------------------------------------------------------
-prio section in add_task.html
----------------------------------------------------------------------- */
+
 function updateButtons(buttonType, isActive) {
   const smallButton = document.getElementById(
     `prio_button_${buttonType}_small`
@@ -269,8 +210,8 @@ function renderCategories() {
   CATEGORY_LIST_SMALL.innerHTML = '';
   CATEGORY_LIST_BIG.innerHTML = '';
   let i;
-  for (i = 0; i < allCategories.length; i++) {
-    const currentCategory = allCategories[i];
+  for (i = 0; i < categories.length; i++) {
+    const currentCategory = categories[i];
     CATEGORY_LIST_SMALL.innerHTML += generateCategoryListHTML(
       i,
       currentCategory,
@@ -297,11 +238,11 @@ function selectTaskCategory(currentCategoryName, currentCategoryColor) {
 }
 
 function deleteCategory(i) {
-  let categoryToBeDeleted = allCategories[i];
+  let categoryToBeDeleted = categories[i];
   let categoryIndex = currentCategories.findIndex(function (item) {
     return item.category_name === categoryToBeDeleted.category_name;
   });
-  allCategories.splice(i, 1);
+  categories.splice(i, 1);
   if (categoryIndex === 0) {
     currentCategories.splice(categoryIndex, 1);
     renderCurrentCategory();
@@ -379,7 +320,7 @@ function changeCategoryTextAndColor(i, containerType) {
       category_name: categoryTextInputField.value.trim(),
       category_color: colorInputField.value,
     };
-    allCategories[i] = updatedCategory;
+    categories[i] = updatedCategory;
     renderCategories();
     sendCategoriesToServer();
   } else {
@@ -422,7 +363,7 @@ async function addNewCategory(i, containerType) {
   let newCategoryText = document.getElementById(
     `category_new_input_${containerType}`
   );
-  let categoryIndex = allCategories.findIndex(function (item) {
+  let categoryIndex = categories.findIndex(function (item) {
     return item.category_name === newCategoryText.value;
   });
   if (newCategoryText.value !== '') {
@@ -431,7 +372,7 @@ async function addNewCategory(i, containerType) {
         category_name: newCategoryText.value.trim(),
         category_color: newCategoryColor.value,
       };
-      allCategories.push(newCategory);
+      categories.push(newCategory);
       renderCategories();
       await sendCategoriesToServer();
     } else {
@@ -481,7 +422,6 @@ create new task section in add_task.html
 ------------------------------------------------------------------- */
 async function createNewTask(status, event) {
   event.stopPropagation();
-  /* createdTasks = []; */
   let formStatus = checkIfBoxesAreEmpty(status);
   if (formStatus) {
     await sendCreatedTask();
@@ -496,9 +436,7 @@ function checkIfBoxesAreEmpty(status) {
     return false;
   } else {
     let task = createTaskObject(status);
-    /* allTasks.push(task); */
     createdTask = task;
-    console.log('neue Aufgabe: ', createdTask);
     removeClassLists();
     return true;
   }

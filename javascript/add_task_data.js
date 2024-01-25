@@ -1,11 +1,10 @@
 let allTasks = [];
 let createdTask = {};
 let subTasks = [];
-/* let taskCategories = ['Technical Task', 'User Story']; */
 let updatedSubtask;
 
-let allCategories = [];
-let allContacts = [];
+let categories = [];
+let contacts = [];
 let currentContacts = [];
 let currentDueDate = '';
 let currentCategories = [];
