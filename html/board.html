@@ -85,7 +85,7 @@
           <div
             class="drag-area"
             id="toDo"
-            ondrop="moveTo('toDo')"
+            ondrop="moveTo('toDo'); removeHighlight('toDo')"   
             ondragleave="removeHighlight('toDo')"
             ondragover="allowDrop(event); highlight('toDo')"
           ></div>
@@ -100,7 +100,7 @@
           <div
             class="drag-area"
             id="inProgress"
-            ondrop="moveTo('inProgress')"
+            ondrop="moveTo('inProgress'), removeHighlight('inProgress')"
             ondragleave="removeHighlight('inProgress')"
             ondragover="allowDrop(event); highlight('inProgress')"
           ></div>
@@ -115,7 +115,7 @@
           <div
             class="drag-area"
             id="awaitFeedback"
-            ondrop="moveTo('awaitFeedback')"
+            ondrop="moveTo('awaitFeedback'), removeHighlight('awaitFeedback')"
             ondragleave="removeHighlight('awaitFeedback')"
             ondragover="allowDrop(event); highlight('awaitFeedback')"
           ></div>
@@ -127,7 +127,7 @@
           <div
             class="drag-area"
             id="done"
-            ondrop="moveTo('done')"
+            ondrop="moveTo('done'), removeHighlight('done')"
             ondragleave="removeHighlight('done')"
             ondragover="allowDrop(event); highlight('done')"
           ></div>
