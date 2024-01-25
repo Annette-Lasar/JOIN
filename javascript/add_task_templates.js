@@ -49,7 +49,7 @@ function generateNewCategoryBoxHTML(i, containerType) {
   return /* html */ `
       <div id="new_category_${containerType}" class="new-category">
         <div>New category</div>
-        <div id="new_category_plus_${containerType}" onclick="createNewCategory(${i}, '${containerType}')"><img src="../icons/plus.svg" alt=""></div>
+        <div id="new_category_plus_${containerType}" onclick="createNewCategory(${i}, '${containerType}')" class="new-category-plus"><img src="../icons/plus.svg" alt=""></div>
       </div>
     `;
 }

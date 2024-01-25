@@ -1,38 +1,8 @@
-let createdTasks = [];
+let allTasks = [];
+let createdTask = {};
 let subTasks = [];
-let taskCategories = ['Technical Task', 'User Story'];
+/* let taskCategories = ['Technical Task', 'User Story']; */
 let updatedSubtask;
-/* let allCategories = [
-  {
-    category_name: 'Technical Task',
-    category_color: '#FF0000',
-  },
-
-  {
-    category_name: 'User Story',
-    category_color: '#0000FF',
-  },
-
-  {
-    category_name: 'Marketing',
-    category_color: '#008000',
-  },
-
-  {
-    category_name: 'Development',
-    category_color: '#FFA500',
-  },
-
-  {
-    category_name: 'Design',
-    category_color: '#DA70D6',
-  },
-
-  {
-    category_name: 'Leisure',
-    category_color: '#90EE90',
-  },
-]; */
 
 let allCategories = [];
 let allContacts = [];

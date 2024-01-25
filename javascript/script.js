@@ -219,8 +219,14 @@ function toggleDropdownLists(idContainer, idArrow, event) {
 }
 
 function combinedClickFunction(event) {
-  const clickedElement = event.target.closest('.contact-list-element');
-  if (clickedElement == null) {
+  if (
+    event.target.closest('.contact-list-element') == null &&
+    event.target.closest('.category-item') == null &&
+    event.target.closest('.category-icon-wrapper') == null &&
+    event.target.closest('.new-category-plus') == null &&
+    event.target.closest('.new-category') == null &&
+    event.target.closest('.close-and-check-wrapper-edit-subtask') == null
+  ) {
     closeDropdownList(
       'category_list_small',
       'select_arrow_categories_small',
@@ -245,9 +251,6 @@ function closeDropdownList(idContainer, idArrow, event) {
     SELECT_ARROW.classList.remove('turn');
   }
 }
-
-
-
 
 function addCategoriesEventListeners() {
   for (let i = 0; i < allCategories.length; i++) {
@@ -278,7 +281,6 @@ function renderAlert(containerId, messageId, alertMessage) {
   if (containerId === 'alert_container') {
     alertContent.innerHTML = generateAlertContentHTML(alertMessage);
   } else if (containerId === 'confirm_container') {
-    console.log('tasks', tasks);
     alertContent.innerHTML = generateConfirmContentHTML(alertMessage);
   }
 }
@@ -287,7 +289,6 @@ function renderConfirmDelete(i, containerId, messageId, alertMessage) {
   openOrCloseAlertContainer(containerId, 'open');
   const confirmContent = document.getElementById(messageId);
   confirmContent.innerHTML = '';
-  console.log('tasks', tasks);
   confirmContent.innerHTML = generateConfirmContentHTML(i, alertMessage);
 }
 

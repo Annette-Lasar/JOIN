@@ -1,10 +1,11 @@
 async function initTasks() {
   init();
-  await checkIfUserIsLoggedIn('getFromServer');
+  await getTasksFromServer();
+  await getContactsFromServer();
+  await getCategoriesFromServer();
   showAndHideBoxesAccordingToScreenSize();
   setStandardDateToToday('task_due_date_small');
   setStandardDateToToday('task_due_date_big');
-  await loadContactsAndCategoriesUserOrGuest(); // Hier wird die funktion von Semir aufgerufen!!!!
   renderContacts();
   renderCurrentContacts();
   addCheckboxEventListeners();
@@ -12,26 +13,89 @@ async function initTasks() {
   renderSubtasks();
 }
 
-//#################### Funktion von Semir START ################################
+async function getTasksFromServer() {
+  let user = await checkUser();
+  if (user) {
+    console.log('User: ', user);
+    allTasks = JSON.parse(await getItem(`${user.email}_tasks`));
+  } else {
+    console.log('User: ', user);
+    allTasks = JSON.parse(await getItem('guestTasks'));
+  }
+}
 
-async function loadContactsAndCategoriesUserOrGuest() {
+async function getContactsFromServer() {
+  let user = await checkUser();
+  if (user) {
+    console.log('User: ', user);
+    allContacts = JSON.parse(await getItem(`${user.email}_contacts`));
+  } else {
+    console.log('User für Contacts: ', user);
+    allContacts = JSON.parse(await getItem('guestContacts'));
+  }
+}
+
+async function getCategoriesFromServer() {
+  let user = await checkUser();
+  if (user) {
+    allCategories = JSON.parse(await getItem(`${user.email}_categories`));
+  } else {
+    allCategories = JSON.parse(await getItem('guestCategories'));
+  }
+}
+
+async function sendCategoriesToServer() {
+  let user = await checkUser();
+  if (user) {
+    await setItem(`${user.email}_categories`, JSON.stringify(allCategories));
+  } else {
+    await setItem('guestCategories', JSON.stringify(allCategories));
+  }
+}
+
+async function sendCreatedTask() {
+  await getTasksFromServer();
+  allTasks.push(createdTask);
+  await sendNewTaskToServer();
+}
+
+async function sendNewTaskToServer() {
+  let user = await checkUser();
+  if (allTasks.length > 0) {
+    if (user) {
+      await setItem(`${user.email}_tasks`, JSON.stringify(allTasks));
+      clearAllTaskContainers();
+      renderAlert(
+        'alert_container',
+        'alert_content',
+        'A new task has successfully been created and added to your board.'
+      );
+    } else {
+      await setItem('guestTasks', JSON.stringify(allTasks));
+      clearAllTaskContainers();
+      renderAlert(
+        'alert_container',
+        'alert_content',
+        'A new task has successfully been created and added to the board.'
+      );
+    }
+    redirectToBoardPage();
+  }
+}
+
+function redirectToBoardPage() {
+  window.location.href = 'board.html';
+}
+
+async function checkUser() {
   let userLogin = localStorage.getItem('userLogin');
   if (userLogin == 'true') {
     let userEmail = localStorage.getItem('userEmail');
     userEmail = userEmail.replace(/"/g, '');
-    users = JSON.parse(await getItem('users'));
-    let user = users.find((u) => u.email === userEmail);
-    if (user) {
-      allContacts = JSON.parse(await getItem(`${user.email}_contacts`)); //  Hier wird das Kontakte-Array eines angemeldeten Users in der Variable 'allContacts' gespeichert
-      // allCategories = JSON.parse(await getItem(`${user.email}_categories`));        //  Hier wird das Categories-Array eines angemeldeten Users in der Variable 'allCategories' gespeichert
-    }
-  } else {
-    allContacts = JSON.parse(await getItem('guestContacts')); //   Hier wird das Kontakte-Array eines Gasts in der Variable 'allContacts' gespeichert
-    allCategories = JSON.parse(await getItem(`guestCategories`)); //   Hier wird das Categories-Array eines Gasts in der Variable 'allCategories' gespeichert
+    let user = users.find((u) => u.email == userEmail);
+    return user;
   }
 }
-
-//#################### Funktion von Semir ENDE ################################
 
 /* --------------------------------------------------------------------
 contact section in add_task.html
@@ -230,8 +294,6 @@ function selectTaskCategory(currentCategoryName, currentCategoryColor) {
 
   currentCategories[0] = selectedCategory;
   renderCurrentCategory();
-  closeCategoryLists(`category_list_small`, `select_arrow_categories_small`);
-  closeCategoryLists(`category_list_big`, `select_arrow_categories_big`);
 }
 
 function deleteCategory(i) {
@@ -244,9 +306,8 @@ function deleteCategory(i) {
     currentCategories.splice(categoryIndex, 1);
     renderCurrentCategory();
   }
+  sendCategoriesToServer();
   renderCategories();
-  closeCategoryLists(`category_list_small`, `select_arrow_categories_small`);
-  closeCategoryLists(`category_list_big`, `select_arrow_categories_big`);
 }
 
 function closeCategoryLists(idContainer, idArrow) {
@@ -320,6 +381,7 @@ function changeCategoryTextAndColor(i, containerType) {
     };
     allCategories[i] = updatedCategory;
     renderCategories();
+    sendCategoriesToServer();
   } else {
     renderAlert(
       'alert_container',
@@ -353,7 +415,7 @@ function getRandomColor() {
   return color;
 }
 
-function addNewCategory(i, containerType) {
+async function addNewCategory(i, containerType) {
   let newCategoryColor = document.getElementById(
     `color_new_input_${containerType}_${i}`
   );
@@ -371,6 +433,7 @@ function addNewCategory(i, containerType) {
       };
       allCategories.push(newCategory);
       renderCategories();
+      await sendCategoriesToServer();
     } else {
       renderAlert(
         'alert_container',
@@ -418,7 +481,7 @@ create new task section in add_task.html
 ------------------------------------------------------------------- */
 async function createNewTask(status, event) {
   event.stopPropagation();
-  createdTasks = [];
+  /* createdTasks = []; */
   let formStatus = checkIfBoxesAreEmpty(status);
   if (formStatus) {
     await sendCreatedTask();
@@ -433,7 +496,9 @@ function checkIfBoxesAreEmpty(status) {
     return false;
   } else {
     let task = createTaskObject(status);
-    createdTasks.push(task);
+    /* allTasks.push(task); */
+    createdTask = task;
+    console.log('neue Aufgabe: ', createdTask);
     removeClassLists();
     return true;
   }
@@ -640,26 +705,49 @@ function addSubtask(inputId, wrapperId, plusIconId) {
   hideCancelAndAcceptSubtask(CLOSE_AND_CHECK_WRAPPER, SUBTASK_PLUS_ICON);
 }
 
-document.getElementById('check_subtask_small').addEventListener('click', function() {
-  addSubtask('sub_tasks_small', 'close_and_check_wrapper_small', 'subtask_plus_small');
-});
+document
+  .getElementById('check_subtask_small')
+  .addEventListener('click', function () {
+    addSubtask(
+      'sub_tasks_small',
+      'close_and_check_wrapper_small',
+      'subtask_plus_small'
+    );
+  });
 
-document.getElementById('check_subtask_big').addEventListener('click', function() {
-  addSubtask('sub_tasks_big', 'close_and_check_wrapper_big', 'subtask_plus_big');
-});
+document
+  .getElementById('check_subtask_big')
+  .addEventListener('click', function () {
+    addSubtask(
+      'sub_tasks_big',
+      'close_and_check_wrapper_big',
+      'subtask_plus_big'
+    );
+  });
 
-document.getElementById('sub_tasks_small').addEventListener('keydown', function(event) {
-  if (event.key === 'Enter') {
-    addSubtask('sub_tasks_small', 'close_and_check_wrapper_small', 'subtask_plus_small');
-  }
-});
+document
+  .getElementById('sub_tasks_small')
+  .addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+      addSubtask(
+        'sub_tasks_small',
+        'close_and_check_wrapper_small',
+        'subtask_plus_small'
+      );
+    }
+  });
 
-document.getElementById('sub_tasks_big').addEventListener('keydown', function(event) {
-  if (event.key === 'Enter') {
-    addSubtask('sub_tasks_big', 'close_and_check_wrapper_big', 'subtask_plus_big');
-  }
-});
-
+document
+  .getElementById('sub_tasks_big')
+  .addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+      addSubtask(
+        'sub_tasks_big',
+        'close_and_check_wrapper_big',
+        'subtask_plus_big'
+      );
+    }
+  });
 
 /**
  * With this function the subtasks of the array subTasks are rendered in the browser.
@@ -713,65 +801,3 @@ function changeSubtaskText(i, containerType) {
 /* ---------------------------------------------------------------
 send task to server section in add_task.html
 ------------------------------------------------------------------- */
-async function sendCreatedTask() {
-  await checkIfUserIsLoggedIn('getFromServer');
-  await checkIfUserIsLoggedIn('sendToServer');
-}
-
-async function checkIfUserIsLoggedIn(action) {
-  let userLogin = localStorage.getItem('userLogin');
-  if (userLogin == 'true') {
-    let userEmail = localStorage.getItem('userEmail');
-    userEmail = userEmail.replace(/"/g, '');
-    users = JSON.parse(await getItem('users'));
-    let user = users.find((u) => u.email == userEmail);
-    if (action === 'getFromServer') {
-      await getTasksFromServer(user);
-    } else if (action === 'sendToServer') {
-      await sendNewTaskToServer(user);
-    }
-  } else {
-    if (action === 'getFromServer') {
-      await getTasksFromServer('guest');
-    } else if (action === 'sendToServer') {
-      await sendNewTaskToServer('guest');
-    }
-  }
-}
-
-async function getTasksFromServer(user) {
-  if (user !== 'guest') {
-    tasks = JSON.parse(await getItem(`${user.email}_tasks`));
-    tasks.forEach((oneTask) => createdTasks.push(oneTask));
-  } else if (user === 'guest') {
-    tasks = JSON.parse(await getItem('guestTasks'));
-    tasks.forEach((oneTask) => createdTasks.push(oneTask));
-  }
-}
-
-function redirectToBoardPage() {
-  window.location.href = 'board.html';
-}
-
-async function sendNewTaskToServer(user) {
-  if (createdTasks.length > 0) {
-    if (user === 'guest') {
-      await setItem('guestTasks', JSON.stringify(createdTasks));
-      clearAllTaskContainers();
-      renderAlert(
-        'alert_container',
-        'alert_content',
-        'A new task has successfully been created and added to the board.'
-      );
-    } else {
-      await setItem(`${user.email}_tasks`, JSON.stringify(createdTasks));
-      clearAllTaskContainers();
-      renderAlert(
-        'alert_container',
-        'alert_content',
-        'A new task has successfully been created and added to your board.'
-      );
-    }
-    redirectToBoardPage();
-  }
-}
