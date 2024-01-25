@@ -118,3 +118,23 @@ breakpoint: 50em
       opacity: 1;
     }
   }
+
+
+  @media(800px < width < 1250px) {
+
+    .addTaskToBoard-btn-big {
+      width: 82px;
+      margin-right: 30px;
+      padding: 4px;
+    }
+  
+    .searchbar-and-addTaskBtn-wrapper {
+      width: 60%;
+    }
+  
+    .inner-searchbar-wrapper {
+      margin-right: 15px;
+    }
+  
+    
+}
