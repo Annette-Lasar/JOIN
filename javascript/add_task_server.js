@@ -100,6 +100,7 @@ async function getTasksFromServer() {
     if (userLogin == 'true') {
       let userEmail = localStorage.getItem('userEmail');
       userEmail = userEmail.replace(/"/g, '');
+      let users = JSON.parse(await getItem('users'));
       let user = users.find((u) => u.email == userEmail);
       return user;
     }
