@@ -189,7 +189,6 @@ nav {
 .nav {
     max-width: 1024px;
     margin: 0 auto;
-    /* padding: 0 1em; */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -398,7 +397,7 @@ breakpoint: 50em
 
     .nav {
         height: 100%;
-        padding: 4em 0;
+        padding: min(4em, 6vh) 0;
         display: flex;
         flex-direction: column;
     }
@@ -472,6 +471,12 @@ breakpoint: 50em
         display: none;
     }
 
+}
+
+@media (height < 600px) {
+    .legal-info-wrapper {
+        height: auto;
+    }
 }
 
 /* ---------------------------------------------------
