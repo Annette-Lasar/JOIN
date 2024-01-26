@@ -141,7 +141,6 @@ h4 {
 }
 
 .status-headline {
-  /* width: 80%; */
   display: flex;
   justify-content: space-between;
   align-items: center;

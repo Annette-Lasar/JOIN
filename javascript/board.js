@@ -88,11 +88,11 @@ function renderTaskList(targetStatus, tasksWithTargetStatus) {
 function replaceStatusText(status) {
   switch (status) {
     case 'toDo':
-      return 'To Do';
+      return 'to Do';
     case 'inProgress':
-      return 'In Progress';
+      return 'in Progress';
     case 'awaitFeedback':
-      return 'Await Feedback';
+      return 'await Feedback';
     default:
       return status;
   }

@@ -4,10 +4,8 @@
 async function getTasksFromServer() {
     let user = await checkUser();
     if (user) {
-      console.log('User: ', user);
       allTasks = JSON.parse(await getItem(`${user.email}_tasks`));
     } else {
-      console.log('User: ', user);
       allTasks = JSON.parse(await getItem('guestTasks'));
     }
   }
@@ -18,10 +16,8 @@ async function getTasksFromServer() {
   async function getContactsFromServer() {
     let user = await checkUser();
     if (user) {
-      console.log('User: ', user);
       contacts = JSON.parse(await getItem(`${user.email}_contacts`));
     } else {
-      console.log('User für Contacts: ', user);
       contacts = JSON.parse(await getItem('guestContacts'));
     }
   }
