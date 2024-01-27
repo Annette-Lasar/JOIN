@@ -219,6 +219,10 @@ breakpoint: 50em
   .label-for-progress {
     font-size: 0.6rem;
   }
+
+  .not-assigned {
+    font-size: 0.75rem;
+  }
 }
 
 @media (min-width: 65em) {

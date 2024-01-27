@@ -1,3 +1,31 @@
+.add-task-overlay {
+  max-width: 700px;
+  position: fixed;
+  inset: 5px;
+  background-color: var(--background-color-lightgray);
+  z-index: 30;
+  border: var(--accent-color-gray) 1px solid;
+  border-radius: 4px;
+}
+
+.add-task-header-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.add-task-header-wrapper img {
+  cursor: pointer;
+}
+
+.add-task-overlay-page {
+  height: 92%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: auto;
+}
+
 .task-wrapper {
   height: 100%;
   padding: 1em;
@@ -60,7 +88,7 @@ textarea:focus {
 }
 
 textarea {
-    margin: 0 0 1em;
+  margin: 0 0 1em;
   font-family: 'Inter', sans-serif;
   resize: none;
 }
@@ -188,6 +216,10 @@ input[type='date'] {
 .category-wrapper,
 .contact-wrapper {
   position: relative;
+}
+
+.contact-wrapper {
+  height: auto;
 }
 
 .task-category {
@@ -459,6 +491,7 @@ input[type='color'] {
   width: 12px;
 }
 
+
 .create-task-wrapper {
   padding: 24px 1em;
   display: flex;
@@ -467,9 +500,8 @@ input[type='color'] {
 }
 
 .create-task-wrapper.overlay {
-  margin: 0 0 2em 0;
+  margin: 0;
   padding: 12px 1em;
-  border: orange 1px solid;
 }
 
 .explanation-container {
@@ -610,6 +642,7 @@ input[type='color'] {
   }
 
   .task-wrapper {
+    height: auto;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -648,33 +681,31 @@ input[type='color'] {
   .d-none {
     display: none;
   }
+
+  .add-task-overlay {
+    min-width: 600px;
+    height: 500px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-40%, -50%);
+  }
+
+  .add-task-overlay-page {
+    max-height: 90%;
+  }
+  
+  .add-task-overlay-page::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  .contact-wrapper {
+    height: 140px;
+  }
+
+  .create-task-wrapper.overlay {
+    margin: 0;
+  }
+
 }
 
-.add-task-overlay {
-  position: fixed;
-  inset: 5px;
-  background-color: var(--background-color-lightgray);
-  z-index: 30;
-  border: var(--accent-color-gray) 1px solid;
-  border-radius: 4px;
-}
 
-.add-task-overlay-page {
-  height: 80vh;
-  overflow-y: auto;
-  border: red 1px solid;
-}
-
-.add-task-overlay-page::-webkit-scrollbar {
-  width: 12px;
-}
-
-.add-task-header-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.add-task-header-wrapper img {
-  cursor: pointer;
-}
