@@ -7,6 +7,8 @@ async function initBoard() {
   await loadContactsUserOrGuest();
   await loadCategoriesUserOrGuest();
   showTasksOnBoard();
+  setupSubtaskEventListener('check_subtask_small', 'sub_tasks_small', 'close_and_check_wrapper_small', 'subtask_plus_small');
+  setupSubtaskEventListener('check_subtask_big', 'sub_tasks_big', 'close_and_check_wrapper_big', 'subtask_plus_big');
 }
 
 
@@ -107,6 +109,7 @@ function replaceStatusText(status) {
  */
 function callFurtherFunctionsToRenderTasks(i, oneTask, status) {
   renderTasksOnBoard(i, oneTask, status);
+  adaptInitialsToBackground(`todo_category_${i}`);
   updateProgressBar(i, tasks[i]);
   updateCompletedTasks(i, tasks[i]);
   renderContactsOnOutsideCard(i, oneTask);
@@ -454,7 +457,7 @@ async function deleteTask(i) {
   await sendTasksToServer();
   await loadTasksUserOrGuest();
   await loadContactsUserOrGuest();
-  showTasksOnBoard();
+  location.reload();
 }
 
 /**

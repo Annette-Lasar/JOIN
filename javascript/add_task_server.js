@@ -78,10 +78,11 @@ async function getTasksFromServer() {
         renderAlert(
           'alert_container',
           'alert_content',
-          'A new task has successfully been created and added to the board.'
+          'A new task has successfully been created and added to the board. You will be directed to the board.'
         );
       }
-      redirectToBoardPage();
+      setTimeout(redirectToBoardPage, 2000);
+      
     }
   }
 

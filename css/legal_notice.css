@@ -11,7 +11,7 @@ body {
 }
 
 .blue:hover {
-  color: blue;
+  color: var(--color-variant11);
 }
 
 .main-legal {
@@ -46,7 +46,7 @@ h2 {
 h3 {
   margin: 12px 0;
   font-size: 1.3rem;
-  color: black !important;
+  color: var(--accent-color-black) !important;
 }
 
 h4 {

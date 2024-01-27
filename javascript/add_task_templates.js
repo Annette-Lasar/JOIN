@@ -1,5 +1,11 @@
-
-
+/**
+ * This function generates the HTML code for a list of all available
+ * contacts in the add task section.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {Object} oneContact - This is a JSON representing one contact
+ * in the array currentContacts.
+ * @returns - The function returns the HTML code.
+ */
 function generateContactListHTML(i, oneContact) {
   const [firstName, lastName] = oneContact.name.split(' ');
   return /* html */ `
@@ -17,6 +23,10 @@ function generateContactListHTML(i, oneContact) {
     `;
 }
 
+/**
+ * This function generates a select all checkbox in the contacts list.
+ * @returns - The function returns the HTML code.
+ */
 function generateSelectAllHTML() {
   return /* html */ `
       <li class="contact-list-element">
@@ -28,6 +38,13 @@ function generateSelectAllHTML() {
     `;
 }
 
+/**
+ * This function generates the initials icons for the available contacts.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {Object} oneContact - This is a JSON representing a contact 
+ * in the array currentContacts.
+ * @returns - The function returns the HTML code.
+ */
 function generateContactsIconsHTML(i, oneContact) {
   const [firstName, lastName] = oneContact.name.split(' ');
   return /* html */ `
@@ -37,6 +54,13 @@ function generateContactsIconsHTML(i, oneContact) {
     `;
 }
 
+/**
+ * This function generates an overflow indicator for those contact
+ * icons that don't have enough space in the container to be rendered.
+ * @param {number} hiddenContactsCount - This is the number of contacts
+ * that cannot be shown in the container. 
+ * @returns - The function returns the HTML code.
+ */
 function generateOverflowIndicatorHTML(hiddenContactsCount) {
   return /* html */ `
       <div id="overflow_indicator" class="overflow-indicator">
@@ -45,6 +69,13 @@ function generateOverflowIndicatorHTML(hiddenContactsCount) {
     `;
 }
 
+/**
+ * This function generates the HTML code for a box that enables
+ * the user to add a new category to the list.
+ * @param {number} i - This ist the index of a task in the array tasks.
+ * @param {string} containerType - This is either 'small' or 'big'.
+ * @returns - The function returns the HTML code. 
+ */
 function generateNewCategoryBoxHTML(i, containerType) {
   return /* html */ `
       <div id="new_category_${containerType}" class="new-category">
@@ -54,6 +85,13 @@ function generateNewCategoryBoxHTML(i, containerType) {
     `;
 }
 
+/**
+ * This fucntion generates the HTML code for a list of available categories.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {Array} currentCategory - This is an array with the available categories.
+ * @param {string} containerType - This is either 'small' or 'big'.
+ * @returns 
+ */
 function generateCategoryListHTML(i, currentCategory, containerType) {
   return /* html */ `
           <li id="category_item_${containerType}_${i}" class="category-item">
@@ -74,6 +112,14 @@ function generateCategoryListHTML(i, currentCategory, containerType) {
       `;
 }
 
+/**
+ * This function generates HTML code that displays a category's name
+ * and its color in a list.
+ * @param {string} currentCategoryName - This is a category's name.
+ * @param {color} currentCategoryColor - This is a category's color in
+ * form of a hex code.
+ * @returns 
+ */
 function generateCurrentCategoryHTML(
   currentCategoryName,
   currentCategoryColor
@@ -90,6 +136,16 @@ function generateCurrentCategoryHTML(
       `;
 }
 
+/**
+ * This function generates an input field that enables the user
+ * to edit a category.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {string} currentCategoryName - This is a category's name.
+ * @param {color} currentCategoryColor - This is a category's color
+ * in form of a hex code.
+ * @param {string} containerType - This is either 'small' or 'big'.
+ * @returns 
+ */
 function generateCategoryInputHTML(
   i,
   currentCategoryName,
@@ -110,6 +166,15 @@ function generateCategoryInputHTML(
     `;
 }
 
+/**
+ * This function generates input fields that are needed to create
+ * a new category.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {string} containerType - This is either 'small' or 'big'.
+ * @param {color} randomColor - This is a random color in form of a
+ * hex code. 
+ * @returns 
+ */
 function generateInputForNewCategoryHTML(i, containerType, randomColor) {
   return /* html */ `
       <input id="color_new_input_${containerType}_${i}" type="color" value="${randomColor}">

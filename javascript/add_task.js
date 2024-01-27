@@ -1,5 +1,5 @@
 /**
- * This function calls all functions that need 
+ * This function calls all functions that need
  * to be executed on loading the page.
  */
 async function initTasks() {
@@ -14,6 +14,18 @@ async function initTasks() {
   renderCurrentContacts();
   addCheckboxEventListeners();
   renderCategories();
+  setupSubtaskEventListener(
+    'check_subtask_small',
+    'sub_tasks_small',
+    'close_and_check_wrapper_small',
+    'subtask_plus_small'
+  );
+  setupSubtaskEventListener(
+    'check_subtask_big',
+    'sub_tasks_big',
+    'close_and_check_wrapper_big',
+    'subtask_plus_big'
+  );
   renderSubtasks();
 }
 
@@ -34,13 +46,19 @@ function renderContacts() {
  * This function selects or unselects all available contacts.
  * @param {number} i - This is the index of a task in the array tasks.
  * @param {HTMLElement} contactCheckbox - This is an individual checkbox for each contact.
- * @param {Object} oneContact - This is a JSON representing 
+ * @param {Object} oneContact - This is a JSON representing
  * one contact in the subarray current_contacts.
  * @param {HTMLElement} checkAllCheckbox - This is a checkbox that selects or unselects
  * all other contacts.
  * @param {MouseEvent} event - This is a click event.
  */
-function selectAndUnselectAllContacts(i, contactCheckbox, oneContact, checkAllCheckbox, event) {
+function selectAndUnselectAllContacts(
+  i,
+  contactCheckbox,
+  oneContact,
+  checkAllCheckbox,
+  event
+) {
   event.stopPropagation();
   const individualCheckboxes = document.getElementById(`contact_checkbox_${i}`);
   currentContacts = [];
@@ -56,13 +74,9 @@ function selectAndUnselectAllContacts(i, contactCheckbox, oneContact, checkAllCh
   renderCurrentContacts();
 }
 
-/* function areContactsEqual(contact1, contact2) {
-  return isEqual(contact1, contact2);
-} */
-
 /**
  * This function adds an event listener to the contact checkboxes in order to
- * register if any changes have been made. 
+ * register if any changes have been made.
  */
 function addCheckboxEventListeners() {
   for (let i = 0; i < contacts.length; i++) {
@@ -109,7 +123,7 @@ function selectContacts(contactCheckbox, oneContact, event) {
 }
 
 /**
- * This function checks whether two contacts are equal. 
+ * This function checks whether two contacts are equal.
  * @param {Object} obj1 - This is a contact from the array current contacts.
  * @param {Object} obj2 - This is the selected contact from the list.
  * @returns - The function returns true if all parameters of a contact match.
@@ -130,7 +144,6 @@ function isEqual(obj1, obj2) {
   return true;
 }
 
-
 /**
  * This function renders all selected contacts into a container underneath
  * the dropdown list.
@@ -140,25 +153,31 @@ function renderCurrentContacts() {
   contactsContainer.innerHTML = '';
   const maxWidth = contactsContainer.offsetWidth;
   let visibleContacts = [...currentContacts];
-  while (calculateTotalWidth(visibleContacts) > maxWidth && visibleContacts.length > 1) {
+  while (
+    calculateTotalWidth(visibleContacts) > maxWidth &&
+    visibleContacts.length > 1
+  ) {
     visibleContacts.pop();
   }
   visibleContacts.forEach((contact, i) => {
     contactsContainer.innerHTML += generateContactsIconsHTML(i, contact);
     adaptInitialsToBackground(`initials_icon_assigned_${i}`);
   });
-  const hiddenContactsCount = Math.max(0, currentContacts.length - visibleContacts.length);
+  const hiddenContactsCount = Math.max(
+    0,
+    currentContacts.length - visibleContacts.length
+  );
   if (hiddenContactsCount > 0) {
-    contactsContainer.innerHTML += generateOverflowIndicatorHTML(hiddenContactsCount);
+    contactsContainer.innerHTML +=
+      generateOverflowIndicatorHTML(hiddenContactsCount);
   }
 }
 
-
 /**
- * This function calculates the total width of all contact icons. 
+ * This function calculates the total width of all contact icons.
  * @param {Array} contacts - This is an array that holds all visible contacts.
  * @returns - The function returns a number that corresponds to the total
- * width of all contact icons in pixels. 
+ * width of all contact icons in pixels.
  */
 function calculateTotalWidth(contacts) {
   const contactWidth = 25;
@@ -173,7 +192,12 @@ window.addEventListener('resize', function () {
   renderCurrentContacts();
 });
 
-
+/**
+ * This function updates the status buttons of a task.
+ * @param {string} buttonType - The button type is either 'urgent',
+ * 'medium' or 'low'.
+ * @param {Boolean} isActive - This is either true or false.
+ */
 function updateButtons(buttonType, isActive) {
   const smallButton = document.getElementById(
     `prio_button_${buttonType}_small`
@@ -189,6 +213,11 @@ function updateButtons(buttonType, isActive) {
   }
 }
 
+/**
+ * This function changes a task's prio status.
+ * @param {string} prioStatus - The priority status is either 'urgent',
+ * 'medium' or 'low'.
+ */
 function changePrioStatus(prioStatus) {
   const buttonTypes = ['urgent', 'medium', 'low'];
   buttonTypes.forEach((type) => updateButtons(type, false));
@@ -202,6 +231,9 @@ function changePrioStatus(prioStatus) {
   }
 }
 
+/**
+ * This function renders the available categories for a task.
+ */
 function renderCategories() {
   CATEGORY_LIST_SMALL.innerHTML = '';
   CATEGORY_LIST_BIG.innerHTML = '';
@@ -223,6 +255,11 @@ function renderCategories() {
   CATEGORY_LIST_BIG.innerHTML += generateNewCategoryBoxHTML(i, 'big');
 }
 
+/**
+ * With this function the user can select a category from the list.
+ * @param {string} currentCategoryName - This is a category's name.
+ * @param {color} currentCategoryColor - This is a category's color in form of a hex code.
+ */
 function selectTaskCategory(currentCategoryName, currentCategoryColor) {
   let selectedCategory = {
     category_name: currentCategoryName,
@@ -233,6 +270,10 @@ function selectTaskCategory(currentCategoryName, currentCategoryColor) {
   renderCurrentCategory();
 }
 
+/**
+ * This function enables the user to delete a category from the list.
+ * @param {number} i - This is the index of a category in the array currentCategories.
+ */
 function deleteCategory(i) {
   let categoryToBeDeleted = categories[i];
   let categoryIndex = currentCategories.findIndex(function (item) {
@@ -247,6 +288,11 @@ function deleteCategory(i) {
   renderCategories();
 }
 
+/**
+ * This function closes the category dropdown list.
+ * @param {string} idContainer - This is the id of the container to be closed.
+ * @param {string} idArrow - This is the id of the arrow img next to the list.
+ */
 function closeCategoryLists(idContainer, idArrow) {
   const CATEGORY_LIST = document.getElementById(idContainer);
   const SELECT_ARROW = document.getElementById(idArrow);
@@ -254,6 +300,9 @@ function closeCategoryLists(idContainer, idArrow) {
   SELECT_ARROW.classList.remove('turn');
 }
 
+/**
+ * This function renders the selected category into the top container.
+ */
 function renderCurrentCategory() {
   SELECT_TASK_CATEGORY_ELEMENT_SMALL.innerHTML = '';
   SELECT_TASK_CATEGORY_ELEMENT_BIG.innerHTML = '';
@@ -274,6 +323,14 @@ function renderCurrentCategory() {
   }
 }
 
+/**
+ * This functon enables the user to edit a category.
+ * @param {number} i - This is the index of a category in the array currentCategories.
+ * @param {string} currentCategoryName - This is the category's name.
+ * @param {color} currentCategoryColor - This is a category's color in form of a hex code.
+ * @param {string} containerType - This is either 'small' or 'big' for two containers that
+ * are shown or hidden according to the window size.
+ */
 function editCategory(
   i,
   currentCategoryName,
@@ -293,6 +350,13 @@ function editCategory(
   changeInputBackgroundColor(i, containerType, 'color_input');
 }
 
+/**
+ * This function changes the background color of a round icon next
+ * to the category if the user edits the color.
+ * @param {number} i - This is the index of a category in the array currentCategories.
+ * @param {string} containerType - This is either 'small' or 'big'.
+ * @param {string} containerID - This is part of the id of the container in question.
+ */
 function changeInputBackgroundColor(i, containerType, containerID) {
   const colorInputField = document.getElementById(
     `${containerID}_${containerType}_${i}`
@@ -303,6 +367,11 @@ function changeInputBackgroundColor(i, containerType, containerID) {
   });
 }
 
+/**
+ * This function enables the user to change a category's text and color.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {string} containerType - This is either 'small' or 'big'.
+ */
 function changeCategoryTextAndColor(i, containerType) {
   let colorInputField = document.getElementById(
     `color_input_${containerType}_${i}`
@@ -329,6 +398,11 @@ function changeCategoryTextAndColor(i, containerType) {
   }
 }
 
+/**
+ * This function enables the user to create a new category.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {string} containerType - This is either 'small' or 'big'.
+ */
 function createNewCategory(i, containerType) {
   const randomColor = getRandomColor();
   const newCategoryBox = document.getElementById(
@@ -343,6 +417,11 @@ function createNewCategory(i, containerType) {
   changeInputBackgroundColor(i, containerType, 'color_new_input');
 }
 
+/**
+ * This function gets a random color for a new category that is suggested
+ * to the user. It can be edited according to the user's wishes.
+ * @returns - The function returns a randomly created hex code for a color.
+ */
 function getRandomColor() {
   const letters = '0123456789ABCDEF';
   let color = '#';
@@ -352,19 +431,32 @@ function getRandomColor() {
   return color;
 }
 
+/**
+ * This function adds a new category to the browser.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {string} containerType - This is either 'small' or 'big'.
+ */
 async function addNewCategory(i, containerType) {
-  let newCategoryColor = document.getElementById(
+  const newCategoryColor = document.getElementById(
     `color_new_input_${containerType}_${i}`
   );
-  let newCategoryText = document.getElementById(
+  const newCategoryText = document.getElementById(
     `category_new_input_${containerType}`
   );
-  let categoryIndex = categories.findIndex(function (item) {
-    return item.category_name === newCategoryText.value;
-  });
-  if (newCategoryText.value !== '') {
+
+  if (newCategoryText.value === '') {
+    renderAlert(
+      'alert_container',
+      'alert_content',
+      'Please enter a new category name!'
+    );
+  } else {
+    const categoryIndex = categories.findIndex(
+      (item) => item.category_name === newCategoryText.value
+    );
+
     if (categoryIndex === -1) {
-      let newCategory = {
+      const newCategory = {
         category_name: newCategoryText.value.trim(),
         category_color: newCategoryColor.value,
       };
@@ -379,21 +471,22 @@ async function addNewCategory(i, containerType) {
       );
       renderCategories();
     }
-  } else {
-    renderAlert(
-      'alert_container',
-      'alert_content',
-      'Please enter a new category name!'
-    );
-    renderCategories();
   }
 }
 
+/**
+ * This function gets today's date in the format yyyy-mm-dd
+ * @param {string} containerID - This is the input field's id.
+ */
 function setStandardDateToToday(containerID) {
   const today = new Date().toISOString().split('T')[0];
   document.getElementById(containerID).setAttribute('min', today);
 }
 
+/**
+ * This function enables the user to select a due date for his task.
+ * @param {string} containerId - This is the input field's id.
+ */
 function selectDueDate(containerId) {
   const duedateBox = document.getElementById(containerId);
   let newCurrentDueDate = duedateBox.value.trim();
@@ -401,6 +494,10 @@ function selectDueDate(containerId) {
   renderCurrentDueDate(newCurrentDueDate);
 }
 
+/**
+ * This function renders the new due date into its container.
+ * @param {date} newCurrentDueDate - This is the current due date.
+ */
 function renderCurrentDueDate(newCurrentDueDate) {
   const duedateBoxSmall = document.getElementById('task_due_date_small');
   const duedateBoxBig = document.getElementById('task_due_date_big');
@@ -410,6 +507,12 @@ function renderCurrentDueDate(newCurrentDueDate) {
   duedateBoxBig.value = newCurrentDueDate;
 }
 
+/**
+ * This function enables the user to create a new task.
+ * @param {string} status - A task's status is either 'toDo', 'inProgress',
+ * 'awaitFeedback' or 'done'.
+ * @param {MouseEvent} event - This is a click event.
+ */
 async function createNewTask(status, event) {
   event.stopPropagation();
   let formStatus = checkIfBoxesAreEmpty(status);
@@ -418,6 +521,13 @@ async function createNewTask(status, event) {
   }
 }
 
+/**
+ * This function checks if required input fields are empty. If they aren't
+ * it creates a new task.
+ * @param {string} status - A task's status is either 'toDo', 'inProgress',
+ * 'awaitFeedback' or 'done'.
+ * @returns
+ */
 function checkIfBoxesAreEmpty(status) {
   if (checkAllRequiredBoxes()) {
     checkIfTitleIsEmpty();
@@ -432,6 +542,11 @@ function checkIfBoxesAreEmpty(status) {
   }
 }
 
+/**
+ * This function checks if the required fields are empty.
+ * @returns - The function returns true, if one of the required
+ * input fields are empty.
+ */
 function checkAllRequiredBoxes() {
   return (
     TITLE_BOX.value === '' ||
@@ -441,6 +556,9 @@ function checkAllRequiredBoxes() {
   );
 }
 
+/**
+ * This function creates a warning if the title input box is empty.
+ */
 function checkIfTitleIsEmpty() {
   if (TITLE_BOX.value === '') {
     TASK_TITLE_INFO_BOX.classList.add('visible');
@@ -448,6 +566,9 @@ function checkIfTitleIsEmpty() {
   }
 }
 
+/**
+ * This function creates a warning if the due date input field is empty.
+ */
 function checkIfDueDateIsEmpty() {
   if (currentDueDate === '') {
     TASK_DUE_INFO_BOX_SMALL.classList.add('visible');
@@ -457,6 +578,9 @@ function checkIfDueDateIsEmpty() {
   }
 }
 
+/**
+ * This function creates a warning if no category has been selected.
+ */
 function checkIfCategoriesIsEmpty() {
   if (currentCategories.length === 0) {
     TASK_CATEGORY_BOX_SMALL.classList.add('visible');
@@ -466,6 +590,13 @@ function checkIfCategoriesIsEmpty() {
   }
 }
 
+/**
+ * This function creates a new task in form of a JSON.
+ * @param {string} taskStatus - A task's status is either 'toDo', 'inProgress',
+ * 'awaitFeedback' or 'done'.
+ * @returns - The function returns a JSON with all the necessary information to
+ * create a new task.
+ */
 function createTaskObject(taskStatus) {
   let newTask = {
     title: TITLE_BOX.value,
@@ -481,6 +612,10 @@ function createTaskObject(taskStatus) {
   return newTask;
 }
 
+/**
+ * This function removes all the warnings if the required fields
+ * have been filled out.
+ */
 function removeClassLists() {
   TASK_TITLE_INFO_BOX.classList.remove('visible');
   TITLE_BOX.classList.remove('red-border');
@@ -494,6 +629,10 @@ function removeClassLists() {
   TASK_CATEGORY_SELECT_BIG.classList.remove('red-border');
 }
 
+/**
+ * This function removes the title warning if the input field has been
+ * filled out.
+ */
 function removeTitleWarning() {
   if (TITLE_BOX.value !== '') {
     TASK_TITLE_INFO_BOX.classList.remove('visible');
@@ -501,6 +640,10 @@ function removeTitleWarning() {
   }
 }
 
+/**
+ * This function removes the due date warning, if the input field
+ * has been filled out.
+ */
 function removeDueDateWarning() {
   if (currentDueDate !== '') {
     TASK_DUE_INFO_BOX_SMALL.classList.remove('visible');
@@ -510,6 +653,10 @@ function removeDueDateWarning() {
   }
 }
 
+/**
+ * This function removes the category warning if a category has been
+ * selected.
+ */
 function removeCategoryWarning() {
   if (currentCategories.length === 1) {
     TASK_CATEGORY_BOX_SMALL.classList.remove('visible');
@@ -519,18 +666,31 @@ function removeCategoryWarning() {
   }
 }
 
+/**
+ * This event listener checks if the title input field is empty.
+ */
 TITLE_BOX.addEventListener('blur', function () {
   removeTitleWarning();
 });
 
+/**
+ * This event listener checks if the due date input field is empty.
+ */
 DUE_DATE_BOX_BIG.addEventListener('blur', function () {
   removeDueDateWarning();
 });
 
+/**
+ * This event listener checks a category has been selected.
+ */
 DUE_DATE_BOX_SMALL.addEventListener('blur', function () {
   removeDueDateWarning();
 });
 
+/**
+ * This function resets all input fields buttons and dropdown lists
+ * to their original state.
+ */
 function clearAllTaskContainers() {
   TITLE_BOX.value = '';
   DESCRIPTION_BOX.value = '';
@@ -545,9 +705,6 @@ function clearAllTaskContainers() {
   renderSubtasks();
 }
 
-/* --------------------------------------------------------------------
-subtask section in add_task.html
----------------------------------------------------------------------- */
 /**
  * Shows two buttons that enable the user to either refuse or accept
  * the input value as a new subtask
@@ -633,49 +790,31 @@ function addSubtask(inputId, wrapperId, plusIconId) {
   hideCancelAndAcceptSubtask(CLOSE_AND_CHECK_WRAPPER, SUBTASK_PLUS_ICON);
 }
 
-document
-  .getElementById('check_subtask_small')
-  .addEventListener('click', function () {
-    addSubtask(
-      'sub_tasks_small',
-      'close_and_check_wrapper_small',
-      'subtask_plus_small'
-    );
+/**
+ * This function sets an event listener so that the user can add a 
+ * subtask by pressing the enter key.
+ * @param {string} elementId - This is the id of the button that creates a new subtask.
+ * @param {string} tasksId - This is the id of the input field.
+ * @param {string} wrapperId - This is the id of the close and check wrapper.
+ * @param {string} plusId - This is the id of the plus button.
+ */
+function setupSubtaskEventListener(elementId, tasksId, wrapperId, plusId) {
+  document.getElementById(elementId).addEventListener('click', function () {
+    addSubtask(tasksId, wrapperId, plusId);
   });
 
-document
-  .getElementById('check_subtask_big')
-  .addEventListener('click', function () {
-    addSubtask(
-      'sub_tasks_big',
-      'close_and_check_wrapper_big',
-      'subtask_plus_big'
-    );
-  });
-
-document
-  .getElementById('sub_tasks_small')
-  .addEventListener('keydown', function (event) {
-    if (event.key === 'Enter') {
-      addSubtask(
-        'sub_tasks_small',
-        'close_and_check_wrapper_small',
-        'subtask_plus_small'
-      );
-    }
-  });
-
-document
-  .getElementById('sub_tasks_big')
-  .addEventListener('keydown', function (event) {
-    if (event.key === 'Enter') {
-      addSubtask(
-        'sub_tasks_big',
-        'close_and_check_wrapper_big',
-        'subtask_plus_big'
-      );
-    }
-  });
+  /**
+   * This event listener checks if the enter key is pressed to create a new 
+   * subtask.
+   */
+  document
+    .getElementById(tasksId)
+    .addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        addSubtask(tasksId, wrapperId, plusId);
+      }
+    });
+}
 
 /**
  * With this function the subtasks of the array subTasks are rendered in the browser.
@@ -710,6 +849,11 @@ function editSubtask(i, containerType, subtask) {
   subtaskElement.innerHTML = generateInputEditHTML(i, containerType, subtask);
 }
 
+/**
+ * This function enables the user to edit a subtask's text.
+ * @param {number} i - This is the index of a subtask in the subarray subtasks.
+ * @param {string} containerType - This is either 'small' or 'big'. 
+ */
 function changeSubtaskText(i, containerType) {
   let editedInput = document.getElementById(`edit_input_${containerType}_${i}`);
   let editedSubtask = editedInput.value.trim();
@@ -725,4 +869,3 @@ function changeSubtaskText(i, containerType) {
     renderSubtasks();
   }
 }
-

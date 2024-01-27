@@ -32,13 +32,11 @@ const PRIO_BUTTON_MEDIUM_BIG = document.getElementById(
 );
 const PRIO_BUTTON_LOW_BIG = document.getElementById('prio_button_low_big');
 /* -------------------- due date --------------------- */
-/* const DUE_DATE_SMALL_SCREEN = document.getElementById('due_date_small_screen'); */
 const DUE_DATE_BOX_SMALL = document.getElementById('task_due_date_small');
 const DUE_DATE_BOX_BIG = document.getElementById('task_due_date_big');
 const TASK_DUE_INFO_BOX_SMALL = document.getElementById('task_due_info_small');
 const TASK_DUE_INFO_BOX_BIG = document.getElementById('task_due_info_big');
 /* --------------------- category -------------------- */
-/* const CATEGORY_SMALL_SCREEN = document.getElementById('category_small_screen'); */
 const TASK_CATEGORY_BOX_SMALL = document.getElementById(
   'task_category_info_small'
 );

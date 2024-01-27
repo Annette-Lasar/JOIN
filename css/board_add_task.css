@@ -309,7 +309,6 @@ li:hover,
 .icon-and-category-wrapper,
 .category-icon-wrapper,
 .contact-list li {
-  /* padding: 0.5em 0.25em; */
   display: flex;
   align-items: center;
   justify-content: space-between;

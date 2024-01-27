@@ -201,8 +201,8 @@ h4 {
   justify-content: center;
   border: var(--accent-color-gray) 0.5px solid;
   border-radius: 50%;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Hinzugefügte Schatten für den erhabenen Effekt */
-  transition: box-shadow 0.3s ease; /* Übergang für eine sanfte Animation */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); 
+  transition: box-shadow 0.3s ease; 
 }
 
 .three-dots-wrapper:hover {

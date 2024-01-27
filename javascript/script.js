@@ -1,3 +1,6 @@
+/**
+ * This function calls all necessary function on loading the page.
+ */
 async function init() {
   moveLogoOnStartScreen();
   await includeHTML();
@@ -10,11 +13,14 @@ async function init() {
   showInitials();
 }
 
+/**
+ * This function inserts the header and the navigation as templates.
+ */
 async function includeHTML() {
   let includeElements = document.querySelectorAll('[w3-include-html]');
   for (let i = 0; i < includeElements.length; i++) {
     const element = includeElements[i];
-    file = element.getAttribute('w3-include-html'); // "includes/header.html"
+    file = element.getAttribute('w3-include-html'); 
     let resp = await fetch(file);
     if (resp.ok) {
       element.innerHTML = await resp.text();
@@ -24,24 +30,28 @@ async function includeHTML() {
   }
 }
 
-/* -------------------------- start screen ---------------------------------- */
+/**
+ * This function moves the logo on the start screen and changes the background-color. 
+ */
 function moveLogoOnStartScreen() {
-  const URL = window.location.href;
-  if (URL.endsWith('index.html')) {
+  if (window.location.href.endsWith('index.html')) {
     setTimeout(() => {
-      document
-        .getElementById('login_page')
-        .classList.add('change-background-color');
-      document.getElementById('login_join_logo').classList.add('animate-logo');
-      document.getElementById('path_dot').classList.add('change-logo-color');
-      document.getElementById('path_j').classList.add('change-logo-color');
-      document.getElementById('path_o').classList.add('change-logo-color');
-      document.getElementById('path_i').classList.add('change-logo-color');
-      document.getElementById('path_n').classList.add('change-logo-color');
+      const loginPage = document.getElementById('login_page');
+      const loginJoinLogo = document.getElementById('login_join_logo');
+      const logoPaths = ['path_dot', 'path_j', 'path_o', 'path_i', 'path_n'];
+      loginPage.classList.add('change-background-color');
+      loginJoinLogo.classList.add('animate-logo');
+      logoPaths.forEach(pathId => {
+        document.getElementById(pathId).classList.add('change-logo-color');
+      });
     }, 500);
   }
 }
 
+
+/**
+ * This function hides the navigation on pages that are outside a user's login realm.
+ */
 function hideNavIconsOnExternalSites() {
   let menuWrapper = document.getElementById('menu_items_wrapper');
   let legalNoticeLink = document.getElementById('legal_notice_link');
@@ -56,6 +66,10 @@ function hideNavIconsOnExternalSites() {
   }
 }
 
+/**
+ * This function influences the layout of active sites.
+ * @returns - It returns nothing if an url contains index_link in its url.
+ */
 function activeSite() {
   const URL = window.location.href;
   let focusedId =
@@ -71,12 +85,17 @@ function activeSite() {
   document.getElementById(focusedId).classList.add('active');
 }
 
+/**
+ * This function toggles a context menu if the user clicks on the name or 
+ * guest icon in the top right corner of a page. 
+ */
 function toggleHeaderMenu() {
   document.getElementById('header_menu').classList.toggle('d-none');
   document.getElementById('background_wrapper').classList.toggle('d-none');
   document.getElementById('user_icon').classList.toggle('header-active');
 }
 
+/** This function hides the help link button on the help page. */
 function hideHelpLinkOnHelpPage() {
   let headerHelpIcon = document.getElementById('header_help_icon');
   const URL = window.location.href;
@@ -181,6 +200,10 @@ async function logout() {
   window.location.href = 'index.html';
 }
 
+
+/**
+ * This function shows and hides boxes of add task according to screen size.
+ */
 function showAndHideBoxesAccordingToScreenSize() {
   const url = window.location.href;
   const SMALL_SCREEN_ELEMENTS = [
@@ -227,6 +250,11 @@ function toggleDropdownLists(idContainer, idArrow, event) {
   }
 }
 
+/**
+ * This function closes several dropdown lists if not clicked on one of the
+ * lists themselves.
+ * @param {MouseEvent} event - This is a click event.
+ */
 function combinedClickFunction(event) {
   if (
     event.target.closest('.contact-list-element') == null &&
@@ -250,6 +278,12 @@ function combinedClickFunction(event) {
   }
 }
 
+/**
+ * This function closes several dropdown lists.
+ * @param {string} idContainer - This is the id of the list to be closed.
+ * @param {string} idArrow - This is the id of the arrow next to the list to be closed.
+ * @param {MouseEvent} event - This is a click event.
+ */
 function closeDropdownList(idContainer, idArrow, event) {
   event.stopPropagation();
   const CATEGORY_LIST = document.getElementById(idContainer);
@@ -260,6 +294,10 @@ function closeDropdownList(idContainer, idArrow, event) {
   }
 }
 
+/**
+ * This function adds an event listener that checks if a category is selected
+ * and removes a warning.
+ */
 function addCategoriesEventListeners() {
   for (let i = 0; i < categories.length; i++) {
     const categoryWrapperSmall = document.getElementById(
@@ -277,11 +315,21 @@ function addCategoriesEventListeners() {
   }
 }
 
+/**
+ * This event listener checks the window size.
+ */
 document.addEventListener('DOMContentLoaded', function () {
   showAndHideBoxesAccordingToScreenSize();
   window.addEventListener('resize', showAndHideBoxesAccordingToScreenSize);
 });
 
+/**
+ * This function renders an alert message if a container has not been filled out.
+ * @param {string} containerId - This is the id of the container that is opened.
+ * @param {string} messageId - This is the id of the container into which the message
+ * is rendered.
+ * @param {string} alertMessage - This is the message that is to be shown. 
+ */
 function renderAlert(containerId, messageId, alertMessage) {
   openOrCloseAlertContainer(containerId, 'open');
   const alertContent = document.getElementById(messageId);
@@ -293,6 +341,15 @@ function renderAlert(containerId, messageId, alertMessage) {
   }
 }
 
+/**
+ * This function renders a confirm container with two buttons that enable the
+ * user to confirm or reject a warning.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {string} containerId - This is the id of the container to be opened.
+ * @param {string} messageId - This is the id of the container into which the
+ * message is to be shown.
+ * @param {string} alertMessage - This is the message text to be shown. 
+ */
 function renderConfirmDelete(i, containerId, messageId, alertMessage) {
   openOrCloseAlertContainer(containerId, 'open');
   const confirmContent = document.getElementById(messageId);
@@ -300,6 +357,11 @@ function renderConfirmDelete(i, containerId, messageId, alertMessage) {
   confirmContent.innerHTML = generateConfirmContentHTML(i, alertMessage);
 }
 
+/**
+ * This function opens or closes the confirm container.
+ * @param {string} containerId - This is the id of the container to be opened or closed.
+ * @param {string} action - This is either 'open' or 'close'. 
+ */
 function openOrCloseAlertContainer(containerId, action) {
   const alertContainer = document.getElementById(containerId);
   if (action === 'open') {
@@ -309,12 +371,23 @@ function openOrCloseAlertContainer(containerId, action) {
   }
 }
 
+/**
+ * This function generates the HTML code for an alert message.
+ * @param {string} alertMessage - This is the alert message text to be shown.
+ * @returns - The function returns the HTML code.
+ */
 function generateAlertContentHTML(alertMessage) {
   return /* html */ `
     <div class="alert-message">${alertMessage}</div>
   `;
 }
 
+/**
+ * This function generates the HTML code for a confirm message.
+ * @param {number} i - This is the index of a task in the array tasks.
+ * @param {string} alertMessage - This is the message text to be shown.
+ * @returns - The function returns the HTML code. 
+ */
 function generateConfirmContentHTML(i, alertMessage) {
   return /* html */ `
     <div class="alert-message">${alertMessage}</div>
@@ -325,6 +398,12 @@ function generateConfirmContentHTML(i, alertMessage) {
   `;
 }
 
+/**
+ * This function adapts the initials' color to its background. If the background is 
+ * light, the color of the characters is dark and vice versa.
+ * @param {string} containerID - This is the id of the container that contains the 
+ * backgroundcolor and the characters to be adapted.
+ */
 function adaptInitialsToBackground(containerID) {
   const iconContainer = document.getElementById(containerID);
   const iconColor = getComputedStyle(iconContainer).backgroundColor;
@@ -337,6 +416,11 @@ function adaptInitialsToBackground(containerID) {
   }
 }
 
+/**
+ * This function checks if a color is light or dark.
+ * @param {color} color - This is a color in the form of a rgb code.
+ * @returns - The function returns true if a color is light.
+ */
 function isColorLight(color) {
   const rgb = color.match(/\d+/g).map(Number);
   const brightness = (rgb[0] * 299 + rgb[1] * 587 + rgb[2] * 114) / 1000;

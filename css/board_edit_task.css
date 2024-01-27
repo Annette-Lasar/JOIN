@@ -150,18 +150,6 @@
   cursor: pointer;
 }
 
-/* .edit-contact-list-wrapper {
-  padding: 4px 2px;
-  margin: 0 0 0.25em;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.edit-contact-list-wrapper:first-of-type {
-  height: 36px;
-} */
-
 .contact-list-element {
   padding: 4px 2px;
   margin: 0 0 0.25em;

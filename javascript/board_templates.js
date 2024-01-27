@@ -110,7 +110,7 @@ function generateOverflowIndicatorOutsideCardHTML(hiddenContactsCount) {
     return /* html */ `
             <div id="taskCard_${i}" data-status="${oneTask.status}" draggable="true" onclick="openOrCloseContainer(${i}, 'detail_task_wrapper_${i}', 'open')" ondragstart="startDragging(${i})" class="todo">
               <div class="todo-header-wrapper">
-                  <div class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
+                  <div id="todo_category_${i}" class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
                   <div onclick="openCardContextMenu(${i}, '${oneTask.status}', event)" class="three-dots-wrapper"><img src="../icons/three_dots.svg"></div>
               </div>
               <div class="todo-title">${oneTask['title']}</div>

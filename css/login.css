@@ -164,7 +164,6 @@ body {
   flex-direction: column;
   justify-content: space-between;
   border-radius: 12px;
-  /* border: green 3px solid; */
 }
 
 .sign-up-content form {
