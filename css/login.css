@@ -93,6 +93,7 @@ body {
 .login-content,
 .sign-up-content {
   width: 80vw;
+  height: 70vh;
   max-width: 600px;
   margin: 3.5rem 0 0;
   display: flex;
@@ -102,10 +103,17 @@ body {
 }
 
 .sign-up-content {
-  height: 50vh;
+  height: 65vh;
   padding: 1em;
-  background-color: var(--accent-color-white);
   border-radius: 12px;
+  width: 80vw;
+  max-width: 600px;
+  margin: 3.5rem 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--accent-color-white);
 }
 
 .headline-login-content,
@@ -136,7 +144,7 @@ body {
 .login-content h1,
 .sign-up-content h1 {
   margin: 0 auto;
-  font-size: 44px;
+  font-size: 2rem;
   font-weight: 700;
   color: var(--background-color-darkblue);
 }
@@ -149,7 +157,7 @@ body {
 
 .form-content-without-sign-up-button {
   width: 100%;
-  height: 50vh;
+  height: 90%;
   margin: 0 auto;
   padding: 1em 0;
   background-color: var(--accent-color-white);
@@ -160,6 +168,7 @@ body {
 .login-content form,
 .sign-up-content form {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -355,6 +364,11 @@ breakpoint: 50em
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .login-content h1,
+  .sign-up-content h1 {
+    font-size: 3rem;
   }
 
   .button-wrapper-log-in {

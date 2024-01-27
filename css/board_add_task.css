@@ -301,11 +301,6 @@ li:hover,
   transform: rotate(180deg);
 }
 
-.category-item:first-of-type .category-icon-wrapper,
-.category-item:nth-of-type(2) .category-icon-wrapper {
-  display: none;
-}
-
 .icon-and-category-wrapper,
 .category-icon-wrapper,
 .contact-list li {
