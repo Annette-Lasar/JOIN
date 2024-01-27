@@ -397,11 +397,7 @@ breakpoint: 50em
 
     .nav {
         height: 100%;
-<<<<<<< HEAD
-        padding: 2em 0;
-=======
         padding: min(4em, 6vh) 0;
->>>>>>> 276ca243c74143ed90408eb6cbc1e4aa7c2c8fe4
         display: flex;
         flex-direction: column;
     }
@@ -424,7 +420,7 @@ breakpoint: 50em
         margin: 1em 0 0;
         display: flex;
         flex-direction: column;
-        justify-content: space-evenly;
+        justify-content: center;
         align-items: flex-start;
         gap: 15px;
     }
