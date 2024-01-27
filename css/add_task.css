@@ -329,6 +329,10 @@ input[type='color'] {
   cursor: pointer;
 }
 
+input[type='color']::-webkit-color-swatch {
+  border: none;
+}
+
 .input-edit-category-text,
 .category-new-input {
   flex: 1;
