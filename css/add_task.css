@@ -225,7 +225,7 @@ input[type='date'] {
 
 .task-category {
   width: 100%;
-  padding: 0.6em;
+  padding: 0.7em;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -351,7 +351,7 @@ subtasks section
 ---------------------------------------------------------------------------------------- */
 .sub-task-wrapper {
   width: 99%;
-  padding: 0.3em;
+  padding: 0.25em 0.3em;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -637,57 +637,4 @@ breakpoint: 28em
     min-width: 350px;
   }
 }
-/* ---------------------------------------------------
-breakpoint: 50em
------------------------------------------------------- */
-@media (min-width: 50em) {
-  .task-wrapper {
-    overflow-y: unset;
-  }
 
-  .clear-button {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .task-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  .create-task-wrapper {
-    margin: 1em 0;
-  }
-
-  .category-list.show {
-    padding: 0 0.25em 1em;
-  }
-
-  .big-screen,
-  .small-screen {
-    width: 45%;
-  }
-
-  .separator-line {
-    width: 1px;
-    height: 200px;
-    margin: 1em 0 0;
-    display: block;
-    background-color: var(--accent-color-gray);
-  }
-
-  .subtask-container-big {
-    max-height: 100px;
-    overflow-y: auto;
-  }
-
-  .alert-container {
-    position: absolute;
-  }
-
-  .d-none {
-    display: none;
-  }
-}

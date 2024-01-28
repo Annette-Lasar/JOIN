@@ -1,0 +1,103 @@
+/* ---------------------------------------------------
+breakpoint: 50em
+------------------------------------------------------ */
+@media (min-width: 50em) {
+    .task-wrapper {
+      overflow-y: unset;
+    }
+  
+    .clear-button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  
+    .task-wrapper {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  
+    .create-task-wrapper {
+      margin: 1em 0;
+    }
+  
+    .category-list.show {
+      padding: 0 0.25em 1em;
+    }
+  
+    .big-screen,
+    .small-screen {
+      width: 45%;
+    }
+  
+    .separator-line {
+      width: 1px;
+      height: 200px;
+      margin: 1em 0 0;
+      display: block;
+      background-color: var(--accent-color-gray);
+    }
+  
+    .subtask-container-big {
+      max-height: 100px;
+      overflow-y: auto;
+    }
+  
+    .alert-container {
+      position: absolute;
+    }
+  
+    .d-none {
+      display: none;
+    }
+  }
+
+  /* -------------------------------------------------
+  breakpoint 60em
+  ---------------------------------------------------- */
+  @media (min-width: 60em) {
+    h1 {
+        font-size: 1.9rem;
+    }
+
+    .task-wrapper {
+        height: 100%;
+        border: red 1px solid;
+    }
+
+    .label {
+        font-size: 1rem;
+    }
+  }
+
+  @media (min-width: 60em) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    .task-wrapper {
+        height: 90%;
+    }
+
+    .label {
+        font-size: 1.2rem;
+    }
+
+    input::placeholder,
+    textarea::placeholder,
+    .task-category {
+        font-size: 1rem
+    }
+
+    .contact-list, 
+    .category-list {
+        top: 60px;
+    }
+
+    .contact-list li,
+    .category-list li,
+    .new-category {
+        font-size: 1rem;
+    }
+  }
