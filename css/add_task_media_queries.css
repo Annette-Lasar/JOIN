@@ -2,6 +2,10 @@
 breakpoint: 50em
 ------------------------------------------------------ */
 @media (min-width: 50em) {
+    .page {
+        max-width: 1024px;
+    }
+
     .task-wrapper {
       overflow-y: unset;
     }
@@ -47,6 +51,10 @@ breakpoint: 50em
     .alert-container {
       position: absolute;
     }
+
+    .explanation-container {
+        font-size: 0.8rem;
+    }
   
     .d-none {
       display: none;
@@ -66,8 +74,28 @@ breakpoint: 50em
         border: red 1px solid;
     }
 
-    .label {
+    .label,
+    .prio-button {
         font-size: 1rem;
+    }
+
+    .explanation-container {
+        font-size: 0.9rem;
+    }
+
+    .task-and-clear-button-wrapper {
+        width: 250px;
+    }
+
+    .clear-button, 
+    .dark-button {
+        width: 120px;
+        font-size: 1rem;
+    }
+
+    .clear-button {
+        padding: 10px 12px;
+        width: fit-content;
     }
   }
 
@@ -98,6 +126,10 @@ breakpoint: 50em
     .contact-list li,
     .category-list li,
     .new-category {
+        font-size: 1rem;
+    }
+
+    .explanation-container {
         font-size: 1rem;
     }
   }
