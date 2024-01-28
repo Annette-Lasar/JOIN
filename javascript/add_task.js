@@ -767,7 +767,8 @@ function deleteSubtask(i) {
  * @param {string} wrapperId - see above
  * @param {string} plusIconId - see above
  */
-function addSubtask(inputId, wrapperId, plusIconId) {
+function addSubtask(inputId, wrapperId, plusIconId, event) {
+  event.stopPropagation();
   const SUBTASK_INPUT_BOX = document.getElementById(inputId);
   const CLOSE_AND_CHECK_WRAPPER = document.getElementById(wrapperId);
   const SUBTASK_PLUS_ICON = document.getElementById(plusIconId);
