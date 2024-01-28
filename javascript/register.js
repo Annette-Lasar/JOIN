@@ -99,6 +99,7 @@ function notAUser() {
     }
 }
 
+
 /**
  * the 'users' array is then sent back to the server;
  * Additionally, 3 keys are created on the server for each user (in the form of their email address); 
@@ -135,7 +136,6 @@ function successfullyRegistered() {
         toggleSignUpAndLogin();
     }, 2000); 
 }
-
 
 
 /**
