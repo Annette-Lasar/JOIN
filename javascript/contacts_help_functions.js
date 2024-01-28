@@ -31,20 +31,43 @@ function loadInitials(i) {
     return true;
   }
   
+  /**
+   * Checks if name has spaces in it.
+   * 
+   * @param {string} name 
+   * @returns true or false
+   */
   function hasWhiteSpace(name) {
     return name.indexOf(' ') >= 0;
   }
   
+
+  /**
+   * Prevents space at the beginning of name input field
+   * 
+   * @param {string} input 
+   */
   function validate(input) {
     if (/^\s/.test(input.value)){
         input.value = '';
     }
   }
   
+  /**
+   * Prevents more than one whitespace in the name input field
+   * 
+   * @param {string} input 
+   */
   function removeExtraSpaces(input) {
     input.value = input.value.replace(/ +/g, ' ');
   }
   
+  /**
+   * Capitalizes the value in name input field
+   * 
+   * @param {string} str 
+   * @returns 
+   */
   function capitalize(str) {
     var splitStr = str.toLowerCase().split(' ');
     for (var i = 0; i < splitStr.length; i++) {
@@ -111,6 +134,12 @@ function loadInitials(i) {
     }, 300);
   }
 
+  /**
+   * Loads the first letter/letters of name value
+   * 
+   * @param {string} name 
+   * @returns 
+   */
   function loadFirstLetter(name) {
     let firstLetter = '';
     for (let i = 0; i < name.length; i++) {
