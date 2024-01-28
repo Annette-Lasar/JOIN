@@ -105,8 +105,9 @@ function checkContactsInGroup() {
 function addContactToGroup() {
     for (let i = 0; i < allContacts.length; i++) {
         let name = allContacts[i]['name'];
-        let firstLetter = name.slice(0, 1);
+        let firstLetter = loadFirstLetter(name);
         document.getElementById('contacts' + firstLetter).innerHTML += addContactToGroupTemplate(name, i);
+        
     }
 }
 
@@ -256,6 +257,7 @@ function createdContactAnimation() {
  */
 function pushNewContact() {
     let inputName = document.getElementById('add_name').value;
+    inputName = capitalize(inputName);
     let inputEMail = document.getElementById('add_email').value;
     let inputPhone = document.getElementById('add_phone').value;
     let color = randomUserColor();

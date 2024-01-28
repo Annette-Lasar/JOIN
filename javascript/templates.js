@@ -1,77 +1,4 @@
 /**
- * Extracts initials from contact name.
- * 
- * @param {number} i - index of current contact.
- * @returns 
- */
-function loadInitials(i) {
-  let name = allContacts[i]['name'].split(' ');
-  let initials = '';
-  for (let j = 0; j < name.length; j++) {
-      initials += name[j][0];
-  }
-  return initials;
-}
-
-/**
- * Shows Add new contact form.
- */
-function showAddForm() {
-  document.getElementById('contact_form').innerHTML = addNewContactFormTemplate();
-  formAnimation();
-}
-
-/**
- * Shows Edit contact form.
- */
-function showEditForm() {
-  let i = currentContactIndex();
-  document.getElementById('contact_form').innerHTML = editContactFormTemplate(i);
-  loadContactValues(i);
-  formAnimation();
-}
-
-/**
- * Loads the actual values for a contact that we will change into the edit contact input fields.
- * 
- * @param {number} i - edited contact index.
- */
-function loadContactValues(i) {
-  document.getElementById('add_name').value = allContacts[i]['name'];
-  document.getElementById('add_email').value = allContacts[i]['e_mail'];
-  document.getElementById('add_phone').value = allContacts[i]['phone'];
-}
-
-/**
-* Removes all values from add new contact input fields.
-*/
-function resetAddNewContactValues() {
-  document.getElementById('add_name').value = '';
-  document.getElementById('add_email').value = '';
-  document.getElementById('add_phone').value = '';
-}
-
-/**
-* Shows small menu with contact edit or delete options.
-*/
-function showOptions() {
-  document.getElementById('empty').style.display = 'block';
-  document.getElementById('edit_delete').classList.remove('slide-out-edit');
-  document.getElementById('edit_delete').classList.add('slide-in-edit');
-}
-
-/**
-* Hides the menu with contact edit or delete options.
-*/
-function hideOptions() {
-  document.getElementById('edit_delete').classList.remove('slide-in-edit');
-  document.getElementById('edit_delete').classList.add('slide-out-edit');
-  setTimeout(() => {
-      document.getElementById('empty').style.display = 'none';
-  }, 300);
-}
-
-/**
  * Template for groups.
  * 
  * @param {string} letter - all letters in alphabet
@@ -235,8 +162,8 @@ function addNewContactFormTemplate() {
         </svg>
       </div>
       <form class="form" onsubmit="addNewContact(); return false">
-        <input id="add_name" type="text" placeholder="Name" required>
-        <input id="add_email" type="email" name="" placeholder="E-Mail" required>
+        <input id="add_name" type="text" placeholder="Name" oninput="validate(this), removeExtraSpaces(this)" required>
+        <input id="add_email" type="email" name="" onkeypress="return isSpace(event)"  placeholder="E-Mail" required>
         <input id="add_phone" type="tel" name="" placeholder="Telefon" onkeypress="return isNumber(event)" onpaste="return false;" ondrop="return false;" required>
         <div class="form-buttons">
           <button id="cancel_btn" class="cancel-btn white-btn" onclick="hideAddForm()">
@@ -321,8 +248,8 @@ function editContactFormTemplate(i) {
         </div>
       </div>
       <form class="form" onsubmit="saveContactChanges(${i}); return false">
-        <input id="add_name" type="text" placeholder="Name" required>
-        <input id="add_email" type="email" name="" placeholder="E-Mail" required>
+        <input id="add_name" type="text" placeholder="Name" oninput="validate(this), removeExtraSpaces(this)" required>
+        <input id="add_email" type="email" name="" onkeypress="return isSpace(event)" placeholder="E-Mail" required>
         <input id="add_phone" type="tel" name="" placeholder="Telefon" onkeypress="return isNumber(event)" onpaste="return false;" ondrop="return false;" required>
         <div class="form-buttons">
           <button type="button" id="delete_btn" class="delete-btn white-btn" onclick="renderAlertDeleteContact('confirm_container', 'confirm_content', 'Are you sure you want to delete this contact permanently? This process is irreversible.'), hideAddForm()">
