@@ -700,6 +700,7 @@ input:focus-visible {
         padding: 24px;
         background-color: var(--accent-color-white);
         position: sticky;
+        top: 0;
     }
 
     .dark-button {
