@@ -23,7 +23,16 @@ body {
 }
 
 .page {
-  height: calc(100vh - 160px - 48px);
+  height: calc(100vh - 160px);
+  border: orange 2px solid;
+}
+
+.outer-task-wrapper {
+  height: 100%;
+  border: royalblue 2px solid;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .task-wrapper {
@@ -499,10 +508,11 @@ subtasks section
 }
 
 .create-task-wrapper {
-  padding: 24px 1em;
+  padding: 12px 1em;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border: green 1px solid;
 }
 
 .create-task-wrapper.overlay {

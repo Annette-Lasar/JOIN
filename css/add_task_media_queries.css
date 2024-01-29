@@ -3,7 +3,15 @@ breakpoint: 50em
 ------------------------------------------------------ */
 @media (min-width: 50em) {
     .page {
-        max-width: 1024px;
+      height: calc(100vh - 80px);
+      display: flex;
+        justify-content: center;
+    }
+
+    .outer-task-wrapper {
+      height: 100%;
+      width: 100%;
+      max-width: 1024px;
     }
 
     .task-wrapper {
@@ -22,9 +30,9 @@ breakpoint: 50em
       justify-content: space-between;
     }
   
-    .create-task-wrapper {
+    /* .create-task-wrapper {
       margin: 1em 0;
-    }
+    } */
   
     .category-list.show {
       padding: 0 0.25em 1em;
