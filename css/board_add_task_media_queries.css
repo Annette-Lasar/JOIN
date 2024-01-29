@@ -1,0 +1,130 @@
+/* ---------------------------------------------------
+  breakpoint: 28em
+  ------------------------------------------------------ */
+@media (min-width: 28em) {
+  .alert-container {
+    min-width: 350px;
+  }
+}
+
+/* ---------------------------------------------------
+    breakpoint: 38em
+    ------------------------------------------------------ */
+@media (min-width: 38em) {
+  .add-task-overlay {
+    height: 450px;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+  }
+}
+
+/* ---------------------------------------------------
+    breakpoint: 50em
+    ------------------------------------------------------ */
+@media (min-width: 50em) {
+  .clear-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .task-wrapper {
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .create-task-wrapper {
+    margin: 1em 0;
+  }
+
+  .category-list.show {
+    padding: 0 0.25em 1em;
+  }
+
+  .big-screen,
+  .small-screen {
+    width: 45%;
+  }
+
+  .separator-line {
+    width: 1px;
+    height: 200px;
+    margin: 1em 0 0;
+    display: block;
+    background-color: var(--accent-color-gray);
+  }
+
+  .subtask-container-big {
+    max-height: 100px;
+    overflow-y: auto;
+  }
+
+  .alert-container {
+    position: absolute;
+  }
+
+  .d-none {
+    display: none;
+  }
+
+  .add-task-overlay {
+    min-width: 600px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-40%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .add-task-overlay-page {
+    max-height: 90%;
+  }
+
+  .add-task-overlay-page::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  .contact-wrapper {
+    height: 140px;
+  }
+
+  .create-task-wrapper.overlay {
+    margin: 0;
+  }
+}
+
+/* ---------------------------------------------------
+    breakpoint: 60em
+    ------------------------------------------------------ */
+@media (min-width: 60em) {
+  .add-task-overlay {
+    height: 530px;
+  }
+
+  .add-task-overlay h1 {
+    font-size: 2rem;
+  }
+}
+
+/* ---------------------------------------------------
+    breakpoint: 70em
+    ------------------------------------------------------ */
+@media (min-width: 70em) {
+  .add-task-overlay {
+    width: 800px;
+    max-width: 800px;
+    height: 600px;
+  }
+
+  .add-task-overlay h1 {
+    font-size: 2rem;
+  }
+}
+
+.d-none {
+    display: none;
+}

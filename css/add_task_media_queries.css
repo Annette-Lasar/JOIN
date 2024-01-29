@@ -1,4 +1,13 @@
 /* ---------------------------------------------------
+breakpoint: 28em
+------------------------------------------------------ */
+@media (min-width: 28em) {
+  .alert-container {
+    min-width: 350px;
+  }
+}
+
+/* ---------------------------------------------------
 breakpoint: 50em
 ------------------------------------------------------ */
 @media (min-width: 50em) {
@@ -29,10 +38,6 @@ breakpoint: 50em
       flex-direction: row;
       justify-content: space-between;
     }
-  
-    /* .create-task-wrapper {
-      margin: 1em 0;
-    } */
   
     .category-list.show {
       padding: 0 0.25em 1em;
@@ -79,7 +84,6 @@ breakpoint: 50em
 
     .task-wrapper {
         height: 100%;
-        border: red 1px solid;
     }
 
     .label,
@@ -109,7 +113,9 @@ breakpoint: 50em
 
   @media (min-width: 60em) {
     h1 {
-        font-size: 2rem;
+      margin-left: 0.5em;  
+      font-size: 2rem;
+
     }
 
     .task-wrapper {
@@ -139,5 +145,11 @@ breakpoint: 50em
 
     .explanation-container {
         font-size: 1rem;
+    }
+  }
+
+  @media (min-width: 70em) {
+    h1 {
+      font-size: 3rem;
     }
   }

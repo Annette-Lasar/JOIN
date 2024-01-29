@@ -8,11 +8,15 @@
     <link rel="stylesheet" href="../css/reset_stylesheet.css" />
     <link rel="stylesheet" href="../css/fonts.css" />
     <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/style_media_queries.css" />
     <link rel="stylesheet" href="../css/board.css" />
     <link rel="stylesheet" href="../css/board_detail_view.css" />
     <link rel="stylesheet" href="../css/board_edit_task.css" />
     <link rel="stylesheet" href="../css/add_task.css" />
+    <link rel="stylesheet" href="../css/add_task_subtasks_alert.css" />
     <link rel="stylesheet" href="../css/board_add_task.css" />
+    <link rel="stylesheet" href="../css/board_add_task_subtask.css" />
+    <link rel="stylesheet" href="../css/board_add_task_media_queries.css" />
     <link rel="stylesheet" href="../css/board_media_queries.css" />
     <script src="../javascript/data_backup_guests.js" defer></script>
     <script src="../javascript/script.js" defer></script>
@@ -21,9 +25,13 @@
     <script src="../javascript/board_server.js" defer></script>
     <script src="../javascript/board_data.js" defer></script>
     <script src="../javascript/board.js" defer></script>
+    <script src="../javascript/board_general.js" defer></script>
     <script src="../javascript/board_templates.js" defer></script>
-    <script src="../javascript/bord_edit_task.js" defer></script>
+    <script src="../javascript/board_templates_overlay.js" defer></script>
+    <script src="../javascript/board_edit_task.js" defer></script>
+    <script src="../javascript/board_edit_subtasks.js" defer></script>
     <script src="../javascript/add_task.js" defer></script>
+    <script src="../javascript/add_task_category.js" defer></script>
     <script src="../javascript/add_task_server.js" defer></script>
     <script src="../javascript/add_task_templates.js" defer></script>
     <script src="../javascript/summary.js" defer></script>
@@ -172,7 +180,7 @@
       <div class="add-task-header-wrapper">
         <h1>Add Task</h1>
         <img
-          onclick="closeAddTaskToList()"
+          onclick="closeAddTaskToList(event)"
           src="../icons/close.svg"
           alt="Close add task"
         />
@@ -370,7 +378,7 @@
                     />
                     <div class="subtask-separator-line"></div>
                     <img
-                      onclick="addSubtask('sub_tasks_small', 'close_and_check_wrapper_small', 'subtask_plus_small')"
+                      onclick="addSubtask('sub_tasks_small', 'close_and_check_wrapper_small', 'subtask_plus_small', event)"
                       id="check_subtask_small"
                       class="check-subtask"
                       src="../icons/check.svg"
