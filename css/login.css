@@ -6,7 +6,7 @@ body {
   width: 100vw;
   height: 100vh;
   padding: 1em;
-  position: relative;
+ /*  position: relative; */
   background-color: var(--background-color-darkblue);
   overflow: hidden;
   transition: background-color 1s;
@@ -102,9 +102,18 @@ body {
   justify-content: space-between;
 }
 
+.login-content {
+  height: 75vh;
+  max-height: 600px;
+  position: relative;
+  justify-content: center;
+  border: orchid 1px solid;
+}
+
 .sign-up-content {
-  height: 65vh;
-  padding: 1em;
+  height: 70vh;
+  max-height: 350px;
+  padding: 0.5em 1em;
   border-radius: 12px;
   width: 80vw;
   max-width: 600px;
@@ -119,10 +128,11 @@ body {
 .headline-login-content,
 .headline-sign-up-content {
   width: 100%;
+  margin: 0 0 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  gap: 12px;
 }
 
 .sign-up-content a {
@@ -149,20 +159,35 @@ body {
   color: var(--background-color-darkblue);
 }
 
+.invisible-arrow {
+  opacity: 0;
+}
+
 .blue-line {
   height: 3px;
   width: 100px;
   background-color: var(--accent-color-lightblue);
 }
 
+.combined-signup-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .form-content-without-sign-up-button {
   width: 100%;
   height: 90%;
-  margin: 0 auto;
-  padding: 1em 0;
+  max-height: 300px;
+  margin: 0 auto 0.5em;
+  padding: 0.5em 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: var(--accent-color-white);
   box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
   border-radius: 12px;
+  border: orange 1px solid;
 }
 
 .login-content form,
@@ -175,19 +200,24 @@ body {
   border-radius: 12px;
 }
 
-.sign-up-content form {
-  height: 250px;
+.login-content form {
+  border: red 1px solid;
+  max-height: 360px;
 }
 
-
+.sign-up-content form {
+  gap: 12px;
+}
 
 .login-input-and-button-wrapper {
-  height: 70%;
-  margin: 1em 0;
+  height: 50%;
+  margin: 0.5em 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  gap: 8px;
+  border: royalblue 1px solid;
 }
 
 .login-input-wrapper {
@@ -258,6 +288,10 @@ input:hover {
 }
 
 .button-wrapper-log-in {
+  width: 100%;
+}
+
+.button-wrapper-log-in {
   height: 70px;
 }
 
@@ -306,7 +340,7 @@ button {
 }
 
 .sign-up-wrapper {
-  margin: 1em 0 0;
+  margin: 0.5em 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -360,19 +394,18 @@ breakpoint: 50em
 @media (min-width: 50em) {
   .button-wrapper-log-in,
   .button-wrapper-sign-up {
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 8px;
+    border: royalblue 1px solid;
   }
 
   .login-content h1,
   .sign-up-content h1 {
     font-size: 3rem;
-  }
-
-  .button-wrapper-log-in {
-    width: 260px;
   }
 
   .button-wrapper-sign-up {
@@ -382,8 +415,8 @@ breakpoint: 50em
   .sign-up-wrapper {
     width: 220px;
     position: absolute;
-    top: -36px;
-    right: -32px;
+    top: 4px;
+    right: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -397,6 +430,174 @@ breakpoint: 50em
   .button-wrapper-log-in button,
   .button-wrapper-sign-up button {
     width: 120px;
+  }
+}
+
+/* ---------------------------------------------------
+breakpoint: 60em
+------------------------------------------------------ */
+@media (min-width: 60em) {
+  .sign-up-wrapper {
+    top: 36px
+  }
+
+  @keyframes moveLogo {
+    100% {
+      transform: translate(-50%, -50%) translate(-28vw, -40vh);
+      height: 50px;
+    }
+  }
+}
+
+/* ---------------------------------------------------
+breakpoint: 65em
+------------------------------------------------------ */
+@media (min-width: 65em) {
+  .sign-up-wrapper {
+    top: 48px
+  }
+
+  @keyframes moveLogo {
+    100% {
+      transform: translate(-50%, -50%) translate(-26vw, -40vh);
+      height: 50px;
+    }
+  }
+}
+
+/* ---------------------------------------------------
+breakpoint: 70em
+------------------------------------------------------ */
+@media (min-width: 70em) {
+  .sign-up-wrapper {
+    top: 52px
+  }
+
+  @keyframes moveLogo {
+    100% {
+      transform: translate(-50%, -50%) translate(-24vw, -36vh);
+      height: 50px;
+    }
+  }
+}
+
+/* ---------------------------------------------------
+breakpoint: 75em
+------------------------------------------------------ */
+@media (min-width: 75em) {
+  @keyframes moveLogo {
+    100% {
+      transform: translate(-50%, -50%) translate(-23vw, -34vh);
+      height: 50px;
+    }
+  }
+}
+
+/* ---------------------------------------------------
+breakpoint: 80em
+------------------------------------------------------ */
+@media (min-width: 80em) {
+  @keyframes moveLogo {
+    100% {
+      transform: translate(-50%, -50%) translate(-21vw, -30vh);
+      height: 50px;
+    }
+  }
+}
+
+/* ---------------------------------------------------
+breakpoint: 85em
+------------------------------------------------------ */
+@media (min-width: 85em) {
+  @keyframes moveLogo {
+    100% {
+      transform: translate(-50%, -50%) translate(-20vw, -30vh);
+      height: 50px;
+    }
+  }
+}
+
+/* ---------------------------------------------------
+breakpoint: 85em
+------------------------------------------------------ */
+@media (min-width: 85em) {
+  @keyframes moveLogo {
+    100% {
+      transform: translate(-50%, -50%) translate(-20vw, -30vh);
+      height: 50px;
+    }
+  }
+}
+
+/* ---------------------------------------------------
+breakpoint: 90em
+------------------------------------------------------ */
+@media (min-width: 90em) {
+  @keyframes moveLogo {
+    100% {
+      transform: translate(-50%, -50%) translate(-19vw, -27vh);
+      height: 50px;
+    }
+  }
+}
+
+/* ---------------------------------------------------
+breakpoint: 95em
+------------------------------------------------------ */
+@media (min-width: 95em) {
+  @keyframes moveLogo {
+    100% {
+      transform: translate(-50%, -50%) translate(-18vw, -26vh);
+      height: 50px;
+    }
+  }
+}
+
+/* ---------------------------------------------------
+breakpoint: 100em
+------------------------------------------------------ */
+@media (min-width: 100em) {
+  @keyframes moveLogo {
+    100% {
+      transform: translate(-50%, -50%) translate(-17vw, -25vh);
+      height: 50px;
+    }
+  }
+}
+
+/* ---------------------------------------------------
+breakpoint: 105em
+------------------------------------------------------ */
+@media (min-width: 105em) {
+  @keyframes moveLogo {
+    100% {
+      transform: translate(-50%, -50%) translate(-16vw, -23vh);
+      height: 50px;
+    }
+  }
+}
+
+/* ---------------------------------------------------
+breakpoint: 110em
+------------------------------------------------------ */
+@media (min-width: 110em) {
+  @keyframes moveLogo {
+    100% {
+      transform: translate(-50%, -50%) translate(-15vw, -23vh);
+      height: 50px;
+    }
+  }
+}
+
+/* ---------------------------------------------------
+breakpoint: 115em
+------------------------------------------------------ */
+@media (min-width: 115em) {
+  @keyframes moveLogo {
+    100% {
+      transform: translate(-50%, -50%) translate(-15vw, -20vh);
+      height: 50px;
+    }
   }
 }
 
