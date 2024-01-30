@@ -15,6 +15,11 @@ breakpoint: 50em
     justify-content: center;
   }
 
+ .board-wrapper {
+  width: 100%;
+  max-width: 1024px;
+ }
+
   .headline-searchbar-addTask-wrapper {
     width: 100%;
     padding: 0 0.25em 0 0;
@@ -274,3 +279,11 @@ breakpoint: 50em
   font-size: 0.7rem;
 }
 }
+
+/* @media (min-width: 90em) {
+  .board-wrapper {
+    max-width: 1440px;
+    margin: 0 auto;
+    border: royalblue 1px solid;
+  }
+} */

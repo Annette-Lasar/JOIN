@@ -21,6 +21,7 @@ breakpoint: 50em
       height: 100%;
       width: 100%;
       max-width: 1024px;
+      max-height: 800px;
     }
 
     .task-wrapper {
