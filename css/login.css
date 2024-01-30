@@ -4,7 +4,6 @@ body {
   align-items: center;
   overflow: hidden;
   background-color: var(--background-color-darkblue);
-  border: green 2px solid;
 }
 
 .login-page {
@@ -15,9 +14,11 @@ body {
   margin: 0 auto;
   padding: 1em;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
   transition: background-color 1s;
-  border: blue 1px solid;
 }
 
 .login-join-logo {
@@ -33,15 +34,11 @@ body {
   animation: changeBackground 1s forwards;
 }
 
-/* body {
-  animation: changeBackground 1s forwards;
-} */
-
 .content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+ /*  position: absolute; */
+ /*  top: 50%; */
+  /* left: 50%; */
+  /* transform: translate(-50%, -50%); */
   font-size: 24px;
   opacity: 0;
   pointer-events: none;
@@ -64,12 +61,7 @@ body {
   0% {
     background-color: var(--background-color-darkblue);
   }
-  /* 25% {
-    background-color: var(--background-color-darkblue);
-  }
-  50% {
-    background-color: var(--background-color-darkblue);
-  } */
+ 
   100% {
     background-color: var(--background-color-lightgray);
   }
@@ -125,9 +117,8 @@ body {
 .login-content {
   height: 75vh;
   max-height: 600px;
-  position: relative;
+  /* position: relative; */
   justify-content: center;
-  border: orchid 1px solid;
 }
 
 .sign-up-content {
@@ -200,14 +191,13 @@ body {
   height: 90%;
   max-height: 300px;
   margin: 0 auto 0.5em;
-  padding: 0.5em 0;
+  padding: 1em 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background-color: var(--accent-color-white);
   box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
   border-radius: 12px;
-  border: orange 1px solid;
 }
 
 .login-content form,
@@ -221,8 +211,7 @@ body {
 }
 
 .login-content form {
-  border: red 1px solid;
-  max-height: 360px;
+  max-height: 400px;
 }
 
 .sign-up-content form {
@@ -237,7 +226,6 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  border: royalblue 1px solid;
 }
 
 .login-input-wrapper {
@@ -403,222 +391,6 @@ button {
   border: 3px solid var(--background-color-darkblue);
   border-radius: 14px;
   padding: 16px;
-}
-
-/* ====================================================
-media queries
-====================================================== */
-/* ---------------------------------------------------
-breakpoint: 50em
------------------------------------------------------- */
-@media (min-width: 50em) {
-  .button-wrapper-log-in,
-  .button-wrapper-sign-up {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border: royalblue 1px solid;
-  }
-
-  .login-content h1,
-  .sign-up-content h1 {
-    font-size: 3rem;
-  }
-
-  .button-wrapper-sign-up {
-    width: 100%;
-  }
-
-  .sign-up-wrapper {
-    width: 220px;
-    position: absolute;
-    top: 4px;
-    right: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 0.8rem;
-  }
-
-  .button-wrapper-sign-up {
-    justify-content: center;
-  }
-
-  .button-wrapper-log-in button,
-  .button-wrapper-sign-up button {
-    width: 120px;
-  }
-}
-
-/* ---------------------------------------------------
-breakpoint: 60em
------------------------------------------------------- */
-@media (min-width: 60em) {
-  .sign-up-wrapper {
-    top: 36px;
-  }
-
-  /*  @keyframes moveLogo {
-    100% {
-      transform: translate(-50%, -50%) translate(-28vw, -40vh);
-      height: 50px;
-    }
-  } */
-}
-
-/* ---------------------------------------------------
-breakpoint: 65em
------------------------------------------------------- */
-@media (min-width: 65em) {
-  .sign-up-wrapper {
-    top: 48px;
-  }
-
-  /* @keyframes moveLogo {
-    100% {
-      transform: translate(-50%, -50%) translate(-26vw, -40vh);
-      height: 50px;
-    }
-  } */
-}
-
-/* ---------------------------------------------------
-breakpoint: 70em
------------------------------------------------------- */
-@media (min-width: 70em) {
-  .sign-up-wrapper {
-    top: 52px;
-  }
-
-  /*   @keyframes moveLogo {
-    100% {
-      transform: translate(-50%, -50%) translate(-24vw, -36vh);
-      height: 50px;
-    }
-  } */
-}
-
-/* ---------------------------------------------------
-breakpoint: 75em
------------------------------------------------------- */
-@media (min-width: 75em) {
-  /*  @keyframes moveLogo {
-    100% {
-      transform: translate(-50%, -50%) translate(-23vw, -34vh);
-      height: 50px;
-    }
-  } */
-}
-
-/* ---------------------------------------------------
-breakpoint: 80em
------------------------------------------------------- */
-@media (min-width: 80em) {
-  /*   @keyframes moveLogo {
-    100% {
-      transform: translate(-50%, -50%) translate(-21vw, -30vh);
-      height: 50px;
-    }
-  } */
-}
-
-/* ---------------------------------------------------
-breakpoint: 85em
------------------------------------------------------- */
-@media (min-width: 85em) {
-  /*  @keyframes moveLogo {
-    100% {
-      transform: translate(-50%, -50%) translate(-20vw, -30vh);
-      height: 50px;
-    }
-  } */
-}
-
-/* ---------------------------------------------------
-breakpoint: 85em
------------------------------------------------------- */
-@media (min-width: 85em) {
-  /* @keyframes moveLogo {
-    100% {
-      transform: translate(-50%, -50%) translate(-20vw, -30vh);
-      height: 50px;
-    }
-  } */
-}
-
-/* ---------------------------------------------------
-breakpoint: 90em
------------------------------------------------------- */
-@media (min-width: 90em) {
-  /* @keyframes moveLogo {
-    100% {
-      transform: translate(-50%, -50%) translate(-19vw, -27vh);
-      height: 50px;
-    }
-  } */
-}
-
-/* ---------------------------------------------------
-breakpoint: 95em
------------------------------------------------------- */
-@media (min-width: 95em) {
-  /*  @keyframes moveLogo {
-    100% {
-      transform: translate(-50%, -50%) translate(-18vw, -26vh);
-      height: 50px;
-    }
-  } */
-}
-
-/* ---------------------------------------------------
-breakpoint: 100em
------------------------------------------------------- */
-@media (min-width: 100em) {
-  /*  @keyframes moveLogo {
-    100% {
-      transform: translate(-50%, -50%) translate(-17vw, -25vh);
-      height: 50px;
-    }
-  } */
-}
-
-/* ---------------------------------------------------
-breakpoint: 105em
------------------------------------------------------- */
-@media (min-width: 105em) {
-  /* @keyframes moveLogo {
-    100% {
-      transform: translate(-50%, -50%) translate(-16vw, -23vh);
-      height: 50px;
-    }
-  } */
-}
-
-/* ---------------------------------------------------
-breakpoint: 110em
------------------------------------------------------- */
-@media (min-width: 110em) {
-  /*  @keyframes moveLogo {
-    100% {
-      transform: translate(-50%, -50%) translate(-15vw, -23vh);
-      height: 50px;
-    }
-  } */
-}
-
-/* ---------------------------------------------------
-breakpoint: 115em
------------------------------------------------------- */
-@media (min-width: 115em) {
-  /* @keyframes moveLogo {
-    100% {
-      transform: translate(-50%, -50%) translate(-15vw, -20vh);
-      height: 50px;
-    }
-  } */
 }
 
 .d-none {
