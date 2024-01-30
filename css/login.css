@@ -1,15 +1,23 @@
 body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
   overflow: hidden;
+  background-color: var(--background-color-darkblue);
+  border: green 2px solid;
 }
 
 .login-page {
   width: 100vw;
   height: 100vh;
+  max-width: 1024px;
+  max-height: 800px;
+  margin: 0 auto;
   padding: 1em;
- /*  position: relative; */
-  background-color: var(--background-color-darkblue);
+  position: relative;
   overflow: hidden;
   transition: background-color 1s;
+  border: blue 1px solid;
 }
 
 .login-join-logo {
@@ -24,6 +32,10 @@ body {
 .change-background-color {
   animation: changeBackground 1s forwards;
 }
+
+/* body {
+  animation: changeBackground 1s forwards;
+} */
 
 .content {
   position: absolute;
@@ -52,6 +64,12 @@ body {
   0% {
     background-color: var(--background-color-darkblue);
   }
+  /* 25% {
+    background-color: var(--background-color-darkblue);
+  }
+  50% {
+    background-color: var(--background-color-darkblue);
+  } */
   100% {
     background-color: var(--background-color-lightgray);
   }
@@ -72,7 +90,9 @@ body {
     height: 100px;
   }
   100% {
-    transform: translate(-50%, -50%) translate(-36vw, -42vh);
+    /* transform: translate(-50%, -50%) translate(-36vw, -42vh); */
+    top: 48px;
+    left: 48px;
     height: 50px;
   }
 }
@@ -438,15 +458,15 @@ breakpoint: 60em
 ------------------------------------------------------ */
 @media (min-width: 60em) {
   .sign-up-wrapper {
-    top: 36px
+    top: 36px;
   }
 
-  @keyframes moveLogo {
+  /*  @keyframes moveLogo {
     100% {
       transform: translate(-50%, -50%) translate(-28vw, -40vh);
       height: 50px;
     }
-  }
+  } */
 }
 
 /* ---------------------------------------------------
@@ -454,15 +474,15 @@ breakpoint: 65em
 ------------------------------------------------------ */
 @media (min-width: 65em) {
   .sign-up-wrapper {
-    top: 48px
+    top: 48px;
   }
 
-  @keyframes moveLogo {
+  /* @keyframes moveLogo {
     100% {
       transform: translate(-50%, -50%) translate(-26vw, -40vh);
       height: 50px;
     }
-  }
+  } */
 }
 
 /* ---------------------------------------------------
@@ -470,135 +490,135 @@ breakpoint: 70em
 ------------------------------------------------------ */
 @media (min-width: 70em) {
   .sign-up-wrapper {
-    top: 52px
+    top: 52px;
   }
 
-  @keyframes moveLogo {
+  /*   @keyframes moveLogo {
     100% {
       transform: translate(-50%, -50%) translate(-24vw, -36vh);
       height: 50px;
     }
-  }
+  } */
 }
 
 /* ---------------------------------------------------
 breakpoint: 75em
 ------------------------------------------------------ */
 @media (min-width: 75em) {
-  @keyframes moveLogo {
+  /*  @keyframes moveLogo {
     100% {
       transform: translate(-50%, -50%) translate(-23vw, -34vh);
       height: 50px;
     }
-  }
+  } */
 }
 
 /* ---------------------------------------------------
 breakpoint: 80em
 ------------------------------------------------------ */
 @media (min-width: 80em) {
-  @keyframes moveLogo {
+  /*   @keyframes moveLogo {
     100% {
       transform: translate(-50%, -50%) translate(-21vw, -30vh);
       height: 50px;
     }
-  }
+  } */
 }
 
 /* ---------------------------------------------------
 breakpoint: 85em
 ------------------------------------------------------ */
 @media (min-width: 85em) {
-  @keyframes moveLogo {
+  /*  @keyframes moveLogo {
     100% {
       transform: translate(-50%, -50%) translate(-20vw, -30vh);
       height: 50px;
     }
-  }
+  } */
 }
 
 /* ---------------------------------------------------
 breakpoint: 85em
 ------------------------------------------------------ */
 @media (min-width: 85em) {
-  @keyframes moveLogo {
+  /* @keyframes moveLogo {
     100% {
       transform: translate(-50%, -50%) translate(-20vw, -30vh);
       height: 50px;
     }
-  }
+  } */
 }
 
 /* ---------------------------------------------------
 breakpoint: 90em
 ------------------------------------------------------ */
 @media (min-width: 90em) {
-  @keyframes moveLogo {
+  /* @keyframes moveLogo {
     100% {
       transform: translate(-50%, -50%) translate(-19vw, -27vh);
       height: 50px;
     }
-  }
+  } */
 }
 
 /* ---------------------------------------------------
 breakpoint: 95em
 ------------------------------------------------------ */
 @media (min-width: 95em) {
-  @keyframes moveLogo {
+  /*  @keyframes moveLogo {
     100% {
       transform: translate(-50%, -50%) translate(-18vw, -26vh);
       height: 50px;
     }
-  }
+  } */
 }
 
 /* ---------------------------------------------------
 breakpoint: 100em
 ------------------------------------------------------ */
 @media (min-width: 100em) {
-  @keyframes moveLogo {
+  /*  @keyframes moveLogo {
     100% {
       transform: translate(-50%, -50%) translate(-17vw, -25vh);
       height: 50px;
     }
-  }
+  } */
 }
 
 /* ---------------------------------------------------
 breakpoint: 105em
 ------------------------------------------------------ */
 @media (min-width: 105em) {
-  @keyframes moveLogo {
+  /* @keyframes moveLogo {
     100% {
       transform: translate(-50%, -50%) translate(-16vw, -23vh);
       height: 50px;
     }
-  }
+  } */
 }
 
 /* ---------------------------------------------------
 breakpoint: 110em
 ------------------------------------------------------ */
 @media (min-width: 110em) {
-  @keyframes moveLogo {
+  /*  @keyframes moveLogo {
     100% {
       transform: translate(-50%, -50%) translate(-15vw, -23vh);
       height: 50px;
     }
-  }
+  } */
 }
 
 /* ---------------------------------------------------
 breakpoint: 115em
 ------------------------------------------------------ */
 @media (min-width: 115em) {
-  @keyframes moveLogo {
+  /* @keyframes moveLogo {
     100% {
       transform: translate(-50%, -50%) translate(-15vw, -20vh);
       height: 50px;
     }
-  }
+  } */
 }
 
 .d-none {
