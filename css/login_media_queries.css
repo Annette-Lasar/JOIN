@@ -2,46 +2,111 @@
 breakpoint: 50em
 ------------------------------------------------------ */
 @media (min-width: 50em) {
-    .button-wrapper-log-in,
-    .button-wrapper-sign-up {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-  
-    .login-content h1,
-    .sign-up-content h1 {
-      font-size: 3rem;
-    }
-  
-    .button-wrapper-sign-up {
-      width: 100%;
-    }
-  
-    .sign-up-wrapper {
-      width: 220px;
-      position: absolute;
-      top: 24px;
-      right: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.8rem;
-    }
-  
-    .button-wrapper-sign-up {
-      justify-content: center;
-    }
-  
-    .button-wrapper-log-in button,
-    .button-wrapper-sign-up button {
-      width: 120px;
-    }
+
+  .button-wrapper-log-in,
+  .button-wrapper-sign-up {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 35px;
   }
 
-  .d-none {
-    display: none;
+  .login-content h1,
+  .sign-up-content h1 {
+    font-size: 61px;
   }
+
+  .blue-line {
+    width: 150px;
+  }
+
+  .button-wrapper-sign-up {
+    width: 100%;
+  }
+
+  .sign-up-wrapper {
+    width: 220px;
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8rem;
+  }
+
+  .button-wrapper-sign-up {
+    justify-content: center;
+  }
+
+  .button-sign-up {
+    padding: 0.5em 1em;
+    font-size: 1em;
+  }
+
+  .form-content-without-sign-up-button {
+    width: 100%;
+    margin: 0 auto 0.5em;
+    padding: 48px 115px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--accent-color-white);
+    box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
+    border-radius: 30px;
+    gap: 32px;
+  }
+
+  .button-login,
+  .button-sign-up {
+    width: 100px;
+  }
+
+  .button-guest-login {
+    width: auto;
+  }
+
+  .login-input-and-button-wrapper {
+    margin: 0.5em 0;
+  }
+
+  .legal-wrapper {
+    margin: 1rem 0 0;
+  }
+
+  .sign-up-wrapper p {
+    font-size: 0.8rem;
+  }
+
+  .sign-up-wrapper {
+    margin: 0.5em 0 0;
+    gap: 8px;
+  }
+
+  .sign-up-content {
+    padding: 48px 115px;
+  }
+
+  /* .button-wrapper-log-in button,
+    .button-wrapper-sign-up button {
+      width: 120px;
+    } */
+}
+
+@media (height < 640px) {
+  .sign-up-content {
+    margin: 0;
+    padding: 32px;
+  }
+
+  .legal-wrapper {
+    margin: 0;
+  }
+}
+
+
+.d-none {
+  display: none;
+}

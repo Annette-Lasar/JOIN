@@ -9,8 +9,8 @@ body {
 .login-page {
   width: 100vw;
   height: 100vh;
-  max-width: 1024px;
-  max-height: 800px;
+  max-width: 1440px;
+  max-height: 1024px;
   margin: 0 auto;
   padding: 1em;
   position: relative;
@@ -35,8 +35,8 @@ body {
 }
 
 .content {
- /*  position: absolute; */
- /*  top: 50%; */
+  /*  position: absolute; */
+  /*  top: 50%; */
   /* left: 50%; */
   /* transform: translate(-50%, -50%); */
   font-size: 24px;
@@ -61,7 +61,7 @@ body {
   0% {
     background-color: var(--background-color-darkblue);
   }
- 
+
   100% {
     background-color: var(--background-color-lightgray);
   }
@@ -71,6 +71,7 @@ body {
   0% {
     fill: var(--accent-color-white);
   }
+
   100% {
     fill: var(--background-color-darkblue);
   }
@@ -81,6 +82,7 @@ body {
     transform: translate(-50%, -50%);
     height: 100px;
   }
+
   100% {
     /* transform: translate(-50%, -50%) translate(-36vw, -42vh); */
     top: 48px;
@@ -105,9 +107,9 @@ body {
 .login-content,
 .sign-up-content {
   width: 80vw;
-  height: 70vh;
+  /* height: 70vh; */
   max-width: 600px;
-  margin: 3.5rem 0 0;
+  /* margin: 3.5rem 0 0; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -122,9 +124,9 @@ body {
 }
 
 .sign-up-content {
-  height: 70vh;
-  max-height: 350px;
-  padding: 0.5em 1em;
+  /* height: 70vh; */
+  /* max-height: 532px; */
+  padding: 1em 1em;
   border-radius: 12px;
   width: 80vw;
   max-width: 600px;
@@ -134,6 +136,22 @@ body {
   align-items: center;
   justify-content: space-between;
   background-color: var(--accent-color-white);
+  gap: 24px;
+  border-radius: 30px;
+  box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
+}
+
+.center {
+  justify-content: center;
+  margin: 32px 0;
+}
+
+.center label, .center a{
+  font-size: 16px;
+}
+
+.center label{
+  color: #a8a8a8;
 }
 
 .headline-login-content,
@@ -165,7 +183,7 @@ body {
 .login-content h1,
 .sign-up-content h1 {
   margin: 0 auto;
-  font-size: 2rem;
+  font-size: 47px;
   font-weight: 700;
   color: var(--background-color-darkblue);
 }
@@ -176,28 +194,26 @@ body {
 
 .blue-line {
   height: 3px;
-  width: 100px;
+  width: 88px;
   background-color: var(--accent-color-lightblue);
 }
 
 .combined-signup-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 24px;
 }
 
 .form-content-without-sign-up-button {
   width: 100%;
-  height: 90%;
-  max-height: 300px;
   margin: 0 auto 0.5em;
-  padding: 1em 0;
+  padding: 32px 16px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background-color: var(--accent-color-white);
   box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
-  border-radius: 12px;
+  border-radius: 30px;
 }
 
 .login-content form,
@@ -215,28 +231,28 @@ body {
 }
 
 .sign-up-content form {
-  gap: 12px;
+  gap: 32px;
 }
 
 .login-input-and-button-wrapper {
   height: 50%;
-  margin: 0.5em 0;
+  margin: 1em 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 32px;
 }
 
 .login-input-wrapper {
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   padding: 0.3em;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border: var(--accent-color-lightgray) 1px solid;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
 .login-input-wrapper:focus-within {
@@ -251,6 +267,15 @@ input[type='password'] {
   height: 28px;
   border: none;
   outline: none;
+  font-family: inherit;
+  font-size: 20px;
+  padding-left: 8px;
+}
+
+input::placeholder {
+  font-family: inherit;
+  color: #d1d1d1;
+  font-size: 20px;
 }
 
 input[type='text'] {
@@ -279,12 +304,13 @@ input:hover {
 }
 
 .remember-user {
-  width: 90%;
+  width: 85%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   gap: 4px;
   font-size: 0.8rem;
+  /* margin-left: 39px; */
 }
 
 .button-wrapper-log-in,
@@ -297,11 +323,12 @@ input:hover {
 
 .button-wrapper-log-in {
   width: 100%;
+  gap: 21px;
 }
 
-.button-wrapper-log-in {
+/* .button-wrapper-log-in {
   height: 70px;
-}
+} */
 
 button {
   width: fit-content;
@@ -311,6 +338,8 @@ button {
 
 .light-button a {
   color: var(--accent-color-anthracite);
+  font-size: inherit;
+  font-weight: 700;
 }
 
 .light-button:hover .light-button-link {
@@ -334,42 +363,48 @@ button {
 
 .button-login,
 .button-sign-up {
+  display: block;
   background-color: var(--background-color-darkblue);
   color: var(--accent-color-white);
   border: var(--background-color-darkblue) 1px solid;
-  border-radius: 4px;
+  border-radius: 8px;
+  font-size: 21px;
+  width: 180px;
 }
 
 .button-guest-login {
   background-color: var(--accent-color-white);
   color: var(--background-color-darkblue);
   border: var(--background-color-darkblue) 1px solid;
-  border-radius: 4px;
+  border-radius: 8px;
+  font-size: 21px;
+  width: 180px;
 }
 
 .sign-up-wrapper {
-  margin: 0.5em 0 0;
+  /* margin: 2.5em 0 0; */
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 35px;
 }
 
 .sign-up-wrapper p {
-  font-size: 0.8rem;
+  font-size: 20px;
 }
 
 .button-sign-up {
-  padding: 0.5em 1em;
+  padding: 0.5em 0.5em;
   width: 100px;
+  font-size: 16px;
 }
 
 .legal-wrapper {
-  margin: 1rem 0 0;
+  margin: 14vh 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 16px;
   font-size: 0.7rem;
 }
 
