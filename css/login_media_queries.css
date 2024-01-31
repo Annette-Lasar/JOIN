@@ -1,6 +1,13 @@
 /* ---------------------------------------------------
 breakpoint: 50em
 ------------------------------------------------------ */
+
+@media (min-width: 30em) {
+.login-content h1,
+.sign-up-content h1 {
+  font-size: 48px;
+}
+}
 @media (min-width: 50em) {
 
   .button-wrapper-log-in,
@@ -73,7 +80,7 @@ breakpoint: 50em
   }
 
   .legal-wrapper {
-    margin: 1rem 0 0;
+    margin: 8rem 0 0;
   }
 
   .sign-up-wrapper p {
@@ -88,22 +95,59 @@ breakpoint: 50em
   .sign-up-content {
     padding: 48px 115px;
   }
-
-  /* .button-wrapper-log-in button,
-    .button-wrapper-sign-up button {
-      width: 120px;
-    } */
 }
 
-@media (height < 640px) {
+@media (height < 800px) {
   .sign-up-content {
     margin: 0;
     padding: 32px;
+    gap: 16px;
   }
 
   .legal-wrapper {
-    margin: 0;
+    margin-top: 32px;
   }
+
+  .form-content-without-sign-up-button {
+    padding: 24px 14px;
+  }
+
+  .login-content h1,
+  .sign-up-content h1 {
+    font-size: 32px;
+  }
+
+  .login-input-and-button-wrapper {
+    margin: 0.5em 0;
+    gap: 16px;
+  }
+
+  .button-login,
+  .button-guest-login {
+    font-size: 16px;
+    width: 132px;
+  }
+
+  .sign-up-wrapper p {
+    font-size: 16px;
+  }
+
+  .button-wrapper-log-in {
+    gap: 16px;
+  }
+
+  input::placeholder {
+    font-size: 16px;
+  }
+
+  input[type='text'], input[type='email'], input[type='password'] {
+    font-size: 16px;
+    height: auto;
+  }
+
+  .combined-signup-wrapper {
+    gap: 16px;
+}
 }
 
 
