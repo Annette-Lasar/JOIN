@@ -154,3 +154,16 @@ breakpoint: 50em
 .d-none {
   display: none;
 }
+
+
+@media(width < 370px) {
+  input::placeholder {
+    font-size: 17px; 
+  }
+
+  #sign_up_wrapper p {
+    font-size: 15px;
+  }
+
+}
+
