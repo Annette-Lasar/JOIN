@@ -111,7 +111,7 @@ body {
 }
 
 .login-content {
-  height: 75vh;
+  /* height: 75vh; */
   max-height: 600px;
   /* position: relative; */
   justify-content: center;
@@ -177,7 +177,7 @@ body {
 .login-content h1,
 .sign-up-content h1 {
   margin: 0 auto;
-  font-size: 47px;
+  font-size: 32px;
   font-weight: 700;
   color: var(--background-color-darkblue);
 }
@@ -380,7 +380,7 @@ button {
 }
 
 .sign-up-wrapper p {
-  font-size: 0.9rem;
+  font-size: 16px;
 }
 
 .button-sign-up {
@@ -390,7 +390,7 @@ button {
 }
 
 .legal-wrapper {
-  margin: 14vh 0 0;
+  margin: 18vh 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
