@@ -280,10 +280,14 @@ breakpoint: 50em
 }
 }
 
-/* @media (min-width: 90em) {
-  .board-wrapper {
-    max-width: 1440px;
-    margin: 0 auto;
-    border: royalblue 1px solid;
+@media (min-width: 60em) {
+  h1 {
+    font-size: 1.9rem;
   }
-} */
+}
+
+@media (min-width: 70em) {
+  h1 {
+    font-size: 3rem;
+  }
+}

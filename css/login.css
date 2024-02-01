@@ -15,7 +15,6 @@ body {
   padding: 1em;
   position: relative;
   display: flex;
-  align-items: center;
   justify-content: center;
   overflow: hidden;
   transition: background-color 1s;
@@ -35,10 +34,6 @@ body {
 }
 
 .content {
-  /*  position: absolute; */
-  /*  top: 50%; */
-  /* left: 50%; */
-  /* transform: translate(-50%, -50%); */
   font-size: 24px;
   opacity: 0;
   pointer-events: none;
@@ -84,9 +79,8 @@ body {
   }
 
   100% {
-    /* transform: translate(-50%, -50%) translate(-36vw, -42vh); */
-    top: 48px;
-    left: 48px;
+    top: 36px;
+    left: 36px;
     height: 50px;
   }
 }
@@ -326,10 +320,6 @@ input:hover {
   gap: 21px;
 }
 
-/* .button-wrapper-log-in {
-  height: 70px;
-} */
-
 button {
   width: fit-content;
   padding: 0.5em 1em;
@@ -390,7 +380,7 @@ button {
 }
 
 .sign-up-wrapper p {
-  font-size: 20px;
+  font-size: 0.9rem;
 }
 
 .button-sign-up {
