@@ -12,12 +12,12 @@ body {
   max-width: 1440px;
   max-height: 1024px;
   margin: 0 auto;
-  padding: 1em;
   position: relative;
   display: flex;
   justify-content: center;
   overflow: hidden;
   transition: background-color 1s;
+  border: royalblue 1px solid;
 }
 
 .login-join-logo {
@@ -34,10 +34,16 @@ body {
 }
 
 .content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   font-size: 24px;
   opacity: 0;
   pointer-events: none;
   transition: opacity 2s;
+  border: green 1px solid;
 }
 
 .animate-logo {
@@ -101,9 +107,7 @@ body {
 .login-content,
 .sign-up-content {
   width: 80vw;
-  /* height: 70vh; */
   max-width: 600px;
-  /* margin: 3.5rem 0 0; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -111,19 +115,17 @@ body {
 }
 
 .login-content {
-  /* height: 75vh; */
+  width: 98%;
   max-height: 600px;
-  /* position: relative; */
   justify-content: center;
 }
 
 .sign-up-content {
-  /* height: 70vh; */
-  /* max-height: 532px; */
+  width: 98%;
+  max-width: 450px;
   padding: 1em 1em;
   border-radius: 12px;
-  width: 80vw;
-  max-width: 600px;
+ 
   margin: 3.5rem 0 0;
   display: flex;
   flex-direction: column;
@@ -200,6 +202,7 @@ body {
 
 .form-content-without-sign-up-button {
   width: 100%;
+  max-width: 450px;
   margin: 0 auto 0.5em;
   padding: 32px 16px;
   display: flex;
@@ -208,6 +211,7 @@ body {
   background-color: var(--accent-color-white);
   box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
   border-radius: 30px;
+  border: blue 2px solid;
 }
 
 .login-content form,
@@ -218,10 +222,11 @@ body {
   flex-direction: column;
   justify-content: space-between;
   border-radius: 12px;
+  border: orange 2px solid;
 }
 
 .login-content form {
-  max-height: 400px;
+  max-height: 600px;
 }
 
 .sign-up-content form {
@@ -269,8 +274,8 @@ input[type='password'] {
 input::placeholder {
   font-family: inherit;
   color: #d1d1d1;
-  font-size: 20px;
 }
+
 
 input[type='text'] {
   background-image: url(../icons/person.svg);
@@ -298,13 +303,12 @@ input:hover {
 }
 
 .remember-user {
-  width: 85%;
+  width: 70%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 0.8rem;
-  /* margin-left: 39px; */
+  /* font-size: 0.8rem; */
 }
 
 .button-wrapper-log-in,
@@ -372,11 +376,11 @@ button {
 }
 
 .sign-up-wrapper {
-  /* margin: 2.5em 0 0; */
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 35px;
+  border: red 1px solid;
 }
 
 .sign-up-wrapper p {
@@ -390,7 +394,7 @@ button {
 }
 
 .legal-wrapper {
-  margin: 18vh 0 0;
+  margin: 2rem 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
