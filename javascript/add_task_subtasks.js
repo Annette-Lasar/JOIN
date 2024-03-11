@@ -93,8 +93,8 @@ function showCancelAndAcceptSubtask(wrapperId, plusIconId) {
    * @param {string} wrapperId - This is the id of the close and check wrapper.
    * @param {string} plusId - This is the id of the plus button.
    */
-  function setupSubtaskEventListener(elementId, tasksId, wrapperId, plusId) {
-    document.getElementById(elementId).addEventListener('click', function () {
+  function setupSubtaskEventListener(elementId, tasksId, wrapperId, plusId, event) {
+    document.getElementById(elementId).addEventListener('keyup', function () {
       addSubtask(tasksId, wrapperId, plusId, event);
     });
   

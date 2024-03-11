@@ -1,9 +1,9 @@
-* {
+/* * {
   scrollbar-width: auto;
   scrollbar-color: var(--background-color-darkblue)
     var(--background-color-lightgray);
 }
-
+ */
 *::-webkit-scrollbar {
   width: 16px;
 }

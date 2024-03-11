@@ -44,12 +44,15 @@ function clickOutsideDropdown(i, event) {
    * 'awaitFeedback' or 'done'.
    * @param {MouseEvent} event - This is a click event. It's needed to stop event bubbling.
    */
-  function moveToNewList(i, status, event) {
+  async function moveToNewList(i, status, event) {
     event.stopPropagation();
     currentTaskCard = document.getElementById(`taskCard_${i}`);
     let cardStatus = tasks[i].status;
     if (status !== cardStatus) {
       tasks[i].status = status;
+      sendTasksToServer();
+      await loadTasksUserOrGuest();
+      await loadContactsUserOrGuest();
       showTasksOnBoard();
     }
   }

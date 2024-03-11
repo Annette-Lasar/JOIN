@@ -2,142 +2,137 @@
 breakpoint: 50em
 ------------------------------------------------------ */
 @media (min-width: 50em) {
+  body {
+    position: relative;
+  }
 
-    body {
-        position: relative;
-    }
+  .page {
+    margin: 0 0 0 180px;
+    position: relative;
+  }
 
-    .page {
-        margin: 0 0 0 180px;
-        position: relative;
-    }
+  header {
+    padding: 1.25em 1em 1.25em 240px;
+  }
 
+  .header-wrapper .header-join-logo {
+    display: none;
+  }
 
-    header {
-        padding: 1.25em 1em 1.25em 240px;
-    }
+  .header-wrapper p {
+    display: block;
+  }
 
+  nav {
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 170px;
+  }
 
-    .header-wrapper .header-join-logo {
-        display: none;
-    }
+  div[w3-include-html] {
+    height: 100%;
+  }
 
-    .header-wrapper p {
-        display: block;
-    }
+  div[w3-include-html] p {
+    margin-top: 10px;
+  }
 
-    nav {
-        height: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        width: 170px;
-    }
+  .nav {
+    height: 100%;
+    max-height: 1024px;
+    padding: min(4em, 6vh) 0;
+    display: flex;
+    flex-direction: column;
+  }
 
-    div[w3-include-html] {
-        height: 100%;
-    }
+  .join-logo {
+    height: 100px;
+    display: block;
+  }
 
-    div[w3-include-html] p {
-        margin-top: 10px;
-    }
+  .join-logo img {
+    max-height: 90%;
+  }
 
-    .nav {
-        height: 100%;
-        max-height: 1024px;
-        padding: min(4em, 6vh) 0;
-        display: flex;
-        flex-direction: column;
-    }
+  .menu-items {
+    width: 100%;
+  }
 
-    .join-logo {
-        height: 100px;
-        display: block;
-    }
+  .menu-items-wrapper {
+    height: 80%;
+    margin: 1em 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 15px;
+  }
 
-    .join-logo img {
-        max-height: 90%;
-    }
+  .menu-items-wrapper p {
+    font-size: 16px !important;
+  }
 
-    .menu-items {
-        width: 100%;
-    }
+  .menu-items a,
+  .legal-info-wrapper a {
+    height: auto;
+    flex-direction: row;
+    width: 100%;
+    padding: 8px 0;
+    justify-content: unset;
+    font-size: 1em;
+    border-radius: 0;
+    padding-left: 24px;
+  }
 
-    .menu-items-wrapper {
-        height: 80%;
-        margin: 1em 0 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        gap: 15px;
-    }
+  .active {
+    border-radius: 0;
+  }
 
-    .menu-items-wrapper p {
-        font-size: 16px !important;
-    }
+  .menu-items img {
+    height: 30px;
+    width: 30px;
+  }
 
-    .menu-items a,
-    .legal-info-wrapper a {
-        height: auto;
-        flex-direction: row;
-        width: 100%;
-        padding: 8px 0;
-        justify-content: unset;
-        font-size: 1em;
-        border-radius: 0;
-        padding-left: 24px;
-    }
+  .legal-info-wrapper {
+    height: 40%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+  }
 
-    .active {
-        border-radius: 0;
-    }
+  .legal-info-wrapper a {
+    color: #cdcdcd;
+  }
 
+  .legal-info-wrapper a:hover {
+    color: var(--accent-color-lightblue);
+  }
 
-    .menu-items img {
-        height: 30px;
-        width: 30px;
-    }
-
-    .legal-info-wrapper {
-        height: 40%;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        align-items: center;
-    }
-
-    .legal-info-wrapper a {
-        color: #cdcdcd;
-    }
-
-    .legal-info-wrapper a:hover {
-        color: var(--accent-color-lightblue);
-    }
-
-    .add-contact {
-        display: none;
-    }
-
+  .add-contact {
+    display: none;
+  }
 }
 
 @media (height < 600px) {
-    .legal-info-wrapper {
-        height: auto;
-    }
+  .legal-info-wrapper {
+    height: auto;
+  }
 }
 
 /* ---------------------------------------------------
 breakpoint: 540px to 50em
 ------------------------------------------------------ */
 @media (480px <=width <=50em) {
-    .menu-items-wrapper {
-        justify-content: space-evenly;
-    }
+  .menu-items-wrapper {
+    justify-content: space-evenly;
+  }
 }
 
 .d-none {
-    display: none;
+  display: none;
 }
