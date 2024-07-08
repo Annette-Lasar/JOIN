@@ -36,11 +36,9 @@ async function includeHTML() {
 function moveLogoOnStartScreen() {
   if (window.location.href.endsWith('index.html')) {
     setTimeout(() => {
-     /*  const loginPage = document.getElementById('login_page'); */
       const bodyElement = document.body;
       const loginJoinLogo = document.getElementById('login_join_logo');
       const logoPaths = ['path_dot', 'path_j', 'path_o', 'path_i', 'path_n'];
-      /* loginPage.classList.add('change-background-color'); */
       bodyElement.classList.add('change-background-color');
       loginJoinLogo.classList.add('animate-logo');
       logoPaths.forEach(pathId => {
@@ -199,7 +197,7 @@ async function logout() {
   localStorage.removeItem('userName');
   localStorage.removeItem('userEmail');
   localStorage.removeItem('alreadyGreeted');
-  window.location.href = 'index.html';
+  window.location.href = '../../index.html';
 }
 
 

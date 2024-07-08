@@ -11,7 +11,7 @@
   }
   
   .sub-task-wrapper:focus-within {
-    outline: var(--accent-color-anthracite) 2px solid;
+    outline: var(--accent-color-anthracite) 1.5px solid;
   }
   
   .sub-task-wrapper img,
@@ -34,6 +34,7 @@
     gap: 8px;
   }
   
+  
   .close-and-check-wrapper,
   .close-and-check-wrapper-edit-subtask {
     display: flex;
@@ -41,7 +42,8 @@
     justify-content: space-between;
     gap: 8px;
   }
-  
+ 
+
   .cancel-subtask,
   .cancel-edit-subtask {
     height: 16px;
@@ -51,7 +53,8 @@
   .check-edit-subtask {
     height: 10px;
   }
-  
+
+
   .check-subtask,
   .check-edit-subtask {
     filter: invert(1);

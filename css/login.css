@@ -17,7 +17,6 @@ body {
   justify-content: center;
   overflow: hidden;
   transition: background-color 1s;
-  border: royalblue 1px solid;
 }
 
 .login-join-logo {
@@ -43,7 +42,6 @@ body {
   opacity: 0;
   pointer-events: none;
   transition: opacity 2s;
-  border: green 1px solid;
 }
 
 .animate-logo {
@@ -211,7 +209,6 @@ body {
   background-color: var(--accent-color-white);
   box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
   border-radius: 30px;
-  border: blue 2px solid;
 }
 
 .login-content form,
@@ -222,11 +219,11 @@ body {
   flex-direction: column;
   justify-content: space-between;
   border-radius: 12px;
-  border: orange 2px solid;
 }
 
 .login-content form {
   max-height: 600px;
+  margin: 1em 0 0;
 }
 
 .sign-up-content form {
@@ -308,7 +305,7 @@ input:hover {
   display: flex;
   align-items: center;
   gap: 4px;
-  /* font-size: 0.8rem; */
+  font-size: 0.8rem;
 }
 
 .button-wrapper-log-in,
@@ -380,7 +377,6 @@ button {
   align-items: center;
   justify-content: center;
   gap: 35px;
-  border: red 1px solid;
 }
 
 .sign-up-wrapper p {
