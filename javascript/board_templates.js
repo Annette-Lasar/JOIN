@@ -111,7 +111,7 @@ function generateToDoHTML(
             <div id="taskCard_${i}" data-status="${oneTask.status}" draggable="true" onclick="openOrCloseContainer(${i}, 'detail_task_wrapper_${i}', 'open')" ondragstart="startDragging(${i})" class="todo">
               <div class="todo-header-wrapper">
                   <div id="todo_category_${i}" class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
-                  <div onclick="openCardContextMenu(${i}, '${oneTask.status}', event)" class="three-dots-wrapper"><img src="../icons/three_dots.svg"></div>
+                  <div onclick="openCardContextMenu(${i}, '${oneTask.status}', event)" class="three-dots-wrapper"><img src="../img/three_dots.svg"></div>
               </div>
               <div class="todo-title">${oneTask['title']}</div>
                   <div class="todo-description">${newTruncatedSentence}</div>
@@ -122,14 +122,14 @@ function generateToDoHTML(
                   <div class="contacts-and-prio-wrapper">
                     <div id="task_contact_${i}" class="task-contact-wrapper"></div>
                     <div class="task-prio">
-                        <img class="prio-icon" src="../icons/prio_${oneTask.current_prio}.svg">
+                        <img class="prio-icon" src="../img/prio_${oneTask.current_prio}.svg">
                     </div>
               </div>
                 <div id="context_menu_${i}" class="context-menu-card d-none" data-index="${i}">  
                     <div onclick="closeCardContextMenu(${i}, event)" class="context-menu-title-wrapper">
                       <div class="context-menu-move-to-wrapper">
                         <h3>Move card to ...</h3>  
-                        <img id="context_menu_close_${i}"  class="context-menu-close" src="../icons/close_white.svg">
+                        <img id="context_menu_close_${i}"  class="context-menu-close" src="../img/close_white.svg">
                       </div>
                     </div>  
                     <ul>
@@ -155,7 +155,7 @@ function generateDetailViewHTML(i, oneTask) {
   return /* html */ `
           <div id="category_and_close_wrapper${i}" class="category-and-close-wrapper">
             <div class="todo-category" style="background-color: ${oneTask.current_category[0].category_color}; border: 1px solid ${oneTask.current_category[0].category_color};">${oneTask.current_category[0].category_name}</div>
-            <img class="detail-close-button" onclick="openOrCloseContainer(${i}, 'detail_task_wrapper_${i}', 'close')" src="../icons/close.svg" alt="">
+            <img class="detail-close-button" onclick="openOrCloseContainer(${i}, 'detail_task_wrapper_${i}', 'close')" src="../img/close.svg" alt="">
           </div>
           <div id="edit_task_wrapper${i}">
           <div id="detail_title${i}">
@@ -172,7 +172,7 @@ function generateDetailViewHTML(i, oneTask) {
             <div class="priority">Priority:</div>
             <div class="prio-wrapper">
               <div>${oneTask.current_prio}</div>
-                <img class="prio-icon" src="../icons/prio_${oneTask.current_prio}.svg" alt="">
+                <img class="prio-icon" src="../img/prio_${oneTask.current_prio}.svg" alt="">
             </div>
           </div>
           <div id="detail_task_contacts_wrapper${i}" class="detail-task-contacts-wrapper">
@@ -192,11 +192,11 @@ function generateDetailViewHTML(i, oneTask) {
           <div id="delete_and_edit_wrapper${i}" class="delete-and-edit-wrapper">
             <div id="delete_and_edit_${i}" class="delete-and-edit">
               <div onclick="renderConfirmDelete(${i}, 'confirm_container', 'confirm_content', 'Are you sure you want to delete this task permanently? This process is irreversible.');" class="delete-wrapper">
-                <img src="../icons/delete.svg" alt="">
+                <img src="../img/delete.svg" alt="">
                 <div>Delete</div>
               </div>
               <div onclick="editTask(${i})" class="edit-wrapper">
-                <img src="../icons/edit_dark.svg" alt="">
+                <img src="../img/edit_dark.svg" alt="">
                 <div>Edit</div>
               </div>
             </div>
@@ -213,7 +213,7 @@ function generateDetailViewHTML(i, oneTask) {
 function generateCloseIcon(i) {
   return /* html */ `
       <div id="edit_close_button_wrapper${i}" class="edit-close-button-wrapper">
-        <img class="detail-close-button" onclick="closeTaskWithoutSaving(${i})" src="../icons/close.svg" alt="">
+        <img class="detail-close-button" onclick="closeTaskWithoutSaving(${i})" src="../img/close.svg" alt="">
       </div>
     `;
 }

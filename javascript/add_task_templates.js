@@ -80,7 +80,7 @@ function generateNewCategoryBoxHTML(i, containerType) {
   return /* html */ `
       <div id="new_category_${containerType}" class="new-category">
         <div>New category</div>
-        <div id="new_category_plus_${containerType}" onclick="createNewCategory(${i}, '${containerType}')" class="new-category-plus"><img src="../icons/plus.svg" alt=""></div>
+        <div id="new_category_plus_${containerType}" onclick="createNewCategory(${i}, '${containerType}')" class="new-category-plus"><img src="../img/plus.svg" alt=""></div>
       </div>
     `;
 }
@@ -104,9 +104,9 @@ function generateCategoryListHTML(i, currentCategory, containerType) {
               </div>
             </div>
             <div class="category-icon-wrapper">
-              <img onclick="editCategory(${i}, '${currentCategory.category_name}', '${currentCategory.category_color}', '${containerType}')" src="../icons/edit_dark.svg" height="14">
+              <img onclick="editCategory(${i}, '${currentCategory.category_name}', '${currentCategory.category_color}', '${containerType}')" src="../img/edit_dark.svg" height="14">
               <div class="subtask-separator-line"></div>
-              <img onclick="deleteCategory(${i})" src="../icons/delete.svg" height="14">
+              <img onclick="deleteCategory(${i})" src="../img/delete.svg" height="14">
             </div>
           </li>
       `;
@@ -157,9 +157,9 @@ function generateCategoryInputHTML(
         <input id="color_input_${containerType}_${i}" class="color-input-category" type="color" value="${currentCategoryColor}">
         <input id="category_input_${containerType}_${i}" type="text" class="input-edit-category-text" value="${currentCategoryName}" required>
         <div class="close-and-check-wrapper-edit-subtask">
-          <img onclick="renderCategories()" class="cancel-edit-subtask" src="../icons/close.svg" alt="">
+          <img onclick="renderCategories()" class="cancel-edit-subtask" src="../img/close.svg" alt="">
           <div class="subtask-separator-line"></div>
-          <img onclick="changeCategoryTextAndColor(${i}, '${containerType}')" class="check-edit-subtask" src="../icons/check.svg" alt="">
+          <img onclick="changeCategoryTextAndColor(${i}, '${containerType}')" class="check-edit-subtask" src="../img/check.svg" alt="">
         </div>
       </div>
       
@@ -180,9 +180,9 @@ function generateInputForNewCategoryHTML(i, containerType, randomColor) {
       <input id="color_new_input_${containerType}_${i}" type="color" value="${randomColor}">
       <input id="category_new_input_${containerType}" type="text" class="category-new-input" placeholder="Pick color and add category">
       <div class="close-and-check-wrapper-edit-subtask">
-          <img onclick="renderCategories()" class="cancel-edit-subtask" src="../icons/close.svg" alt="">
+          <img onclick="renderCategories()" class="cancel-edit-subtask" src="../img/close.svg" alt="">
           <div class="subtask-separator-line"></div>
-          <img onclick="addNewCategory(${i}, '${containerType}')" class="check-edit-subtask" src="../icons/check.svg" alt="">
+          <img onclick="addNewCategory(${i}, '${containerType}')" class="check-edit-subtask" src="../img/check.svg" alt="">
         </div>
     `;
 }
@@ -199,9 +199,9 @@ function generateSubtaskHTML(i, subtask, containerType) {
   return /* html */ `
       <div id="subtask_list_wrapper_${containerType}_${i}" class="subtask-list-${containerType}">${subtask.subtask_name}
         <div class="subtask-button-wrapper-${containerType}">
-          <img onclick="editSubtask(${i}, '${containerType}', '${subtask.subtask_name}')" src="../icons/edit_dark.svg">
+          <img onclick="editSubtask(${i}, '${containerType}', '${subtask.subtask_name}')" src="../img/edit_dark.svg">
           <div class="subtask-separator-line"></div>
-          <img onclick="deleteSubtask(${i})" src="../icons/delete.svg">
+          <img onclick="deleteSubtask(${i})" src="../img/delete.svg">
         </div>
       </div>
   `;
@@ -220,9 +220,9 @@ function generateInputEditHTML(i, containerType, subtask) {
       <div class="edit-subtask-wrapper">
         <input type="text" id="edit_input_${containerType}_${i}" value="${subtask}" class="edit-input" placeholder="Enter your edited subtask text">
         <div class="close-and-check-wrapper-edit-subtask">
-          <img onclick="renderSubtasks()" class="cancel-edit-subtask" src="../icons/close.svg" alt="">
+          <img onclick="renderSubtasks()" class="cancel-edit-subtask" src="../img/close.svg" alt="">
           <div class="subtask-separator-line"></div>
-          <img onclick="changeSubtaskText(${i}, '${containerType}', '${subtask}')" class="check-edit-subtask" src="../icons/check.svg" alt="">
+          <img onclick="changeSubtaskText(${i}, '${containerType}', '${subtask}')" class="check-edit-subtask" src="../img/check.svg" alt="">
         </div>
       </div>
     `;

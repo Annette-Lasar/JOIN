@@ -176,7 +176,7 @@ function addNewContactFormTemplate() {
           </button>
           <button class="create-contact-btn dark-btn">
             Create contact
-            <img src="../icons/check.svg" alt="">
+            <img src="../img/check.svg" alt="">
           </button>
         </div>
       </form>
@@ -236,12 +236,12 @@ function editContactFormTemplate(i) {
       <div id="alert_container" class="background-wrapper d-none" onclick="openOrCloseAlertContainer('alert_container', 'close')">
         <div class="alert-container">
           <div class="alert-image-wrapper">
-            <img class="alert-logo" src="../icons/join_logo_white.svg" alt="" />
+            <img class="alert-logo" src="../img/join_logo_white.svg" alt="" />
             <h3>Information</h3>
             <img
               onclick="openOrCloseAlertContainer('alert_container', 'close')"
               class="alert-close"
-              src="../icons/close_white.svg"
+              src="../img/close_white.svg"
             />
           </div>
           <div id="alert_content" class="alert-content"></div>
@@ -257,7 +257,7 @@ function editContactFormTemplate(i) {
           </button>
           <button type="submit" class="create-contact-btn dark-btn">
             Save
-            <img src="../icons/check.svg" alt="">
+            <img src="../img/check.svg" alt="">
           </button>
         </div>
       </form>

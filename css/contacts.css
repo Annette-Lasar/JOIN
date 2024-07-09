@@ -427,18 +427,18 @@ input:focus-visible {
 }
 
 #add_name {
-  background: url(../icons/person.svg) no-repeat scroll;
+  background: url(../img/person.svg) no-repeat scroll;
   background-position: top 12px right 21px;
   text-transform: capitalize;
 }
 
 #add_email {
-  background: url(../icons/mail.svg) no-repeat scroll;
+  background: url(../img/mail.svg) no-repeat scroll;
   background-position: top 12px right 21px;
 }
 
 #add_phone {
-  background: url(../icons/call.svg) no-repeat scroll;
+  background: url(../img/call.svg) no-repeat scroll;
   background-position: top 8px right 21px;
 }
 

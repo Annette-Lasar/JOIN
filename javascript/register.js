@@ -148,15 +148,15 @@ function successfullyRegistered() {
 function changePasswordVisibility(id) {
     let inputField = document.getElementById(id);
     if(inputField.value == '') {
-        inputField.style.backgroundImage = 'url(../icons/visibility_off.svg)';
+        inputField.style.backgroundImage = 'url(../img/visibility_off.svg)';
     }
     if(inputField.value != '') {
         if(inputField.type === 'password') {
             inputField.type = 'text';
-            inputField.style.backgroundImage = 'url(../icons/visibility_on.svg)';
+            inputField.style.backgroundImage = 'url(../img/visibility_on.svg)';
         } else { 
             inputField.type = 'password';
-            inputField.style.backgroundImage = 'url(../icons/visibility_off.svg)';      
+            inputField.style.backgroundImage = 'url(../img/visibility_off.svg)';      
         }
     }
     let enteredPassword = inputField.value;

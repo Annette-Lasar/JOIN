@@ -280,21 +280,21 @@ input::placeholder {
 
 
 input[type='text'] {
-  background-image: url(../icons/person.svg);
+  background-image: url(../img/person.svg);
   background-repeat: no-repeat;
   background-position: 98% 50%;
   background-size: 20px;
 }
 
 input[type='email'] {
-  background-image: url(../icons/mail.svg);
+  background-image: url(../img/mail.svg);
   background-repeat: no-repeat;
   background-position: 98% 50%;
   background-size: 20px;
 }
 
 input[type='password'] {
-  background-image: url(../icons/lock.svg);
+  background-image: url(../img/lock.svg);
   background-repeat: no-repeat;
   background-position: 98% 50%;
   background-size: 22px;

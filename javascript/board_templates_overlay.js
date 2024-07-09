@@ -105,7 +105,7 @@ function generateContactsDropdownHTML(i) {
                 Select contacts to assign<img
                   id="select_arrow_contacts${i}"
                   class="edit-select-arrow-contacts"
-                  src="../icons/arrow_drop_down.svg"
+                  src="../img/arrow_drop_down.svg"
                 />
               </div>
               <ul id="edit_contact_list${i}" class="edit-contact-list">
@@ -193,21 +193,21 @@ function generateMakeSubtasksEditableHTML(i) {
                   onclick="clearSubtask(${i})"
                   id="clear_subtask_${i}"
                   class="clear-subtask"
-                  src="../icons/close.svg"
+                  src="../img/close.svg"
                   />
                 <div class="subtask-icon-separator"></div>
                 <img
                   onclick="addNewSubtask(${i})"
                   id="check_subtask_${i}"
                   class="check-subtask"
-                  src="../icons/check.svg"
+                  src="../img/check.svg"
                 />
             </div>
             <img
               id="subtask_plus_${i}"
               class="edit-plus-button"
               onclick="showAndHideCancelAndAcceptSubtask(${i}, 'show')"
-              src="../icons/plus.svg"
+              src="../img/plus.svg"
               />
           </div>
         </div>
@@ -233,9 +233,9 @@ function generateSubtasksListHTML(i, j, oneSubtask) {
       <div id="subtask_list_item_wrapper${i}_${j}" class="subtask-list-item-wrapper">
           <div id="subtask_list_item${i}_${j}" class="subtask-list-item">${oneSubtask.subtask_name}</div>
           <div class="subtask-list-item-icon-wrapper">
-            <img onclick="editSubtask(${i}, ${j})" src="../icons/edit_dark.svg">
+            <img onclick="editSubtask(${i}, ${j})" src="../img/edit_dark.svg">
             <div class="subtask-icon-separator"></div>
-            <img onclick="deleteSubtask(${i}, ${j})" src="../icons/delete.svg">
+            <img onclick="deleteSubtask(${i}, ${j})" src="../img/delete.svg">
           </div>
       </div>
           
@@ -255,9 +255,9 @@ function generateEditSubtaskInputHTML(i, j, oneSubtask) {
       <div class="edit-subtask-inputfield-wrapper">
         <input id="edit_subtask_input_${i}_${j}" type="text" value="${oneSubtask.subtask_name}">
         <div class="edit-subtask-icons-wrapper">
-          <img onclick="clearInputField(${i}, ${j})" src="../icons/close.svg">
+          <img onclick="clearInputField(${i}, ${j})" src="../img/close.svg">
           <div class="subtask-icon-separator"></div>
-          <img onclick="updateEditedSubtask(${i}, ${j})" src="../icons/check.svg">
+          <img onclick="updateEditedSubtask(${i}, ${j})" src="../img/check.svg">
         </div>
       </div>
     `;
@@ -273,7 +273,7 @@ function generateOkayButtonHTML(i) {
     <div class="okay-wrapper">
       <button onclick="renderTaskDetailView(${i})" class="edit-okay-button">
         OK
-        <img src="../icons/check.svg" height=10">
+        <img src="../img/check.svg" height=10">
       </button>
     </div>
     `;
@@ -321,7 +321,7 @@ function generateCreateTaskButtonsHTML(status) {
             </button>
             <button onclick="createNewTask('${status}', event)" class="dark-button">
               Create task
-              <img src="../icons/check.svg" alt="" />
+              <img src="../img/check.svg" alt="" />
             </button>
           </div>
     `;

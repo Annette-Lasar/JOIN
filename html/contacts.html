@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Join</title>
-  <link rel="icon" href="../icons/join_logo.svg" />
+  <link rel="icon" href="../img/join_logo.svg" />
   <link rel="stylesheet" href="../css/reset_stylesheet.css" />
   <link rel="stylesheet" href="../css/fonts.css" />
   <link rel="stylesheet" href="../css/style.css" />
@@ -30,7 +30,7 @@
       <div class="add-contact-button">
         <button class="dark-button desktop-btn" onclick="showAddForm()">
           Add new contact
-          <img src="../icons/person_add.svg" alt="">
+          <img src="../img/person_add.svg" alt="">
         </button>
       </div>
 
@@ -61,20 +61,20 @@
     </div>
   </div>
   <div id="add_contact_button" class="add-contact" onclick="showAddForm()">
-    <img src="../icons/person_add.svg" alt="">
+    <img src="../img/person_add.svg" alt="">
   </div>
   <div id="edit_contact_button" class="add-contact" onclick="showOptions()">
-    <img src="../icons/more_vert.svg" alt="">
+    <img src="../img/more_vert.svg" alt="">
   </div>
   <div id="contact_form" style="display: none;"></div>
   <div id="empty" onclick="hideOptions()">
     <div id="edit_delete" class="edit-delete">
       <div onclick="showEditForm()">
-        <img src="../icons/edit_dark.svg" alt="">
+        <img src="../img/edit_dark.svg" alt="">
         Edit
       </div>
       <div onclick="renderAlertDeleteContact('confirm_container', 'confirm_content', 'Are you sure you want to delete this contact permanently? This process is irreversible.');">
-        <img class="delete-img" src="../icons/delete.svg" alt="">
+        <img class="delete-img" src="../img/delete.svg" alt="">
         Delete
       </div>
     </div>
@@ -82,12 +82,12 @@
   <div id="confirm_container" class="background-wrapper d-none" onclick="openOrCloseAlertContainer('confirm_container', 'close')" style="background-color: rgba(0, 0, 0, 0.2); z-index: 999;">
     <div class="alert-container confirm-container">
       <div class="alert-image-wrapper">
-        <img class="alert-logo" src="../icons/join_logo_white.svg" alt="" />
+        <img class="alert-logo" src="../img/join_logo_white.svg" alt="" />
         <h3>Information</h3>
         <img
           onclick="openOrCloseAlertContainer('confirm_container', 'close')"
           class="alert-close"
-          src="../icons/close_white.svg"
+          src="../img/close_white.svg"
         />
       </div>
       <div id="confirm_content" class="alert-content" style="flex-direction: column; gap: 12px;"></div>
