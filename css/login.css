@@ -146,6 +146,11 @@ body {
 
 .center label{
   color: #a8a8a8;
+  font-size: 12px;
+}
+
+.center label a {
+  font-size: 12px;
 }
 
 .headline-login-content,

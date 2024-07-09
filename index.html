@@ -1,153 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join</title>
+    <link rel="icon" href="./icons/join_logo.svg" />
+    <link rel="stylesheet" href="./css/reset_stylesheet.css" />
+    <link rel="stylesheet" href="./css/fonts.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/style_media_queries.css" />
+    <link rel="stylesheet" href="./css/login.css" />
+    <link rel="stylesheet" href="./css/login_media_queries.css" />
+    <script src="./javascript/script.js" defer></script>
+    <script src="./javascript/storage.js" defer></script>
+    <script src="./javascript/exemplary_userArrays.js" defer></script>
+    <script src="./javascript/register.js" defer></script>
+    <script src="./javascript/login.js" defer></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Join</title>
-  <link rel="icon" href="./icons/join_logo.svg" />
-  <link rel="stylesheet" href="../css/reset_stylesheet.css" />
-  <link rel="stylesheet" href="../css/fonts.css" />
-  <link rel="stylesheet" href="../css/style.css" />
-  <link rel="stylesheet" href="../css/style_media_queries.css" />
-  <link rel="stylesheet" href="../css/login.css" />
-  <link rel="stylesheet" href="../css/login_media_queries.css" />
-  <script src="../javascript/script.js" defer></script>
-  <script src="../javascript/storage.js" defer></script>
-  <script src="../javascript/exemplary_userArrays.js" defer></script>
-  <script src="../javascript/register.js" defer></script>
-  <script src="../javascript/login.js" defer></script>
-</head>
-
-<body onload="init()">
-  <div id="login_page" class="login-page">
-    <a href="./index.html">
-      <svg id="login_join_logo" class="login-join-logo" width="101" height="122" viewBox="0 0 101 122" fill="none"
-        xmlns="http://www.w3.org/2000/svg">
-        <g clip-path="url(#clip0_301_1264)">
-          <path id="path_dot" d="M71.7067 0H49.5488V25.4923H71.7067V0Z" fill="white" />
-          <path id="path_j"
-            d="M49.5484 46.2251H71.7062V82.1779C71.8075 90.8292 69.3453 99.3153 64.6328 106.557C59.9796 113.594 50.9972 121.966 34.3788 121.966C16.2776 121.966 5.72704 113.406 0.0341797 108.715L14.0107 91.4743C19.5672 96.0112 24.9191 99.7435 34.464 99.7435C41.6909 99.7435 44.5714 96.7988 46.2588 94.2307C48.5528 90.6637 49.7393 86.4923 49.6677 82.2464L49.5484 46.2251Z"
-            fill="white" />
-          <path id="path_blue_square" d="M38.2477 30.1318H16.0898V52.3884H38.2477V30.1318Z" fill="#29ABE2" />
-          <path id="path_o"
-            d="M83.3136 111.522C83.3136 116.265 80.9104 118.815 77.5526 118.815C74.1948 118.815 71.9961 115.785 71.9961 111.762C71.9961 107.739 74.263 104.554 77.7401 104.554C81.2172 104.554 83.3136 107.687 83.3136 111.522ZM74.5698 111.711C74.5698 114.57 75.7118 116.675 77.6719 116.675C79.632 116.675 80.7399 114.45 80.7399 111.539C80.7399 108.988 79.7172 106.592 77.6719 106.592C75.6266 106.592 74.5698 108.903 74.5698 111.711Z"
-            fill="white" />
-          <path id="path_i" d="M87.7112 104.76V118.593H85.2568V104.76H87.7112Z" fill="white" />
-          <path id="path_n"
-            d="M90.3701 118.593V104.76H93.0972L96.0289 110.461C96.7836 111.952 97.455 113.483 98.0401 115.049C97.8867 113.337 97.8186 111.368 97.8186 109.177V104.76H100.068V118.593H97.5288L94.5631 112.772C93.7779 111.243 93.078 109.671 92.4666 108.064C92.4666 109.776 92.5859 111.711 92.5859 114.09V118.576L90.3701 118.593Z"
-            fill="white" />
-        </g>
-        <defs>
-          <clipPath id="clip0_301_1264">
-            <rect width="100.034" height="121.966" fill="white" transform="translate(0.0341797)" />
-          </clipPath>
-        </defs>
-      </svg>
-    </a>
-    <div class="content animate-content">
-      <div id="login_content" class="login-content">
-        <form id="login_Form" onsubmit="login(); return false;">
-          <div class="form-content-without-sign-up-button">
-            <div class="headline-login-content">
-              <h1>Log in</h1>
-              <div class="blue-line"></div>
+  <body onload="init()">
+    <div id="login_page" class="login-page">
+      <a href="./index.html">
+        <svg
+          id="login_join_logo"
+          class="login-join-logo"
+          width="101"
+          height="122"
+          viewBox="0 0 101 122"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g clip-path="url(#clip0_301_1264)">
+            <path
+              id="path_dot"
+              d="M71.7067 0H49.5488V25.4923H71.7067V0Z"
+              fill="white"
+            />
+            <path
+              id="path_j"
+              d="M49.5484 46.2251H71.7062V82.1779C71.8075 90.8292 69.3453 99.3153 64.6328 106.557C59.9796 113.594 50.9972 121.966 34.3788 121.966C16.2776 121.966 5.72704 113.406 0.0341797 108.715L14.0107 91.4743C19.5672 96.0112 24.9191 99.7435 34.464 99.7435C41.6909 99.7435 44.5714 96.7988 46.2588 94.2307C48.5528 90.6637 49.7393 86.4923 49.6677 82.2464L49.5484 46.2251Z"
+              fill="white"
+            />
+            <path
+              id="path_blue_square"
+              d="M38.2477 30.1318H16.0898V52.3884H38.2477V30.1318Z"
+              fill="#29ABE2"
+            />
+            <path
+              id="path_o"
+              d="M83.3136 111.522C83.3136 116.265 80.9104 118.815 77.5526 118.815C74.1948 118.815 71.9961 115.785 71.9961 111.762C71.9961 107.739 74.263 104.554 77.7401 104.554C81.2172 104.554 83.3136 107.687 83.3136 111.522ZM74.5698 111.711C74.5698 114.57 75.7118 116.675 77.6719 116.675C79.632 116.675 80.7399 114.45 80.7399 111.539C80.7399 108.988 79.7172 106.592 77.6719 106.592C75.6266 106.592 74.5698 108.903 74.5698 111.711Z"
+              fill="white"
+            />
+            <path
+              id="path_i"
+              d="M87.7112 104.76V118.593H85.2568V104.76H87.7112Z"
+              fill="white"
+            />
+            <path
+              id="path_n"
+              d="M90.3701 118.593V104.76H93.0972L96.0289 110.461C96.7836 111.952 97.455 113.483 98.0401 115.049C97.8867 113.337 97.8186 111.368 97.8186 109.177V104.76H100.068V118.593H97.5288L94.5631 112.772C93.7779 111.243 93.078 109.671 92.4666 108.064C92.4666 109.776 92.5859 111.711 92.5859 114.09V118.576L90.3701 118.593Z"
+              fill="white"
+            />
+          </g>
+          <defs>
+            <clipPath id="clip0_301_1264">
+              <rect
+                width="100.034"
+                height="121.966"
+                fill="white"
+                transform="translate(0.0341797)"
+              />
+            </clipPath>
+          </defs>
+        </svg>
+      </a>
+      <div class="content animate-content">
+        <div id="login_content" class="login-content">
+          <form id="login_Form" onsubmit="login(); return false;">
+            <div class="form-content-without-sign-up-button">
+              <div class="headline-login-content">
+                <h1>Log in</h1>
+                <div class="blue-line"></div>
+              </div>
+              <div class="login-input-and-button-wrapper">
+                <div class="login-input-wrapper">
+                  <input
+                    id="email_Login"
+                    required
+                    type="email"
+                    placeholder="Email"
+                  />
+                </div>
+                <div class="login-input-wrapper">
+                  <input
+                    id="password_Login"
+                    required
+                    type="password"
+                    placeholder="Password"
+                    onclick="changePasswordVisibility(this.id)"
+                  />
+                </div>
+                <div class="remember-user">
+                  <input id="remember_user" type="checkbox" />
+                  <label for="remember_user">Remember me</label>
+                </div>
+              </div>
+              <div class="button-wrapper-log-in">
+                <button type="submit" class="button-login dark-button">
+                  Log in
+                </button>
+                <button type="button" class="button-guest-login light-button">
+                  <a href="./html/summary.html" class="light-button-link"
+                    >Guest Log in</a
+                  >
+                </button>
+              </div>
             </div>
-            <div class="login-input-and-button-wrapper">
-              <div class="login-input-wrapper">
-                <input id="email_Login" required type="email" placeholder="Email" />
-              </div>
-              <div class="login-input-wrapper">
-                <input id="password_Login" required type="password" placeholder="Password"
-                  onclick="changePasswordVisibility(this.id)" />
-              </div>
-              <div class="remember-user">
-                <input id="remember_user" type="checkbox" />
-                <label for="remember_user">Remember me</label>
-              </div>
-            </div>
-            <div class="button-wrapper-log-in">
-              <button type="submit" class="button-login dark-button">
-                Log in
+            <div id="sign_up_wrapper" class="sign-up-wrapper">
+              <p>Not a Join user?</p>
+              <button
+                id="goToSignUp_Btn"
+                type="button"
+                onclick="toggleSignUpAndLogin(this.id)"
+                class="button-sign-up dark-button"
+              >
+                Sign up
               </button>
-              <button type="button" class="button-guest-login light-button">
-                <a href="./html/summary.html" class="light-button-link">Guest Log in</a>
+            </div>
+          </form>
+        </div>
+        <div id="sign_up_content" class="sign-up-content d-none">
+          <div class="headline-sign-up-content">
+            <div class="sign-up-headline-wrapper">
+              <img
+                id="backToLogin_Btn"
+                onclick="toggleSignUpAndLogin(this.id)"
+                src="./icons/arrow_left_line_variant2.svg"
+                alt=""
+              />
+              <h1>Sign up</h1>
+              <img
+                id="backToLogin_Btn"
+                class="invisible-arrow"
+                onclick="toggleSignUpAndLogin(this.id)"
+                src="./icons/arrow_left_line_variant2.svg"
+                alt=""
+              />
+            </div>
+            <div class="blue-line"></div>
+          </div>
+          <form id="signUp_Form" onsubmit="register(); return false;">
+            <div class="combined-signup-wrapper">
+              <div class="login-input-wrapper">
+                <input
+                  required
+                  id="name_SignUp"
+                  type="text"
+                  placeholder="First and last name"
+                />
+              </div>
+              <div class="login-input-wrapper">
+                <input
+                  required
+                  id="email_SignUp"
+                  type="email"
+                  placeholder="Email"
+                />
+              </div>
+              <div class="login-input-wrapper">
+                <input
+                  required
+                  id="password_SignUp"
+                  type="password"
+                  placeholder="Password"
+                  onclick="changePasswordVisibility(this.id)"
+                />
+              </div>
+              <div class="login-input-wrapper">
+                <input
+                  required
+                  id="confirmPassword_SignUp"
+                  type="password"
+                  placeholder="Confirm password"
+                  onclick="changePasswordVisibility(this.id)"
+                />
+              </div>
+              <div class="remember-user center">
+                <input id="accept_policy" type="checkbox" required />
+                <label for="remember_user"
+                  >I accept the
+                  <a href="./html/privacy_policy_external.html"
+                    >Privacy policy</a
+                  ></label
+                >
+              </div>
+            </div>
+
+            <div class="button-wrapper-sign-up">
+              <button
+                id="register_btn"
+                type="submit"
+                class="button-login dark-button"
+              >
+                Sign up
               </button>
             </div>
+          </form>
+          <div id="messageBox" class="messageBox">
+            Successfully Registered !
           </div>
-          <div id="sign_up_wrapper" class="sign-up-wrapper">
-            <p>Not a Join user?</p>
-            <button id="goToSignUp_Btn" type="button" onclick="toggleSignUpAndLogin(this.id)"
-              class="button-sign-up dark-button">
-              Sign up
-            </button>
-          </div>
-        </form>
-      </div>
-      <div id="sign_up_content" class="sign-up-content d-none">
-        <div class="headline-sign-up-content">
-          <div class="sign-up-headline-wrapper">
-            <img id="backToLogin_Btn" onclick="toggleSignUpAndLogin(this.id)"
-              src="../icons/arrow_left_line_variant2.svg" alt="" />
-            <h1>Sign up</h1>
-            <img id="backToLogin_Btn" class="invisible-arrow" onclick="toggleSignUpAndLogin(this.id)"
-              src="../icons/arrow_left_line_variant2.svg" alt="" />
-          </div>
-          <div class="blue-line"></div>
         </div>
-        <form id="signUp_Form" onsubmit="register(); return false;">
-          <div class="combined-signup-wrapper">
-            <div class="login-input-wrapper">
-              <input required id="name_SignUp" type="text" placeholder="First and last name" />
-            </div>
-            <div class="login-input-wrapper">
-              <input required id="email_SignUp" type="email" placeholder="Email" />
-            </div>
-            <div class="login-input-wrapper">
-              <input required id="password_SignUp" type="password" placeholder="Password"
-                onclick="changePasswordVisibility(this.id)" />
-            </div>
-            <div class="login-input-wrapper">
-              <input required id="confirmPassword_SignUp" type="password" placeholder="Confirm password"
-                onclick="changePasswordVisibility(this.id)" />
-            </div>
-            <div class="remember-user center">
-              <input id="accept_policy" type="checkbox" required />
-              <label for="remember_user">I accept the
-                <a href="./html/privacy_policy_external.html">Privacy policy</a></label>
-            </div>
+        <div class="legal-wrapper">
+          <a href="./html/privacy_policy_external.html">Privacy Policy</a>
+          <a href="./html/legal_notice_external.html">Legal Notice</a>
+        </div>
+        <div id="alert_container" class="alert-container d-none">
+          <div class="alert-image-wrapper">
+            <img class="alert-logo" src="../icons/join_logo_white.svg" alt="" />
+            <h3>Information</h3>
+            <img
+              onclick="openOrCloseAlertContainer('alert_container', 'close')"
+              class="alert-close"
+              src="https://join.annette-lasar.de/icons/close_white.svg"
+            />
           </div>
-
-          <div class="button-wrapper-sign-up">
-            <button id="register_btn" type="submit" class="button-login dark-button">
-              Sign up
-            </button>
-          </div>
-        </form>
-        <div id="messageBox" class="messageBox">
-          Successfully Registered !
+          <div id="alert_content" class="alert-content"></div>
         </div>
       </div>
-      <div class="legal-wrapper">
-        <a href="./html/privacy_policy_external.html">Privacy Policy</a>
-        <a href="./html/legal_notice_external.html">Legal Notice</a>
-      </div>
-      <div id="alert_container" class="alert-container d-none">
-        <div class="alert-image-wrapper">
-          <img class="alert-logo" src="../icons/join_logo_white.svg" alt="" />
-          <h3>Information</h3>
-          <img onclick="openOrCloseAlertContainer('alert_container', 'close')" class="alert-close"
-            src="../icons/close_white.svg" />
-        </div>
-        <div id="alert_content" class="alert-content"></div>
-      </div>
-      <!-- <div id="sign_up_wrapper" class="sign-up-wrapper">
-          <p>Not a Join user?</p>
-          <button onclick="toggleSignUpAndLogin()" class="button-sign-up dark-button">Sign up</button>
-        </div> -->
-
     </div>
-  </div>
-</body>
-
+  </body>
 </html>
